@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" role="img" aria-labelledby="title desc">
+  <title id="title">BuildBench interlocking B logo</title>
+  <desc id="desc">Two offset letter B outlines representing cross-architecture build repair.</desc>
+  <rect x="1" y="1" width="46" height="46" rx="6" fill="#1e252c" />
+  <path
+    d="M10 9v30h10c6 0 10-3 10-7.5S26 24 20 24H10h9c6 0 10-3 10-7.5S25 9 19 9h-9Z"
+    fill="none"
+    stroke="#ee6253"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+  <path
+    d="M18 9v30h10c6 0 10-3 10-7.5S34 24 28 24H18h9c6 0 10-3 10-7.5S33 9 27 9h-9Z"
+    fill="none"
+    stroke="#eaf3fc"
+    stroke-width="4"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

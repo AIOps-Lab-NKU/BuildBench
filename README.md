@@ -3,7 +3,7 @@
 Static preview website for the Build-Bench Challenge at the ICSE 2027
 Competition Track.
 
-Published preview: <https://worstwoof.github.io/build-bench-challenge/>
+Published website: <https://aiops-lab-nku.github.io/BuildBench/>
 
 ## Local preview
 
