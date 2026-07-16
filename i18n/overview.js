@@ -1,0 +1,93 @@
+window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
+window.BuildBenchI18nData.pages.overview = Object.freeze({
+  "Build-Bench Challenge | ICSE 2027": "Build-Bench Challenge | ICSE 2027",
+  "Official ICSE 2027 Competition": "ICSE 2027 官方竞赛信息",
+  "Cross-Architecture Package Build Repair": "跨架构软件包构建修复",
+  "Build an agent that diagnoses and repairs real software packages which build on one instruction set architecture but fail on another. Repairs are judged by executable builds in a controlled environment.":
+    "构建一个 Agent，诊断并修复在一种指令集架构上能够构建、在另一种架构上构建失败的真实软件包。修复效果以受控环境中的实际构建结果为准。",
+  "Explore the task": "了解任务",
+  "Agent interface": "Agent 接口",
+  "Research paper": "研究论文",
+  "Competition data, starter kit, API contract, and submission portal are planned releases.":
+    "竞赛数据、starter kit、API 合约和提交平台将陆续发布。",
+  "Status": "状态",
+  "Infrastructure preparation": "基础设施准备中",
+  "Submission unit": "提交单元",
+  "One compliant repair Agent": "一个符合规范的修复 Agent",
+  "Organizer-run hidden cases": "主办方运行的隐藏测试用例",
+  "Final session": "最终环节",
+  "Proposal accepted": "提案已获接收",
+  "Starter kit": "Starter kit",
+  "Public validation": "公开验证",
+  "Hidden evaluation": "隐藏评测",
+  "ICSE session": "ICSE 现场环节",
+  "Competition guide": "竞赛指南",
+  "Start with the part you need": "从你需要的内容开始",
+  "The full specification is separated into focused pages. Draft items remain visibly marked until the organizing team freezes them.":
+    "完整规范按主题拆分到不同页面。主办团队正式冻结前，草案内容都会保留清晰标记。",
+  "Task & Dataset": "任务与数据集",
+  "Case contents, repair scope, data directions, and planned splits":
+    "Case 内容、修复范围、迁移方向和拟定的数据划分",
+  "Agent Submission": "Agent 提交",
+  "The single submission model and the draft organizer API contract":
+    "统一的提交模式和主办方 API 合约草案",
+  "Executable validation, proposed metrics, evaluator stages, and open decisions":
+    "可执行验证、拟定指标、评测流程和待定事项",
+  "Integrity, disclosure, allowed modifications, audits, and reproducibility":
+    "诚信要求、信息披露、允许的修改、审核与可复现性",
+  "reproducible failed packages": "个可复现的构建失败软件包",
+  "cross-ISA migration directions": "个跨指令集架构迁移方向",
+  "major failure categories": "类主要失败原因",
+  "best paper-reported success rate": "论文报告的最高成功率",
+  "Competition model": "竞赛模式",
+  "One Agent, one controlled evaluation path": "一个 Agent，一条受控评测路径",
+  "Teams provide an Agent that follows the published interface. Organizers run that Agent against competition cases and verify every repair in the official build environment.":
+    "参赛团队提交遵循公开接口的 Agent。主办方用该 Agent 处理竞赛 Case，并在官方构建环境中验证每项修复。",
+  "Read the draft Agent contract": "查看 Agent 合约草案",
+  "Submit Agent": "提交 Agent",
+  "Provide a reproducible Agent artifact using the announced packaging format.":
+    "按公布的打包格式提供可复现的 Agent 制品。",
+  "Run hidden case": "运行隐藏 Case",
+  "The harness supplies one case through the standardized interface.":
+    "评测框架通过标准化接口提供一个 Case。",
+  "Collect repair": "收集修复结果",
+  "The Agent returns the prescribed repair artifact and structured status.":
+    "Agent 返回规定格式的修复制品和结构化状态。",
+  "Build and score": "构建并评分",
+  "OBS or the official validator checks the repair and feeds aggregate results to the leaderboard.":
+    "OBS 或官方验证器检查修复，并将汇总结果计入排行榜。",
+  "Proposed schedule": "拟定时间安排",
+  "From starter kit to ICSE 2027": "从 starter kit 到 ICSE 2027",
+  "Dates below come from the accepted proposal and remain subject to alignment with the official ICSE 2027 schedule.":
+    "以下时间来自已接收的提案，最终仍需与 ICSE 2027 官方日程对齐。",
+  "View the complete timeline": "查看完整时间安排",
+  "Aug 2026": "2026 年 8 月",
+  "Development set and baselines": "开发集与基线",
+  "Sep 2026": "2026 年 9 月",
+  "Public validation leaderboard": "公开验证排行榜",
+  "Nov 2026": "2026 年 11 月",
+  "Final submission freeze": "最终提交冻结",
+  "Dec 2026": "2026 年 12 月",
+  "Results and participant reports": "结果与参赛报告",
+  "Competition session and presentation": "竞赛现场环节与展示",
+  "Organizers": "主办团队",
+  "Build-Bench team": "Build-Bench 团队",
+  "College of Software, Nankai University, with industry collaboration from Microsoft.":
+    "南开大学软件学院，微软提供产业合作支持。",
+  "Main contact, dataset, website, leaderboard, and evaluation infrastructure":
+    "主要联系人，负责数据集、网站、排行榜和评测基础设施",
+  "Competition design, hidden evaluation, ICSE session, and final report":
+    "负责竞赛设计、隐藏评测、ICSE 现场环节和最终报告",
+  "Participant support, technical documentation, and starter-kit reproduction":
+    "负责参赛支持、技术文档和 starter kit 复现",
+  "Industry liaison, external advice, outreach, and report review":
+    "负责产业联络、外部咨询、宣传和报告审阅",
+  "The Build-Bench Challenge at ICSE 2027 evaluates agents for executable cross-architecture package build repair.":
+    "ICSE 2027 Build-Bench Challenge 面向跨架构软件包构建修复，评测能够执行修复任务的 Agent。",
+  "A competition for agent-driven repair of real package build failures across x86_64 and aarch64.":
+    "面向 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64 与 aarch64 架构。",
+  "Primary actions": "主要操作",
+  "Competition summary": "竞赛概览",
+  "Proposed competition stages": "拟定的竞赛阶段",
+  "Build-Bench research benchmark summary": "Build-Bench 研究基准概览",
+});

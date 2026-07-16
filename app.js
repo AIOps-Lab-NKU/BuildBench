@@ -1,6 +1,11 @@
 const menuButton = document.querySelector("[data-menu-button]");
 const nav = document.querySelector("[data-nav]");
+const siteHeader = document.querySelector(".site-header");
 const localNavLinks = Array.from(document.querySelectorAll('.page-rail nav a[href^="#"]'));
+
+function translate(value) {
+  return window.BuildBenchI18n?.t(value) || value;
+}
 
 function renderIcons() {
   window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
@@ -9,13 +14,26 @@ function renderIcons() {
 function setMenu(open) {
   if (!menuButton || !nav) return;
 
+  updateMobileNavGeometry();
   menuButton.setAttribute("aria-expanded", String(open));
-  menuButton.setAttribute("aria-label", open ? "Close navigation" : "Open navigation");
-  menuButton.setAttribute("title", open ? "Close navigation" : "Open navigation");
+  menuButton.setAttribute(
+    "aria-label",
+    translate(open ? "Close navigation" : "Open navigation"),
+  );
+  menuButton.setAttribute("title", translate(open ? "Close navigation" : "Open navigation"));
   nav.classList.toggle("open", open);
   document.body.classList.toggle("menu-open", open);
   menuButton.innerHTML = `<i data-lucide="${open ? "x" : "menu"}" aria-hidden="true"></i>`;
   renderIcons();
+}
+
+function updateMobileNavGeometry() {
+  if (!siteHeader) return;
+  const headerRect = siteHeader.getBoundingClientRect();
+  const top = Math.max(0, Math.round(headerRect.height));
+  const height = Math.max(0, Math.round(window.innerHeight - Math.max(0, headerRect.bottom)));
+  document.documentElement.style.setProperty("--mobile-nav-top", `${top}px`);
+  document.documentElement.style.setProperty("--mobile-nav-height", `${height}px`);
 }
 
 menuButton?.addEventListener("click", () => {
@@ -31,7 +49,13 @@ document.addEventListener("keydown", (event) => {
 });
 
 window.addEventListener("resize", () => {
+  updateMobileNavGeometry();
   if (window.innerWidth > 1080) setMenu(false);
+});
+
+window.addEventListener("buildbench:languagechange", () => {
+  updateMobileNavGeometry();
+  setMenu(menuButton?.getAttribute("aria-expanded") === "true");
 });
 
 if ("IntersectionObserver" in window && localNavLinks.length) {
@@ -100,4 +124,7 @@ boardFilters.forEach((button) => {
 
 if (boardRows.length) applyBoardFilter("all");
 
-window.addEventListener("DOMContentLoaded", renderIcons);
+window.addEventListener("DOMContentLoaded", () => {
+  updateMobileNavGeometry();
+  renderIcons();
+});
