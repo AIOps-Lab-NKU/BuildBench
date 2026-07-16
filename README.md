@@ -9,6 +9,30 @@ Published website: <https://aiops-lab-nku.github.io/BuildBench/>
 
 Open `index.html` directly, or serve the directory with any static file server.
 
+For a local server preview from the project root:
+
+```powershell
+file-python -m http.server 8765 --directory site
+```
+
+Then open <http://127.0.0.1:8765/>.
+
+## Languages
+
+Every page supports English and Simplified Chinese through the `EN | 中文`
+control in the header. English remains the static HTML and no-JavaScript
+fallback. Chinese is applied by `i18n.js` using the page dictionary under
+`i18n/`.
+
+The selected language is stored locally and represented by `?lang=zh` in
+shareable Chinese URLs. Internal page links preserve the parameter, including
+when the site is opened directly from the filesystem.
+
+When English copy changes, update the exact matching key in the corresponding
+page dictionary. Keep product names, model names, architecture identifiers,
+code, API fields, and formulas untranslated unless the displayed terminology
+itself changes.
+
 ## Content status
 
 The site separates verified research results from planned competition
