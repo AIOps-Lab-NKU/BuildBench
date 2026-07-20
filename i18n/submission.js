@@ -2,8 +2,8 @@ window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Agent Submission | Build-Bench Challenge": "Agent 提交 | Build-Bench Challenge",
   "Draft contract": "合约草案",
-  "The single-Agent model is confirmed; packaging, API fields, budgets, and network policy are not final.":
-    "单一 Agent 模式已经确认；打包方式、API 字段、预算和网络策略尚未最终确定。",
+  "case.zip and result.zip are the working I/O envelopes; exact schemas, budgets, and network policy are not final.":
+    "case.zip 和 result.zip 是当前使用的输入输出压缩包；准确 schema、预算和网络策略尚未最终确定。",
   "Draft interface": "接口草案",
   "Agent Submission": "Agent 提交",
   "Teams will provide one repair Agent that satisfies a standardized input and output contract. Organizers will run the Agent on competition cases and score its resulting repairs.":
@@ -54,10 +54,13 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Results are aggregated": "汇总结果",
   "Valid case outcomes contribute to the submission score and leaderboard statistics.":
     "有效的 Case 结果会计入提交得分和排行榜统计。",
-  "Draft input contract": "输入合约草案",
-  "What the harness provides": "评测框架提供的内容",
-  "The final starter kit will define an exact directory tree and machine-readable schema. The following capabilities are intended, but field names are not final.":
-    "最终 starter kit 将定义准确的目录树和机器可读 schema。以下能力是拟定方案，但字段名尚未最终确定。",
+  "case.zip input": "case.zip 输入",
+  "Draft case.zip contract": "case.zip 输入合约草案",
+  "One ZIP contains the complete case input": "一个 ZIP 包含完整 Case 输入",
+  "The harness will provide one read-only": "评测框架将为每个 Case 提供一个只读的",
+  "per case. The final starter kit will define the exact tree and JSON Schema; the current working layout is:":
+    "。最终 starter kit 将定义准确目录树和 JSON Schema；当前工作布局为：",
+  "Illustrative case.zip tree": "case.zip 目录示例",
   "Read-only case directory": "只读 Case 目录",
   "Package specifications, source archives, existing patches, auxiliary build-service files, and the failed log.":
     "软件包规范文件、源码归档、已有补丁、构建服务辅助文件和失败日志。",
@@ -70,11 +73,13 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Iteration feedback": "迭代反馈",
   "Whether an Agent can request build attempts during one case, and which logs are returned after each attempt.":
     "Agent 能否在处理单个 Case 时请求构建，以及每次尝试后返回哪些日志。",
-  "Draft output contract": "输出合约草案",
-  "Return a repair and a structured status": "返回修复结果和结构化状态",
-  "A unified diff is the planned repair artifact because it is inspectable, auditable, and can be applied to a clean package copy. The harness also needs a machine-readable result describing whether the Agent produced a repair.":
-    "计划采用 unified diff 作为修复制品，因为它便于检查和审核，也能应用到干净的软件包副本。评测框架还需要机器可读的结果，用来说明 Agent 是否生成了修复。",
-  "Illustrative output only - not the final schema": "仅为输出示例，不是最终 schema",
+  "result.zip output": "result.zip 输出",
+  "Draft result.zip contract": "result.zip 输出合约草案",
+  "One ZIP returns the repair and status": "一个 ZIP 返回修复结果和状态",
+  "The Agent will return one": "Agent 将返回一个",
+  ". A unified diff remains the repair artifact because it is inspectable, auditable, and can be applied to a clean package copy.":
+    "。unified diff 仍是修复制品，因为它便于检查和审核，也能应用到干净的软件包副本。",
+  "Illustrative result.zip tree and result.json": "result.zip 目录和 result.json 示例",
   "The sample communicates the shape of the contract, not guaranteed names or values. The released JSON Schema and conformance tests will be authoritative.":
     "该示例仅说明合约的大致结构，不保证字段名或取值。最终以发布的 JSON Schema 和一致性测试为准。",
   "Expected result classes": "预期结果类型",
@@ -134,6 +139,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Development cases with expected evaluator outputs": "附带预期评测器输出的开发 Case",
   "Published resource, model API, network, and failure policies":
     "公开的资源、模型 API、网络和失败处理策略",
+  "Organizer baseline plan:": "主办方 Baseline 计划：",
+  "comparable baseline runs will use no more than two open-source model configurations and one closed model configuration, with versions and parameters frozen and reported. This does not restrict participant Agents unless the final Rules explicitly say so.":
+    "可比的 Baseline 运行将至多使用两种开源模型配置和一种闭源模型配置，并冻结、报告版本和参数。除非最终 Rules 明确规定，否则这不限制参赛 Agent。",
   "Next": "下一页",
   "See how Agent runs become scores": "了解 Agent 运行结果如何转化为得分",
   "Draft Agent submission model and organizer-run API contract for the Build-Bench Challenge.":

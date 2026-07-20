@@ -8,9 +8,9 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/faq.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/faq.js?v=20260716-3" defer></script>
+    <script src="i18n/faq.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
@@ -47,7 +47,7 @@
             <span class="section-label">Participation</span>
             <h2>Entering the competition</h2>
             <div class="faq-list">
-              <details open><summary>What exactly does a team submit?<i data-lucide="plus" aria-hidden="true"></i></summary><p>One repair Agent that follows the versioned organizer interface. The Agent is run by the competition harness on organizer-controlled cases. It returns a repair artifact and structured completion status. Packaging and API details are still being designed; see <a href="submission.html">Agent Submission</a>.</p></details>
+              <details open><summary>What exactly does a team submit?<i data-lucide="plus" aria-hidden="true"></i></summary><p>One repair Agent that follows the versioned organizer interface. For each case, the working protocol supplies <code>case.zip</code> and expects <code>result.zip</code>, containing structured status and an optional <code>repair.diff</code>. Exact schemas and Agent packaging remain draft; see <a href="submission.html">Agent Submission</a>.</p></details>
               <details><summary>Are patch output and Agent container separate submission modes?<i data-lucide="plus" aria-hidden="true"></i></summary><p>No. The competition now intends to use a single Agent submission model. A unified diff is the common repair output produced by the Agent and consumed by the evaluator. It is not a second competition entry path.</p></details>
               <details><summary>Must the Agent use an LLM?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The primary leaderboard is intended for LLM-based and agentic repair systems. Traditional non-LLM systems may be included as clearly labeled comparison baselines, subject to the final rulebook.</p></details>
               <details><summary>How large can a team be?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Team-size, affiliation, registration, and conflict-of-interest rules have not yet been announced. They will follow the ICSE Competition Track requirements and the released competition rulebook.</p></details>
@@ -71,7 +71,7 @@
             <h2>Scoring and leaderboard questions</h2>
             <div class="faq-list">
               <details><summary>How is a repair judged?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The evaluator applies the Agent's repair to a clean case, checks modification policy, and runs the official target-architecture build validator. Textual similarity to an organizer patch is not the success criterion.</p></details>
-              <details><summary>Are the current metrics final?<i data-lucide="plus" aria-hidden="true"></i></summary><p>No. Build success rate and the listed tie-breakers come from the accepted proposal, not a completed post-acceptance team decision. They remain explicitly marked Draft on the <a href="evaluation.html">Evaluation page</a>.</p></details>
+              <details><summary>Are the current metrics final?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Build Success Rate is the working single primary ranking metric. Exact denominator semantics, failure handling, and any tie-breaker remain draft on the <a href="evaluation.html">Evaluation page</a>.</p></details>
               <details><summary>What happens if the Agent crashes or times out?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The final scoring semantics are TBA. The rulebook must distinguish Agent failure, malformed output, build failure, infrastructure failure, and cases canceled by the organizers.</p></details>
               <details><summary>Will model cost or token usage affect ranking?<i data-lucide="plus" aria-hidden="true"></i></summary><p>This has not been decided. The organizer must determine whether Agent runtime, model cost, token use, build time, and repair iterations are ranking metrics, tie-breakers, or informational columns.</p></details>
               <details><summary>Why does the current leaderboard show model results?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Those rows reproduce research results from the Build-Bench paper so participants can understand the benchmark. They are not competition entries and will remain visibly separated from the future public competition ranking.</p></details>
@@ -82,9 +82,9 @@
             <span class="section-label">Data and builds</span>
             <h2>Cases, architectures, and OBS</h2>
             <div class="faq-list">
-              <details><summary>How many Build-Bench cases are there?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The latest paper reports 268 reproducible cases: 163 for x86_64-to-aarch64 and 105 for aarch64-to-x86_64. Final development, validation, and hidden-test counts will be frozen before launch.</p></details>
+              <details><summary>How many Build-Bench cases are there?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The latest paper reports 268 reproducible cases: 163 for x86_64-to-aarch64 and 105 for aarch64-to-x86_64. Another 200 public package candidates are under validation and are not yet accepted benchmark cases. Final split counts will be frozen before launch.</p></details>
               <details><summary>What is OBS and why is it used?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Open Build Service is a platform for building packages across distributions and architectures. Build-Bench uses it as an executable validation backend: after a repair is applied, OBS rebuilds the package for the target architecture and reports whether the real build succeeds.</p></details>
-              <details><summary>Can participants validate locally?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The accepted proposal plans Docker-based local validation for development while retaining the OBS path for paper-aligned and official validation. The starter kit will document prerequisites and known architecture-emulation limitations.</p></details>
+              <details><summary>Can participants validate locally?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Yes. The working environment prioritizes a Docker-based local validator for reproducible development. OBS remains useful for research-corpus reconstruction and organizer-side evidence checks. The starter kit will document prerequisites and architecture-emulation limitations.</p></details>
               <details><summary>Will every package artifact be redistributed?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Only when licensing permits. For cases with unclear redistribution status, organizers may release scripts that reconstruct the case from public package sources.</p></details>
             </div>
           </section>
@@ -93,7 +93,7 @@
             <span class="section-label">Schedule and support</span>
             <h2>Releases, deadlines, and updates</h2>
             <div class="faq-list">
-              <details><summary>When will public validation open?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The accepted proposal targets September 2026. This is a proposed month, not a binding date. Exact deadlines will be aligned with the official ICSE 2027 schedule.</p></details>
+              <details><summary>When will public validation open?<i data-lucide="plus" aria-hidden="true"></i></summary><p>July 31, 2026 is an internal preparation checkpoint, not a participant deadline. The accepted proposal targets September 2026 for public validation, but the exact date will be aligned with the official ICSE 2027 schedule.</p></details>
               <details><summary>When is the final submission deadline?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The proposal targets a November 2026 freeze for hidden evaluation. The exact date, timezone, artifact selection procedure, and rerun window remain TBA.</p></details>
               <details><summary>Where will rule and evaluator changes be announced?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Changes will be versioned on the competition website and announced through the public support channel selected by the organizers. A frozen evaluator version will be announced before final submission.</p></details>
               <details><summary>Will teams be able to submit solution papers?<i data-lucide="plus" aria-hidden="true"></i></summary><p>If the ICSE track invites solution papers, eligible teams are expected to need a valid final entry, rule compliance, system disclosure, and performance above an announced baseline. Track-chair policy and page limits will control the final process.</p></details>

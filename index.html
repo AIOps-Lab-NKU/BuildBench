@@ -13,9 +13,9 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/overview.js?v=20260716-3" defer></script>
+    <script src="i18n/overview.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
@@ -90,46 +90,41 @@
         </div>
       </section>
 
-      <section class="portal-section" aria-labelledby="start-title">
+      <section class="people-section" aria-labelledby="people-title">
         <div class="content-wrap">
-          <div class="portal-heading">
-            <div>
-              <span class="section-label">Competition guide</span>
-              <h2 id="start-title">Start with the part you need</h2>
-            </div>
-            <p>The full specification is separated into focused pages. Draft items remain visibly marked until the organizing team freezes them.</p>
+          <div class="people-heading">
+            <div><span class="section-label">People</span><h2 id="people-title">Project and organizing team</h2></div>
+            <p>Build-Bench is organized by Nankai University with industry collaboration from Microsoft.</p>
           </div>
-          <div class="gateway-grid">
-            <a href="task.html">
-              <i data-lucide="package-search" aria-hidden="true"></i>
-              <span><strong>Task &amp; Dataset</strong><small>Case contents, repair scope, data directions, and planned splits</small></span>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-            </a>
-            <a href="submission.html">
-              <i data-lucide="bot" aria-hidden="true"></i>
-              <span><strong>Agent Submission</strong><small>The single submission model and the draft organizer API contract</small></span>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-            </a>
-            <a href="evaluation.html">
-              <i data-lucide="badge-check" aria-hidden="true"></i>
-              <span><strong>Evaluation</strong><small>Executable validation, proposed metrics, evaluator stages, and open decisions</small></span>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-            </a>
-            <a href="rules.html">
-              <i data-lucide="shield-check" aria-hidden="true"></i>
-              <span><strong>Rules</strong><small>Integrity, disclosure, allowed modifications, audits, and reproducibility</small></span>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-            </a>
+          <div class="people-groups">
+            <section aria-labelledby="project-team-title">
+              <h3 id="project-team-title">Project team</h3>
+              <ul class="people-list">
+                <li><strong>Chenyu Zhao</strong><span>Project lead</span><small>Nankai University</small></li>
+                <li><strong>Zihao Huang</strong><span>Project contributor</span><small>Nankai University</small></li>
+                <li><strong>Yihang Lin</strong><span>Project contributor</span><small>Nankai University</small></li>
+                <li><strong>An Xu</strong><span>Project contributor</span><small>Nankai University</small></li>
+                <li><strong>Chengtai Li</strong><span>Project contributor</span><small>Nankai University</small></li>
+              </ul>
+            </section>
+            <section aria-labelledby="advisors-title">
+              <h3 id="advisors-title">Academic and industry advisors</h3>
+              <ul class="people-list compact-people-list">
+                <li><strong>Shenglin Zhang</strong><span>Competition and evaluation</span><small>Nankai University</small></li>
+                <li><strong>Zeshun Huang</strong><span>Documentation and reproduction</span><small>Nankai University</small></li>
+                <li><strong>Minghua Ma</strong><span>Industry collaboration</span><small>Microsoft</small></li>
+              </ul>
+            </section>
           </div>
         </div>
       </section>
 
       <section class="fact-band" aria-label="Build-Bench research benchmark summary">
         <div class="fact-grid">
-          <div class="fact"><strong>268</strong><span>reproducible failed packages</span></div>
-          <div class="fact"><strong>2</strong><span>cross-ISA migration directions</span></div>
-          <div class="fact"><strong>5</strong><span>major failure categories</span></div>
-          <div class="fact"><strong>63.19%</strong><span>best paper-reported success rate</span></div>
+          <div class="fact"><strong>268</strong><span>paper-reported reproducible cases</span></div>
+          <div class="fact"><strong>163</strong><span>x86_64 to aarch64 cases</span></div>
+          <div class="fact"><strong>105</strong><span>aarch64 to x86_64 cases</span></div>
+          <div class="fact"><strong>200</strong><span>additional candidates under validation</span></div>
         </div>
       </section>
 
@@ -138,14 +133,14 @@
           <div class="portal-heading stacked-heading">
             <span class="section-label">Competition model</span>
             <h2 id="workflow-title">One Agent, one controlled evaluation path</h2>
-            <p>Teams provide an Agent that follows the published interface. Organizers run that Agent against competition cases and verify every repair in the official build environment.</p>
+            <p>Teams provide an Agent that follows the published interface. Organizers run it against competition cases and verify each repair with the official containerized build validator.</p>
             <a class="text-link" href="submission.html">Read the draft Agent contract<i data-lucide="arrow-right" aria-hidden="true"></i></a>
           </div>
           <ol class="home-flow">
             <li><span>01</span><div><strong>Submit Agent</strong><p>Provide a reproducible Agent artifact using the announced packaging format.</p></div></li>
             <li><span>02</span><div><strong>Run hidden case</strong><p>The harness supplies one case through the standardized interface.</p></div></li>
             <li><span>03</span><div><strong>Collect repair</strong><p>The Agent returns the prescribed repair artifact and structured status.</p></div></li>
-            <li><span>04</span><div><strong>Build and score</strong><p>OBS or the official validator checks the repair and feeds aggregate results to the leaderboard.</p></div></li>
+            <li><span>04</span><div><strong>Build and score</strong><p>The official validator checks the repair and feeds Build Success Rate to the leaderboard.</p></div></li>
           </ol>
         </div>
       </section>
@@ -153,12 +148,13 @@
       <section class="portal-section" aria-labelledby="schedule-title">
         <div class="content-wrap schedule-preview">
           <div>
-            <span class="section-label">Proposed schedule</span>
+            <span class="section-label">Working schedule</span>
             <h2 id="schedule-title">From starter kit to ICSE 2027</h2>
             <p>Dates below come from the accepted proposal and remain subject to alignment with the official ICSE 2027 schedule.</p>
             <a class="text-link" href="timeline.html">View the complete timeline<i data-lucide="arrow-right" aria-hidden="true"></i></a>
           </div>
           <div class="milestone-preview">
+            <div><time datetime="2026-07-31">Jul 31, 2026</time><span>Internal preparation checkpoint</span></div>
             <div><time datetime="2026-08">Aug 2026</time><span>Development set and baselines</span></div>
             <div><time datetime="2026-09">Sep 2026</time><span>Public validation leaderboard</span></div>
             <div><time datetime="2026-11">Nov 2026</time><span>Final submission freeze</span></div>
@@ -168,21 +164,6 @@
         </div>
       </section>
 
-      <section class="organizers-section" aria-labelledby="organizers-title">
-        <div class="content-wrap">
-          <div class="section-intro centered-intro light-intro">
-            <span class="section-label">Organizers</span>
-            <h2 id="organizers-title">Build-Bench team</h2>
-            <p>College of Software, Nankai University, with industry collaboration from Microsoft.</p>
-          </div>
-          <div class="organizer-grid">
-            <article><span>CZ</span><h3>Chenyu Zhao</h3><p>Main contact, dataset, website, leaderboard, and evaluation infrastructure</p><small>Nankai University</small></article>
-            <article><span>SZ</span><h3>Shenglin Zhang</h3><p>Competition design, hidden evaluation, ICSE session, and final report</p><small>Nankai University</small></article>
-            <article><span>ZH</span><h3>Zeshun Huang</h3><p>Participant support, technical documentation, and starter-kit reproduction</p><small>Nankai University</small></article>
-            <article><span>MM</span><h3>Minghua Ma</h3><p>Industry liaison, external advice, outreach, and report review</p><small>Microsoft</small></article>
-          </div>
-        </div>
-      </section>
     </main>
 
     <footer class="site-footer">

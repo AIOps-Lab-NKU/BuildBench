@@ -41,8 +41,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "best paper-reported success rate": "论文报告的最高成功率",
   "Competition model": "竞赛模式",
   "One Agent, one controlled evaluation path": "一个 Agent，一条受控评测路径",
-  "Teams provide an Agent that follows the published interface. Organizers run that Agent against competition cases and verify every repair in the official build environment.":
-    "参赛团队提交遵循公开接口的 Agent。主办方用该 Agent 处理竞赛 Case，并在官方构建环境中验证每项修复。",
+  "Teams provide an Agent that follows the published interface. Organizers run it against competition cases and verify each repair with the official containerized build validator.":
+    "参赛团队提交遵循公开接口的 Agent。主办方用它处理竞赛 Case，并通过官方容器化构建验证器检查每项修复。",
   "Read the draft Agent contract": "查看 Agent 合约草案",
   "Submit Agent": "提交 Agent",
   "Provide a reproducible Agent artifact using the announced packaging format.":
@@ -54,13 +54,15 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "The Agent returns the prescribed repair artifact and structured status.":
     "Agent 返回规定格式的修复制品和结构化状态。",
   "Build and score": "构建并评分",
-  "OBS or the official validator checks the repair and feeds aggregate results to the leaderboard.":
-    "OBS 或官方验证器检查修复，并将汇总结果计入排行榜。",
-  "Proposed schedule": "拟定时间安排",
+  "The official validator checks the repair and feeds Build Success Rate to the leaderboard.":
+    "官方验证器检查修复，并将构建成功率计入排行榜。",
+  "Working schedule": "当前时间安排",
   "From starter kit to ICSE 2027": "从 starter kit 到 ICSE 2027",
   "Dates below come from the accepted proposal and remain subject to alignment with the official ICSE 2027 schedule.":
     "以下时间来自已接收的提案，最终仍需与 ICSE 2027 官方日程对齐。",
   "View the complete timeline": "查看完整时间安排",
+  "Jul 31, 2026": "2026 年 7 月 31 日",
+  "Internal preparation checkpoint": "内部准备检查点",
   "Aug 2026": "2026 年 8 月",
   "Development set and baselines": "开发集与基线",
   "Sep 2026": "2026 年 9 月",
@@ -70,18 +72,26 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Dec 2026": "2026 年 12 月",
   "Results and participant reports": "结果与参赛报告",
   "Competition session and presentation": "竞赛现场环节与展示",
-  "Organizers": "主办团队",
-  "Build-Bench team": "Build-Bench 团队",
-  "College of Software, Nankai University, with industry collaboration from Microsoft.":
-    "南开大学软件学院，微软提供产业合作支持。",
-  "Main contact, dataset, website, leaderboard, and evaluation infrastructure":
-    "主要联系人，负责数据集、网站、排行榜和评测基础设施",
-  "Competition design, hidden evaluation, ICSE session, and final report":
-    "负责竞赛设计、隐藏评测、ICSE 现场环节和最终报告",
-  "Participant support, technical documentation, and starter-kit reproduction":
-    "负责参赛支持、技术文档和 starter kit 复现",
-  "Industry liaison, external advice, outreach, and report review":
-    "负责产业联络、外部咨询、宣传和报告审阅",
+  "People": "成员",
+  "Project and organizing team": "项目与组织团队",
+  "Build-Bench is organized by Nankai University with industry collaboration from Microsoft.":
+    "Build-Bench 由南开大学组织，微软提供产业合作支持。",
+  "Project team": "项目团队",
+  "Project lead": "项目负责人",
+  "Project contributor": "项目成员",
+  "Academic and industry advisors": "学术与产业顾问",
+  "Competition and evaluation": "竞赛与评测",
+  "Documentation and reproduction": "文档与复现",
+  "Industry collaboration": "产业合作",
+  "Chenyu Zhao": "赵晨宇",
+  "Zihao Huang": "黄子豪",
+  "Yihang Lin": "林亦航",
+  "An Xu": "徐安",
+  "Chengtai Li": "李铖泰",
+  "paper-reported reproducible cases": "个论文报告的可复现 Case",
+  "x86_64 to aarch64 cases": "个 x86_64 → aarch64 Case",
+  "aarch64 to x86_64 cases": "个 aarch64 → x86_64 Case",
+  "additional candidates under validation": "个正在验证的新增候选",
   "The Build-Bench Challenge at ICSE 2027 evaluates agents for executable cross-architecture package build repair.":
     "ICSE 2027 Build-Bench Challenge 面向跨架构软件包构建修复，评测能够执行修复任务的 Agent。",
   "A competition for agent-driven repair of real package build failures across x86_64 and aarch64.":

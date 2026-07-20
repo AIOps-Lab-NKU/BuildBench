@@ -8,9 +8,9 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/task.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/task.js?v=20260716-3" defer></script>
+    <script src="i18n/task.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
@@ -88,11 +88,12 @@
           <section class="doc-section" id="dataset">
             <span class="section-label">Research corpus</span>
             <h2>268 reproducible real-world failures</h2>
-            <div class="source-callout"><i data-lucide="book-open-check" aria-hidden="true"></i><p>This preview follows the latest Build-Bench paper: <strong>163 x86_64-to-aarch64</strong> cases and <strong>105 aarch64-to-x86_64</strong> cases. Final competition assignments will be frozen before launch.</p></div>
+            <div class="source-callout"><i data-lucide="book-open-check" aria-hidden="true"></i><p>This preview follows the latest Build-Bench paper: <strong>163 x86_64-to-aarch64</strong> cases and <strong>105 aarch64-to-x86_64</strong> cases. The original 268 cases are being revalidated before the competition dataset is frozen.</p></div>
             <div class="direction-grid compact-directions">
               <div><strong>163</strong><span>x86_64 &rarr; aarch64</span><small>Paper-reported corpus</small></div>
               <div><strong>105</strong><span>aarch64 &rarr; x86_64</span><small>Paper-reported corpus</small></div>
             </div>
+            <div class="source-callout warning-callout"><i data-lucide="search-check" aria-hidden="true"></i><p><strong>Expansion status:</strong> 200 additional public package candidates have been discovered. They remain candidates, not accepted benchmark cases, until the original failure and repaired success are reproduced under a frozen environment.</p></div>
             <h3>Failure categories</h3>
             <div class="category-list" aria-label="Build-Bench failure categories">
               <div><span><i style="--value:100%"></i></span><strong>Compilation error</strong><small>116</small></div>
@@ -115,8 +116,10 @@
           <section class="doc-section" id="provenance">
             <span class="section-label">Provenance and licensing</span>
             <h2>Release only what can be shared responsibly</h2>
-            <p>Package artifacts originate from public openSUSE build scenarios. Before release, organizers plan to audit license metadata, remove local credentials and personal paths, and document redistribution constraints.</p>
+            <p>The paper corpus originates from public openSUSE build scenarios. Dataset expansion is also investigating other distributions, package ecosystems, and ISA directions that can be reproduced in a containerized build environment.</p>
+            <p>Before release, organizers will audit license metadata, remove local credentials and personal paths, document redistribution constraints, and group semantic duplicates.</p>
             <p>When redistribution is unclear, the starter kit may provide reconstruction scripts that retrieve artifacts from public package sources instead of distributing original archives.</p>
+            <div class="source-callout"><i data-lucide="database" aria-hidden="true"></i><p><strong>Hugging Face dataset:</strong> the public repository link will be added after the first dataset version passes validation, licensing, and deduplication review.</p></div>
           </section>
 
           <nav class="next-page" aria-label="Next page"><span>Next</span><a href="submission.html"><strong>Agent Submission</strong><small>Understand the single submission model</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>

@@ -8,15 +8,15 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/timeline.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/timeline.js?v=20260716-3" defer></script>
+    <script src="i18n/timeline.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
   <body data-page="timeline">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Proposed timeline</span><span>Milestone months come from the accepted proposal; exact dates remain TBA.</span></div>
+    <div class="status-strip" role="status"><span class="status-strip-label">Working timeline</span><span>July 31 is an internal preparation checkpoint; public competition deadlines remain TBA.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -31,7 +31,7 @@
       <section class="page-masthead">
         <div class="content-wrap">
           <div><span class="page-kicker">Competition schedule</span><h1>Timeline</h1><p>A staged launch separates interface stabilization, development resources, public validation, hidden evaluation, and the ICSE 2027 competition session.</p></div>
-          <dl class="masthead-facts"><div><dt>Current phase</dt><dd>Website and infrastructure</dd></div><div><dt>Public validation</dt><dd>Proposed Sep 2026</dd></div><div><dt>Final session</dt><dd>ICSE 2027</dd></div></dl>
+          <dl class="masthead-facts"><div><dt>Current phase</dt><dd>Data and protocol preparation</dd></div><div><dt>Internal checkpoint</dt><dd>July 31, 2026</dd></div><div><dt>Final session</dt><dd>ICSE 2027</dd></div></dl>
         </div>
       </section>
 
@@ -49,7 +49,7 @@
             <span class="section-label">Proposal milestones</span>
             <h2>Planned competition sequence</h2>
             <ol class="roadmap">
-              <li class="active"><time datetime="2026-07"><strong>July 2026</strong><span>Current preparation phase</span></time><div><span class="roadmap-status current">In progress</span><h3>Public website and starter kit preparation</h3><p>Publish the competition overview, stabilize the Agent contract, harden evaluator infrastructure, and prepare participant documentation.</p><ul><li>Multipage website preview</li><li>Agent API design</li><li>OBS and local validator integration</li><li>Data audit and metadata normalization</li></ul></div></li>
+              <li class="active"><time datetime="2026-07-31"><strong>July 31, 2026</strong><span>Internal preparation checkpoint</span></time><div><span class="roadmap-status current">In progress</span><h3>Complete the first data, validator, and protocol pass</h3><p>Finish the first audit of the original cases, package the first validated new cases, run the Docker validator proof of concept, and publish working input/output and evaluation drafts.</p><ul><li>Original 268-case audit status</li><li>First validated expansion cases</li><li>case.zip and result.zip draft</li><li>Docker validator end-to-end record</li><li>Website and Dataset Card draft</li></ul></div></li>
               <li><time datetime="2026-08"><strong>August 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Development set and baselines released</h3><p>Release public development cases, conformance examples, evaluator documentation, and reproducible baseline Agents.</p></div></li>
               <li><time datetime="2026-09"><strong>September 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Public validation leaderboard opens</h3><p>Accept versioned Agent entries, run public validation cases, and return bounded diagnostic feedback.</p></div></li>
               <li><time datetime="2026-11"><strong>November 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Final submission freeze</h3><p>Freeze each team's selected Agent artifact, the interface version, evaluator, case manifests, and resource policy for hidden evaluation.</p></div></li>
@@ -61,7 +61,7 @@
           <section class="doc-section" id="release-gates">
             <span class="section-label">Release gates</span>
             <h2>What must be ready before public validation</h2>
-            <div class="gate-list"><div><span>Gate A</span><strong>Agent contract frozen</strong><p>Entrypoint, input/output schemas, packaging, conformance tests, and failure semantics are versioned.</p></div><div><span>Gate B</span><strong>Evaluation policy frozen</strong><p>Metrics, budgets, allowed APIs, network policy, tie-breakers, and submission limits are published.</p></div><div><span>Gate C</span><strong>Dataset release audited</strong><p>Splits, licensing, checksums, immutable paths, and near-duplicate grouping are verified.</p></div><div><span>Gate D</span><strong>End-to-end path tested</strong><p>Example Agent submission, case execution, OBS validation, structured result, and leaderboard update all succeed.</p></div></div>
+            <div class="gate-list"><div><span>Gate A</span><strong>Agent contract frozen</strong><p>Entrypoint, input/output schemas, packaging, conformance tests, and failure semantics are versioned.</p></div><div><span>Gate B</span><strong>Evaluation policy frozen</strong><p>Metrics, budgets, allowed APIs, network policy, tie-breakers, and submission limits are published.</p></div><div><span>Gate C</span><strong>Dataset release audited</strong><p>Splits, licensing, checksums, immutable paths, and near-duplicate grouping are verified.</p></div><div><span>Gate D</span><strong>End-to-end path tested</strong><p>Example Agent submission, case execution, containerized build validation, structured result, and leaderboard update all succeed.</p></div></div>
           </section>
 
           <section class="doc-section" id="final-phase">

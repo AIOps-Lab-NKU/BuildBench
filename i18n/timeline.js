@@ -3,16 +3,16 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
     "Proposed Build-Bench Challenge timeline from preparation through the ICSE 2027 competition session.":
       "Build-Bench Challenge 从筹备到 ICSE 2027 竞赛环节的拟定时间安排。",
     "Timeline | Build-Bench Challenge": "时间安排 | Build-Bench Challenge",
-    "Proposed timeline": "拟定时间安排",
-    "Milestone months come from the accepted proposal; exact dates remain TBA.":
-      "里程碑月份来自获批提案，具体日期仍待确定。",
+    "Working timeline": "当前时间安排",
+    "July 31 is an internal preparation checkpoint; public competition deadlines remain TBA.":
+      "7 月 31 日是内部准备检查点；公开竞赛截止时间仍待定。",
     "Competition schedule": "竞赛时间安排",
     "A staged launch separates interface stabilization, development resources, public validation, hidden evaluation, and the ICSE 2027 competition session.":
       "分阶段启动将接口稳定、开发资源发布、公开验证、隐藏评测和 ICSE 2027 竞赛环节依次展开。",
     "Current phase": "当前阶段",
-    "Website and infrastructure": "网站与基础设施",
-    "Public validation": "公开验证",
-    "Proposed Sep 2026": "拟定于 2026 年 9 月",
+    "Data and protocol preparation": "数据与协议准备",
+    "Internal checkpoint": "内部检查点",
+    "July 31, 2026": "2026 年 7 月 31 日",
     "Final session": "最终环节",
     "On this page": "本页内容",
     "Proposed schedule": "拟定时间安排",
@@ -25,16 +25,16 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
       "获批提案仅规定了里程碑月份，而非最终截止日期。以下日期仅供规划使用，不构成具有约束力的提交截止时间。",
     "Proposal milestones": "提案里程碑",
     "Planned competition sequence": "计划中的竞赛流程",
-    "July 2026": "2026 年 7 月",
-    "Current preparation phase": "当前筹备阶段",
+    "Internal preparation checkpoint": "内部准备检查点",
     "In progress": "进行中",
-    "Public website and starter kit preparation": "筹备公开网站和入门套件",
-    "Publish the competition overview, stabilize the Agent contract, harden evaluator infrastructure, and prepare participant documentation.":
-      "发布竞赛概览，稳定 Agent 合约，强化评测基础设施，并准备参赛文档。",
-    "Multipage website preview": "多页面网站预览",
-    "Agent API design": "Agent API 设计",
-    "OBS and local validator integration": "OBS 与本地验证器集成",
-    "Data audit and metadata normalization": "数据审核与元数据标准化",
+    "Complete the first data, validator, and protocol pass": "完成第一轮数据、验证器和协议准备",
+    "Finish the first audit of the original cases, package the first validated new cases, run the Docker validator proof of concept, and publish working input/output and evaluation drafts.":
+      "完成原有 Case 的第一轮审核，整理首批通过验证的新 Case，跑通 Docker 验证器概念验证，并发布输入输出和评测草案。",
+    "Original 268-case audit status": "原有 268 个 Case 审核状态",
+    "First validated expansion cases": "首批通过验证的扩充 Case",
+    "case.zip and result.zip draft": "case.zip 与 result.zip 草案",
+    "Docker validator end-to-end record": "Docker 验证器端到端记录",
+    "Website and Dataset Card draft": "网站与 Dataset Card 草案",
     "August 2026": "2026 年 8 月",
     "Development set and baselines released": "发布开发集与基线",
     "Release public development cases, conformance examples, evaluator documentation, and reproducible baseline Agents.":
@@ -71,8 +71,8 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
       "数据划分、许可证、校验和、不可变路径和近重复项分组均已验证。",
     "Gate D": "门槛 D",
     "End-to-end path tested": "端到端流程已测试",
-    "Example Agent submission, case execution, OBS validation, structured result, and leaderboard update all succeed.":
-      "示例 Agent 提交、Case 执行、OBS 验证、结构化结果生成和排行榜更新均可成功完成。",
+    "Example Agent submission, case execution, containerized build validation, structured result, and leaderboard update all succeed.":
+      "示例 Agent 提交、Case 执行、容器化构建验证、结构化结果生成和排行榜更新均可成功完成。",
     "Freeze first, then run hidden cases": "先冻结版本，再运行隐藏 Case",
     "Select final entry": "选择最终参赛项目",
     "Freeze versions": "冻结版本",

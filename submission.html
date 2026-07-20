@@ -8,15 +8,15 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/submission.js?v=20260716-3" defer></script>
+    <script src="i18n/submission.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
   <body data-page="submission">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Draft contract</span><span>The single-Agent model is confirmed; packaging, API fields, budgets, and network policy are not final.</span></div>
+    <div class="status-strip" role="status"><span class="status-strip-label">Draft contract</span><span>case.zip and result.zip are the working I/O envelopes; exact schemas, budgets, and network policy are not final.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -38,7 +38,7 @@
       <div class="content-wrap page-layout">
         <aside class="page-rail" aria-label="On this page">
           <strong>On this page</strong>
-          <nav><a href="#model">Submission model</a><a href="#lifecycle">Lifecycle</a><a href="#input">Agent input</a><a href="#output">Agent output</a><a href="#packaging">Packaging</a><a href="#resources">Resources &amp; APIs</a><a href="#checklist">Checklist</a></nav>
+          <nav><a href="#model">Submission model</a><a href="#lifecycle">Lifecycle</a><a href="#input">case.zip input</a><a href="#output">result.zip output</a><a href="#packaging">Packaging</a><a href="#resources">Resources &amp; APIs</a><a href="#checklist">Checklist</a></nav>
           <div class="rail-status draft"><span>Draft</span><p>Do not build against field names on this page until the versioned starter kit is released.</p></div>
         </aside>
 
@@ -67,9 +67,20 @@
           </section>
 
           <section class="doc-section" id="input">
-            <span class="section-label">Draft input contract</span>
-            <h2>What the harness provides</h2>
-            <p>The final starter kit will define an exact directory tree and machine-readable schema. The following capabilities are intended, but field names are not final.</p>
+            <span class="section-label">Draft case.zip contract</span>
+            <h2>One ZIP contains the complete case input</h2>
+            <p>The harness will provide one read-only <code>case.zip</code> per case. The final starter kit will define the exact tree and JSON Schema; the current working layout is:</p>
+            <div class="code-block contract-code">
+              <div><span>Illustrative case.zip tree</span></div>
+              <pre><code>case.zip
+|-- manifest.json
+|-- source/
+|-- spec/
+|-- patches/
+|-- metadata/
+\-- logs/
+    \-- target-build.log</code></pre>
+            </div>
             <div class="contract-list">
               <div><span class="contract-state intended">Intended</span><strong>Read-only case directory</strong><p>Package specifications, source archives, existing patches, auxiliary build-service files, and the failed log.</p></div>
               <div><span class="contract-state intended">Intended</span><strong>Case manifest</strong><p>Case ID, package name, source architecture, target architecture, validator backend, and checksums.</p></div>
@@ -79,15 +90,19 @@
           </section>
 
           <section class="doc-section" id="output">
-            <span class="section-label">Draft output contract</span>
-            <h2>Return a repair and a structured status</h2>
-            <p>A unified diff is the planned repair artifact because it is inspectable, auditable, and can be applied to a clean package copy. The harness also needs a machine-readable result describing whether the Agent produced a repair.</p>
+            <span class="section-label">Draft result.zip contract</span>
+            <h2>One ZIP returns the repair and status</h2>
+            <p>The Agent will return one <code>result.zip</code>. A unified diff remains the repair artifact because it is inspectable, auditable, and can be applied to a clean package copy.</p>
             <div class="code-block contract-code">
-              <div><span>Illustrative output only - not the final schema</span></div>
-              <pre data-command-text><code>{
+              <div><span>Illustrative result.zip tree and result.json</span></div>
+              <pre><code>result.zip
+|-- result.json
+\-- repair.diff
+
+{
   "case_id": "example-case",
   "status": "repaired",
-  "patch_path": "output/repair.diff"
+  "patch_path": "repair.diff"
 }</code></pre>
             </div>
             <div class="source-callout warning-callout"><i data-lucide="info" aria-hidden="true"></i><p>The sample communicates the shape of the contract, not guaranteed names or values. The released JSON Schema and conformance tests will be authoritative.</p></div>
@@ -113,6 +128,7 @@
               <div><i data-lucide="rotate-ccw" aria-hidden="true"></i><span><strong>Retry semantics</strong><p>Startup retries, transient API failures, malformed output, timeout, and evaluator fault handling.</p></span></div>
               <div><i data-lucide="calendar-clock" aria-hidden="true"></i><span><strong>Submission frequency</strong><p>Daily limits, artifact replacement, validation queue priority, and final-entry selection.</p></span></div>
             </div>
+            <div class="source-callout"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><p><strong>Organizer baseline plan:</strong> comparable baseline runs will use no more than two open-source model configurations and one closed model configuration, with versions and parameters frozen and reported. This does not restrict participant Agents unless the final Rules explicitly say so.</p></div>
           </section>
 
           <section class="doc-section" id="checklist">

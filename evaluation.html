@@ -8,15 +8,15 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/evaluation.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260716-3" />
+    <link rel="stylesheet" href="styles.css?v=20260720-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/evaluation.js?v=20260716-3" defer></script>
+    <script src="i18n/evaluation.js?v=20260720-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
   <body data-page="evaluation">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Draft evaluation</span><span>Proposal-derived metrics are shown for review and are not yet the team's final competition rules.</span></div>
+    <div class="status-strip" role="status"><span class="status-strip-label">Working evaluation</span><span>Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -31,24 +31,24 @@
       <section class="page-masthead draft-masthead">
         <div class="content-wrap">
           <div><span class="page-kicker"><i data-lucide="file-clock" aria-hidden="true"></i>Draft protocol</span><h1>Evaluation</h1><p>The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.</p></div>
-          <dl class="masthead-facts"><div><dt>Oracle</dt><dd>Executable build</dd></div><div><dt>Primary metric</dt><dd>Proposed success rate</dd></div><div><dt>Final definitions</dt><dd>Pending approval</dd></div></dl>
+          <dl class="masthead-facts"><div><dt>Oracle</dt><dd>Executable build</dd></div><div><dt>Primary metric</dt><dd>Build Success Rate</dd></div><div><dt>Open detail</dt><dd>Failure handling</dd></div></dl>
         </div>
       </section>
 
       <div class="content-wrap page-layout">
         <aside class="page-rail" aria-label="On this page">
           <strong>On this page</strong>
-          <nav><a href="#status">Protocol status</a><a href="#principle">Core principle</a><a href="#harness">Evaluation harness</a><a href="#metrics">Proposed metrics</a><a href="#feedback">Public vs. hidden</a><a href="#decisions">Open decisions</a></nav>
-          <div class="rail-status draft"><span>Draft</span><p>Metrics originate from the accepted proposal, not a completed post-acceptance team decision.</p></div>
+          <nav><a href="#status">Protocol status</a><a href="#principle">Primary metric</a><a href="#harness">Evaluation harness</a><a href="#metrics">Reporting fields</a><a href="#feedback">Public vs. hidden</a><a href="#decisions">Open decisions</a></nav>
+          <div class="rail-status review"><span>Working decision</span><p>One primary score ranks entries. Exact denominator and secondary ordering rules will be frozen before launch.</p></div>
         </aside>
 
         <article class="page-document">
-          <div class="draft-banner"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>Not yet the official scoring specification</strong><p>The accepted proposal names build success rate and several tie-breakers. They are reproduced here as a reviewable draft. Exact formulas, budgets, failure handling, ranking frequency, and tie-breakers must be confirmed before launch.</p></div></div>
+          <div class="draft-banner"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>Primary metric selected; full scoring semantics remain draft</strong><p>Entries are ranked first by Build Success Rate. Exact denominator rules, resource budgets, failure handling, ranking frequency, and any tie-breaker must still be frozen before launch.</p></div></div>
 
           <section class="doc-section" id="status">
             <span class="section-label">Protocol status</span>
             <h2>Separate source material from final rules</h2>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable evaluation protocol status table"><table class="decision-table"><thead><tr><th>Item</th><th>Basis</th><th>Status</th></tr></thead><tbody><tr><td>Executable build as the success oracle</td><td>Build-Bench paper and accepted proposal</td><td><span class="decision-intended">Strong basis</span></td></tr><tr><td>Build success rate as primary metric</td><td>Accepted proposal</td><td><span class="decision-review">Team review</span></td></tr><tr><td>Invalid patch, patch size, file count, build time tie-breakers</td><td>Accepted proposal</td><td><span class="decision-review">Team review</span></td></tr><tr><td>Agent runtime, model cost, token use, retries, and iteration budget</td><td>Not fully specified</td><td><span class="decision-open">Open</span></td></tr></tbody></table></div>
+            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable evaluation protocol status table"><table class="decision-table"><thead><tr><th>Item</th><th>Basis</th><th>Status</th></tr></thead><tbody><tr><td>Executable build as the success oracle</td><td>Build-Bench paper and accepted proposal</td><td><span class="decision-intended">Selected</span></td></tr><tr><td>Build Success Rate as the single primary metric</td><td>Accepted proposal and organizer working decision</td><td><span class="decision-intended">Selected</span></td></tr><tr><td>Failure categories and denominator semantics</td><td>Required for reproducible scoring</td><td><span class="decision-review">Team review</span></td></tr><tr><td>Tie-breaker and informational fields</td><td>Secondary to the primary metric</td><td><span class="decision-open">Open</span></td></tr></tbody></table></div>
           </section>
 
           <section class="doc-section" id="principle">
@@ -56,7 +56,7 @@
             <h2>Executable outcomes are the oracle</h2>
             <p class="lead">A repair is successful only when it applies cleanly, respects competition policy, and the repaired package passes the official validator on the target architecture.</p>
             <div class="metric-panel document-metric">
-              <span class="section-label">Proposal-derived primary metric</span>
+              <span class="section-label">Primary ranking metric</span>
               <div class="formula" aria-label="Success rate equals successfully built cases divided by evaluated cases"><span>SuccessRate</span><span>=</span><span class="fraction"><span>successfully built cases</span><span>evaluated cases</span></span></div>
               <p>Textual similarity to an organizer patch is not the criterion. A different repair may receive credit when it produces a compliant, successful build.</p>
             </div>
@@ -71,18 +71,18 @@
               <li><span>3</span><div><strong>Invoke Agent</strong><p>Provide standardized input and enforce runtime, API, network, and resource policy.</p></div><small>Agent</small></li>
               <li><span>4</span><div><strong>Collect output</strong><p>Validate the completion status and repair artifact against the released contract.</p></div><small>Harness</small></li>
               <li><span>5</span><div><strong>Apply and audit repair</strong><p>Apply the diff to a clean copy and reject forbidden path changes or build bypasses.</p></div><small>Evaluator</small></li>
-              <li><span>6</span><div><strong>Run target build</strong><p>Launch the official OBS or local validator with a bounded timeout.</p></div><small>Validator</small></li>
+              <li><span>6</span><div><strong>Run target build</strong><p>Launch the official containerized validator on the target architecture under the published resource policy.</p></div><small>Validator</small></li>
               <li><span>7</span><div><strong>Record outcome</strong><p>Write structured status, durations, patch statistics, and permitted logs.</p></div><small>Results</small></li>
             </ol>
           </section>
 
           <section class="doc-section" id="metrics">
-            <span class="section-label">Proposed metrics</span>
-            <h2>What the accepted proposal currently suggests</h2>
+            <span class="section-label">Reporting fields</span>
+            <h2>One ranking score, with separate diagnostics</h2>
             <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable draft metrics table">
-              <table class="spec-table metric-table"><thead><tr><th>Order</th><th>Metric</th><th>Draft definition</th><th>Status</th></tr></thead><tbody><tr><td>Primary</td><td>Build success rate</td><td>Successfully built cases divided by evaluated cases</td><td><span class="contract-state review">Review</span></td></tr><tr><td>Tie-break 1</td><td>Invalid repairs</td><td>Fewer malformed, non-applying, or policy-invalid repair outputs</td><td><span class="contract-state review">Review</span></td></tr><tr><td>Tie-break 2</td><td>Total patch size</td><td>Smaller cumulative repair diff</td><td><span class="contract-state review">Review</span></td></tr><tr><td>Tie-break 3</td><td>Modified files</td><td>Fewer files changed across evaluated cases</td><td><span class="contract-state review">Review</span></td></tr><tr><td>Tie-break 4</td><td>Build time</td><td>Lower total build time in the organizer environment</td><td><span class="contract-state review">Review</span></td></tr></tbody></table>
+              <table class="spec-table metric-table"><thead><tr><th>Role</th><th>Field</th><th>Working definition</th><th>Status</th></tr></thead><tbody><tr><td>Primary ranking</td><td>Build Success Rate</td><td>Successfully built cases divided by valid evaluated cases</td><td><span class="contract-state intended">Selected</span></td></tr><tr><td>Diagnostic</td><td>Outcome categories</td><td>Successful build, build failure, invalid output, Agent failure, or organizer fault</td><td><span class="contract-state review">Definition review</span></td></tr><tr><td>Diagnostic</td><td>Runtime and model use</td><td>Agent runtime, build time, token use, model/API cost, retries, and iterations</td><td><span class="contract-state tba">Informational</span></td></tr><tr><td>Diagnostic</td><td>Repair statistics</td><td>Patch size, modified files, and policy validation status</td><td><span class="contract-state tba">Informational</span></td></tr><tr><td>Secondary ordering</td><td>Tie-breaker</td><td>Applied only when primary scores are equal</td><td><span class="contract-state tba">To be announced</span></td></tr></tbody></table>
             </div>
-            <div class="source-callout"><i data-lucide="scale" aria-hidden="true"></i><p>These metrics were proposed before the unified Agent contract was finalized. Agent execution cost, model/API budget, repair iterations, and reproducibility may need additional reporting or ranking rules.</p></div>
+            <div class="source-callout"><i data-lucide="scale" aria-hidden="true"></i><p>Diagnostic fields explain results but do not form a weighted multi-factor score. The final rulebook will state whether any one field is used only to break an exact tie.</p></div>
           </section>
 
           <section class="doc-section" id="feedback">
