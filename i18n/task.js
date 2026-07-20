@@ -68,8 +68,11 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
   "163 x86_64-to-aarch64": "163 个 x86_64 → aarch64",
   "cases and": "Case，以及",
   "105 aarch64-to-x86_64": "105 个 aarch64 → x86_64",
-  "cases. Final competition assignments will be frozen before launch.":
-    "Case。最终竞赛分配将在启动前冻结。",
+  "cases. The original 268 cases are being revalidated before the competition dataset is frozen.":
+    "Case。原有 268 个 Case 正在重新验证，之后才会冻结竞赛数据集。",
+  "Expansion status:": "扩充状态：",
+  "200 additional public package candidates have been discovered. They remain candidates, not accepted benchmark cases, until the original failure and repaired success are reproduced under a frozen environment.":
+    "目前已发现 200 个公开软件包候选。只有在冻结环境中复现原始失败和修复后成功构建后，它们才可能从候选变为正式 Case。",
   "Paper-reported corpus": "论文报告的数据集",
   "Failure categories": "失败类别",
   "Compilation error": "编译错误",
@@ -94,10 +97,15 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
     "Case 将按软件包分组，避免高度相似的软件包被分到不同数据集中。最终数量和软件包分配尚未公布。",
   "Provenance and licensing": "数据来源与许可",
   "Release only what can be shared responsibly": "只发布能够合规共享的内容",
-  "Package artifacts originate from public openSUSE build scenarios. Before release, organizers plan to audit license metadata, remove local credentials and personal paths, and document redistribution constraints.":
-    "软件包制品来自公开的 openSUSE 构建场景。发布前，主办方计划审核许可证元数据，移除本地凭据和个人路径，并记录再分发限制。",
+  "The paper corpus originates from public openSUSE build scenarios. Dataset expansion is also investigating other distributions, package ecosystems, and ISA directions that can be reproduced in a containerized build environment.":
+    "论文数据集来自公开的 openSUSE 构建场景。数据扩充也在调研能够在容器化构建环境中复现的其他发行版、软件包生态和 ISA 方向。",
+  "Before release, organizers will audit license metadata, remove local credentials and personal paths, document redistribution constraints, and group semantic duplicates.":
+    "发布前，主办方将审核许可证元数据，移除本地凭据和个人路径，记录再分发限制，并按语义对重复项分组。",
   "When redistribution is unclear, the starter kit may provide reconstruction scripts that retrieve artifacts from public package sources instead of distributing original archives.":
     "如果再分发条件不明确，starter kit 可能提供重建脚本，从公开软件包源获取制品，而不直接分发原始归档。",
+  "Hugging Face dataset:": "Hugging Face 数据集：",
+  "the public repository link will be added after the first dataset version passes validation, licensing, and deduplication review.":
+    "首个数据集版本通过验证、许可证和去重审核后，再添加公开仓库链接。",
   "Next": "下一页",
   "Agent Submission": "Agent 提交",
   "Understand the single submission model": "了解统一的提交模式",

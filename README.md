@@ -39,17 +39,20 @@ The site separates verified research results from planned competition
 infrastructure and uses focused pages instead of one long landing page:
 
 - `index.html` is the competition overview and navigation hub.
-- `task.html` documents the task, case anatomy, research corpus, and planned splits.
-- `submission.html` documents the single Agent submission model and draft API contract.
-- `evaluation.html` separates proposal-derived metrics from team-approved rules.
+- `task.html` distinguishes the 268-case paper corpus from 200 additional
+  candidates that are still under validation.
+- `submission.html` documents the single Agent model and the working
+  `case.zip` / `result.zip` I/O envelopes.
+- `evaluation.html` uses Build Success Rate as the single primary ranking
+  metric while keeping denominator and tie-break details visibly draft.
 - `rules.html`, `timeline.html`, and `faq.html` contain participant guidance.
 - `leaderboard.html` shows paper-reported research baselines until public
   competition submissions open.
 
-The Agent packaging format, API schema, resource and network policies, exact
-metrics, final split counts, submission limits, and deadlines remain draft or
-organizer-preview content. Confirm them against the released evaluator and
-starter kit before removing the preview banners.
+The Agent packaging format, exact ZIP schemas, resource and network policies,
+denominator semantics, tie-breaker, final split counts, submission limits, and
+deadlines remain draft or organizer-preview content. Confirm them against the
+released evaluator and starter kit before removing the preview banners.
 
 ## Sources
 

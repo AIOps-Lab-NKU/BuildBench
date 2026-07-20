@@ -1,9 +1,9 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.evaluation = Object.freeze({
   "Evaluation | Build-Bench Challenge": "评测 | Build-Bench Challenge",
-  "Draft evaluation": "评测草案",
-  "Proposal-derived metrics are shown for review and are not yet the team's final competition rules.":
-    "来自提案的指标目前仅供评审，尚非团队最终确定的竞赛规则。",
+  "Working evaluation": "当前评测方案",
+  "Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.":
+    "Build Success Rate 是唯一的主要排名指标；分母和同分判定细节仍在审核中。",
   "Draft protocol": "评测方案草案",
   "The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.":
     "评测框架在受控 Case 上运行提交的 Agent，应用其修复并执行目标架构构建，再将结果转换为可复现的指标。",
@@ -68,8 +68,8 @@ window.BuildBenchI18nData.pages.evaluation = Object.freeze({
     "将 diff 应用到干净副本，并拒绝修改禁止路径或绕过构建的行为。",
   "Evaluator": "评测器",
   "Run target build": "运行目标架构构建",
-  "Launch the official OBS or local validator with a bounded timeout.":
-    "启动官方 OBS 或本地验证器，并设置有限的超时时间。",
+  "Launch the official containerized validator on the target architecture under the published resource policy.":
+    "在公布的资源策略下，于目标架构上启动官方容器化验证器。",
   "Validator": "验证器",
   "Record outcome": "记录结果",
   "Write structured status, durations, patch statistics, and permitted logs.":
@@ -141,4 +141,46 @@ window.BuildBenchI18nData.pages.evaluation = Object.freeze({
   "Success rate equals successfully built cases divided by evaluated cases":
     "成功率等于成功构建的 Case 数除以参与评测的 Case 数",
   "Scrollable draft metrics table": "可横向滚动的指标草案表",
+  "Build Success Rate": "构建成功率",
+  "Open detail": "待定细节",
+  "Failure handling": "失败处理",
+  "Primary metric": "主要指标",
+  "Reporting fields": "结果记录字段",
+  "Working decision": "当前决定",
+  "One primary score ranks entries. Exact denominator and secondary ordering rules will be frozen before launch.":
+    "一个主要得分用于排名。准确分母和次级排序规则将在启动前冻结。",
+  "Primary metric selected; full scoring semantics remain draft": "主要指标已选定；完整评分语义仍是草案",
+  "Entries are ranked first by Build Success Rate. Exact denominator rules, resource budgets, failure handling, ranking frequency, and any tie-breaker must still be frozen before launch.":
+    "参赛结果首先按构建成功率排名。准确分母规则、资源预算、失败处理、排名频率和任何同分判定规则仍需在启动前冻结。",
+  "Selected": "已选定",
+  "Build Success Rate as the single primary metric": "以 Build Success Rate 作为唯一主要指标",
+  "Accepted proposal and organizer working decision": "已接收提案和主办方当前决定",
+  "Failure categories and denominator semantics": "失败类别与分母语义",
+  "Required for reproducible scoring": "可复现评分所必需",
+  "Tie-breaker and informational fields": "同分判定与信息字段",
+  "Secondary to the primary metric": "次于主要指标",
+  "Primary ranking metric": "主要排名指标",
+  "One ranking score, with separate diagnostics": "一个排名得分，配合独立诊断字段",
+  "Role": "作用",
+  "Field": "字段",
+  "Working definition": "当前定义",
+  "Primary ranking": "主要排名",
+  "Successfully built cases divided by valid evaluated cases": "成功构建 Case 数除以有效评测 Case 数",
+  "Diagnostic": "诊断",
+  "Outcome categories": "结果类别",
+  "Successful build, build failure, invalid output, Agent failure, or organizer fault":
+    "成功构建、构建失败、无效输出、Agent 失败或主办方故障",
+  "Definition review": "定义审核中",
+  "Runtime and model use": "运行时间与模型使用",
+  "Agent runtime, build time, token use, model/API cost, retries, and iterations":
+    "Agent 运行时间、构建时间、Token 用量、模型/API 成本、重试与迭代次数",
+  "Informational": "仅供参考",
+  "Repair statistics": "修复统计",
+  "Patch size, modified files, and policy validation status": "补丁大小、修改文件和规则验证状态",
+  "Secondary ordering": "次级排序",
+  "Tie-breaker": "同分判定",
+  "Applied only when primary scores are equal": "仅在主要得分相同时使用",
+  "To be announced": "待公布",
+  "Diagnostic fields explain results but do not form a weighted multi-factor score. The final rulebook will state whether any one field is used only to break an exact tie.":
+    "诊断字段用于解释结果，不会组成加权多因素得分。最终规则将说明是否仅在完全同分时使用某个字段进行判定。",
 });
