@@ -69,8 +69,8 @@
               <li><span>1</span><div><strong>Validate entry</strong><p>Verify the Agent artifact, configuration, version, and submission metadata.</p></div><small>Harness</small></li>
               <li><span>2</span><div><strong>Prepare clean case</strong><p>Check case checksums and create an isolated working copy.</p></div><small>Harness</small></li>
               <li><span>3</span><div><strong>Invoke Agent</strong><p>Provide standardized input and enforce runtime, API, network, and resource policy.</p></div><small>Agent</small></li>
-              <li><span>4</span><div><strong>Collect output</strong><p>Validate the completion status and repair artifact against the released contract.</p></div><small>Harness</small></li>
-              <li><span>5</span><div><strong>Apply and audit repair</strong><p>Apply the diff to a clean copy and reject forbidden path changes or build bypasses.</p></div><small>Evaluator</small></li>
+              <li><span>4</span><div><strong>Capture final worktree</strong><p>Validate <code>agent-result.json</code> and compute the canonical diff from the clean input and final worktree.</p></div><small>Harness</small></li>
+              <li><span>5</span><div><strong>Audit canonical repair</strong><p>Reject forbidden path changes, policy violations, or build bypasses before final validation.</p></div><small>Evaluator</small></li>
               <li><span>6</span><div><strong>Run target build</strong><p>Launch the official containerized validator on the target architecture under the published resource policy.</p></div><small>Validator</small></li>
               <li><span>7</span><div><strong>Record outcome</strong><p>Write structured status, durations, patch statistics, and permitted logs.</p></div><small>Results</small></li>
             </ol>

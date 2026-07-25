@@ -32,7 +32,7 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
       "完成原有 Case 的第一轮审核，整理首批通过验证的新 Case，跑通 Docker 验证器概念验证，并发布输入输出和评测草案。",
     "Original 268-case audit status": "原有 268 个 Case 审核状态",
     "First validated expansion cases": "首批通过验证的扩充 Case",
-    "case.zip and result.zip draft": "case.zip 与 result.zip 草案",
+    "Agent Contract v0.1 and conformance draft": "Agent 合约 v0.1 与合规检查草案",
     "Docker validator end-to-end record": "Docker 验证器端到端记录",
     "Website and Dataset Card draft": "网站与 Dataset Card 草案",
     "August 2026": "2026 年 8 月",

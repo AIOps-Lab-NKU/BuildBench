@@ -1,21 +1,113 @@
 # Build-Bench Challenge website
 
-Static preview website for the Build-Bench Challenge at the ICSE 2027
-Competition Track.
+Website and Milestone C submission-service MVP for the Build-Bench Challenge
+at the ICSE 2027 Competition Track.
 
 Published website: <https://aiops-lab-nku.github.io/BuildBench/>
 
-## Local preview
+## Local preview with submission API
 
-Open `index.html` directly, or serve the directory with any static file server.
-
-For a local server preview from the project root:
+From the website project root:
 
 ```powershell
-file-python -m http.server 8765 --directory site
+python -m backend.server --host 127.0.0.1 --port 8765
+```
+
+On Ubuntu/WSL, the equivalent one-command launcher is:
+
+```bash
+./backend/run-server.sh
 ```
 
 Then open <http://127.0.0.1:8765/>.
+
+The backend expects the Starter Kit in the sibling directory
+`../buildbench-starter-kit`. Override it when necessary:
+
+```powershell
+python -m backend.server `
+  --host 127.0.0.1 `
+  --port 8765 `
+  --starter-kit "D:\path\to\buildbench-starter-kit"
+```
+
+Opening HTML files directly or using `python -m http.server` still previews
+static content, but Agent upload and Hosted Smoke Test require
+`backend.server`.
+
+## Milestone C workflow
+
+Create a submission with the Starter Kit:
+
+```bash
+./bb package --agent ./agents/my-agent
+```
+
+Open `my-submissions.html`, choose **Make new submission**, and select:
+
+```text
+dist/agent-submission.zip
+```
+
+The platform:
+
+1. stores the immutable ZIP and SHA-256;
+2. safely extracts it;
+3. runs the Starter Kit's authoritative static checker;
+4. marks a valid version `qualified`;
+5. waits for the participant to request **Run Smoke Test**;
+6. executes `bb test` asynchronously and displays the result.
+
+Upload does not start a Hosted Smoke Test or full evaluation. Full evaluation,
+hidden cases, scoring, authentication, and leaderboard updates are outside the
+Milestone C MVP.
+
+Runtime data is written to `runtime-data/` and ignored by Git. Override the
+location with:
+
+```bash
+export BB_WEB_DATA_ROOT=/path/to/private/runtime-data
+```
+
+The Smoke Test worker count defaults to two:
+
+```bash
+export BB_SMOKE_WORKERS=2
+```
+
+## API v0
+
+```text
+GET  /api/health
+GET  /api/submissions
+GET  /api/submissions/{id}
+POST /api/submissions
+POST /api/submissions/{id}/smoke-test
+```
+
+`POST /api/submissions` accepts raw `application/zip` bytes and an optional
+`X-Agent-Filename` header.
+
+## Tests
+
+```bash
+python -m unittest discover -s backend/tests -v
+node --check submissions.js
+```
+
+The server acceptance must also upload a real Milestone B ZIP and complete one
+Hosted Smoke Test.
+
+## Security status
+
+Milestone C validates ZIP paths, sizes, symlinks, submission schema, entrypoint,
+dependencies, and common credential patterns. The service should remain bound
+to `127.0.0.1` during development.
+
+These checks do not make the current privileged Docker Validator safe for
+arbitrary public Agent uploads. Production launch still requires
+authentication, per-team authorization and quotas, hardened worker or VM
+isolation, secrets management, and private hidden-Case storage.
 
 ## Languages
 

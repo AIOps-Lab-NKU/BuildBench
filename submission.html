@@ -3,20 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Draft Agent submission model and organizer-run API contract for the Build-Bench Challenge." />
-    <title>Agent Submission | Build-Bench Challenge</title>
+    <meta name="description" content="Agent submission guide for the Build-Bench Challenge, including package contents, runtime directories, build feedback, testing, and submission requirements." />
+    <title>Agent Submission Guide | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260725-5" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/submission.js?v=20260720-1" defer></script>
+    <script src="i18n/submission.js?v=20260725-4" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
   <body data-page="submission">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Draft contract</span><span>case.zip and result.zip are the working I/O envelopes; exact schemas, budgets, and network policy are not final.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -28,116 +27,299 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead draft-masthead">
-        <div class="content-wrap">
-          <div><span class="page-kicker"><i data-lucide="file-clock" aria-hidden="true"></i>Draft interface</span><h1>Agent Submission</h1><p>Teams will provide one repair Agent that satisfies a standardized input and output contract. Organizers will run the Agent on competition cases and score its resulting repairs.</p></div>
-          <dl class="masthead-facts"><div><dt>Submission model</dt><dd>One Agent</dd></div><div><dt>Execution</dt><dd>Organizer controlled</dd></div><div><dt>Contract version</dt><dd>To be announced</dd></div></dl>
+      <section class="page-masthead submission-guide-masthead">
+        <div class="content-wrap submission-hero-grid">
+          <div class="submission-hero-copy">
+            <span class="page-kicker"><i data-lucide="package-open" aria-hidden="true"></i>Agent submission</span>
+            <h1>Agent Submission Guide</h1>
+            <p>Submit a runnable Agent source bundle. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical <code>repair.diff</code>, and the Docker Validator verifies it on a clean Case.</p>
+          </div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout">
-        <aside class="page-rail" aria-label="On this page">
-          <strong>On this page</strong>
-          <nav><a href="#model">Submission model</a><a href="#lifecycle">Lifecycle</a><a href="#input">case.zip input</a><a href="#output">result.zip output</a><a href="#packaging">Packaging</a><a href="#resources">Resources &amp; APIs</a><a href="#checklist">Checklist</a></nav>
-          <div class="rail-status draft"><span>Draft</span><p>Do not build against field names on this page until the versioned starter kit is released.</p></div>
+      <div class="content-wrap page-layout submission-guide-layout">
+        <aside class="page-rail submission-guide-rail competition-page-rail" aria-label="Submission guide navigation">
+          <div class="rail-navigation-group">
+            <strong>Competition</strong>
+            <nav class="competition-navigation" aria-label="Competition pages">
+              <a class="active" href="submission.html" aria-current="page"><i data-lucide="book-open" aria-hidden="true"></i>Agent Submission Guide</a>
+              <a href="data-downloads.html"><i data-lucide="database" aria-hidden="true"></i>Data &amp; Downloads</a>
+              <a href="my-submissions.html"><i data-lucide="inbox" aria-hidden="true"></i>My Submissions</a>
+            </nav>
+          </div>
+          <div class="rail-navigation-group on-page-navigation">
+            <strong>On this page</strong>
+            <nav aria-label="On this page">
+            <a href="#quick-start">Quick start</a>
+            <a href="#submission-contents">Submission contents</a>
+            <a href="#runtime-interface">Runtime interface</a>
+            <a href="#test-submission">Test your submission</a>
+            <a href="#submission-requirements">Submission requirements</a>
+            </nav>
+          </div>
         </aside>
 
-        <article class="page-document">
-          <div class="draft-banner"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>Interface under design</strong><p>The organizing team has confirmed a single Agent submission model. The delivery artifact, invocation method, schemas, resource limits, model access, and failure semantics still require team approval.</p></div></div>
-
-          <section class="doc-section" id="model">
-            <span class="section-label">Submission model</span>
-            <h2>Submit an Agent, not precomputed answers</h2>
-            <p class="lead">A team supplies a reproducible Agent that can consume the prescribed case input and emit the prescribed repair output. The competition harness invokes that Agent on organizer-controlled validation and hidden test cases.</p>
-            <div class="single-model"><i data-lucide="bot" aria-hidden="true"></i><div><strong>One competition entry</strong><p>The Agent may internally use prompting, retrieval, static analysis, build-log parsing, tool calls, or iterative repair loops. These are implementation choices inside the same submission model, not separate submission modes.</p></div></div>
-            <p>The repair patch remains the common artifact that the evaluator applies and builds. It is an Agent output, not a second way to enter the competition.</p>
-          </section>
-
-          <section class="doc-section" id="lifecycle">
-            <span class="section-label">Organizer-run lifecycle</span>
-            <h2>From Agent artifact to leaderboard score</h2>
-            <ol class="agent-flow">
-              <li><span>1</span><i data-lucide="package-plus" aria-hidden="true"></i><div><strong>Team submits Agent</strong><p>The platform validates metadata and stores an immutable, versioned entry.</p></div></li>
-              <li><span>2</span><i data-lucide="box" aria-hidden="true"></i><div><strong>Harness starts runtime</strong><p>The organizer launches the Agent in an isolated environment with the announced limits.</p></div></li>
-              <li><span>3</span><i data-lucide="folder-input" aria-hidden="true"></i><div><strong>Harness provides a case</strong><p>The Agent receives a case directory and metadata through the versioned interface.</p></div></li>
-              <li><span>4</span><i data-lucide="file-output" aria-hidden="true"></i><div><strong>Agent emits a repair</strong><p>The Agent writes a unified diff and structured completion status to the output location.</p></div></li>
-              <li><span>5</span><i data-lucide="hammer" aria-hidden="true"></i><div><strong>Evaluator builds package</strong><p>The repair is applied to a clean copy and verified with the official target build.</p></div></li>
-              <li><span>6</span><i data-lucide="bar-chart-3" aria-hidden="true"></i><div><strong>Results are aggregated</strong><p>Valid case outcomes contribute to the submission score and leaderboard statistics.</p></div></li>
+        <article class="page-document submission-guide-document">
+          <section class="doc-section" id="quick-start">
+            <span class="section-label">01 / Start</span>
+            <h2>Quick start</h2>
+            <p>Run the official example first, then create, test, package, and upload your own Agent.</p>
+            <ol class="quick-start-steps" aria-label="Submission preparation steps">
+              <li>
+                <span class="quick-start-number">01</span>
+                <div class="quick-start-step">
+                  <strong>Get the Starter Kit</strong>
+                  <p>Download the archive from <a href="data-downloads.html">Data &amp; Downloads</a>, extract it, and enter the project directory.</p>
+                  <div class="code-block quick-start-command"><pre><code>tar -xzf buildbench-starter-kit.tar.gz
+cd buildbench-starter-kit</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: the current directory contains <code>bb</code>, <code>agents/</code>, and <code>example-cases/</code>.</span></p>
+                </div>
+              </li>
+              <li>
+                <span class="quick-start-number">02</span>
+                <div class="quick-start-step">
+                  <strong>Run the official demo</strong>
+                  <p>Check Git, Docker, and the versioned images, then run the complete failure-to-success example.</p>
+                  <div class="code-block quick-start-command"><pre><code>./bb doctor
+./bb demo</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: <code>Final validation succeeded</code>; evidence is saved under <code>runs/demo/</code>.</span></p>
+                </div>
+              </li>
+              <li>
+                <span class="quick-start-number">03</span>
+                <div class="quick-start-step">
+                  <strong>Create your Agent</strong>
+                  <p>Copy the managed Python template into a new editable Agent directory.</p>
+                  <div class="code-block quick-start-command"><pre><code>./bb init my-agent</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: a new Agent is created at <code>agents/my-agent/</code>; existing directories are never overwritten.</span></p>
+                </div>
+              </li>
+              <li>
+                <span class="quick-start-number">04</span>
+                <div class="quick-start-step">
+                  <strong>Edit <code>src/</code> and test locally</strong>
+                  <p>Implement the repair logic in <code>agents/my-agent/src/</code>, then run every bundled Example Case.</p>
+                  <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
+./bb test --agent ./agents/my-agent</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case patches, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
+                </div>
+              </li>
+              <li>
+                <span class="quick-start-number">05</span>
+                <div class="quick-start-step">
+                  <strong>Check and package</strong>
+                  <p>Validate the manifest, entrypoint, dependencies, and files before creating a deterministic upload bundle.</p>
+                  <div class="code-block quick-start-command"><pre><code>./bb check --agent ./agents/my-agent
+./bb package --agent ./agents/my-agent</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: both checks pass and the command prints the ZIP path, size, and SHA-256.</span></p>
+                </div>
+              </li>
+              <li>
+                <span class="quick-start-number">06</span>
+                <div class="quick-start-step">
+                  <strong>Upload the Agent bundle</strong>
+                  <p>Open <a href="my-submissions.html">My Submissions</a>, choose <strong>Make new submission</strong>, and upload the generated ZIP.</p>
+                  <div class="code-block quick-start-command"><pre><code>ls -lh dist/agent-submission.zip</code></pre></div>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: a new immutable Agent version appears in the submission table and enters the Checking state.</span></p>
+                </div>
+              </li>
             </ol>
           </section>
 
-          <section class="doc-section" id="input">
-            <span class="section-label">Draft case.zip contract</span>
-            <h2>One ZIP contains the complete case input</h2>
-            <p>The harness will provide one read-only <code>case.zip</code> per case. The final starter kit will define the exact tree and JSON Schema; the current working layout is:</p>
-            <div class="code-block contract-code">
-              <div><span>Illustrative case.zip tree</span></div>
-              <pre><code>case.zip
-|-- manifest.json
-|-- source/
-|-- spec/
-|-- patches/
-|-- metadata/
-\-- logs/
-    \-- target-build.log</code></pre>
+          <section class="doc-section" id="submission-contents">
+            <span class="section-label">02 / Package</span>
+            <h2>Submission contents</h2>
+            <p>Upload one ZIP archive with a shallow, inspectable root. The platform reads the manifest before building the Agent runtime.</p>
+
+            <div class="submission-package-grid">
+              <div class="code-block submission-code">
+                <div class="code-toolbar"><span>agent-submission.zip</span><small>archive root</small></div>
+                <pre><code>agent-submission.zip
+├── agent.yaml
+├── src/
+├── requirements.lock
+├── Dockerfile
+├── tests/
+│   └── smoke/
+└── README.md</code></pre>
+              </div>
+              <dl class="submission-file-notes">
+                <div><dt><code>agent.yaml</code> and <code>src/</code></dt><dd><strong>Required.</strong> Declare the runtime and include the Agent implementation.</dd></div>
+                <div><dt><code>requirements.lock</code></dt><dd>Required when using the managed Python runtime.</dd></div>
+                <div><dt><code>Dockerfile</code></dt><dd>Include only when using a custom runtime.</dd></div>
+                <div><dt><code>tests/</code> and <code>README.md</code></dt><dd>Optional local tests and method documentation.</dd></div>
+              </dl>
             </div>
-            <div class="contract-list">
-              <div><span class="contract-state intended">Intended</span><strong>Read-only case directory</strong><p>Package specifications, source archives, existing patches, auxiliary build-service files, and the failed log.</p></div>
-              <div><span class="contract-state intended">Intended</span><strong>Case manifest</strong><p>Case ID, package name, source architecture, target architecture, validator backend, and checksums.</p></div>
-              <div><span class="contract-state tba">TBA</span><strong>Invocation transport</strong><p>Fixed CLI command, local HTTP API, or equivalent harness adapter.</p></div>
-              <div><span class="contract-state tba">TBA</span><strong>Iteration feedback</strong><p>Whether an Agent can request build attempts during one case, and which logs are returned after each attempt.</p></div>
+
+            <aside class="submission-warning" role="note">
+              <i data-lucide="circle-slash-2" aria-hidden="true"></i>
+              <div><strong>Do not include secrets or evaluation answers.</strong><p>Exclude <code>.env</code> files, API keys, pre-generated patches, hidden Case information, caches, and runtime artifacts.</p></div>
+            </aside>
+
+            <h3>Minimum <code>agent.yaml</code></h3>
+            <p>The manifest declares how the platform builds and starts the Agent. The complete schema will be provided in the Starter Kit.</p>
+            <div class="code-block submission-code manifest-example">
+              <div class="code-toolbar"><span>agent.yaml</span><small>minimum managed-runtime example</small></div>
+              <pre><code>schema_version: "0.1"
+
+agent:
+  name: "example-agent"
+  version: "1.0.0"
+
+runtime:
+  type: "managed"
+  profile: "python-3.11"
+
+entrypoint:
+  - "python"
+  - "-m"
+  - "src.main"
+
+protocol:
+  version: "0.1"
+  build_feedback: true</code></pre>
             </div>
           </section>
 
-          <section class="doc-section" id="output">
-            <span class="section-label">Draft result.zip contract</span>
-            <h2>One ZIP returns the repair and status</h2>
-            <p>The Agent will return one <code>result.zip</code>. A unified diff remains the repair artifact because it is inspectable, auditable, and can be applied to a clean package copy.</p>
-            <div class="code-block contract-code">
-              <div><span>Illustrative result.zip tree and result.json</span></div>
-              <pre><code>result.zip
-|-- result.json
-\-- repair.diff
+          <section class="doc-section" id="runtime-interface">
+            <span class="section-label">03 / Runtime</span>
+            <h2>Runtime interface</h2>
+            <p>Each Case starts in a fresh workspace. The original input remains unchanged while the Agent works on a writable copy.</p>
 
-{
-  "case_id": "example-case",
-  "status": "repaired",
-  "patch_path": "repair.diff"
-}</code></pre>
+            <h3>Workspace</h3>
+            <div class="runtime-interface-grid">
+              <div class="code-block submission-code">
+                <div class="code-toolbar"><span>/workspace</span><small>one Case run</small></div>
+                <pre><code>/workspace/
+├── input/            # read-only
+├── work/
+│   └── repo/         # writable
+└── output/           # writable</code></pre>
+              </div>
+              <ul class="runtime-rules">
+                <li><strong>Read <code>input/</code>.</strong><span>It contains the task metadata, initial failure evidence, and original package tree.</span></li>
+                <li><strong>Modify only <code>work/repo/</code>.</strong><span>This is the candidate package tree used for build requests.</span></li>
+                <li><strong>Use stdout and stderr for logs.</strong><span>The platform captures both streams for diagnostics.</span></li>
+                <li><strong>Optionally write <code>agent-result.json</code>.</strong><span>Place machine-readable completion details in <code>output/</code>.</span></li>
+              </ul>
             </div>
-            <div class="source-callout warning-callout"><i data-lucide="info" aria-hidden="true"></i><p>The sample communicates the shape of the contract, not guaranteed names or values. The released JSON Schema and conformance tests will be authoritative.</p></div>
-            <h3>Expected result classes</h3>
-            <div class="status-grid"><div><strong>Repair produced</strong><p>A candidate diff is available for policy checks and executable validation.</p></div><div><strong>No repair</strong><p>The Agent completed but intentionally emitted no patch for the case.</p></div><div><strong>Agent failure</strong><p>The Agent crashed, timed out, or returned malformed output; final scoring semantics are TBA.</p></div></div>
-          </section>
 
-          <section class="doc-section" id="packaging">
-            <span class="section-label">Delivery and entrypoint</span>
-            <h2>Reproducible packaging is required; the vehicle is TBA</h2>
-            <p>The Agent must be runnable without manual intervention and must expose one deterministic entrypoint. The team has not yet chosen whether the official artifact will be a container image, a source repository plus lockfile, or another packaged runtime.</p>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable Agent packaging decision table"><table class="decision-table"><thead><tr><th>Decision</th><th>Current status</th></tr></thead><tbody><tr><td>Submission artifact</td><td><span class="decision-open">Open</span> Container image, repository bundle, or platform-managed package</td></tr><tr><td>Entrypoint</td><td><span class="decision-open">Open</span> Fixed CLI or local API</td></tr><tr><td>Architecture of Agent runtime</td><td><span class="decision-open">Open</span> Native, emulated, or platform selected</td></tr><tr><td>Dependency installation</td><td><span class="decision-open">Open</span> Prebuilt only or bounded setup phase</td></tr><tr><td>Versioning</td><td><span class="decision-intended">Intended</span> Immutable artifact digest per leaderboard entry</td></tr></tbody></table></div>
-          </section>
-
-          <section class="doc-section" id="resources">
-            <span class="section-label">Resources and external services</span>
-            <h2>Policies that must be frozen before submissions open</h2>
-            <div class="open-decisions">
-              <div><i data-lucide="timer" aria-hidden="true"></i><span><strong>Time and iteration budget</strong><p>Per-case wall time, maximum repair attempts, tool calls, and build requests.</p></span></div>
-              <div><i data-lucide="cpu" aria-hidden="true"></i><span><strong>Compute budget</strong><p>CPU, memory, disk, accelerator availability, and concurrency.</p></span></div>
-              <div><i data-lucide="network" aria-hidden="true"></i><span><strong>Network policy</strong><p>Whether outbound access is disabled, allowlisted, or brokered only through organizer APIs.</p></span></div>
-              <div><i data-lucide="key-round" aria-hidden="true"></i><span><strong>Model credentials</strong><p>Supported model providers, secret injection, accounting, and whether teams may bring their own keys.</p></span></div>
-              <div><i data-lucide="rotate-ccw" aria-hidden="true"></i><span><strong>Retry semantics</strong><p>Startup retries, transient API failures, malformed output, timeout, and evaluator fault handling.</p></span></div>
-              <div><i data-lucide="calendar-clock" aria-hidden="true"></i><span><strong>Submission frequency</strong><p>Daily limits, artifact replacement, validation queue priority, and final-entry selection.</p></span></div>
+            <h3>Build feedback</h3>
+            <p>When build feedback is enabled, the Agent requests a build through the platform-provided <code>bb-build</code> command. This planned CLI will be included in the Starter Kit.</p>
+            <div class="code-block submission-code build-command">
+              <div class="code-toolbar"><span>Planned CLI example</span><small>not yet released</small></div>
+              <pre><code>bb-build run \
+  --workdir /workspace/work/repo \
+  --output /workspace/output/build-feedback/attempt-001</code></pre>
             </div>
-            <div class="source-callout"><i data-lucide="sliders-horizontal" aria-hidden="true"></i><p><strong>Organizer baseline plan:</strong> comparable baseline runs will use no more than two open-source model configurations and one closed model configuration, with versions and parameters frozen and reported. This does not restrict participant Agents unless the final Rules explicitly say so.</p></div>
+            <ol class="compact-flow build-feedback-flow" aria-label="Build feedback flow">
+              <li><span>01</span><strong>Agent</strong></li>
+              <li><span>02</span><strong>bb-build</strong></li>
+              <li><span>03</span><strong>Build Gateway</strong></li>
+              <li><span>04</span><strong>Docker Validator</strong></li>
+              <li><span>05</span><strong>Status and log excerpt</strong></li>
+            </ol>
+            <ul class="boundary-list">
+              <li>The Agent does not receive the Docker Socket.</li>
+              <li>The Agent does not start the Validator directly.</li>
+              <li>Build requests and per-build time are limited.</li>
+              <li>The platform retains the complete build logs.</li>
+            </ul>
+
+            <h3>Final patch</h3>
+            <ol class="compact-flow patch-flow" aria-label="Canonical patch validation flow">
+              <li><span>01</span><strong>Original Case</strong></li>
+              <li><span>02</span><strong>Modified worktree</strong></li>
+              <li><span>03</span><strong>Canonical repair.diff</strong></li>
+              <li><span>04</span><strong>allowed_paths check</strong></li>
+              <li><span>05</span><strong>Docker Validator</strong></li>
+            </ol>
+            <p class="canonical-note"><strong>Official evaluation uses only the canonical diff generated by the platform.</strong> The patch is reapplied to a clean Case before the final target build.</p>
           </section>
 
-          <section class="doc-section" id="checklist">
-            <span class="section-label">Release checklist</span>
-            <h2>What participants will receive before launch</h2>
-            <ul class="release-checklist"><li><i data-lucide="square" aria-hidden="true"></i>Versioned Agent interface specification</li><li><i data-lucide="square" aria-hidden="true"></i>JSON Schema or equivalent validation contract</li><li><i data-lucide="square" aria-hidden="true"></i>Minimal conforming example Agent</li><li><i data-lucide="square" aria-hidden="true"></i>Local conformance and smoke-test command</li><li><i data-lucide="square" aria-hidden="true"></i>Development cases with expected evaluator outputs</li><li><i data-lucide="square" aria-hidden="true"></i>Published resource, model API, network, and failure policies</li></ul>
+          <section class="doc-section" id="test-submission">
+            <span class="section-label">04 / Test</span>
+            <h2>Test your submission</h2>
+            <p class="submission-section-intro">Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the hosted Smoke Test checks that the same bundle can run under the competition protocol.</p>
+
+            <div class="submission-guide-subsection">
+              <h3>Before full evaluation</h3>
+              <p>Complete these checks in order before using a full-evaluation attempt:</p>
+              <ol class="submission-test-steps">
+                <li><strong>Prepare the released tools.</strong><span>Download the Starter Kit, schemas, and development Cases from <a href="data-downloads.html">Data &amp; Downloads</a> when they become available.</span></li>
+                <li><strong>Run local conformance checks.</strong><span>Validate the ZIP layout and <code>agent.yaml</code>, then start the declared entrypoint in the local Runner.</span></li>
+                <li><strong>Exercise the runtime interface.</strong><span>Run at least one example Case, edit only <code>/workspace/work/repo</code>, and verify any <code>agent-result.json</code> output.</span></li>
+                <li><strong>Pass a hosted Smoke Test.</strong><span>Upload the same Agent bundle from <a href="my-submissions.html">My Submissions</a> and review the returned logs and diagnostics.</span></li>
+                <li><strong>Select the qualified version.</strong><span>Start full evaluation explicitly; uploading a new version alone does not place it in the evaluation queue.</span></li>
+              </ol>
+            </div>
+
+            <div class="submission-guide-subsection">
+              <h3>Testing locally</h3>
+              <p>Local testing should confirm that the submission contract works before organizer resources are used. Check all of the following:</p>
+              <ul class="submission-checklist">
+                <li>The ZIP opens with <code>agent.yaml</code> and <code>src/</code> at its root.</li>
+                <li>The manifest matches the published Agent Schema and declares one valid entrypoint.</li>
+                <li>The entrypoint starts without interactive input and exits with a meaningful status.</li>
+                <li><code>/workspace/input</code> remains unchanged; repository edits are confined to <code>/workspace/work/repo</code>.</li>
+                <li>Optional <code>agent-result.json</code> output matches the published result schema.</li>
+                <li>The Agent completes at least one released example or local Smoke Case.</li>
+              </ul>
+              <p class="submission-inline-note"><span>Planned</span>The Starter Kit will provide the local Runner, conformance CLI, schemas, example Cases, and exact commands. These downloads are not yet published.</p>
+            </div>
+
+            <div class="submission-guide-subsection">
+              <h3>Smoke tests</h3>
+              <p>A hosted Smoke Test uses the same Agent Runner, workspace layout, build-feedback protocol, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.</p>
+              <p>Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing a Smoke Test does not guarantee success on the full Case set.</p>
+            </div>
+
+            <div class="submission-guide-subsection">
+              <h3>Full evaluation</h3>
+              <p>Uploading an Agent creates a versioned submission but does not automatically start full evaluation. After that version passes format checks and the required Smoke Test, select it in <a href="my-submissions.html">My Submissions</a> and choose <strong>Start evaluation</strong>. The platform then creates one isolated Agent job per Case and schedules jobs subject to the published resource policy.</p>
+              <p>For each Case, the platform records the Agent outcome separately from the final Docker Validator outcome. Only the canonical patch generated from the Agent's worktree is reapplied to a clean Case for the official target-architecture build.</p>
+            </div>
           </section>
 
-          <nav class="next-page" aria-label="Next page"><span>Next</span><a href="evaluation.html"><strong>Evaluation</strong><small>See how Agent runs become scores</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
+          <section class="doc-section" id="submission-requirements">
+            <span class="section-label">05 / Requirements</span>
+            <h2>Submission requirements</h2>
+            <p class="submission-section-intro">A submission must be reproducible, non-interactive, and safe to run against organizer-controlled Cases. Requirements that are still under infrastructure review are marked <span class="requirement-tba">TBA</span>.</p>
+
+            <div class="submission-guide-subsection">
+              <h3>Key requirements checklist</h3>
+              <ul class="submission-checklist">
+                <li>Submit one source ZIP containing the required <code>agent.yaml</code> and <code>src/</code> entries.</li>
+                <li>Declare one runtime: managed Python 3.11 with <code>requirements.lock</code>, or a custom runtime with a platform-reviewed <code>Dockerfile</code>.</li>
+                <li>Provide a deterministic, non-interactive entrypoint that can process one Case per invocation.</li>
+                <li>Do not include <code>.env</code> files, credentials, API keys, pre-generated repair patches, hidden Case information, dependency caches, or previous run artifacts.</li>
+                <li>Read task metadata and the original package only from <code>/workspace/input</code>; make all proposed repairs in <code>/workspace/work/repo</code>.</li>
+                <li>Do not modify evaluator files or paths outside the Case's published <code>allowed_paths</code>.</li>
+                <li>Only optional machine-readable status and diagnostics may be written to <code>/workspace/output</code>. The official <code>repair.diff</code> is generated by the platform, not the Agent.</li>
+              </ul>
+            </div>
+
+            <div class="submission-guide-subsection">
+              <h3>Runtime and security</h3>
+              <ul class="submission-checklist">
+                <li>The Agent runs as a non-root user in an isolated runtime created for one Case.</li>
+                <li><code>/workspace/input</code> is mounted read-only; only the work and output directories are writable.</li>
+                <li>The Docker Socket and Docker daemon are never exposed to the Agent.</li>
+                <li>Build feedback is requested through the platform-provided <code>bb-build</code> command and Build Gateway. The Docker Validator remains organizer-controlled.</li>
+                <li>The platform captures stdout, stderr, exit status, wall time, and build requests for diagnosis and audit.</li>
+                <li>Network policy, per-Case wall-time limit, maximum build requests, CPU, memory, and storage limits are <span class="requirement-tba">TBA</span>.</li>
+              </ul>
+            </div>
+
+            <div class="submission-guide-subsection">
+              <h3>Dependencies and custom runtime</h3>
+              <p>For the managed runtime, declare Python dependencies in <code>requirements.lock</code>. The competition will publish the exact Python 3.11 base environment and supported installation process with the Starter Kit. Undeclared host packages must not be assumed.</p>
+              <p>A custom <code>Dockerfile</code> is optional for Agents that cannot use the managed runtime. The platform will inspect it, build an immutable image, record its digest, and run it under the same non-root, filesystem, network, and resource policies as managed submissions.</p>
+              <p>Supported base images, package-installation rules, network access during image construction and execution, maximum ZIP size, and submission frequency are <span class="requirement-tba">TBA</span>. Final values will be published before submissions open.</p>
+            </div>
+          </section>
+
+          <nav class="next-page" aria-label="Next page"><span>Next</span><a href="data-downloads.html"><strong>Data &amp; Downloads</strong><small>See the competition resources and release status</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
         </article>
       </div>
     </main>

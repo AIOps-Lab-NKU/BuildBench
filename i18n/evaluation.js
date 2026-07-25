@@ -60,12 +60,13 @@ window.BuildBenchI18nData.pages.evaluation = Object.freeze({
   "Invoke Agent": "调用 Agent",
   "Provide standardized input and enforce runtime, API, network, and resource policy.":
     "提供标准化输入，并执行运行时间、API、网络和资源策略。",
-  "Collect output": "收集输出",
-  "Validate the completion status and repair artifact against the released contract.":
-    "根据已发布的合约验证完成状态和修复制品。",
-  "Apply and audit repair": "应用并审核修复",
-  "Apply the diff to a clean copy and reject forbidden path changes or build bypasses.":
-    "将 diff 应用到干净副本，并拒绝修改禁止路径或绕过构建的行为。",
+  "Capture final worktree": "捕获最终工作树",
+  "Validate": "验证",
+  "and compute the canonical diff from the clean input and final worktree.":
+    "，并根据干净输入和最终工作树计算规范 diff。",
+  "Audit canonical repair": "审核规范修复",
+  "Reject forbidden path changes, policy violations, or build bypasses before final validation.":
+    "在最终验证前拒绝禁止路径修改、政策违规或绕过构建的行为。",
   "Evaluator": "评测器",
   "Run target build": "运行目标架构构建",
   "Launch the official containerized validator on the target architecture under the published resource policy.":

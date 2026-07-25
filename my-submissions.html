@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Build-Bench Agent submission status, Smoke Tests, and full evaluation history." />
+    <title>My Submissions | Build-Bench Challenge</title>
+    <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/my-submissions.html" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260725-5" />
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <script src="i18n/my-submissions.js?v=20260725-4" defer></script>
+    <script src="i18n.js?v=20260716-3" defer></script>
+    <script src="app.js?v=20260716-3" defer></script>
+    <script src="submissions.js?v=20260725-4" defer></script>
+  </head>
+  <body data-page="my-submissions">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
+        <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
+          <a href="index.html">Overview</a><a href="task.html">Task &amp; Data</a><a class="active" href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="page-masthead competition-page-masthead">
+        <div class="content-wrap">
+          <span class="page-kicker"><i data-lucide="inbox" aria-hidden="true"></i>Agent Track</span>
+          <h1>My Submissions</h1>
+          <p>Manage qualified Agent versions, request full evaluations, and review Smoke Test diagnostics from one place.</p>
+        </div>
+      </section>
+
+      <div class="content-wrap page-layout competition-page-layout">
+        <aside class="page-rail competition-page-rail" aria-label="Competition navigation">
+          <div class="rail-navigation-group">
+            <strong>Competition</strong>
+            <nav class="competition-navigation" aria-label="Competition pages">
+              <a href="submission.html"><i data-lucide="book-open" aria-hidden="true"></i>Agent Submission Guide</a>
+              <a href="data-downloads.html"><i data-lucide="database" aria-hidden="true"></i>Data &amp; Downloads</a>
+              <a class="active" href="my-submissions.html" aria-current="page"><i data-lucide="inbox" aria-hidden="true"></i>My Submissions</a>
+            </nav>
+          </div>
+        </aside>
+
+        <article class="page-document competition-page-document submissions-dashboard">
+          <section class="submission-account-summary" aria-label="Submission summary">
+            <div><span>Best score</span><strong>&mdash;</strong><small>No evaluated submission</small></div>
+            <div><span>Current rank</span><strong>&mdash;</strong><small>Not ranked</small></div>
+            <div><span>Full evaluations used</span><strong>0</strong><small>Limit TBA</small></div>
+          </section>
+
+          <section class="new-submission-panel" aria-label="Make a new submission">
+            <input type="file" accept=".zip,application/zip" hidden data-agent-upload />
+            <button type="button" class="new-submission-primary" data-upload-button>
+              <i data-lucide="upload" aria-hidden="true"></i>
+              <span>Make new submission</span>
+            </button>
+            <p>Upload performs static checks only. It does not start an evaluation.</p>
+          </section>
+
+          <div class="submission-notice" role="status" aria-live="polite" hidden data-submission-notice></div>
+
+          <section class="submission-history-section" aria-labelledby="agent-versions-title">
+            <header>
+              <div><span class="section-label">Uploaded bundles</span><h2 id="agent-versions-title">Agent submission versions</h2></div>
+              <span class="history-count" data-agent-version-count>0 versions</span>
+            </header>
+            <div data-agent-versions-list>
+              <div class="competition-empty-state">
+                <i data-lucide="package-open" aria-hidden="true"></i>
+                <div><strong>No Agent versions yet</strong><p>Upload an Agent ZIP to create your first immutable submission version.</p></div>
+              </div>
+            </div>
+          </section>
+
+          <section class="submission-history-section" aria-labelledby="full-evaluations-title">
+            <header>
+              <div><span class="section-label">Leaderboard runs</span><h2 id="full-evaluations-title">Full evaluations</h2></div>
+              <span class="history-count" data-full-count>0 runs</span>
+            </header>
+            <div data-full-evaluations-list>
+              <div class="competition-empty-state competition-empty-state-inline">
+                <i data-lucide="info" aria-hidden="true"></i>
+                <p>You currently have no full evaluation submissions for this competition.</p>
+              </div>
+            </div>
+          </section>
+        </article>
+      </div>
+    </main>
+
+    <dialog class="submission-log-modal" aria-labelledby="submission-log-modal-title" data-log-modal>
+      <div class="submission-log-modal-shell">
+        <header class="submission-log-modal-header">
+          <div>
+            <span class="section-label">Agent submission</span>
+            <h2 id="submission-log-modal-title">Execution log</h2>
+          </div>
+          <button type="button" class="submission-log-modal-close" aria-label="Close log" data-log-close>
+            <i data-lucide="x" aria-hidden="true"></i>
+          </button>
+        </header>
+
+        <div class="submission-log-modal-summary">
+          <div><span>Status</span><strong><span class="submission-status running" data-log-status>Checking</span></strong></div>
+          <div><span>Agent version</span><strong data-log-agent>&mdash;</strong></div>
+          <div><span>Submission ID</span><strong><code data-log-id>&mdash;</code></strong></div>
+        </div>
+
+        <div class="submission-notice error" role="alert" hidden data-log-error></div>
+        <pre class="submission-log-modal-console" tabindex="0" data-log-content>Loading log&hellip;</pre>
+
+        <footer class="submission-log-modal-footer">
+          <a class="submission-log-download" href="#" hidden data-log-download>
+            <i data-lucide="download" aria-hidden="true"></i>Download log
+          </a>
+          <button type="button" class="submission-log-dismiss" data-log-close>Dismiss</button>
+        </footer>
+      </div>
+    </dialog>
+
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></nav><a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
+  </body>
+</html>
