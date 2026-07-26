@@ -17,6 +17,8 @@
   const logDownload = document.querySelector("[data-log-download]");
   const ACTIVE = new Set(["checking", "smoke_queued", "smoke_running"]);
   const RETRYABLE = new Set(["qualified", "smoke_failed", "infrastructure_error"]);
+  const PAGE_SIZE = 6;
+  let currentPage = 1;
   let submissions = [];
   let pollTimer = null;
 
@@ -70,6 +72,13 @@
       return `${value} ${chineseUnit}`;
     }
     return value === 1 ? `1 ${singular}` : `${value} ${plural}`;
+  }
+
+  function pageLabel(page, totalPages) {
+    if (window.BuildBenchI18n?.getLanguage() === "zh") {
+      return `? ${page} ??? ${totalPages} ?`;
+    }
+    return `Page ${page} of ${totalPages}`;
   }
 
   function setNotice(message, tone = "info") {
@@ -144,6 +153,7 @@
       );
     }
     if (!submissions.length) {
+      currentPage = 1;
       versionList.innerHTML = `
         <div class="competition-empty-state">
           <i data-lucide="package-open" aria-hidden="true"></i>
@@ -155,6 +165,11 @@
       `;
       return;
     }
+
+    const totalPages = Math.max(1, Math.ceil(submissions.length / PAGE_SIZE));
+    currentPage = Math.min(Math.max(currentPage, 1), totalPages);
+    const startIndex = (currentPage - 1) * PAGE_SIZE;
+    const visibleSubmissions = submissions.slice(startIndex, startIndex + PAGE_SIZE);
 
     versionList.innerHTML = `
       <div class="agent-version-table-wrap">
@@ -170,7 +185,7 @@
             </tr>
           </thead>
           <tbody>
-          ${submissions
+          ${visibleSubmissions
           .map((item) => {
             const canRun = RETRYABLE.has(item.status);
             const canEvaluate =
@@ -225,6 +240,19 @@
           </tbody>
         </table>
       </div>
+      ${
+        totalPages > 1
+          ? `<nav class="agent-version-pagination" aria-label="${escapeHtml(t("Agent version pages"))}">
+               <button type="button" data-page-action="previous" ${currentPage === 1 ? "disabled" : ""}>
+                 <i data-lucide="chevron-left" aria-hidden="true"></i>${escapeHtml(t("Previous"))}
+               </button>
+               <span aria-live="polite">${escapeHtml(pageLabel(currentPage, totalPages))}</span>
+               <button type="button" data-page-action="next" ${currentPage === totalPages ? "disabled" : ""}>
+                 ${escapeHtml(t("Next"))}<i data-lucide="chevron-right" aria-hidden="true"></i>
+               </button>
+             </nav>`
+          : ""
+      }
     `;
   }
 
@@ -285,6 +313,7 @@
         body: file,
       });
       submissions = [record, ...submissions.filter((item) => item.id !== record.id)];
+      currentPage = 1;
       setNotice(
         record.status === "qualified"
           ? "Agent bundle passed static checks. You may now run a Hosted Smoke Test."
@@ -361,6 +390,17 @@
   uploadButton?.addEventListener("click", () => uploadInput?.click());
   uploadInput?.addEventListener("change", () => upload(uploadInput.files?.[0]));
   versionList?.addEventListener("click", (event) => {
+    const pageButton = event.target.closest("[data-page-action]");
+    if (pageButton && !pageButton.disabled) {
+      currentPage += pageButton.dataset.pageAction === "next" ? 1 : -1;
+      renderAgentVersions();
+      window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
+      document.getElementById("agent-versions-title")?.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+      return;
+    }
     const log = event.target.closest("[data-log-action]");
     if (log) {
       openLog(log.dataset.logAction);

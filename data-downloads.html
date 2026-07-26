@@ -8,9 +8,9 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/data-downloads.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260724-2" />
+    <link rel="stylesheet" href="styles.css?v=20260726-1" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/data-downloads.js?v=20260724-1" defer></script>
+    <script src="i18n/data-downloads.js?v=20260726-1" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
@@ -31,7 +31,7 @@
         <div class="content-wrap">
           <span class="page-kicker"><i data-lucide="database" aria-hidden="true"></i>Competition resources</span>
           <h1>Data &amp; Downloads</h1>
-          <p>Find the public Cases, schemas, and local testing resources used to prepare an Agent submission. Release status is shown for every item.</p>
+          <p>Download the versioned assets needed to develop and verify an Agent. Resources already bundled in the Starter Kit are not listed separately.</p>
         </div>
       </section>
 
@@ -51,7 +51,7 @@
           <header class="competition-document-heading">
             <span class="section-label">Release index</span>
             <h2>Competition resources</h2>
-            <p>Resources will become downloadable from this page after their versions are frozen and published. Unreleased items do not link to placeholder files.</p>
+            <p>Each row is an independently versioned competition asset. Unpublished resources show their real preparation status and never link to placeholder files.</p>
           </header>
 
           <div class="table-scroll resource-table-wrap" tabindex="0" aria-label="Scrollable competition resources table">
@@ -66,38 +66,38 @@
               </thead>
               <tbody>
                 <tr>
-                  <th scope="row">Development Cases</th>
-                  <td>Public Cases for Agent development, debugging, and local build validation.</td>
-                  <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
-                  <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
-                </tr>
-                <tr>
                   <th scope="row">Starter Kit</th>
-                  <td>Local Runner, conformance checks, sample configuration, and usage documentation.</td>
+                  <td>Runner, Example Agent, example cases, checks, packaging commands, and participant documentation.</td>
+                  <td><span class="resource-version">v0.1.0-rc.1</span><span class="resource-state">Release candidate</span></td>
+                  <td><button class="resource-download" type="button" disabled title="Publishing pending">Publishing pending</button></td>
+                </tr>
+                <tr>
+                  <th scope="row">Development Cases</th>
+                  <td>Public package-build Cases for Agent development and broader local evaluation.</td>
                   <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
                   <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
                 </tr>
                 <tr>
-                  <th scope="row">Example Agent</th>
-                  <td>A minimal Agent implementation that demonstrates the entrypoint and workspace protocol.</td>
+                  <th scope="row">Protocol Schemas</th>
+                  <td>Machine-readable Case and <code>agent.yaml</code> schemas used by local checks and platform validation.</td>
                   <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
                   <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
                 </tr>
                 <tr>
-                  <th scope="row">Case Schema</th>
-                  <td>The machine-readable Case manifest and validation rules used by the platform.</td>
-                  <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
-                  <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
+                  <th scope="row">Runtime Images</th>
+                  <td>Pinned Agent, Validator, and example-assets images used by Starter Kit commands.</td>
+                  <td><span class="resource-version">Registry TBA</span><span class="resource-state">Registry pending</span></td>
+                  <td><button class="resource-download" type="button" disabled title="Registry pending">Registry pending</button></td>
                 </tr>
                 <tr>
-                  <th scope="row">Agent Schema</th>
-                  <td>The complete <code>agent.yaml</code> schema for runtime, entrypoint, and protocol fields.</td>
-                  <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
-                  <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
+                  <th scope="row">Release manifest &amp; checksums</th>
+                  <td>Release metadata and SHA-256 checksums for verifying Starter Kit archives.</td>
+                  <td><span class="resource-version">v0.1.0-rc.1</span><span class="resource-state">Prepared</span></td>
+                  <td><button class="resource-download" type="button" disabled title="Publishing pending">Publishing pending</button></td>
                 </tr>
                 <tr>
-                  <th scope="row">Local Smoke Cases</th>
-                  <td>A small set of lightweight Cases for testing packaging and runtime compatibility.</td>
+                  <th scope="row">Dataset card &amp; licenses</th>
+                  <td>Case provenance, redistribution terms, dataset scope, and license notices.</td>
                   <td><span class="resource-version">Version TBA</span><span class="resource-state">Coming soon</span></td>
                   <td><button class="resource-download" type="button" disabled title="Coming soon">Coming soon</button></td>
                 </tr>
@@ -107,7 +107,7 @@
 
           <aside class="resource-release-note" role="note">
             <i data-lucide="info" aria-hidden="true"></i>
-            <div><strong>No resources have been published yet.</strong><p>Release versions, checksums, licenses, and file sizes will be added when the Starter Kit and Development Cases are ready.</p></div>
+            <div><strong>Starter Kit release candidate prepared.</strong><p>The Example Agent and local example cases are included in the Starter Kit. Public download will open after runtime images and license notices are published.</p></div>
           </aside>
         </article>
       </div>

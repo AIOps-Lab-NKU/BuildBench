@@ -82,6 +82,24 @@ class FrontendContractTests(unittest.TestCase):
         self.assertEqual(html.count('class="quick-start-number"'), 6)
         self.assertEqual(html.count('class="quick-start-result"'), 6)
 
+    def test_agent_version_pagination_is_six_per_page(self) -> None:
+        script = (ROOT / "submissions.js").read_text(encoding="utf-8")
+        self.assertIn("const PAGE_SIZE = 6", script)
+        self.assertIn("visibleSubmissions", script)
+        self.assertIn('data-page-action="previous"', script)
+        self.assertIn('data-page-action="next"', script)
+
+    def test_resource_index_has_no_duplicate_bundled_downloads(self) -> None:
+        html = (ROOT / "data-downloads.html").read_text(encoding="utf-8")
+        self.assertIn("Starter Kit", html)
+        self.assertIn("Development Cases", html)
+        self.assertIn("Protocol Schemas", html)
+        self.assertIn("Runtime Images", html)
+        self.assertNotIn('<th scope="row">Example Agent</th>', html)
+        self.assertNotIn('<th scope="row">Local Smoke Cases</th>', html)
+        self.assertNotIn('<th scope="row">Case Schema</th>', html)
+        self.assertNotIn('<th scope="row">Agent Schema</th>', html)
+
     def test_submission_script_uses_only_milestone_c_routes(self) -> None:
         script = (ROOT / "submissions.js").read_text(encoding="utf-8")
         self.assertIn('api("/api/submissions"', script)
