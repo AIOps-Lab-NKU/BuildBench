@@ -315,7 +315,25 @@ class SubmissionService:
             raise RuntimeError("Agent checker did not produce check-result.json")
         return read_json(report_path)
 
-    def create_submission(self, filename: str, payload: bytes) -> dict[str, object]:
+    @staticmethod
+    def _require_owner(
+        record: dict[str, object],
+        owner_id: str | None,
+    ) -> None:
+        if owner_id is None:
+            return
+        record_owner = str(record.get("owner_id") or "development-team")
+        if record_owner != owner_id:
+            raise SubmissionNotFound("submission not found")
+
+    def create_submission(
+        self,
+        filename: str,
+        payload: bytes,
+        *,
+        owner_id: str = "development-team",
+        team_id: str | None = None,
+    ) -> dict[str, object]:
         if not filename.lower().endswith(".zip"):
             raise SubmissionError("Agent submission filename must end in .zip")
         if len(payload) > self.limits.upload_bytes:
@@ -326,6 +344,8 @@ class SubmissionService:
         record: dict[str, object] = {
             "schema_version": "0.1",
             "id": submission_id,
+            "owner_id": owner_id,
+            "team_id": team_id or owner_id,
             "filename": Path(filename).name,
             "sha256": hashlib.sha256(payload).hexdigest(),
             "bytes": len(payload),
@@ -401,6 +421,8 @@ class SubmissionService:
         submission_id = str(record["id"])
         directory = self.store.submission_dir(submission_id)
         public = json.loads(json.dumps(record))
+        public.pop("owner_id", None)
+        public.pop("team_id", None)
         smoke = dict(public.get("smoke") or {})
         smoke.pop("run_dir", None)
         smoke["summary"] = sanitize_smoke_summary(smoke.get("summary"))
@@ -422,8 +444,13 @@ class SubmissionService:
             .replace(str(directory), "<submission>")
         )
 
-    def log_text(self, submission_id: str) -> tuple[str, str]:
-        self.store.get(submission_id)
+    def log_text(
+        self,
+        submission_id: str,
+        owner_id: str | None = None,
+    ) -> tuple[str, str]:
+        record = self.store.get(submission_id)
+        self._require_owner(record, owner_id)
         directory = self.store.submission_dir(submission_id)
         candidates = (
             (directory / "smoke" / "console.log", "smoke-test"),
@@ -446,11 +473,24 @@ class SubmissionService:
             return filename, self._redact_log(directory, content)
         return f"submission-{submission_id}.log", "No log is available yet.\n"
 
-    def get(self, submission_id: str) -> dict[str, object]:
-        return self.public_record(self.store.get(submission_id))
+    def get(
+        self,
+        submission_id: str,
+        owner_id: str | None = None,
+    ) -> dict[str, object]:
+        record = self.store.get(submission_id)
+        self._require_owner(record, owner_id)
+        return self.public_record(record)
 
-    def list(self) -> list[dict[str, object]]:
-        return [self.public_record(record) for record in self.store.list()]
+    def list(self, owner_id: str | None = None) -> list[dict[str, object]]:
+        records = self.store.list()
+        if owner_id is not None:
+            records = [
+                record
+                for record in records
+                if str(record.get("owner_id") or "development-team") == owner_id
+            ]
+        return [self.public_record(record) for record in records]
 
 
 class HostedSmokeQueue:
@@ -469,8 +509,13 @@ class HostedSmokeQueue:
             thread_name_prefix="buildbench-smoke",
         )
 
-    def request(self, submission_id: str) -> dict[str, object]:
+    def request(
+        self,
+        submission_id: str,
+        owner_id: str | None = None,
+    ) -> dict[str, object]:
         record = self.service.store.get(submission_id)
+        self.service._require_owner(record, owner_id)
         if record.get("status") not in SMOKE_RETRY_STATES:
             raise SubmissionConflict(
                 f"Smoke Test cannot start from status {record.get('status')}"

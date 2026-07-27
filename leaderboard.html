@@ -29,6 +29,7 @@
     <script src="i18n/leaderboard.js?v=20260716-3" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
+    <script src="leaderboard-live.js?v=20260727-1" defer></script>
   </head>
   <body data-page="leaderboard">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -82,6 +83,41 @@
             A transparent view of executable cross-architecture build repair. The public competition
             leaderboard is planned for September 2026.
           </p>
+        </div>
+      </section>
+
+      <section class="leaderboard-section competition-board-section" aria-labelledby="competition-results-title">
+        <div class="content-wrap">
+          <div class="board-header">
+            <div>
+              <span class="section-label">Official competition results</span>
+              <h2 id="competition-results-title">Published Full Evaluations</h2>
+              <p>
+                Only completed evaluations released by the organizers appear here. Results are ranked
+                within the same Case-set and evaluation-protocol version.
+              </p>
+            </div>
+          </div>
+          <div class="competition-board-state" data-live-board-state role="status">
+            No official competition results have been published yet.
+          </div>
+          <div class="table-scroll" data-live-board-table hidden tabindex="0" aria-label="Official competition leaderboard">
+            <table class="leaderboard-table competition-leaderboard-table">
+              <thead>
+                <tr>
+                  <th scope="col">Rank</th>
+                  <th scope="col">Team</th>
+                  <th scope="col">Agent version</th>
+                  <th scope="col">Success</th>
+                  <th scope="col">Success rate</th>
+                  <th scope="col">Duration</th>
+                  <th scope="col">Published</th>
+                </tr>
+              </thead>
+              <tbody data-live-board-body></tbody>
+            </table>
+          </div>
+          <p class="competition-board-version" data-live-board-version hidden></p>
         </div>
       </section>
 

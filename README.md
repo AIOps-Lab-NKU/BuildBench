@@ -1,7 +1,7 @@
 # Build-Bench Challenge website
 
-Website and Milestone C submission-service MVP for the Build-Bench Challenge
-at the ICSE 2027 Competition Track.
+Website, Agent submission service, and durable Full Evaluation MVP for the
+Build-Bench Challenge at the ICSE 2027 Competition Track.
 
 Published website: <https://aiops-lab-nku.github.io/BuildBench/>
 
@@ -58,9 +58,12 @@ The platform:
 5. waits for the participant to request **Run Smoke Test**;
 6. executes `bb test` asynchronously and displays the result.
 
-Upload does not start a Hosted Smoke Test or full evaluation. Full evaluation,
-hidden cases, scoring, authentication, and leaderboard updates are outside the
-Milestone C MVP.
+Upload does not start a Hosted Smoke Test or Full Evaluation. After a version
+passes the Hosted Smoke Test, the participant explicitly starts its one
+official Full Evaluation. A separate Worker expands the hidden Case set into
+durable CaseRuns, runs them concurrently, freezes the final score only after
+all CaseRuns finish, and lets an administrator publish the completed result to
+the versioned competition leaderboard.
 
 Runtime data is written to `runtime-data/` and ignored by Git. Override the
 location with:
@@ -83,6 +86,17 @@ GET  /api/submissions
 GET  /api/submissions/{id}
 POST /api/submissions
 POST /api/submissions/{id}/smoke-test
+POST /api/submissions/{id}/full-evaluations
+GET  /api/full-evaluations
+GET  /api/full-evaluations/{id}
+GET  /api/full-evaluations/{id}/events
+GET  /api/full-evaluations/{id}/result
+GET  /api/leaderboard
+
+GET  /api/admin/full-evaluations/{id}
+POST /api/admin/full-evaluations/{id}/recover
+POST /api/admin/full-evaluations/{id}/publish
+POST /api/admin/full-evaluations/{id}/revoke
 ```
 
 `POST /api/submissions` accepts raw `application/zip` bytes and an optional
@@ -104,10 +118,36 @@ Milestone C validates ZIP paths, sizes, symlinks, submission schema, entrypoint,
 dependencies, and common credential patterns. The service should remain bound
 to `127.0.0.1` during development.
 
-These checks do not make the current privileged Docker Validator safe for
-arbitrary public Agent uploads. Production launch still requires
-authentication, per-team authorization and quotas, hardened worker or VM
-isolation, secrets management, and private hidden-Case storage.
+The Agent runner is non-root, read-only, network-disabled, resource-limited,
+and never receives the Docker Socket. Bearer-token identity, owner isolation,
+administrator authorization, audit events, artifact retention, hidden-result
+redaction, and versioned leaderboard publication are implemented.
+
+The current privileged Docker Validator is still restricted to explicit
+organizer-trusted pilots. Untrusted official evaluation remains closed unless
+`BB_VALIDATOR_ISOLATION` selects a dedicated disposable VM/Worker and
+`BB_VALIDATOR_ISOLATION_ATTESTATION` matches the frozen Validator image and
+evaluation protocol. This is a hard production gate, not a warning.
+
+The one-server authentication MVP reads bearer identities from
+`BB_AUTH_TOKENS_JSON` or `BB_AUTH_TOKENS_FILE`; set `BB_AUTH_REQUIRED=1` to
+reject unauthenticated API requests. Production deployments must terminate TLS
+and may replace this token provider with an OIDC-aware reverse proxy.
+
+Full Evaluation Workers run separately from the website:
+
+```bash
+python3 -m backend.evaluation_worker --until-idle
+```
+
+Retention cleanup is dry-run by default:
+
+```bash
+python3 -m backend.retention \
+  --database /private/evaluations.sqlite3 \
+  --output-root /private/full-evaluations \
+  --retention-days 30
+```
 
 ## Languages
 
@@ -133,13 +173,13 @@ infrastructure and uses focused pages instead of one long landing page:
 - `index.html` is the competition overview and navigation hub.
 - `task.html` distinguishes the 268-case paper corpus from 200 additional
   candidates that are still under validation.
-- `submission.html` documents the single Agent model and the working
-  `case.zip` / `result.zip` I/O envelopes.
+- `submission.html` documents the immutable Agent ZIP, managed runtime,
+  workspace contract, local test loop, and platform-generated canonical diff.
 - `evaluation.html` uses Build Success Rate as the single primary ranking
   metric while keeping denominator and tie-break details visibly draft.
 - `rules.html`, `timeline.html`, and `faq.html` contain participant guidance.
-- `leaderboard.html` shows paper-reported research baselines until public
-  competition submissions open.
+- `leaderboard.html` keeps paper-reported research baselines separate from
+  administrator-published, version-compatible Full Evaluation results.
 
 The Agent packaging format, exact ZIP schemas, resource and network policies,
 denominator semantics, tie-breaker, final split counts, submission limits, and

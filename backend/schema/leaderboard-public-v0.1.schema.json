@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildbench.example/schemas/leaderboard-public-v0.1.schema.json",
+  "title": "Build-Bench public competition leaderboard",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "metric", "case_set_version", "protocol_version", "entries"],
+  "properties": {
+    "schema_version": { "const": "0.1" },
+    "metric": { "const": "build_success_rate" },
+    "case_set_version": { "type": ["string", "null"] },
+    "protocol_version": { "type": ["string", "null"] },
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "entry_id", "evaluation_id", "team_name", "agent_name",
+          "agent_version", "score", "successful_cases", "total_cases",
+          "duration_seconds", "case_set_version", "protocol_version",
+          "published_at", "rank"
+        ],
+        "properties": {
+          "entry_id": { "type": "string" },
+          "evaluation_id": { "type": "string" },
+          "team_name": { "type": "string" },
+          "agent_name": { "type": "string" },
+          "agent_version": { "type": "string" },
+          "score": { "type": "number", "minimum": 0, "maximum": 1 },
+          "successful_cases": { "type": "integer", "minimum": 0 },
+          "total_cases": { "type": "integer", "minimum": 1 },
+          "duration_seconds": { "type": "integer", "minimum": 0 },
+          "case_set_version": { "type": "string" },
+          "protocol_version": { "type": "string" },
+          "published_at": { "type": "string" },
+          "rank": { "type": "integer", "minimum": 1 }
+        }
+      }
+    }
+  }
+}

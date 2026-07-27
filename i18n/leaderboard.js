@@ -62,4 +62,14 @@ window.BuildBenchI18nData.pages.leaderboard = Object.freeze({
   "Filtered leaderboard summary": "筛选后的排行榜摘要",
   "Migration direction filter": "迁移方向筛选",
   "Scrollable research results table": "可滚动的研究结果表格"
+  ,"Official competition results": "正式竞赛结果"
+  ,"Published Full Evaluations": "已发布的完整评测"
+  ,"Only completed evaluations released by the organizers appear here. Results are ranked within the same Case-set and evaluation-protocol version.": "此处仅展示组织方发布的已完成评测。结果只在相同 Case 集和评测协议版本内排名。"
+  ,"No official competition results have been published yet.": "尚未发布正式竞赛结果。"
+  ,"Official competition leaderboard": "正式竞赛排行榜"
+  ,"Team": "队伍"
+  ,"Agent version": "Agent 版本"
+  ,"Duration": "耗时"
+  ,"Published": "发布时间"
+  ,"The live competition leaderboard is unavailable. Research baselines remain available below.": "实时竞赛排行榜暂不可用，下方仍可查看研究基线。"
 });

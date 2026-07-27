@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://buildbench.example/schemas/case-run-result-v0.1.schema.json",
+  "title": "Build-Bench internal CaseRun result",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "case_run_id",
+    "case_ordinal",
+    "status",
+    "agent_status",
+    "validator_status",
+    "message",
+    "duration_seconds",
+    "agent_duration_seconds",
+    "build_duration_seconds",
+    "build_attempts",
+    "repair_size_bytes",
+    "modified_files",
+    "timed_out"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "0.1"
+    },
+    "case_run_id": {
+      "type": "string",
+      "pattern": "^CR-[A-Za-z0-9_-]{8,64}$"
+    },
+    "case_ordinal": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "status": {
+      "enum": [
+        "succeeded",
+        "failed",
+        "unresolvable",
+        "timeout",
+        "no_fix",
+        "agent_error",
+        "invalid_patch",
+        "infrastructure_error"
+      ]
+    },
+    "agent_status": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64
+    },
+    "validator_status": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "maxLength": 600
+    },
+    "duration_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "agent_duration_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "build_duration_seconds": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "build_attempts": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "repair_size_bytes": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "modified_files": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "timed_out": {
+      "type": "boolean"
+    }
+  }
+}

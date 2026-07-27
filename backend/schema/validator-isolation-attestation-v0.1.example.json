@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.1",
+  "isolation_mode": "ephemeral_vm",
+  "validator_image_digest": "sha256:replace-with-validator-image-digest",
+  "protocol_config_hash": "replace-with-evaluation-protocol-hash",
+  "docker_socket_exposed_to_agent": false,
+  "hidden_case_store_mounted_in_validator_vm": false,
+  "worker_reused_between_cases": false,
+  "approved_by": "replace-with-security-reviewer",
+  "approved_at": "2026-07-27T00:00:00+00:00",
+  "expires_at": "2027-07-27T00:00:00+00:00",
+  "document_sha256": "sha256-of-canonical-json-without-this-field"
+}

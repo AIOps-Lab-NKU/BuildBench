@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Build-Bench Full Evaluation progress and final result." />
+    <title>Full Evaluation | Build-Bench Challenge</title>
+    <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/evaluation-detail.html" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+    <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
+    <link rel="stylesheet" href="styles.css?v=20260726-2" />
+    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <script src="i18n/evaluation-detail.js?v=20260726-1" defer></script>
+    <script src="i18n.js?v=20260716-3" defer></script>
+    <script src="app.js?v=20260716-3" defer></script>
+    <script src="evaluation-detail.js?v=20260726-1" defer></script>
+  </head>
+  <body data-page="evaluation-detail">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <header class="site-header">
+      <div class="header-inner">
+        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
+        <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
+        <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
+          <a href="index.html">Overview</a><a href="task.html">Task &amp; Data</a><a class="active" href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main-content">
+      <section class="page-masthead competition-page-masthead evaluation-detail-masthead">
+        <div class="content-wrap">
+          <a class="submission-log-back" href="my-submissions.html"><i data-lucide="arrow-left" aria-hidden="true"></i>My Submissions</a>
+          <span class="page-kicker"><i data-lucide="activity" aria-hidden="true"></i>Official evaluation</span>
+          <h1>Full Evaluation</h1>
+          <p data-evaluation-heading>Loading evaluation&hellip;</p>
+        </div>
+      </section>
+
+      <div class="content-wrap evaluation-detail-document" data-evaluation-detail>
+        <div class="submission-notice error" role="alert" hidden data-evaluation-error></div>
+
+        <section class="evaluation-overview" aria-label="Evaluation summary">
+          <div><span>Status</span><strong><span class="submission-status running" data-evaluation-status>Queued</span></strong></div>
+          <div><span>Evaluation ID</span><strong><code data-evaluation-id>&mdash;</code></strong></div>
+          <div><span>Agent version</span><strong data-evaluation-agent>&mdash;</strong></div>
+          <div><span>Started</span><strong data-evaluation-started>&mdash;</strong></div>
+        </section>
+
+        <section class="evaluation-progress-section" aria-labelledby="evaluation-progress-title">
+          <header>
+            <div><span class="section-label">Current run</span><h2 id="evaluation-progress-title">Evaluation progress</h2></div>
+            <strong data-evaluation-progress-label>0 / 0</strong>
+          </header>
+          <div class="evaluation-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-evaluation-progress>
+            <span data-evaluation-progress-bar></span>
+          </div>
+          <p data-evaluation-progress-note>The official score is published only after all Cases finish and the run is finalized.</p>
+        </section>
+
+        <ol class="evaluation-stage-list" aria-label="Evaluation stages" data-evaluation-stages>
+          <li data-stage="queued"><span>1</span><strong>Queued</strong></li>
+          <li data-stage="preparing"><span>2</span><strong>Preparing</strong></li>
+          <li data-stage="evaluating"><span>3</span><strong>Evaluating</strong></li>
+          <li data-stage="finalizing"><span>4</span><strong>Finalizing</strong></li>
+          <li data-stage="completed"><span>5</span><strong>Completed</strong></li>
+        </ol>
+
+        <section class="evaluation-result-panel" hidden data-evaluation-result>
+          <span class="section-label">Final result</span>
+          <div><strong data-evaluation-score>&mdash;</strong><span>Build success rate</span></div>
+          <p data-evaluation-result-note></p>
+        </section>
+
+        <section class="evaluation-timeline-section" aria-labelledby="evaluation-timeline-title">
+          <header><span class="section-label">Run history</span><h2 id="evaluation-timeline-title">Timeline</h2></header>
+          <ol class="evaluation-timeline" data-evaluation-timeline>
+            <li><time>&mdash;</time><p>Waiting for evaluation events&hellip;</p></li>
+          </ol>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></nav><a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
+  </body>
+</html>

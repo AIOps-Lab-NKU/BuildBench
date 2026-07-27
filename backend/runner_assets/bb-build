@@ -1,0 +1,59 @@
+#!/usr/bin/env python3
+"""Request one bounded build from the platform-owned Build Gateway."""
+
+from __future__ import annotations
+
+import json
+import os
+import socket
+import sys
+
+
+def main() -> int:
+    socket_path = os.environ.get("BB_BUILD_GATEWAY_SOCKET", "")
+    token = os.environ.get("BB_BUILD_GATEWAY_TOKEN", "")
+    token_file = os.environ.get("BB_BUILD_GATEWAY_TOKEN_FILE", "")
+    try:
+        timeout_seconds = max(
+            int(os.environ.get("BB_BUILD_GATEWAY_TIMEOUT_SECONDS", "900")),
+            1,
+        )
+    except ValueError:
+        timeout_seconds = 900
+    if not token and token_file:
+        try:
+            token = open(token_file, encoding="utf-8").read().strip()
+        except OSError:
+            token = ""
+    if not socket_path or not token:
+        print("bb-build: build feedback is unavailable", file=sys.stderr)
+        return 2
+    request = json.dumps(
+        {"action": "build", "capability_token": token},
+        separators=(",", ":"),
+    ).encode("utf-8") + b"\n"
+    try:
+        with socket.socket(socket.AF_UNIX, socket.SOCK_STREAM) as client:
+            client.settimeout(timeout_seconds)
+            client.connect(socket_path)
+            client.sendall(request)
+            response = b""
+            while not response.endswith(b"\n"):
+                chunk = client.recv(65536)
+                if not chunk:
+                    break
+                response += chunk
+    except OSError as error:
+        print(f"bb-build: gateway request failed: {error}", file=sys.stderr)
+        return 2
+    try:
+        payload = json.loads(response.decode("utf-8"))
+    except (UnicodeError, json.JSONDecodeError):
+        print("bb-build: gateway returned an invalid response", file=sys.stderr)
+        return 2
+    print(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0 if payload.get("ok") else 1
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

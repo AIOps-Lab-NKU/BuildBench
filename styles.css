@@ -31,6 +31,462 @@
   scroll-behavior: smooth;
 }
 
+/* Full Evaluation participant workflow */
+
+.full-evaluation-table-wrap {
+  overflow-x: auto;
+  margin-top: 18px;
+  border: 1px solid var(--line);
+  border-top: 2px solid var(--blue);
+}
+
+.full-evaluation-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: collapse;
+  table-layout: fixed;
+  background: #fff;
+}
+
+.full-evaluation-table th,
+.full-evaluation-table td {
+  padding: 17px 13px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+
+.full-evaluation-table th {
+  color: var(--ink);
+  background: #f8fafc;
+  font-size: 13.5px;
+  font-weight: 850;
+}
+
+.full-evaluation-table th:nth-child(1) { width: 11%; }
+.full-evaluation-table th:nth-child(2) { width: 17%; }
+.full-evaluation-table th:nth-child(3) { width: 15%; }
+.full-evaluation-table th:nth-child(4) { width: 14%; }
+.full-evaluation-table th:nth-child(5) { width: 11%; }
+.full-evaluation-table th:nth-child(6) { width: 9%; }
+.full-evaluation-table th:nth-child(7) { width: 8%; }
+.full-evaluation-table th:nth-child(8) { width: 15%; }
+
+.full-evaluation-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.full-evaluation-table code {
+  color: var(--blue-dark);
+  font-size: 12.5px;
+  overflow-wrap: anywhere;
+}
+
+.full-evaluation-table strong,
+.full-evaluation-table small,
+.full-evaluation-table time {
+  display: block;
+}
+
+.full-evaluation-table strong,
+.full-evaluation-table time {
+  color: var(--ink-soft);
+  font-size: 13.5px;
+  line-height: 1.5;
+}
+
+.full-evaluation-table small {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.submission-row-action {
+  text-decoration: none;
+}
+
+.evaluation-confirm-modal {
+  width: min(620px, calc(100vw - 32px));
+  padding: 0;
+  color: var(--ink);
+  background: #fff;
+  border: 0;
+  border-radius: 6px;
+  box-shadow: 0 24px 90px rgb(12 32 49 / 28%);
+}
+
+.evaluation-confirm-modal::backdrop {
+  background: rgb(8 24 38 / 58%);
+}
+
+.evaluation-confirm-shell {
+  display: grid;
+  gap: 0;
+}
+
+.evaluation-confirm-shell > header {
+  padding: 28px 30px 23px;
+  border-bottom: 1px solid var(--line);
+}
+
+.evaluation-confirm-shell h2 {
+  margin: 7px 0 8px;
+  font-size: 26px;
+}
+
+.evaluation-confirm-shell header p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.6;
+}
+
+.evaluation-confirm-summary {
+  display: grid;
+  grid-template-columns: 1fr 1.3fr;
+  margin: 0;
+  padding: 21px 30px;
+  border-bottom: 1px solid var(--line);
+}
+
+.evaluation-confirm-summary > div {
+  min-width: 0;
+}
+
+.evaluation-confirm-summary dt {
+  color: var(--muted);
+  font-size: 11.5px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.evaluation-confirm-summary dd {
+  margin: 7px 0 0;
+  color: var(--ink);
+  font-size: 14px;
+  font-weight: 800;
+  overflow-wrap: anywhere;
+}
+
+.evaluation-confirm-warning {
+  display: grid;
+  grid-template-columns: 22px minmax(0, 1fr);
+  gap: 12px;
+  margin: 22px 30px 0;
+  padding: 15px 17px;
+  color: #714d08;
+  background: #fff8df;
+  border-left: 3px solid #d79b24;
+}
+
+.evaluation-confirm-warning svg {
+  width: 19px;
+  height: 19px;
+}
+
+.evaluation-confirm-warning p {
+  margin: 0;
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.evaluation-confirm-shell > .submission-notice {
+  margin: 18px 30px 0;
+}
+
+.evaluation-confirm-shell > footer {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 25px;
+  padding: 19px 30px;
+  background: #f8fafc;
+  border-top: 1px solid var(--line);
+}
+
+.evaluation-detail-masthead .submission-log-back {
+  margin-bottom: 28px;
+}
+
+.evaluation-detail-document {
+  display: grid;
+  gap: 34px;
+  padding-top: 42px;
+  padding-bottom: 80px;
+}
+
+.evaluation-overview {
+  display: grid;
+  grid-template-columns: 0.8fr 1.25fr 1.2fr 1.2fr;
+  border-top: 2px solid var(--blue);
+  border-left: 1px solid var(--line);
+}
+
+.evaluation-overview > div {
+  min-width: 0;
+  min-height: 116px;
+  display: grid;
+  align-content: center;
+  gap: 9px;
+  padding: 20px 22px;
+  border-right: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+
+.evaluation-overview > div > span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.evaluation-overview strong {
+  color: var(--ink);
+  font-size: 15px;
+  overflow-wrap: anywhere;
+}
+
+.evaluation-overview code {
+  color: var(--blue-dark);
+  font-size: 13px;
+}
+
+.evaluation-progress-section {
+  padding: 27px 29px;
+  background: #fff;
+  border: 1px solid var(--line);
+}
+
+.evaluation-progress-section > header {
+  display: flex;
+  align-items: end;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.evaluation-progress-section h2,
+.evaluation-timeline-section h2 {
+  margin: 6px 0 0;
+  font-size: 25px;
+}
+
+.evaluation-progress-section > header > strong {
+  color: var(--blue-dark);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 14px;
+}
+
+.evaluation-progress-track {
+  height: 12px;
+  margin-top: 22px;
+  overflow: hidden;
+  background: #e6edf3;
+  border-radius: 999px;
+}
+
+.evaluation-progress-track > span {
+  display: block;
+  width: 0;
+  height: 100%;
+  background: var(--blue);
+  border-radius: inherit;
+  transition: width 300ms ease;
+}
+
+.evaluation-progress-section > p {
+  margin: 13px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+  line-height: 1.55;
+}
+
+.evaluation-stage-list {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  border: 1px solid var(--line);
+}
+
+.evaluation-stage-list li {
+  min-height: 88px;
+  display: flex;
+  align-items: center;
+  gap: 11px;
+  padding: 17px;
+  color: var(--muted);
+  background: #fff;
+  border-right: 1px solid var(--line);
+}
+
+.evaluation-stage-list li:last-child {
+  border-right: 0;
+}
+
+.evaluation-stage-list li > span {
+  width: 29px;
+  height: 29px;
+  display: grid;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid #aebac4;
+  border-radius: 50%;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.evaluation-stage-list li strong {
+  font-size: 13.5px;
+}
+
+.evaluation-stage-list li.complete {
+  color: #146c50;
+  background: #f0faf6;
+}
+
+.evaluation-stage-list li.complete > span {
+  color: #fff;
+  background: #21825f;
+  border-color: #21825f;
+}
+
+.evaluation-stage-list li.active {
+  color: var(--blue-dark);
+  background: #eef6fc;
+}
+
+.evaluation-stage-list li.active > span {
+  color: #fff;
+  background: var(--blue);
+  border-color: var(--blue);
+}
+
+.evaluation-stage-list li.stopped {
+  color: #9a303c;
+  background: #fff3f4;
+}
+
+.evaluation-result-panel {
+  padding: 28px 30px;
+  background: #f0faf6;
+  border-left: 4px solid #21825f;
+}
+
+.evaluation-result-panel > div {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  margin-top: 8px;
+}
+
+.evaluation-result-panel > div strong {
+  color: #146c50;
+  font-size: 42px;
+}
+
+.evaluation-result-panel > div span {
+  color: var(--ink-soft);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.evaluation-result-panel p {
+  margin: 8px 0 0;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+
+.evaluation-timeline-section {
+  padding-top: 3px;
+}
+
+.evaluation-timeline-section > header {
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-strong);
+}
+
+.evaluation-timeline {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.evaluation-timeline li {
+  display: grid;
+  grid-template-columns: 190px minmax(0, 1fr);
+  gap: 24px;
+  padding: 17px 3px;
+  border-bottom: 1px solid var(--line);
+}
+
+.evaluation-timeline time {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  font-size: 12px;
+}
+
+.evaluation-timeline p {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+@media (max-width: 820px) {
+  .evaluation-confirm-summary,
+  .evaluation-overview,
+  .evaluation-stage-list {
+    grid-template-columns: 1fr;
+  }
+
+  .evaluation-overview > div,
+  .evaluation-stage-list li {
+    min-height: auto;
+  }
+
+  .evaluation-stage-list li {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .evaluation-stage-list li:last-child {
+    border-bottom: 0;
+  }
+
+  .evaluation-timeline li {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+}
+
+@media (max-width: 560px) {
+  .evaluation-confirm-shell > header,
+  .evaluation-confirm-summary,
+  .evaluation-confirm-shell > footer {
+    padding-right: 20px;
+    padding-left: 20px;
+  }
+
+  .evaluation-confirm-warning,
+  .evaluation-confirm-shell > .submission-notice {
+    margin-right: 20px;
+    margin-left: 20px;
+  }
+
+  .evaluation-confirm-shell > footer {
+    display: grid;
+  }
+
+  .evaluation-confirm-shell > footer button {
+    width: 100%;
+  }
+
+  .evaluation-progress-section > header {
+    display: grid;
+  }
+}
+
 * {
   box-sizing: border-box;
   letter-spacing: 0;
@@ -1637,6 +2093,31 @@ pre {
 .leaderboard-section {
   padding: 70px 0 100px;
   background: var(--paper);
+}
+
+.competition-board-section {
+  padding-bottom: 2rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.competition-board-state {
+  padding: 1.25rem 1.4rem;
+  border: 1px solid #b8d5ee;
+  border-left: 4px solid var(--blue);
+  background: #f3f8fd;
+  color: var(--ink-soft);
+  font-size: 1rem;
+}
+
+.competition-board-version {
+  margin: 0.8rem 0 0;
+  color: var(--ink-soft);
+  font-size: 0.92rem;
+}
+
+.competition-leaderboard-table td:nth-child(5),
+.competition-leaderboard-table td:nth-child(6) {
+  font-variant-numeric: tabular-nums;
 }
 
 .board-notice {

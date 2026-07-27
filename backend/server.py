@@ -4,12 +4,28 @@ import argparse
 import json
 import os
 import re
+import time
 from functools import partial
 from http import HTTPStatus
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
+from backend.evaluation_models import (
+    TERMINAL_EVALUATION_STATUSES,
+    EvaluationConfig,
+    EvaluationConflict,
+    EvaluationNotFound,
+    EvaluationResultNotReady,
+    EvaluationUnavailable,
+)
+from backend.evaluation_service import EvaluationService
+from backend.evaluation_store import EvaluationStore
+from backend.security import (
+    AuthenticationError,
+    RequestIdentity,
+    TokenAuthenticator,
+)
 from backend.submissions import (
     ArchiveLimits,
     Checker,
@@ -26,6 +42,22 @@ from backend.submissions import (
 DETAIL_ROUTE = re.compile(r"^/api/submissions/([^/]+)$")
 LOG_ROUTE = re.compile(r"^/api/submissions/([^/]+)/log$")
 SMOKE_ROUTE = re.compile(r"^/api/submissions/([^/]+)/smoke-test$")
+EVALUATION_CREATE_ROUTE = re.compile(
+    r"^/api/submissions/([^/]+)/full-evaluations$"
+)
+EVALUATION_DETAIL_ROUTE = re.compile(r"^/api/full-evaluations/([^/]+)$")
+EVALUATION_EVENTS_ROUTE = re.compile(
+    r"^/api/full-evaluations/([^/]+)/events$"
+)
+EVALUATION_RESULT_ROUTE = re.compile(
+    r"^/api/full-evaluations/([^/]+)/result$"
+)
+ADMIN_EVALUATION_ROUTE = re.compile(
+    r"^/api/admin/full-evaluations/([^/]+)$"
+)
+ADMIN_EVALUATION_ACTION_ROUTE = re.compile(
+    r"^/api/admin/full-evaluations/([^/]+)/(recover|publish|revoke)$"
+)
 BLOCKED_STATIC_PREFIXES = (
     "/backend/",
     "/runtime-data/",
@@ -46,8 +78,29 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         return self.server.smoke_queue  # type: ignore[attr-defined]
 
     @property
+    def evaluation_service(self) -> EvaluationService:
+        return self.server.evaluation_service  # type: ignore[attr-defined]
+
+    @property
     def max_upload_bytes(self) -> int:
         return self.server.max_upload_bytes  # type: ignore[attr-defined]
+
+    @property
+    def authenticator(self) -> TokenAuthenticator:
+        return self.server.authenticator  # type: ignore[attr-defined]
+
+    def _identity(self, *, admin: bool = False) -> RequestIdentity | None:
+        try:
+            return self.authenticator.authenticate(
+                self.headers.get("Authorization"),
+                require_admin=admin,
+            )
+        except AuthenticationError as error:
+            self._error(
+                HTTPStatus.FORBIDDEN if admin else HTTPStatus.UNAUTHORIZED,
+                str(error),
+            )
+            return None
 
     def _json(self, status: int, payload: object) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -86,6 +139,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         parsed = urlparse(self.path)
         path = parsed.path
         if path == "/api/health":
+            evaluation = self.evaluation_service.readiness()
             self._json(
                 HTTPStatus.OK,
                 {
@@ -98,16 +152,96 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                     "smoke_test_available": (
                         self.service.starter_kit / "bb"
                     ).is_file(),
+                    "full_evaluation_enabled": evaluation["enabled"],
+                    "full_evaluation_ready": evaluation["ready"],
+                    "full_evaluation_message": evaluation["message"],
                 },
             )
             return
+        if path == "/api/leaderboard":
+            query = parse_qs(parsed.query)
+            self._json(
+                HTTPStatus.OK,
+                self.evaluation_service.leaderboard(
+                    case_set_version=query.get("case_set_version", [None])[0],
+                    protocol_version=query.get("protocol_version", [None])[0],
+                ),
+            )
+            return
+        match = ADMIN_EVALUATION_ROUTE.fullmatch(path)
+        if match:
+            if self._identity(admin=True) is None:
+                return
+            try:
+                self._json(
+                    HTTPStatus.OK,
+                    self.evaluation_service.admin_detail(
+                        unquote(match.group(1))
+                    ),
+                )
+            except EvaluationNotFound as error:
+                self._error(HTTPStatus.NOT_FOUND, str(error))
+            return
+        identity: RequestIdentity | None = None
+        if path.startswith("/api/"):
+            identity = self._identity()
+            if identity is None:
+                return
         if path == "/api/submissions":
-            self._json(HTTPStatus.OK, {"submissions": self.service.list()})
+            self._json(
+                HTTPStatus.OK,
+                {"submissions": self.service.list(identity.owner_id)},
+            )
+            return
+        if path == "/api/full-evaluations":
+            self._json(
+                HTTPStatus.OK,
+                {
+                    "evaluations": self.evaluation_service.list(
+                        identity.owner_id
+                    )
+                },
+            )
+            return
+        match = EVALUATION_EVENTS_ROUTE.fullmatch(path)
+        if match:
+            self._evaluation_events(
+                unquote(match.group(1)),
+                parse_qs(parsed.query),
+            )
+            return
+        match = EVALUATION_RESULT_ROUTE.fullmatch(path)
+        if match:
+            try:
+                self._json(
+                    HTTPStatus.OK,
+                    self.evaluation_service.result(
+                        unquote(match.group(1)), identity.owner_id
+                    ),
+                )
+            except EvaluationNotFound as error:
+                self._error(HTTPStatus.NOT_FOUND, str(error))
+            except EvaluationResultNotReady as error:
+                self._error(HTTPStatus.CONFLICT, str(error))
+            return
+        match = EVALUATION_DETAIL_ROUTE.fullmatch(path)
+        if match:
+            try:
+                self._json(
+                    HTTPStatus.OK,
+                    self.evaluation_service.get(
+                        unquote(match.group(1)), identity.owner_id
+                    ),
+                )
+            except EvaluationNotFound as error:
+                self._error(HTTPStatus.NOT_FOUND, str(error))
             return
         match = LOG_ROUTE.fullmatch(path)
         if match:
             try:
-                filename, content = self.service.log_text(unquote(match.group(1)))
+                filename, content = self.service.log_text(
+                    unquote(match.group(1)), identity.owner_id
+                )
                 download = parse_qs(parsed.query).get("download") == ["1"]
                 self._text(
                     HTTPStatus.OK,
@@ -120,7 +254,12 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         match = DETAIL_ROUTE.fullmatch(path)
         if match:
             try:
-                self._json(HTTPStatus.OK, self.service.get(unquote(match.group(1))))
+                self._json(
+                    HTTPStatus.OK,
+                    self.service.get(
+                        unquote(match.group(1)), identity.owner_id
+                    ),
+                )
             except SubmissionNotFound as error:
                 self._error(HTTPStatus.NOT_FOUND, str(error))
             return
@@ -136,22 +275,146 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self) -> None:
         path = urlparse(self.path).path
+        match = ADMIN_EVALUATION_ACTION_ROUTE.fullmatch(path)
+        if match:
+            identity = self._identity(admin=True)
+            if identity is None:
+                return
+            self._admin_evaluation_action(
+                unquote(match.group(1)),
+                match.group(2),
+                identity,
+            )
+            return
+        identity = self._identity()
+        if identity is None:
+            return
         if path == "/api/submissions":
-            self._upload_submission()
+            self._upload_submission(identity)
             return
         match = SMOKE_ROUTE.fullmatch(path)
         if match:
             try:
-                record = self.smoke_queue.request(unquote(match.group(1)))
+                record = self.smoke_queue.request(
+                    unquote(match.group(1)), identity.owner_id
+                )
                 self._json(HTTPStatus.ACCEPTED, record)
             except SubmissionNotFound as error:
                 self._error(HTTPStatus.NOT_FOUND, str(error))
             except SubmissionConflict as error:
                 self._error(HTTPStatus.CONFLICT, str(error))
             return
+        match = EVALUATION_CREATE_ROUTE.fullmatch(path)
+        if match:
+            self._create_evaluation(unquote(match.group(1)), identity)
+            return
         self._error(HTTPStatus.NOT_FOUND, "API route not found")
 
-    def _upload_submission(self) -> None:
+    def _create_evaluation(
+        self,
+        submission_id: str,
+        identity: RequestIdentity,
+    ) -> None:
+        idempotency_key = self.headers.get("Idempotency-Key", "").strip()
+        if not idempotency_key:
+            self._error(
+                HTTPStatus.BAD_REQUEST,
+                "Idempotency-Key is required.",
+            )
+            return
+        try:
+            record, created = self.evaluation_service.create(
+                submission_id,
+                idempotency_key,
+                identity.owner_id,
+            )
+            self._json(
+                HTTPStatus.CREATED if created else HTTPStatus.OK,
+                record,
+            )
+        except SubmissionNotFound as error:
+            self._error(HTTPStatus.NOT_FOUND, str(error))
+        except EvaluationConflict as error:
+            self._error(HTTPStatus.CONFLICT, str(error))
+        except EvaluationUnavailable as error:
+            self._error(HTTPStatus.SERVICE_UNAVAILABLE, str(error))
+
+    def _evaluation_events(
+        self,
+        evaluation_id: str,
+        query: dict[str, list[str]],
+    ) -> None:
+        identity = self._identity()
+        if identity is None:
+            return
+        try:
+            header_value = self.headers.get("Last-Event-ID", "0")
+            query_value = query.get("after", [header_value])[0]
+            after_event_id = max(int(query_value), 0)
+        except (TypeError, ValueError):
+            self._error(HTTPStatus.BAD_REQUEST, "Invalid event cursor.")
+            return
+        try:
+            self.evaluation_service.get(evaluation_id, identity.owner_id)
+        except EvaluationNotFound as error:
+            self._error(HTTPStatus.NOT_FOUND, str(error))
+            return
+
+        self.send_response(HTTPStatus.OK)
+        self.send_header("Content-Type", "text/event-stream; charset=utf-8")
+        self.send_header("Cache-Control", "no-store")
+        # This bounded stream intentionally closes so EventSource reconnects
+        # with Last-Event-ID. It also makes one-shot contract tests finite.
+        self.send_header("Connection", "close")
+        self.send_header("X-Accel-Buffering", "no")
+        self.end_headers()
+
+        one_shot = query.get("once") == ["1"]
+        deadline = time.monotonic() + (0 if one_shot else 20)
+        last_heartbeat = 0.0
+        try:
+            while True:
+                events = self.evaluation_service.events(
+                    evaluation_id,
+                    after_event_id,
+                    identity.owner_id,
+                )
+                for event in events:
+                    after_event_id = int(event["id"])
+                    payload = json.dumps(
+                        event,
+                        ensure_ascii=False,
+                        separators=(",", ":"),
+                    )
+                    message = (
+                        f"id: {after_event_id}\n"
+                        f"event: {event['type']}\n"
+                        f"data: {payload}\n\n"
+                    )
+                    self.wfile.write(message.encode("utf-8"))
+                now = time.monotonic()
+                if events:
+                    self.wfile.flush()
+                record = self.evaluation_service.get(
+                    evaluation_id, identity.owner_id
+                )
+                if (
+                    one_shot
+                    or record["status"] in TERMINAL_EVALUATION_STATUSES
+                    or now >= deadline
+                ):
+                    break
+                if now - last_heartbeat >= 10:
+                    self.wfile.write(b": heartbeat\n\n")
+                    self.wfile.flush()
+                    last_heartbeat = now
+                time.sleep(1)
+        except (BrokenPipeError, ConnectionResetError):
+            return
+        finally:
+            self.close_connection = True
+
+    def _upload_submission(self, identity: RequestIdentity) -> None:
         content_type = self.headers.get("Content-Type", "").split(";", 1)[0].strip()
         if content_type not in {"application/zip", "application/octet-stream"}:
             self._error(
@@ -179,10 +442,56 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
             return
         filename = self.headers.get("X-Agent-Filename", "agent-submission.zip")
         try:
-            record = self.service.create_submission(filename, payload)
+            record = self.service.create_submission(
+                filename,
+                payload,
+                owner_id=identity.owner_id,
+                team_id=identity.team_id,
+            )
             self._json(HTTPStatus.CREATED, record)
         except SubmissionError as error:
             self._error(HTTPStatus.BAD_REQUEST, str(error))
+
+    def _admin_evaluation_action(
+        self,
+        evaluation_id: str,
+        action: str,
+        identity: RequestIdentity,
+    ) -> None:
+        try:
+            if action == "recover":
+                record = self.evaluation_service.admin_recover(
+                    evaluation_id,
+                    actor_id=identity.owner_id,
+                )
+                self._json(HTTPStatus.OK, record)
+                return
+            if action == "publish":
+                team_name = self.headers.get("X-BuildBench-Team-Name", "").strip()
+                if not team_name:
+                    self._error(
+                        HTTPStatus.BAD_REQUEST,
+                        "X-BuildBench-Team-Name is required.",
+                    )
+                    return
+                record = self.evaluation_service.admin_publish(
+                    evaluation_id,
+                    team_name=team_name[:100],
+                    actor_id=identity.owner_id,
+                )
+                self._json(HTTPStatus.OK, record)
+                return
+            if action == "revoke":
+                self.evaluation_service.admin_revoke(
+                    evaluation_id,
+                    actor_id=identity.owner_id,
+                )
+                self._json(HTTPStatus.OK, {"status": "revoked"})
+                return
+        except EvaluationNotFound as error:
+            self._error(HTTPStatus.NOT_FOUND, str(error))
+        except EvaluationConflict as error:
+            self._error(HTTPStatus.CONFLICT, str(error))
 
     def log_message(self, format: str, *args: object) -> None:
         print(
@@ -201,6 +510,9 @@ def create_server(
     limits: ArchiveLimits,
     checker: Checker | None = None,
     smoke_runner: SmokeRunner | None = None,
+    evaluation_config: EvaluationConfig | None = None,
+    evaluation_database: Path | None = None,
+    authenticator: TokenAuthenticator | None = None,
 ) -> ThreadingHTTPServer:
     store = SubmissionStore(data_root)
     store.recover_interrupted()
@@ -215,10 +527,34 @@ def create_server(
         max_workers=max_workers,
         runner=smoke_runner,
     )
+    resolved_evaluation_config = (
+        evaluation_config or EvaluationConfig.from_environment(data_root)
+    )
+    resolved_evaluation_database = (
+        evaluation_database
+        or Path(
+            os.environ.get(
+                "BB_EVALUATION_DB",
+                data_root / "evaluations.sqlite3",
+            )
+        )
+    )
+    evaluation_store = EvaluationStore(resolved_evaluation_database)
+    evaluation_service = EvaluationService(
+        evaluation_store,
+        service,
+        resolved_evaluation_config,
+    )
+    resolved_authenticator = authenticator or TokenAuthenticator.from_environment(
+        resolved_evaluation_config.owner_id
+    )
     handler = partial(BuildBenchHandler, directory=str(website_root.resolve()))
     server = ThreadingHTTPServer((host, port), handler)
     server.submission_service = service  # type: ignore[attr-defined]
     server.smoke_queue = queue  # type: ignore[attr-defined]
+    server.evaluation_store = evaluation_store  # type: ignore[attr-defined]
+    server.evaluation_service = evaluation_service  # type: ignore[attr-defined]
+    server.authenticator = resolved_authenticator  # type: ignore[attr-defined]
     server.max_upload_bytes = limits.upload_bytes  # type: ignore[attr-defined]
     return server
 
@@ -255,6 +591,12 @@ def main() -> int:
         type=int,
         default=int(os.environ.get("BB_SMOKE_WORKERS", "2")),
     )
+    parser.add_argument(
+        "--evaluation-db",
+        type=Path,
+        default=None,
+        help="SQLite database for durable Full Evaluation state",
+    )
     args = parser.parse_args()
 
     limits = ArchiveLimits()
@@ -266,6 +608,7 @@ def main() -> int:
         args.data_root,
         args.smoke_workers,
         limits,
+        evaluation_database=args.evaluation_db,
     )
     print(
         f"Build-Bench website: http://{args.host}:{server.server_port}/",
@@ -273,6 +616,11 @@ def main() -> int:
     )
     print(f"Starter Kit: {args.starter_kit.resolve()}", flush=True)
     print(f"Runtime data: {args.data_root.resolve()}", flush=True)
+    print(
+        "Full Evaluation: "
+        + str(server.evaluation_service.readiness()["message"]),  # type: ignore[attr-defined]
+        flush=True,
+    )
     try:
         server.serve_forever()
     except KeyboardInterrupt:

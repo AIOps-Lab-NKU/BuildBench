@@ -37,6 +37,8 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("Smoke Test", script)
         self.assertIn("Actions", script)
         self.assertIn("Start Full Evaluation", script)
+        self.assertIn("data-evaluation-action", script)
+        self.assertIn("data-evaluation-confirm", html)
         self.assertIn("data-log-action", script)
         self.assertIn("View log", script)
         self.assertIn("showModal", script)
@@ -100,16 +102,58 @@ class FrontendContractTests(unittest.TestCase):
         self.assertNotIn('<th scope="row">Case Schema</th>', html)
         self.assertNotIn('<th scope="row">Agent Schema</th>', html)
 
-    def test_submission_script_uses_only_milestone_c_routes(self) -> None:
+    def test_submission_script_uses_full_evaluation_routes(self) -> None:
         script = (ROOT / "submissions.js").read_text(encoding="utf-8")
         self.assertIn('api("/api/submissions"', script)
         self.assertIn("/smoke-test", script)
-        self.assertNotIn("/api/full-evaluation", script)
+        self.assertIn('api("/api/full-evaluations"', script)
+        self.assertIn("/full-evaluations", script)
+        self.assertIn("Idempotency-Key", script)
+        self.assertNotIn("Start another evaluation", script)
         self.assertNotIn("Content-Length", script)
+
+    def test_full_evaluation_detail_contract(self) -> None:
+        html = (ROOT / "evaluation-detail.html").read_text(encoding="utf-8")
+        script = (ROOT / "evaluation-detail.js").read_text(encoding="utf-8")
+        for hook in (
+            "data-evaluation-status",
+            "data-evaluation-progress",
+            "data-evaluation-stages",
+            "data-evaluation-result",
+            "data-evaluation-timeline",
+        ):
+            self.assertIn(hook, html)
+        self.assertIn("/api/full-evaluations/", script)
+        self.assertIn("EventSource", script)
+        self.assertIn("schedulePolling", script)
+        self.assertNotIn("case_id", script)
+        self.assertNotIn("successful_cases", script)
+
+    def test_public_evaluation_schema_is_present(self) -> None:
+        schema = ROOT / "backend" / "schema" / "evaluation-public-v0.1.schema.json"
+        self.assertTrue(schema.is_file())
+        text = schema.read_text(encoding="utf-8")
+        self.assertIn('"status"', text)
+        self.assertIn('"progress"', text)
+        self.assertNotIn('"case_id"', text)
 
     def test_runtime_state_is_git_ignored(self) -> None:
         ignored = (ROOT / ".gitignore").read_text(encoding="utf-8").splitlines()
         self.assertIn("runtime-data/", ignored)
+
+    def test_leaderboard_has_versioned_live_results_contract(self) -> None:
+        html = (ROOT / "leaderboard.html").read_text(encoding="utf-8")
+        script = (ROOT / "leaderboard-live.js").read_text(encoding="utf-8")
+        schema = (
+            ROOT / "backend" / "schema" / "leaderboard-public-v0.1.schema.json"
+        )
+        self.assertIn("Published Full Evaluations", html)
+        self.assertIn("data-live-board-body", html)
+        self.assertIn("leaderboard-live.js", html)
+        self.assertIn('fetch("/api/leaderboard"', script)
+        self.assertIn("case_set_version", script)
+        self.assertIn("protocol_version", script)
+        self.assertTrue(schema.is_file())
 
 
 if __name__ == "__main__":
