@@ -322,7 +322,11 @@ class SubmissionService:
     ) -> None:
         if owner_id is None:
             return
-        record_owner = str(record.get("owner_id") or "development-team")
+        record_owner = str(
+            record.get("team_id")
+            or record.get("owner_id")
+            or "development-team"
+        )
         if record_owner != owner_id:
             raise SubmissionNotFound("submission not found")
 
@@ -488,7 +492,12 @@ class SubmissionService:
             records = [
                 record
                 for record in records
-                if str(record.get("owner_id") or "development-team") == owner_id
+                if str(
+                    record.get("team_id")
+                    or record.get("owner_id")
+                    or "development-team"
+                )
+                == owner_id
             ]
         return [self.public_record(record) for record in records]
 

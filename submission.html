@@ -8,10 +8,11 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260725-5" />
+    <link rel="stylesheet" href="styles.css?v=20260729-2" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/submission.js?v=20260725-4" defer></script>
+    <script src="i18n/submission.js?v=20260729-2" defer></script>
     <script src="i18n.js?v=20260716-3" defer></script>
+    <script src="auth-client.js?v=20260729-1" defer></script>
     <script src="app.js?v=20260716-3" defer></script>
   </head>
   <body data-page="submission">
@@ -64,14 +65,38 @@
             <span class="section-label">01 / Start</span>
             <h2>Quick start</h2>
             <p>Run the official example first, then create, test, package, and upload your own Agent.</p>
+
+            <div class="submission-guide-subsection quick-start-prerequisites">
+              <h3>Before you begin</h3>
+              <p>The Starter Kit is designed for a Linux shell. The commands below have been verified on Ubuntu and WSL2; use Docker Desktop with Linux containers when working through WSL2.</p>
+              <div class="submission-guide-table-wrap">
+                <table class="submission-guide-table" aria-label="Local prerequisites">
+                  <thead><tr><th scope="col">Item</th><th scope="col">What you need</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Host tools</th><td>Git and Docker Engine 24+, or Docker Desktop with Linux containers enabled.</td></tr>
+                    <tr><th scope="row">Host packages</th><td>Python, RPM tooling, <code>obs-build</code>, compilers, and Case dependencies are not installed on the host; versioned containers provide them.</td></tr>
+                    <tr><th scope="row">Network</th><td>Initial setup needs access to the GitHub release and the published container registry or organizer mirror. Agent runtime network policy is <span class="requirement-tba">TBA</span>.</td></tr>
+                    <tr><th scope="row">CPU, memory, and disk</th><td>Minimum and recommended local resources are <span class="requirement-tba">TBA</span>. Formal evaluation quotas are published separately and may differ from your local machine.</td></tr>
+                    <tr><th scope="row">Credentials</th><td>Do not place model API keys in the Agent directory or ZIP. The platform credential-injection policy is <span class="requirement-tba">TBA</span>.</td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="submission-inline-note"><span>Check</span><code>./bb doctor</code> verifies required commands, Docker access, host architecture, and runtime-image availability. It does not certify that your machine meets the final competition resource limits.</p>
+            </div>
+
             <ol class="quick-start-steps" aria-label="Submission preparation steps">
               <li>
                 <span class="quick-start-number">01</span>
                 <div class="quick-start-step">
                   <strong>Get the Starter Kit</strong>
-                  <p>Download the archive from <a href="data-downloads.html">Data &amp; Downloads</a>, extract it, and enter the project directory.</p>
-                  <div class="code-block quick-start-command"><pre><code>tar -xzf buildbench-starter-kit.tar.gz
-cd buildbench-starter-kit</code></pre></div>
+                  <p>Download the current ZIP from <a href="data-downloads.html">Data &amp; Downloads</a>, extract it in a Linux or WSL2 shell, and enter the versioned directory.</p>
+                  <div class="code-block quick-start-command"><pre><code>KIT_VERSION=0.1.0-rc.1
+unzip "buildbench-starter-kit-${KIT_VERSION}.zip"
+cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Configure</dt><dd>No project configuration is required at this step. Keep the entire extracted directory together.</dd></div>
+                    <div><dt>Verify</dt><dd>Run <code>pwd</code> and <code>ls</code>; all later <code>./bb</code> commands must be executed from this directory.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: the current directory contains <code>bb</code>, <code>agents/</code>, and <code>example-cases/</code>.</span></p>
                 </div>
               </li>
@@ -82,6 +107,10 @@ cd buildbench-starter-kit</code></pre></div>
                   <p>Check Git, Docker, and the versioned images, then run the complete failure-to-success example.</p>
                   <div class="code-block quick-start-command"><pre><code>./bb doctor
 ./bb demo</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Configure</dt><dd>Use the image references pinned by the release. If the organizer provides a registry mirror, set <code>BB_AGENT_IMAGE</code>, <code>BB_VALIDATOR_IMAGE</code>, and <code>BB_EXAMPLE_ASSETS_IMAGE</code> before running <code>doctor</code>.</dd></div>
+                    <div><dt>What it runs</dt><dd><code>doctor</code> performs environment checks only. <code>demo</code> uses the official Example Agent and the self-contained <code>hello</code> Case; it does not use your Agent code.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: <code>Final validation succeeded</code>; evidence is saved under <code>runs/demo/</code>.</span></p>
                 </div>
               </li>
@@ -91,6 +120,10 @@ cd buildbench-starter-kit</code></pre></div>
                   <strong>Create your Agent</strong>
                   <p>Copy the managed Python template into a new editable Agent directory.</p>
                   <div class="code-block quick-start-command"><pre><code>./bb init my-agent</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Argument</dt><dd><code>my-agent</code> becomes both the directory name and default <code>agent.name</code>. Use 2–64 lowercase letters, digits, or hyphens.</dd></div>
+                    <div><dt>Configure</dt><dd>Edit repair logic under <code>src/</code>, pin Python dependencies with <code>==</code> in <code>requirements.lock</code>, and change name, version, or entrypoint in <code>agent.yaml</code>.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: a new Agent is created at <code>agents/my-agent/</code>; existing directories are never overwritten.</span></p>
                 </div>
               </li>
@@ -101,6 +134,10 @@ cd buildbench-starter-kit</code></pre></div>
                   <p>Implement the repair logic in <code>agents/my-agent/src/</code>, then run every bundled Example Case.</p>
                   <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
 ./bb test --agent ./agents/my-agent</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.1</code> contains one local Example Case, <code>hello</code>.</dd></div>
+                    <div><dt>Agent behavior</dt><dd>The entrypoint declared in <code>agent.yaml</code> runs once per Case. It reads <code>/workspace/input</code>, edits <code>/workspace/work/repo</code>, and writes <code>/workspace/output/agent-result.json</code>.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case patches, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
                 </div>
               </li>
@@ -111,6 +148,10 @@ cd buildbench-starter-kit</code></pre></div>
                   <p>Validate the manifest, entrypoint, dependencies, and files before creating a deterministic upload bundle.</p>
                   <div class="code-block quick-start-command"><pre><code>./bb check --agent ./agents/my-agent
 ./bb package --agent ./agents/my-agent</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Check</dt><dd>Rejects missing required files, unsupported manifest fields, invalid entrypoints, unpinned dependencies, generated outputs, caches, symbolic links, and likely credentials.</dd></div>
+                    <div><dt>Package</dt><dd>Writes <code>dist/agent-submission.zip</code> by default. Use <code>--output path/name.zip</code> only when you need a different local filename.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: both checks pass and the command prints the ZIP path, size, and SHA-256.</span></p>
                 </div>
               </li>
@@ -120,10 +161,31 @@ cd buildbench-starter-kit</code></pre></div>
                   <strong>Upload the Agent bundle</strong>
                   <p>Open <a href="my-submissions.html">My Submissions</a>, choose <strong>Make new submission</strong>, and upload the generated ZIP.</p>
                   <div class="code-block quick-start-command"><pre><code>ls -lh dist/agent-submission.zip</code></pre></div>
+                  <dl class="quick-start-details">
+                    <div><dt>Upload</dt><dd>Select the ZIP produced by <code>./bb package</code>, not the whole Starter Kit directory and not a ZIP you assembled manually.</dd></div>
+                    <div><dt>After upload</dt><dd>The platform stores an immutable Agent version, performs static checks, and then runs the hosted Smoke Test. Full evaluation starts only after you explicitly select a qualified version.</dd></div>
+                  </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: a new immutable Agent version appears in the submission table and enters the Checking state.</span></p>
                 </div>
               </li>
             </ol>
+
+            <div class="submission-guide-subsection dataset-scope">
+              <h3>Cases used during development and evaluation</h3>
+              <p>Case sets are versioned separately from the Agent submission format. Counts that have not yet been frozen remain placeholders and will be published with the corresponding dataset release.</p>
+              <div class="submission-guide-table-wrap">
+                <table class="submission-guide-table" aria-label="Case set scope">
+                  <thead><tr><th scope="col">Case set</th><th scope="col">Purpose</th><th scope="col">Current scope</th></tr></thead>
+                  <tbody>
+                    <tr><th scope="row">Local Example Cases</th><td>Verify the Starter Kit, Agent entrypoint, workspace protocol, patch generation, and local Validator path.</td><td>1 public Case: <code>hello</code></td></tr>
+                    <tr><th scope="row">Development Cases</th><td>Public Cases for Agent development and broader local experiments.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
+                    <tr><th scope="row">Hosted Smoke Cases</th><td>A lightweight hosted subset used to qualify an uploaded Agent version.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
+                    <tr><th scope="row">Full Evaluation Cases</th><td>Organizer-controlled Cases used for formal scoring.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+              <p class="submission-inline-note"><span>Scope</span>The original Build-Bench benchmark is the source of competition candidates; its historical total must not be read as the final competition Case count. Final set sizes and versions will be announced on <a href="data-downloads.html">Data &amp; Downloads</a>.</p>
+            </div>
           </section>
 
           <section class="doc-section" id="submission-contents">
@@ -138,16 +200,13 @@ cd buildbench-starter-kit</code></pre></div>
 ├── agent.yaml
 ├── src/
 ├── requirements.lock
-├── Dockerfile
-├── tests/
-│   └── smoke/
 └── README.md</code></pre>
               </div>
               <dl class="submission-file-notes">
-                <div><dt><code>agent.yaml</code> and <code>src/</code></dt><dd><strong>Required.</strong> Declare the runtime and include the Agent implementation.</dd></div>
-                <div><dt><code>requirements.lock</code></dt><dd>Required when using the managed Python runtime.</dd></div>
-                <div><dt><code>Dockerfile</code></dt><dd>Include only when using a custom runtime.</dd></div>
-                <div><dt><code>tests/</code> and <code>README.md</code></dt><dd>Optional local tests and method documentation.</dd></div>
+                <div><dt><code>agent.yaml</code></dt><dd><strong>Required.</strong> Declares Agent identity, managed runtime, entrypoint, and protocol version.</dd></div>
+                <div><dt><code>src/</code></dt><dd><strong>Required.</strong> Contains the Agent implementation and the declared Python module or script.</dd></div>
+                <div><dt><code>requirements.lock</code></dt><dd><strong>Required.</strong> Declare every third-party Python dependency with an exact <code>==</code> version.</dd></div>
+                <div><dt><code>README.md</code></dt><dd><strong>Required in v0.1.</strong> Describes how the Agent works and any participant-facing notes.</dd></div>
               </dl>
             </div>
 
@@ -157,7 +216,7 @@ cd buildbench-starter-kit</code></pre></div>
             </aside>
 
             <h3>Minimum <code>agent.yaml</code></h3>
-            <p>The manifest declares how the platform builds and starts the Agent. The complete schema will be provided in the Starter Kit.</p>
+            <p>The manifest declares how the platform builds and starts the Agent. Version <code>0.1</code> supports the managed Python 3.11 profile; the Starter Kit validates this exact contract before packaging.</p>
             <div class="code-block submission-code manifest-example">
               <div class="code-toolbar"><span>agent.yaml</span><small>minimum managed-runtime example</small></div>
               <pre><code>schema_version: "0.1"
@@ -176,8 +235,7 @@ entrypoint:
   - "src.main"
 
 protocol:
-  version: "0.1"
-  build_feedback: true</code></pre>
+  version: "0.1"</code></pre>
             </div>
           </section>
 
@@ -185,6 +243,19 @@ protocol:
             <span class="section-label">03 / Runtime</span>
             <h2>Runtime interface</h2>
             <p>Each Case starts in a fresh workspace. The original input remains unchanged while the Agent works on a writable copy.</p>
+
+            <h3>Execution contract</h3>
+            <div class="submission-guide-table-wrap">
+              <table class="submission-guide-table" aria-label="Agent execution contract">
+                <tbody>
+                  <tr><th scope="row">Invocation</th><td>The platform starts the <code>entrypoint</code> list from <code>agent.yaml</code> once for each Case, with the Agent bundle as the process working directory.</td></tr>
+                  <tr><th scope="row">Workspace variable</th><td><code>BB_WORKSPACE=/workspace</code>. Resolve all Case input, worktree, and structured output paths from this root.</td></tr>
+                  <tr><th scope="row">Completion</th><td>For the current v0.1 local protocol, exit with code <code>0</code> and write <code>/workspace/output/agent-result.json</code> with <code>status: "completed"</code>. A non-zero exit is an Agent error.</td></tr>
+                  <tr><th scope="row">Diagnostics</th><td>Write human-readable progress to stdout or stderr. Do not place secrets in logs; both streams are retained by the platform.</td></tr>
+                  <tr><th scope="row">Repair result</th><td>Do not submit a pre-generated patch. Modify only the writable worktree; the platform creates the canonical <code>repair.diff</code> after the Agent exits.</td></tr>
+                </tbody>
+              </table>
+            </div>
 
             <h3>Workspace</h3>
             <div class="runtime-interface-grid">
@@ -200,12 +271,22 @@ protocol:
                 <li><strong>Read <code>input/</code>.</strong><span>It contains the task metadata, initial failure evidence, and original package tree.</span></li>
                 <li><strong>Modify only <code>work/repo/</code>.</strong><span>This is the candidate package tree used for build requests.</span></li>
                 <li><strong>Use stdout and stderr for logs.</strong><span>The platform captures both streams for diagnostics.</span></li>
-                <li><strong>Optionally write <code>agent-result.json</code>.</strong><span>Place machine-readable completion details in <code>output/</code>.</span></li>
+                <li><strong>Write <code>agent-result.json</code>.</strong><span>Place machine-readable completion status and diagnostics in <code>output/</code>.</span></li>
               </ul>
             </div>
 
+            <div class="code-block submission-code agent-result-example">
+              <div class="code-toolbar"><span>output/agent-result.json</span><small>minimal successful result</small></div>
+              <pre><code>{
+  "schema_version": "0.1",
+  "status": "completed",
+  "message": "Repair attempt completed.",
+  "modified_paths": ["input/package.spec"]
+}</code></pre>
+            </div>
+
             <h3>Build feedback</h3>
-            <p>When build feedback is enabled, the Agent requests a build through the platform-provided <code>bb-build</code> command. This planned CLI will be included in the Starter Kit.</p>
+            <p>The hosted evaluation design lets an Agent request bounded build feedback through the platform-provided <code>bb-build</code> command. This command is not included in Starter Kit <code>v0.1.0-rc.1</code>; its request/response schema, limits, and release version remain <span class="requirement-tba">TBA</span>.</p>
             <div class="code-block submission-code build-command">
               <div class="code-toolbar"><span>Planned CLI example</span><small>not yet released</small></div>
               <pre><code>bb-build run \
@@ -246,9 +327,9 @@ protocol:
               <h3>Before full evaluation</h3>
               <p>Complete these checks in order before using a full-evaluation attempt:</p>
               <ol class="submission-test-steps">
-                <li><strong>Prepare the released tools.</strong><span>Download the Starter Kit, schemas, and development Cases from <a href="data-downloads.html">Data &amp; Downloads</a> when they become available.</span></li>
+                <li><strong>Prepare the released tools.</strong><span>Download the Starter Kit from <a href="data-downloads.html">Data &amp; Downloads</a>. Add versioned Development Cases when their public release becomes available.</span></li>
                 <li><strong>Run local conformance checks.</strong><span>Validate the ZIP layout and <code>agent.yaml</code>, then start the declared entrypoint in the local Runner.</span></li>
-                <li><strong>Exercise the runtime interface.</strong><span>Run at least one example Case, edit only <code>/workspace/work/repo</code>, and verify any <code>agent-result.json</code> output.</span></li>
+                <li><strong>Exercise the runtime interface.</strong><span>Run at least one Example Case, edit only <code>/workspace/work/repo</code>, and verify the required <code>agent-result.json</code> output.</span></li>
                 <li><strong>Pass a hosted Smoke Test.</strong><span>Upload the same Agent bundle from <a href="my-submissions.html">My Submissions</a> and review the returned logs and diagnostics.</span></li>
                 <li><strong>Select the qualified version.</strong><span>Start full evaluation explicitly; uploading a new version alone does not place it in the evaluation queue.</span></li>
               </ol>
@@ -259,13 +340,13 @@ protocol:
               <p>Local testing should confirm that the submission contract works before organizer resources are used. Check all of the following:</p>
               <ul class="submission-checklist">
                 <li>The ZIP opens with <code>agent.yaml</code> and <code>src/</code> at its root.</li>
-                <li>The manifest matches the published Agent Schema and declares one valid entrypoint.</li>
-                <li>The entrypoint starts without interactive input and exits with a meaningful status.</li>
+                <li>The manifest passes <code>./bb check</code> and declares one valid managed-Python entrypoint.</li>
+                <li>The entrypoint starts without interactive input, writes the required structured result, and exits with code <code>0</code> when it completes normally.</li>
                 <li><code>/workspace/input</code> remains unchanged; repository edits are confined to <code>/workspace/work/repo</code>.</li>
-                <li>Optional <code>agent-result.json</code> output matches the published result schema.</li>
-                <li>The Agent completes at least one released example or local Smoke Case.</li>
+                <li><code>/workspace/output/agent-result.json</code> contains <code>schema_version: "0.1"</code> and a supported status.</li>
+                <li>The Agent completes at least one released local Example Case.</li>
               </ul>
-              <p class="submission-inline-note"><span>Planned</span>The Starter Kit will provide the local Runner, conformance CLI, schemas, example Cases, and exact commands. These downloads are not yet published.</p>
+              <p class="submission-inline-note"><span>Released</span>Starter Kit <code>v0.1.0-rc.1</code> provides the local Runner, managed-Python template, one <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
             </div>
 
             <div class="submission-guide-subsection">
@@ -289,13 +370,13 @@ protocol:
             <div class="submission-guide-subsection">
               <h3>Key requirements checklist</h3>
               <ul class="submission-checklist">
-                <li>Submit one source ZIP containing the required <code>agent.yaml</code> and <code>src/</code> entries.</li>
-                <li>Declare one runtime: managed Python 3.11 with <code>requirements.lock</code>, or a custom runtime with a platform-reviewed <code>Dockerfile</code>.</li>
+                <li>Submit one source ZIP containing the required <code>agent.yaml</code>, <code>src/</code>, <code>requirements.lock</code>, and <code>README.md</code> entries.</li>
+                <li>Version <code>0.1</code> accepts the managed Python 3.11 runtime only. Custom Docker runtimes are not accepted in this release.</li>
                 <li>Provide a deterministic, non-interactive entrypoint that can process one Case per invocation.</li>
                 <li>Do not include <code>.env</code> files, credentials, API keys, pre-generated repair patches, hidden Case information, dependency caches, or previous run artifacts.</li>
                 <li>Read task metadata and the original package only from <code>/workspace/input</code>; make all proposed repairs in <code>/workspace/work/repo</code>.</li>
                 <li>Do not modify evaluator files or paths outside the Case's published <code>allowed_paths</code>.</li>
-                <li>Only optional machine-readable status and diagnostics may be written to <code>/workspace/output</code>. The official <code>repair.diff</code> is generated by the platform, not the Agent.</li>
+                <li>Write the required machine-readable completion result to <code>/workspace/output/agent-result.json</code>. The official <code>repair.diff</code> is generated by the platform, not the Agent.</li>
               </ul>
             </div>
 
@@ -305,17 +386,17 @@ protocol:
                 <li>The Agent runs as a non-root user in an isolated runtime created for one Case.</li>
                 <li><code>/workspace/input</code> is mounted read-only; only the work and output directories are writable.</li>
                 <li>The Docker Socket and Docker daemon are never exposed to the Agent.</li>
-                <li>Build feedback is requested through the platform-provided <code>bb-build</code> command and Build Gateway. The Docker Validator remains organizer-controlled.</li>
+                <li>When the hosted build-feedback protocol is released, requests will go through <code>bb-build</code> and the Build Gateway. The Docker Validator remains organizer-controlled.</li>
                 <li>The platform captures stdout, stderr, exit status, wall time, and build requests for diagnosis and audit.</li>
                 <li>Network policy, per-Case wall-time limit, maximum build requests, CPU, memory, and storage limits are <span class="requirement-tba">TBA</span>.</li>
               </ul>
             </div>
 
             <div class="submission-guide-subsection">
-              <h3>Dependencies and custom runtime</h3>
-              <p>For the managed runtime, declare Python dependencies in <code>requirements.lock</code>. The competition will publish the exact Python 3.11 base environment and supported installation process with the Starter Kit. Undeclared host packages must not be assumed.</p>
-              <p>A custom <code>Dockerfile</code> is optional for Agents that cannot use the managed runtime. The platform will inspect it, build an immutable image, record its digest, and run it under the same non-root, filesystem, network, and resource policies as managed submissions.</p>
-              <p>Supported base images, package-installation rules, network access during image construction and execution, maximum ZIP size, and submission frequency are <span class="requirement-tba">TBA</span>. Final values will be published before submissions open.</p>
+              <h3>Dependencies and managed runtime</h3>
+              <p>Declare every third-party Python dependency in <code>requirements.lock</code> with an exact <code>==</code> version. Direct URLs, Git references, editable installs, local paths, and unpinned requirements are rejected by <code>./bb check</code>. Undeclared host packages must not be assumed.</p>
+              <p>Custom <code>Dockerfile</code> submissions are deferred beyond protocol <code>v0.1</code>. If introduced later, their supported base images and image-build policy will be released as a new submission-protocol version rather than silently changing the current contract.</p>
+              <p>Agent runtime network access, model credential injection, maximum ZIP size, submission frequency, and formal CPU, memory, storage, wall-time, and build-request limits are <span class="requirement-tba">TBA</span>. Final values will be published before submissions open.</p>
             </div>
           </section>
 

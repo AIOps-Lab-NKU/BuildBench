@@ -47,6 +47,10 @@
     English: "英文",
     Chinese: "中文",
     "Language selection": "语言选择",
+    "My Submissions": "我的提交",
+    "Sign in": "登录",
+    "Sign out": "退出登录",
+    "Register team": "注册团队",
   });
 
   const translations = Object.freeze({

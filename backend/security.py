@@ -21,6 +21,8 @@ class RequestIdentity:
     team_id: str
     display_name: str
     role: str = "participant"
+    authentication_method: str = "bearer"
+    session_id: str = ""
 
     @property
     def is_admin(self) -> bool:
@@ -48,6 +50,7 @@ class TokenAuthenticator:
             owner_id="development-team",
             team_id="development-team",
             display_name="Development Team",
+            authentication_method="development",
         )
         if required and not self._identities:
             raise ValueError("authentication is required but no tokens are configured")
@@ -97,6 +100,7 @@ class TokenAuthenticator:
                 "BB_DEV_TEAM_NAME", "Development Team"
             ).strip()
             or "Development Team",
+            authentication_method="development",
         )
         return cls(
             identities,

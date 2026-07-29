@@ -11,6 +11,41 @@ function renderIcons() {
   window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
 }
 
+async function renderAccountNavigation() {
+  const actions = document.querySelector(".header-actions");
+  if (!actions || actions.querySelector("[data-account-navigation]")) return;
+  const account = document.createElement("div");
+  account.className = "account-navigation";
+  account.dataset.accountNavigation = "";
+  account.hidden = true;
+  actions.append(account);
+  const session = await window.BuildBenchAuth?.getSession?.();
+  if (session?.team) {
+    account.innerHTML = `
+      <a href="team.html" class="account-team-link">
+        <i data-lucide="users" aria-hidden="true"></i>
+        <span>${session.team.name}</span>
+      </a>
+      <a href="my-submissions.html">${translate("My Submissions")}</a>
+      <button type="button" data-account-signout>${translate("Sign out")}</button>
+    `;
+    account.querySelector("[data-account-signout]")?.addEventListener("click", async () => {
+      try {
+        await window.BuildBenchAuth.logout();
+      } finally {
+        window.location.assign("index.html");
+      }
+    });
+  } else {
+    account.innerHTML = `
+      <a href="login.html">${translate("Sign in")}</a>
+      <a class="account-register-link" href="register.html">${translate("Register team")}</a>
+    `;
+  }
+  account.hidden = false;
+  renderIcons();
+}
+
 function setMenu(open) {
   if (!menuButton || !nav) return;
 
@@ -56,6 +91,8 @@ window.addEventListener("resize", () => {
 window.addEventListener("buildbench:languagechange", () => {
   updateMobileNavGeometry();
   setMenu(menuButton?.getAttribute("aria-expanded") === "true");
+  document.querySelector("[data-account-navigation]")?.remove();
+  renderAccountNavigation();
 });
 
 if ("IntersectionObserver" in window && localNavLinks.length) {
@@ -127,4 +164,5 @@ if (boardRows.length) applyBoardFilter("all");
 window.addEventListener("DOMContentLoaded", () => {
   updateMobileNavGeometry();
   renderIcons();
+  renderAccountNavigation();
 });

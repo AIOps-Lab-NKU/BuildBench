@@ -21,6 +21,17 @@ On Ubuntu/WSL, the equivalent one-command launcher is:
 
 Then open <http://127.0.0.1:8765/>.
 
+Participant registration is built into the same server:
+
+- `/register.html`: the captain creates one team and records 1–5 members;
+- `/login.html`: captain sign-in;
+- `/team.html`: roster and team-name management before roster lock;
+- `/my-submissions.html`: team submission and evaluation workspace.
+
+Other members are roster records and do not create accounts. Team names are
+unique per competition, every member email is required, and one normalized
+member email cannot belong to more than one team in the same competition.
+
 The backend expects the Starter Kit in the sibling directory
 `../buildbench-starter-kit`. Override it when necessary:
 
@@ -82,6 +93,15 @@ export BB_SMOKE_WORKERS=2
 
 ```text
 GET  /api/health
+POST /api/auth/register
+POST /api/auth/login
+POST /api/auth/logout
+GET  /api/auth/me
+GET   /api/team
+PATCH /api/team
+POST   /api/team/members
+PATCH  /api/team/members/{id}
+DELETE /api/team/members/{id}
 GET  /api/submissions
 GET  /api/submissions/{id}
 POST /api/submissions
@@ -155,9 +175,22 @@ The accepted configuration is a project technical control and does not replace
 an independent security audit.
 
 The one-server authentication MVP reads bearer identities from
-`BB_AUTH_TOKENS_JSON` or `BB_AUTH_TOKENS_FILE`; set `BB_AUTH_REQUIRED=1` to
-reject unauthenticated API requests. Production deployments must terminate TLS
-and may replace this token provider with an OIDC-aware reverse proxy.
+`BB_AUTH_TOKENS_JSON` or `BB_AUTH_TOKENS_FILE` for administrator automation and
+uses password-authenticated browser sessions for participants. Set
+`BB_AUTH_REQUIRED=1` to reject the legacy unauthenticated development identity.
+Participant accounts and teams are stored in
+`$BB_WEB_DATA_ROOT/accounts.sqlite3`; override this with `BB_ACCOUNT_DB`.
+`BB_COMPETITION_ID` selects the competition namespace used by team-name and
+member-email uniqueness constraints.
+Passwords use versioned `scrypt` hashes. Session cookies are HttpOnly and
+SameSite, and browser writes require a CSRF token. Production deployments must
+terminate TLS, set `BB_COOKIE_SECURE=1`, and provide a stable high-entropy
+`BB_CSRF_SECRET`.
+
+Email verification is intentionally not enabled in the current registration
+phase. The roster-lock trigger remains an organizer policy decision; the
+database and API already reject member changes after `members_locked_at` is
+set.
 
 Full Evaluation Workers run separately from the website:
 

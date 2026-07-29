@@ -11,6 +11,24 @@ from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
 from urllib.parse import parse_qs, unquote, urlparse
 
+from backend.account_store import (
+    AccountConflict,
+    AccountError,
+    AccountLocked,
+    AccountNotFound,
+    AccountStore,
+    AccountValidationError,
+    DEFAULT_COMPETITION_ID,
+)
+from backend.auth_service import (
+    AuthConflict,
+    AuthError,
+    AuthRateLimited,
+    AuthService,
+    AuthValidationError,
+    HybridAuthenticator,
+    InvalidCredentials,
+)
 from backend.evaluation_models import (
     TERMINAL_EVALUATION_STATUSES,
     EvaluationConfig,
@@ -58,6 +76,7 @@ ADMIN_EVALUATION_ROUTE = re.compile(
 ADMIN_EVALUATION_ACTION_ROUTE = re.compile(
     r"^/api/admin/full-evaluations/([^/]+)/(recover|publish|revoke)$"
 )
+TEAM_MEMBER_ROUTE = re.compile(r"^/api/team/members/([^/]+)$")
 BLOCKED_STATIC_PREFIXES = (
     "/backend/",
     "/runtime-data/",
@@ -86,29 +105,61 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         return self.server.max_upload_bytes  # type: ignore[attr-defined]
 
     @property
-    def authenticator(self) -> TokenAuthenticator:
+    def authenticator(self) -> HybridAuthenticator:
         return self.server.authenticator  # type: ignore[attr-defined]
 
-    def _identity(self, *, admin: bool = False) -> RequestIdentity | None:
+    @property
+    def auth_service(self) -> AuthService:
+        return self.server.auth_service  # type: ignore[attr-defined]
+
+    @property
+    def account_store(self) -> AccountStore:
+        return self.server.account_store  # type: ignore[attr-defined]
+
+    def _identity(
+        self,
+        *,
+        admin: bool = False,
+        csrf: bool = False,
+    ) -> RequestIdentity | None:
         try:
-            return self.authenticator.authenticate(
+            identity = self.authenticator.authenticate(
                 self.headers.get("Authorization"),
+                self.headers.get("Cookie"),
                 require_admin=admin,
             )
+            if csrf and identity.authentication_method == "session":
+                self.auth_service.verify_csrf(
+                    self.headers.get("Cookie"),
+                    self.headers.get("X-CSRF-Token"),
+                )
+            return identity
         except AuthenticationError as error:
             self._error(
-                HTTPStatus.FORBIDDEN if admin else HTTPStatus.UNAUTHORIZED,
+                (
+                    HTTPStatus.FORBIDDEN
+                    if admin or csrf
+                    else HTTPStatus.UNAUTHORIZED
+                ),
                 str(error),
             )
             return None
 
-    def _json(self, status: int, payload: object) -> None:
+    def _json(
+        self,
+        status: int,
+        payload: object,
+        *,
+        headers: dict[str, str] | None = None,
+    ) -> None:
         body = json.dumps(payload, ensure_ascii=False).encode("utf-8")
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Content-Length", str(len(body)))
         self.send_header("Cache-Control", "no-store")
         self.send_header("X-Content-Type-Options", "nosniff")
+        for name, value in (headers or {}).items():
+            self.send_header(name, value)
         self.end_headers()
         self.wfile.write(body)
 
@@ -134,6 +185,81 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
             )
         self.end_headers()
         self.wfile.write(body)
+
+    def _read_json_body(
+        self,
+        *,
+        maximum: int = 64 * 1024,
+    ) -> dict[str, object] | None:
+        if self.headers.get_content_type() != "application/json":
+            self._error(
+                HTTPStatus.UNSUPPORTED_MEDIA_TYPE,
+                "Content-Type must be application/json.",
+            )
+            return None
+        try:
+            length = int(self.headers.get("Content-Length", ""))
+        except ValueError:
+            self._error(
+                HTTPStatus.LENGTH_REQUIRED,
+                "Content-Length is required.",
+            )
+            return None
+        if length <= 0:
+            self._error(HTTPStatus.BAD_REQUEST, "JSON body is required.")
+            return None
+        if length > maximum:
+            self._error(
+                HTTPStatus.REQUEST_ENTITY_TOO_LARGE,
+                "JSON request is too large.",
+            )
+            return None
+        try:
+            payload = json.loads(self.rfile.read(length))
+        except (UnicodeDecodeError, json.JSONDecodeError):
+            self._error(HTTPStatus.BAD_REQUEST, "Request body is not valid JSON.")
+            return None
+        if not isinstance(payload, dict):
+            self._error(HTTPStatus.BAD_REQUEST, "JSON body must be an object.")
+            return None
+        return payload
+
+    @staticmethod
+    def _public_auth_result(
+        result: dict[str, object],
+    ) -> dict[str, object]:
+        return {
+            key: value
+            for key, value in result.items()
+            if not key.startswith("_")
+        }
+
+    def _require_auth_request_origin(self) -> bool:
+        if self.headers.get("Sec-Fetch-Site", "").casefold() == "cross-site":
+            self._error(HTTPStatus.FORBIDDEN, "Cross-site request rejected.")
+            return False
+        origin = self.headers.get("Origin", "").strip()
+        host = self.headers.get("Host", "").strip().casefold()
+        if origin:
+            parsed = urlparse(origin)
+            if parsed.scheme not in {"http", "https"} or parsed.netloc.casefold() != host:
+                self._error(HTTPStatus.FORBIDDEN, "Request origin rejected.")
+                return False
+        return True
+
+    def _auth_error(self, error: Exception) -> None:
+        if isinstance(error, AuthRateLimited):
+            self._error(HTTPStatus.TOO_MANY_REQUESTS, str(error))
+        elif isinstance(error, (AuthConflict, AccountConflict, AccountLocked)):
+            self._error(HTTPStatus.CONFLICT, str(error))
+        elif isinstance(error, (AuthValidationError, AccountValidationError)):
+            self._error(HTTPStatus.BAD_REQUEST, str(error))
+        elif isinstance(error, (InvalidCredentials, AuthenticationError)):
+            self._error(HTTPStatus.UNAUTHORIZED, str(error))
+        elif isinstance(error, AccountNotFound):
+            self._error(HTTPStatus.NOT_FOUND, str(error))
+        else:
+            self._error(HTTPStatus.BAD_REQUEST, str(error))
 
     def do_GET(self) -> None:
         parsed = urlparse(self.path)
@@ -181,6 +307,15 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 ),
             )
             return
+        if path == "/api/auth/me":
+            try:
+                self._json(
+                    HTTPStatus.OK,
+                    self.auth_service.me(self.headers.get("Cookie")),
+                )
+            except AuthenticationError as error:
+                self._error(HTTPStatus.UNAUTHORIZED, str(error))
+            return
         match = ADMIN_EVALUATION_ROUTE.fullmatch(path)
         if match:
             if self._identity(admin=True) is None:
@@ -200,10 +335,21 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
             identity = self._identity()
             if identity is None:
                 return
+        if path == "/api/team":
+            try:
+                self._json(
+                    HTTPStatus.OK,
+                    self.account_store.context_for_user(
+                        identity.owner_id
+                    )["team"],
+                )
+            except AccountError as error:
+                self._auth_error(error)
+            return
         if path == "/api/submissions":
             self._json(
                 HTTPStatus.OK,
-                {"submissions": self.service.list(identity.owner_id)},
+                {"submissions": self.service.list(identity.team_id)},
             )
             return
         if path == "/api/full-evaluations":
@@ -211,7 +357,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 HTTPStatus.OK,
                 {
                     "evaluations": self.evaluation_service.list(
-                        identity.owner_id
+                        identity.team_id
                     )
                 },
             )
@@ -229,7 +375,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 self._json(
                     HTTPStatus.OK,
                     self.evaluation_service.result(
-                        unquote(match.group(1)), identity.owner_id
+                        unquote(match.group(1)), identity.team_id
                     ),
                 )
             except EvaluationNotFound as error:
@@ -243,7 +389,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 self._json(
                     HTTPStatus.OK,
                     self.evaluation_service.get(
-                        unquote(match.group(1)), identity.owner_id
+                        unquote(match.group(1)), identity.team_id
                     ),
                 )
             except EvaluationNotFound as error:
@@ -253,7 +399,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         if match:
             try:
                 filename, content = self.service.log_text(
-                    unquote(match.group(1)), identity.owner_id
+                    unquote(match.group(1)), identity.team_id
                 )
                 download = parse_qs(parsed.query).get("download") == ["1"]
                 self._text(
@@ -270,7 +416,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 self._json(
                     HTTPStatus.OK,
                     self.service.get(
-                        unquote(match.group(1)), identity.owner_id
+                        unquote(match.group(1)), identity.team_id
                     ),
                 )
             except SubmissionNotFound as error:
@@ -288,6 +434,37 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self) -> None:
         path = urlparse(self.path).path
+        if path in {"/api/auth/register", "/api/auth/login"}:
+            if not self._require_auth_request_origin():
+                return
+            payload = self._read_json_body()
+            if payload is None:
+                return
+            try:
+                if path.endswith("/register"):
+                    result = self.auth_service.register(
+                        payload,
+                        client_ip=self.client_address[0],
+                    )
+                    status = HTTPStatus.CREATED
+                else:
+                    result = self.auth_service.login(
+                        payload,
+                        client_ip=self.client_address[0],
+                    )
+                    status = HTTPStatus.OK
+                self._json(
+                    status,
+                    self._public_auth_result(result),
+                    headers={
+                        "Set-Cookie": self.auth_service.set_cookie_header(
+                            str(result["_session_token"])
+                        )
+                    },
+                )
+            except (AuthError, AccountError) as error:
+                self._auth_error(error)
+            return
         match = ADMIN_EVALUATION_ACTION_ROUTE.fullmatch(path)
         if match:
             identity = self._identity(admin=True)
@@ -299,8 +476,32 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 identity,
             )
             return
-        identity = self._identity()
+        identity = self._identity(csrf=True)
         if identity is None:
+            return
+        if path == "/api/auth/logout":
+            self.auth_service.logout(self.headers.get("Cookie"))
+            self._json(
+                HTTPStatus.OK,
+                {"status": "signed_out"},
+                headers={
+                    "Set-Cookie": self.auth_service.clear_cookie_header()
+                },
+            )
+            return
+        if path == "/api/team/members":
+            payload = self._read_json_body()
+            if payload is None:
+                return
+            try:
+                member = self.account_store.add_member(
+                    user_id=identity.owner_id,
+                    team_id=identity.team_id,
+                    member=payload,
+                )
+                self._json(HTTPStatus.CREATED, member)
+            except AccountError as error:
+                self._auth_error(error)
             return
         if path == "/api/submissions":
             self._upload_submission(identity)
@@ -309,7 +510,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         if match:
             try:
                 record = self.smoke_queue.request(
-                    unquote(match.group(1)), identity.owner_id
+                    unquote(match.group(1)), identity.team_id
                 )
                 self._json(HTTPStatus.ACCEPTED, record)
             except SubmissionNotFound as error:
@@ -320,6 +521,61 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         match = EVALUATION_CREATE_ROUTE.fullmatch(path)
         if match:
             self._create_evaluation(unquote(match.group(1)), identity)
+            return
+        self._error(HTTPStatus.NOT_FOUND, "API route not found")
+
+    def do_PATCH(self) -> None:
+        path = urlparse(self.path).path
+        identity = self._identity(csrf=True)
+        if identity is None:
+            return
+        payload = self._read_json_body()
+        if payload is None:
+            return
+        try:
+            if path == "/api/team":
+                self._json(
+                    HTTPStatus.OK,
+                    self.account_store.update_team_name(
+                        user_id=identity.owner_id,
+                        team_id=identity.team_id,
+                        name=payload.get("name"),
+                    ),
+                )
+                return
+            match = TEAM_MEMBER_ROUTE.fullmatch(path)
+            if match:
+                self._json(
+                    HTTPStatus.OK,
+                    self.account_store.update_member(
+                        user_id=identity.owner_id,
+                        team_id=identity.team_id,
+                        member_id=unquote(match.group(1)),
+                        member=payload,
+                    ),
+                )
+                return
+        except AccountError as error:
+            self._auth_error(error)
+            return
+        self._error(HTTPStatus.NOT_FOUND, "API route not found")
+
+    def do_DELETE(self) -> None:
+        path = urlparse(self.path).path
+        identity = self._identity(csrf=True)
+        if identity is None:
+            return
+        match = TEAM_MEMBER_ROUTE.fullmatch(path)
+        if match:
+            try:
+                self.account_store.delete_member(
+                    user_id=identity.owner_id,
+                    team_id=identity.team_id,
+                    member_id=unquote(match.group(1)),
+                )
+                self._json(HTTPStatus.OK, {"status": "deleted"})
+            except AccountError as error:
+                self._auth_error(error)
             return
         self._error(HTTPStatus.NOT_FOUND, "API route not found")
 
@@ -339,7 +595,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
             record, created = self.evaluation_service.create(
                 submission_id,
                 idempotency_key,
-                identity.owner_id,
+                identity.team_id,
             )
             self._json(
                 HTTPStatus.CREATED if created else HTTPStatus.OK,
@@ -368,7 +624,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
             self._error(HTTPStatus.BAD_REQUEST, "Invalid event cursor.")
             return
         try:
-            self.evaluation_service.get(evaluation_id, identity.owner_id)
+            self.evaluation_service.get(evaluation_id, identity.team_id)
         except EvaluationNotFound as error:
             self._error(HTTPStatus.NOT_FOUND, str(error))
             return
@@ -390,7 +646,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 events = self.evaluation_service.events(
                     evaluation_id,
                     after_event_id,
-                    identity.owner_id,
+                    identity.team_id,
                 )
                 for event in events:
                     after_event_id = int(event["id"])
@@ -409,7 +665,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                 if events:
                     self.wfile.flush()
                 record = self.evaluation_service.get(
-                    evaluation_id, identity.owner_id
+                    evaluation_id, identity.team_id
                 )
                 if (
                     one_shot
@@ -526,6 +782,8 @@ def create_server(
     evaluation_config: EvaluationConfig | None = None,
     evaluation_database: Path | None = None,
     authenticator: TokenAuthenticator | None = None,
+    account_database: Path | None = None,
+    auth_service: AuthService | None = None,
 ) -> ThreadingHTTPServer:
     store = SubmissionStore(data_root)
     store.recover_interrupted()
@@ -558,8 +816,33 @@ def create_server(
         service,
         resolved_evaluation_config,
     )
-    resolved_authenticator = authenticator or TokenAuthenticator.from_environment(
+    resolved_token_authenticator = authenticator or TokenAuthenticator.from_environment(
         resolved_evaluation_config.owner_id
+    )
+    resolved_account_database = (
+        account_database
+        or Path(
+            os.environ.get(
+                "BB_ACCOUNT_DB",
+                data_root / "accounts.sqlite3",
+            )
+        )
+    )
+    account_store = (
+        auth_service.store
+        if auth_service is not None
+        else AccountStore(
+            resolved_account_database,
+            competition_id=os.environ.get(
+                "BB_COMPETITION_ID",
+                DEFAULT_COMPETITION_ID,
+            ),
+        )
+    )
+    resolved_auth_service = auth_service or AuthService(account_store)
+    resolved_authenticator = HybridAuthenticator(
+        resolved_token_authenticator,
+        resolved_auth_service,
     )
     handler = partial(BuildBenchHandler, directory=str(website_root.resolve()))
     server = ThreadingHTTPServer((host, port), handler)
@@ -568,6 +851,8 @@ def create_server(
     server.evaluation_store = evaluation_store  # type: ignore[attr-defined]
     server.evaluation_service = evaluation_service  # type: ignore[attr-defined]
     server.authenticator = resolved_authenticator  # type: ignore[attr-defined]
+    server.auth_service = resolved_auth_service  # type: ignore[attr-defined]
+    server.account_store = account_store  # type: ignore[attr-defined]
     server.max_upload_bytes = limits.upload_bytes  # type: ignore[attr-defined]
     return server
 
@@ -610,6 +895,12 @@ def main() -> int:
         default=None,
         help="SQLite database for durable Full Evaluation state",
     )
+    parser.add_argument(
+        "--account-db",
+        type=Path,
+        default=None,
+        help="SQLite database for participant accounts and teams",
+    )
     args = parser.parse_args()
 
     limits = ArchiveLimits()
@@ -622,6 +913,7 @@ def main() -> int:
         args.smoke_workers,
         limits,
         evaluation_database=args.evaluation_db,
+        account_database=args.account_db,
     )
     print(
         f"Build-Bench website: http://{args.host}:{server.server_port}/",

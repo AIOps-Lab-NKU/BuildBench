@@ -73,6 +73,9 @@
   }
 
   async function api(path) {
+    if (window.BuildBenchAuth?.request) {
+      return window.BuildBenchAuth.request(path);
+    }
     const response = await fetch(path, { cache: "no-store" });
     let payload = {};
     try {
@@ -209,6 +212,10 @@
       if (TERMINAL.has(record.status)) stopLiveUpdates();
       return record;
     } catch (error) {
+      if (error.status === 401 && window.BuildBenchAuth) {
+        await window.BuildBenchAuth.requireSession();
+        return null;
+      }
       setError(error.message);
       return null;
     }

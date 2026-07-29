@@ -172,6 +172,41 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("protocol_version", script)
         self.assertTrue(schema.is_file())
 
+    def test_team_registration_and_session_frontend_contract(self) -> None:
+        register = (ROOT / "register.html").read_text(encoding="utf-8")
+        login = (ROOT / "login.html").read_text(encoding="utf-8")
+        team = (ROOT / "team.html").read_text(encoding="utf-8")
+        auth_client = (ROOT / "auth-client.js").read_text(encoding="utf-8")
+        registration_script = (ROOT / "register.js").read_text(
+            encoding="utf-8"
+        )
+        team_script = (ROOT / "team.js").read_text(encoding="utf-8")
+        for hook in (
+            "data-registration-form",
+            "data-member-list",
+            "data-add-member",
+            "data-team-count",
+        ):
+            self.assertIn(hook, register)
+        self.assertIn("/api/auth/register", registration_script)
+        self.assertIn("MAX_ADDITIONAL_MEMBERS = 4", registration_script)
+        self.assertIn("data-login-form", login)
+        self.assertIn("data-team-page", team)
+        self.assertIn("/api/team/members", team_script)
+        self.assertIn("X-CSRF-Token", auth_client)
+        self.assertIn('credentials: "same-origin"', auth_client)
+
+    def test_every_page_loads_shared_session_client(self) -> None:
+        for path in ROOT.glob("*.html"):
+            if path.name.startswith("404"):
+                continue
+            html = path.read_text(encoding="utf-8")
+            self.assertIn(
+                "auth-client.js",
+                html,
+                msg=f"{path.name} does not load the shared session client",
+            )
+
 
 if __name__ == "__main__":
     unittest.main()

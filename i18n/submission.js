@@ -236,6 +236,192 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "支持的基础镜像、软件包安装规则、镜像构建与运行期间的网络访问、ZIP 大小上限和提交频率均为",
   ". Final values will be published before submissions open.":
     "。最终数值将在提交入口开放前发布。",
+  "Before you begin": "开始前准备",
+  "The Starter Kit is designed for a Linux shell. The commands below have been verified on Ubuntu and WSL2; use Docker Desktop with Linux containers when working through WSL2.":
+    "Starter Kit 面向 Linux Shell 设计。以下命令已在 Ubuntu 和 WSL2 中验证；通过 WSL2 使用时，请启用 Docker Desktop 的 Linux 容器。",
+  "Local prerequisites": "本地运行前提",
+  "Item": "项目",
+  "What you need": "需要准备",
+  "Host tools": "宿主机工具",
+  "Git and Docker Engine 24+, or Docker Desktop with Linux containers enabled.":
+    "Git 和 Docker Engine 24+，或已启用 Linux 容器的 Docker Desktop。",
+  "Host packages": "宿主机软件包",
+  "Python, RPM tooling,": "Python、RPM 工具和",
+  ", compilers, and Case dependencies are not installed on the host; versioned containers provide them.":
+    "、编译器及 Case 依赖无需安装到宿主机；这些内容由固定版本容器提供。",
+  "Network": "网络",
+  "Initial setup needs access to the GitHub release and the published container registry or organizer mirror. Agent runtime network policy is":
+    "首次准备需要访问 GitHub Release，以及已发布的容器镜像仓库或组织方镜像源。Agent 运行时网络策略为",
+  "TBA": "待公布",
+  "CPU, memory, and disk": "CPU、内存与磁盘",
+  "Minimum and recommended local resources are": "本地最低和推荐资源配置为",
+  ". Formal evaluation quotas are published separately and may differ from your local machine.":
+    "。正式评测资源配额将另行发布，可能与本地机器配置不同。",
+  "Credentials": "凭据",
+  "Do not place model API keys in the Agent directory or ZIP. The platform credential-injection policy is":
+    "不要把模型 API Key 放入 Agent 目录或 ZIP。平台凭据注入策略为",
+  "Check": "检查",
+  "verifies required commands, Docker access, host architecture, and runtime-image availability. It does not certify that your machine meets the final competition resource limits.":
+    "会检查必要命令、Docker 访问、宿主机架构和运行镜像可用性，但不会判定机器是否满足最终竞赛资源限制。",
+  "Download the current ZIP from": "从",
+  ", extract it in a Linux or WSL2 shell, and enter the versioned directory.":
+    "下载当前 ZIP，在 Linux 或 WSL2 Shell 中解压，并进入带版本号的目录。",
+  "Configure": "配置",
+  "No project configuration is required at this step. Keep the entire extracted directory together.":
+    "此步骤不需要项目配置，请保持解压后的整个目录结构完整。",
+  "Verify": "确认",
+  "Run": "运行",
+  "; all later": "；后续所有",
+  "commands must be executed from this directory.": "命令都必须在该目录中执行。",
+  ", and": "和",
+  "Use the image references pinned by the release. If the organizer provides a registry mirror, set":
+    "默认使用该版本固定的镜像引用。如果组织方提供镜像源，请先设置",
+  "before running": "，再运行",
+  "What it runs": "执行内容",
+  "performs environment checks only.": "只执行环境检查。",
+  "uses the official Example Agent and the self-contained": "使用官方 Example Agent 和自包含的",
+  "Case; it does not use your Agent code.": "Case，不会使用你编写的 Agent 代码。",
+  "Argument": "参数",
+  "becomes both the directory name and default": "既是目录名，也是默认的",
+  ". Use 2–64 lowercase letters, digits, or hyphens.": "。请使用 2–64 个小写字母、数字或连字符。",
+  "Edit repair logic under": "在",
+  ", pin Python dependencies with": "中编写修复逻辑；在",
+  ", and change name, version, or entrypoint in": "中使用固定版本依赖；名称、版本或入口命令在",
+  "Input": "输入",
+  "must point to the Agent directory that contains": "必须指向包含",
+  ". The command runs each ID listed in": "的 Agent 目录。该命令会运行",
+  "; release": "中列出的每个 ID；版本",
+  "contains one local Example Case,": "包含 1 个本地 Example Case：",
+  "Agent behavior": "Agent 行为",
+  "The entrypoint declared in": "在",
+  "runs once per Case. It reads": "中声明的入口会为每个 Case 运行一次。它读取",
+  ", edits": "，修改",
+  ", and writes": "，并写入",
+  "Rejects missing required files, unsupported manifest fields, invalid entrypoints, unpinned dependencies, generated outputs, caches, symbolic links, and likely credentials.":
+    "检查并拒绝缺失必需文件、不支持的清单字段、无效入口、未固定依赖、生成产物、缓存、符号链接和疑似凭据。",
+  "Package": "打包",
+  "Writes": "默认生成",
+  "by default. Use": "。仅在需要不同本地文件名时使用",
+  "only when you need a different local filename.": "。",
+  "Make new submission": "创建新提交",
+  "Upload": "上传",
+  "Select the ZIP produced by": "请选择由",
+  ", not the whole Starter Kit directory and not a ZIP you assembled manually.":
+    "生成的 ZIP，不要上传整个 Starter Kit 目录，也不要手工重新组装 ZIP。",
+  "After upload": "上传后",
+  "The platform stores an immutable Agent version, performs static checks, and then runs the hosted Smoke Test. Full evaluation starts only after you explicitly select a qualified version.":
+    "平台保存不可变的 Agent 版本，执行静态检查，然后运行平台 Smoke Test。只有显式选择已通过的版本后，才会开始完整评测。",
+  "Cases used during development and evaluation": "开发与评测使用的 Case",
+  "Case sets are versioned separately from the Agent submission format. Counts that have not yet been frozen remain placeholders and will be published with the corresponding dataset release.":
+    "Case 集与 Agent 提交格式分别进行版本管理。尚未冻结的数量保留为占位符，并随对应数据集版本发布。",
+  "Case set": "Case 集",
+  "Purpose": "用途",
+  "Current scope": "当前范围",
+  "Local Example Cases": "本地 Example Case",
+  "Verify the Starter Kit, Agent entrypoint, workspace protocol, patch generation, and local Validator path.":
+    "验证 Starter Kit、Agent 入口、工作区协议、补丁生成和本地 Validator 链路。",
+  "1 public Case:": "1 个公开 Case：",
+  "Development Cases": "开发 Case",
+  "Public Cases for Agent development and broader local experiments.":
+    "用于 Agent 开发和更广泛本地实验的公开 Case。",
+  "Count TBA": "数量待公布",
+  "Hosted Smoke Cases": "平台 Smoke Case",
+  "A lightweight hosted subset used to qualify an uploaded Agent version.":
+    "用于验证上传 Agent 版本的轻量级平台子集。",
+  "Full Evaluation Cases": "完整评测 Case",
+  "Organizer-controlled Cases used for formal scoring.": "由组织方控制、用于正式计分的 Case。",
+  "Scope": "范围",
+  "The original Build-Bench benchmark is the source of competition candidates; its historical total must not be read as the final competition Case count. Final set sizes and versions will be announced on":
+    "原始 Build-Bench benchmark 是竞赛候选 Case 的来源；其历史总数不等于最终竞赛 Case 数量。最终集合规模和版本将在",
+  "agent-submission.zip": "agent-submission.zip",
+  "Declares Agent identity, managed runtime, entrypoint, and protocol version.":
+    "声明 Agent 身份、托管运行环境、入口命令和协议版本。",
+  "Contains the Agent implementation and the declared Python module or script.":
+    "包含 Agent 实现以及已声明的 Python 模块或脚本。",
+  "Declare every third-party Python dependency with an exact": "每个第三方 Python 依赖都必须使用精确的",
+  "version.": "版本。",
+  "Required in v0.1.": "v0.1 中必需。",
+  "Describes how the Agent works and any participant-facing notes.":
+    "说明 Agent 的工作方式及参赛者需要了解的事项。",
+  "The manifest declares how the platform builds and starts the Agent. Version":
+    "该清单声明平台如何构建并启动 Agent。版本",
+  "supports the managed Python 3.11 profile; the Starter Kit validates this exact contract before packaging.":
+    "支持托管 Python 3.11 配置；Starter Kit 会在打包前验证这一准确协议。",
+  "agent.yaml": "agent.yaml",
+  "Execution contract": "执行协议",
+  "Agent execution contract": "Agent 执行协议",
+  "Invocation": "调用方式",
+  "The platform starts the": "平台按照",
+  "list from": "中的",
+  "once for each Case, with the Agent bundle as the process working directory.":
+    "列表为每个 Case 启动一次进程，并将 Agent 包目录作为进程工作目录。",
+  "Workspace variable": "工作区变量",
+  ". Resolve all Case input, worktree, and structured output paths from this root.":
+    "。所有 Case 输入、工作树和结构化输出路径都应从该根目录解析。",
+  "Completion": "完成条件",
+  "For the current v0.1 local protocol, exit with code": "在当前 v0.1 本地协议中，应以退出码",
+  "and write": "结束，并写入",
+  "with": "，其中",
+  ". A non-zero exit is an Agent error.": "。非零退出码会被判定为 Agent 错误。",
+  "Diagnostics": "诊断信息",
+  "Write human-readable progress to stdout or stderr. Do not place secrets in logs; both streams are retained by the platform.":
+    "将便于阅读的进度写入 stdout 或 stderr。不要在日志中输出密钥；平台会保留这两个输出流。",
+  "Repair result": "修复结果",
+  "Do not submit a pre-generated patch. Modify only the writable worktree; the platform creates the canonical":
+    "不要提交预先生成的补丁。只能修改可写工作树；Agent 退出后，平台会生成 canonical",
+  "after the Agent exits.": "。",
+  "/workspace": "/workspace",
+  "Write": "写入",
+  "Place machine-readable completion status and diagnostics in": "将机器可读的完成状态和诊断信息写入",
+  "output/agent-result.json": "output/agent-result.json",
+  "minimal successful result": "最小成功结果",
+  "The hosted evaluation design lets an Agent request bounded build feedback through the platform-provided":
+    "平台评测设计允许 Agent 通过平台提供的",
+  "command. This command is not included in Starter Kit": "命令请求有限次数的构建反馈。Starter Kit",
+  "; its request/response schema, limits, and release version remain":
+    "尚未包含该命令；其请求/响应 Schema、限制和发布版本均为",
+  "Agent": "Agent",
+  "bb-build": "bb-build",
+  "Download the Starter Kit from": "从",
+  ". Add versioned Development Cases when their public release becomes available.":
+    "下载 Starter Kit；Development Case 公开发布后，再加入对应的版本化数据。",
+  "Run at least one Example Case, edit only": "至少运行一个 Example Case，只修改",
+  ", and verify the required": "，并验证必需的",
+  "The manifest passes": "清单通过",
+  "and declares one valid managed-Python entrypoint.": "，并声明一个有效的托管 Python 入口。",
+  "The entrypoint starts without interactive input, writes the required structured result, and exits with code":
+    "入口命令无需交互输入即可启动，写出必需的结构化结果，并在正常完成时以退出码",
+  "when it completes normally.": "退出。",
+  "contains": "包含",
+  "and a supported status.": "以及受支持的状态。",
+  "The Agent completes at least one released local Example Case.":
+    "Agent 至少能够完成一个已发布的本地 Example Case。",
+  "Released": "已发布",
+  "Starter Kit": "Starter Kit",
+  "provides the local Runner, managed-Python template, one": "提供本地 Runner、托管 Python 模板、1 个",
+  "Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.":
+    "Example Case、合规检查和确定性打包。Development Case 和独立协议 Schema 仍在后续发布计划中。",
+  "Version": "版本",
+  "accepts the managed Python 3.11 runtime only. Custom Docker runtimes are not accepted in this release.":
+    "仅接受托管 Python 3.11 运行环境。本版本不接受自定义 Docker 运行环境。",
+  "Write the required machine-readable completion result to":
+    "将必需的机器可读完成结果写入",
+  "When the hosted build-feedback protocol is released, requests will go through":
+    "平台构建反馈协议发布后，请求将通过",
+  "and the Build Gateway. The Docker Validator remains organizer-controlled.":
+    "和 Build Gateway 处理。Docker Validator 始终由组织方控制。",
+  "Dependencies and managed runtime": "依赖与托管运行环境",
+  "Declare every third-party Python dependency in": "在",
+  "with an exact": "中为每个第三方 Python 依赖声明精确的",
+  "version. Direct URLs, Git references, editable installs, local paths, and unpinned requirements are rejected by":
+    "版本。直接 URL、Git 引用、可编辑安装、本地路径和未固定版本的依赖都会被",
+  ". Undeclared host packages must not be assumed.": "拒绝。不得假设宿主机提供未声明的软件包。",
+  "Custom": "自定义",
+  "submissions are deferred beyond protocol": "提交延后到协议",
+  ". If introduced later, their supported base images and image-build policy will be released as a new submission-protocol version rather than silently changing the current contract.":
+    "之后。如果后续引入，将通过新的提交协议版本发布受支持的基础镜像和镜像构建策略，而不会静默修改当前协议。",
+  "Agent runtime network access, model credential injection, maximum ZIP size, submission frequency, and formal CPU, memory, storage, wall-time, and build-request limits are":
+    "Agent 运行时网络访问、模型凭据注入、ZIP 大小上限、提交频率，以及正式评测的 CPU、内存、存储、运行时长和构建请求限制均为",
   "Next page": "下一页",
   "Next": "下一页",
   "See the competition resources and release status": "查看竞赛资源及其发布状态",

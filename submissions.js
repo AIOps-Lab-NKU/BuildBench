@@ -329,6 +329,9 @@
   }
 
   async function api(path, options = {}) {
+    if (window.BuildBenchAuth?.request) {
+      return window.BuildBenchAuth.request(path, options);
+    }
     const response = await fetch(path, { cache: "no-store", ...options });
     let payload = {};
     try {
@@ -357,6 +360,10 @@
       if (!quiet) setNotice("");
       render();
     } catch (error) {
+      if (error.status === 401 && window.BuildBenchAuth) {
+        await window.BuildBenchAuth.requireSession();
+        return;
+      }
       setNotice("Submission service is unavailable. Start the Build-Bench website backend and try again.", "error");
       if (!quiet) console.error(error);
     }
