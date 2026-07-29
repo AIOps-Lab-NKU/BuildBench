@@ -96,6 +96,14 @@ class EvaluationStore:
                     """,
                     (utc_now(),),
                 )
+                connection.execute(
+                    """
+                    INSERT OR IGNORE INTO evaluation_schema_versions(
+                        version, applied_at
+                    ) VALUES (5, ?)
+                    """,
+                    (utc_now(),),
+                )
 
     @contextmanager
     def _transaction(self) -> Iterator[sqlite3.Connection]:
@@ -627,6 +635,186 @@ class EvaluationStore:
                 (row["case_run_id"],),
             ).fetchone()
         return dict(claimed)
+
+    def register_worker(
+        self,
+        *,
+        worker_id: str,
+        concurrency: int,
+        case_set_version: str,
+        case_set_digest: str,
+        runtime_image_digest: str,
+        validator_image_digest: str,
+        protocol_version: str,
+        protocol_config_hash: str,
+        isolation_mode: str,
+    ) -> dict[str, object]:
+        worker_id = worker_id.strip()
+        if not worker_id:
+            raise EvaluationConflict("Worker identity is required.")
+        if concurrency <= 0:
+            raise EvaluationConflict("Worker concurrency must be positive.")
+        required = {
+            "Case-set version": case_set_version,
+            "Case-set digest": case_set_digest,
+            "Agent runtime image digest": runtime_image_digest,
+            "Validator image digest": validator_image_digest,
+            "Evaluation protocol version": protocol_version,
+            "Evaluation protocol hash": protocol_config_hash,
+            "Validator isolation mode": isolation_mode,
+        }
+        missing = [label for label, value in required.items() if not value.strip()]
+        if missing:
+            raise EvaluationConflict(
+                "Worker compatibility metadata is incomplete: "
+                + ", ".join(missing)
+            )
+        now = utc_now()
+        with self._transaction() as connection:
+            connection.execute(
+                """
+                INSERT INTO evaluation_workers (
+                    worker_id,
+                    status,
+                    concurrency,
+                    case_set_version,
+                    case_set_digest,
+                    runtime_image_digest,
+                    validator_image_digest,
+                    protocol_version,
+                    protocol_config_hash,
+                    isolation_mode,
+                    started_at,
+                    heartbeat_at,
+                    stopped_at,
+                    updated_at
+                ) VALUES (?, 'online', ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NULL, ?)
+                ON CONFLICT(worker_id) DO UPDATE SET
+                    status = 'online',
+                    concurrency = excluded.concurrency,
+                    case_set_version = excluded.case_set_version,
+                    case_set_digest = excluded.case_set_digest,
+                    runtime_image_digest = excluded.runtime_image_digest,
+                    validator_image_digest = excluded.validator_image_digest,
+                    protocol_version = excluded.protocol_version,
+                    protocol_config_hash = excluded.protocol_config_hash,
+                    isolation_mode = excluded.isolation_mode,
+                    started_at = excluded.started_at,
+                    heartbeat_at = excluded.heartbeat_at,
+                    stopped_at = NULL,
+                    updated_at = excluded.updated_at
+                """,
+                (
+                    worker_id,
+                    concurrency,
+                    case_set_version,
+                    case_set_digest,
+                    runtime_image_digest,
+                    validator_image_digest,
+                    protocol_version,
+                    protocol_config_hash,
+                    isolation_mode,
+                    now,
+                    now,
+                    now,
+                ),
+            )
+            row = connection.execute(
+                "SELECT * FROM evaluation_workers WHERE worker_id = ?",
+                (worker_id,),
+            ).fetchone()
+        assert row is not None
+        return dict(row)
+
+    def heartbeat_worker(self, worker_id: str) -> bool:
+        now = utc_now()
+        with self._transaction() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE evaluation_workers
+                SET heartbeat_at = ?,
+                    updated_at = ?
+                WHERE worker_id = ?
+                  AND status = 'online'
+                """,
+                (now, now, worker_id),
+            )
+        return cursor.rowcount == 1
+
+    def stop_worker(self, worker_id: str) -> bool:
+        now = utc_now()
+        with self._transaction() as connection:
+            cursor = connection.execute(
+                """
+                UPDATE evaluation_workers
+                SET status = 'stopped',
+                    stopped_at = ?,
+                    updated_at = ?
+                WHERE worker_id = ?
+                  AND status = 'online'
+                """,
+                (now, now, worker_id),
+            )
+        return cursor.rowcount == 1
+
+    def worker_readiness(
+        self,
+        *,
+        case_set_version: str,
+        case_set_digest: str,
+        runtime_image_digest: str,
+        validator_image_digest: str,
+        protocol_version: str,
+        protocol_config_hash: str,
+        isolation_mode: str,
+        stale_after_seconds: int,
+    ) -> dict[str, object]:
+        if stale_after_seconds <= 0:
+            raise EvaluationConflict(
+                "Worker heartbeat expiry must be positive."
+            )
+        cutoff = (
+            datetime.now(timezone.utc).replace(microsecond=0)
+            - timedelta(seconds=stale_after_seconds)
+        ).isoformat()
+        with self._connect() as connection:
+            row = connection.execute(
+                """
+                SELECT
+                    COUNT(*) AS worker_count,
+                    COALESCE(SUM(concurrency), 0) AS capacity,
+                    MAX(heartbeat_at) AS latest_heartbeat_at
+                FROM evaluation_workers
+                WHERE status = 'online'
+                  AND heartbeat_at >= ?
+                  AND case_set_version = ?
+                  AND case_set_digest = ?
+                  AND runtime_image_digest = ?
+                  AND validator_image_digest = ?
+                  AND protocol_version = ?
+                  AND protocol_config_hash = ?
+                  AND isolation_mode = ?
+                """,
+                (
+                    cutoff,
+                    case_set_version,
+                    case_set_digest,
+                    runtime_image_digest,
+                    validator_image_digest,
+                    protocol_version,
+                    protocol_config_hash,
+                    isolation_mode,
+                ),
+            ).fetchone()
+        assert row is not None
+        worker_count = int(row["worker_count"] or 0)
+        return {
+            "available": worker_count > 0,
+            "worker_count": worker_count,
+            "capacity": int(row["capacity"] or 0),
+            "latest_heartbeat_at": row["latest_heartbeat_at"],
+            "stale_after_seconds": stale_after_seconds,
+        }
 
     def heartbeat_case_run(
         self,

@@ -33,10 +33,35 @@ class EvaluationService:
 
     def readiness(self) -> dict[str, object]:
         error = self.config.readiness_error()
+        worker = {
+            "required": self.config.require_live_worker,
+            "available": False,
+            "worker_count": 0,
+            "capacity": 0,
+            "latest_heartbeat_at": None,
+            "stale_after_seconds": self.config.worker_stale_seconds,
+        }
+        if error is None and self.config.require_live_worker:
+            worker = self.store.worker_readiness(
+                case_set_version=self.config.case_set_version,
+                case_set_digest=self.config.case_set_digest,
+                runtime_image_digest=self.config.runtime_image_digest,
+                validator_image_digest=self.config.validator_image_digest,
+                protocol_version=self.config.protocol_version,
+                protocol_config_hash=self.config.protocol_config_hash,
+                isolation_mode=self.config.validator_isolation,
+                stale_after_seconds=self.config.worker_stale_seconds,
+            )
+            if not worker["available"]:
+                error = (
+                    "No compatible Full Evaluation Worker is currently "
+                    "available. Please try again shortly."
+                )
         return {
             "enabled": self.config.enabled,
             "ready": error is None,
             "message": error or "Full Evaluation is ready.",
+            "worker": worker,
         }
 
     def create(
@@ -45,9 +70,9 @@ class EvaluationService:
         idempotency_key: str,
         owner_id: str | None = None,
     ) -> tuple[dict[str, object], bool]:
-        readiness_error = self.config.readiness_error()
-        if readiness_error:
-            raise EvaluationUnavailable(readiness_error)
+        readiness = self.readiness()
+        if not readiness["ready"]:
+            raise EvaluationUnavailable(str(readiness["message"]))
         if not IDEMPOTENCY_KEY.fullmatch(idempotency_key):
             raise EvaluationConflict(
                 "Idempotency-Key must be 8-128 safe ASCII characters."

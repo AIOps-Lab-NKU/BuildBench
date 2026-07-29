@@ -22,6 +22,7 @@
   const TERMINAL = new Set(["completed", "cancelled", "system_error"]);
   const ORDER = ["queued", "preparing", "evaluating", "finalizing", "completed"];
   const EVENT_TYPES = ["snapshot", "phase", "progress", "completed", "system_error"];
+  const TIMELINE_PHASES = new Set(["queued", "preparing", "evaluating", "finalizing"]);
   const seenEvents = new Set();
   let eventSource = null;
   let pollTimer = null;
@@ -145,9 +146,6 @@
     if (event.type === "snapshot") {
       return t("Evaluation created and the immutable run snapshot was recorded.");
     }
-    if (event.type === "progress") {
-      return `${t("Evaluation progress updated")}: ${payload.completed_cases ?? 0} / ${payload.total_cases ?? 0}.`;
-    }
     if (event.type === "completed") return t("Evaluation completed and the official result was frozen.");
     if (event.type === "system_error") return t("The evaluation stopped because an organizer-controlled service failed.");
     if (event.type === "phase") {
@@ -156,8 +154,14 @@
     return t("Evaluation state updated.");
   }
 
+  function isTimelineEvent(event) {
+    if (["snapshot", "completed", "system_error"].includes(event.type)) return true;
+    if (event.type !== "phase") return false;
+    return TIMELINE_PHASES.has(event.payload?.status);
+  }
+
   function appendEvent(event) {
-    if (!timeline || seenEvents.has(event.id)) return;
+    if (!timeline || seenEvents.has(event.id) || !isTimelineEvent(event)) return;
     if (timeline.dataset.initial !== "ready") {
       timeline.innerHTML = "";
       timeline.dataset.initial = "ready";
@@ -166,6 +170,31 @@
     const item = document.createElement("li");
     item.innerHTML = `<time>${escapeHtml(formatDate(event.created_at))}</time><p>${escapeHtml(eventDescription(event))}</p>`;
     timeline.append(item);
+  }
+
+  async function loadEventHistory() {
+    if (!evaluationId) return;
+    try {
+      const response = await fetch(
+        `/api/full-evaluations/${encodeURIComponent(evaluationId)}/events?once=1`,
+        { cache: "no-store" },
+      );
+      if (!response.ok) return;
+      const stream = await response.text();
+      stream.split(/\r?\n\r?\n/).forEach((message) => {
+        const data = message
+          .split(/\r?\n/)
+          .find((line) => line.startsWith("data: "));
+        if (!data) return;
+        try {
+          appendEvent(JSON.parse(data.slice(6)));
+        } catch {
+          // Historical timeline data is optional and must not block results.
+        }
+      });
+    } catch {
+      // The aggregate result remains usable when event history is unavailable.
+    }
   }
 
   async function loadRecord() {
@@ -227,6 +256,7 @@
 
   async function initialize() {
     const record = await loadRecord();
+    await loadEventHistory();
     if (record && !TERMINAL.has(record.status)) startEventStream();
   }
 

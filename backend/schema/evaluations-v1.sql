@@ -124,6 +124,36 @@ ON evaluation_case_runs(status, lease_until, created_at);
 CREATE INDEX IF NOT EXISTS case_runs_evaluation
 ON evaluation_case_runs(evaluation_id, case_ordinal);
 
+CREATE TABLE IF NOT EXISTS evaluation_workers (
+    worker_id TEXT PRIMARY KEY,
+    status TEXT NOT NULL
+        CHECK (status IN ('online', 'stopped')),
+    concurrency INTEGER NOT NULL CHECK (concurrency > 0),
+    case_set_version TEXT NOT NULL,
+    case_set_digest TEXT NOT NULL,
+    runtime_image_digest TEXT NOT NULL,
+    validator_image_digest TEXT NOT NULL,
+    protocol_version TEXT NOT NULL,
+    protocol_config_hash TEXT NOT NULL,
+    isolation_mode TEXT NOT NULL,
+    started_at TEXT NOT NULL,
+    heartbeat_at TEXT NOT NULL,
+    stopped_at TEXT,
+    updated_at TEXT NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS evaluation_workers_compatibility
+ON evaluation_workers(
+    status,
+    case_set_version,
+    case_set_digest,
+    runtime_image_digest,
+    validator_image_digest,
+    protocol_version,
+    protocol_config_hash,
+    heartbeat_at
+);
+
 CREATE TABLE IF NOT EXISTS evaluation_events (
     event_id INTEGER PRIMARY KEY AUTOINCREMENT,
     evaluation_id TEXT NOT NULL

@@ -123,11 +123,36 @@ and never receives the Docker Socket. Bearer-token identity, owner isolation,
 administrator authorization, audit events, artifact retention, hidden-result
 redaction, and versioned leaderboard publication are implemented.
 
-The current privileged Docker Validator is still restricted to explicit
-organizer-trusted pilots. Untrusted official evaluation remains closed unless
-`BB_VALIDATOR_ISOLATION` selects a dedicated disposable VM/Worker and
-`BB_VALIDATOR_ISOLATION_ATTESTATION` matches the frozen Validator image and
-evaluation protocol. This is a hard production gate, not a warning.
+Organizer-trusted demos may still use the direct Docker Validator path.
+Untrusted Full Evaluation uses a one-Case, one-shot QEMU/KVM Worker selected
+with `BB_VALIDATOR_ISOLATION=ephemeral_vm`. The launcher receives `/dev/kvm`,
+but not the host Docker Socket, hidden Case store, outbound network, or a
+reusable writable system disk. Inside the disposable guest, the Agent runs
+non-root without network or Docker access; privileged package construction is
+confined to that guest. Only allow-listed outputs are returned and the guest
+overlay is destroyed after the Case.
+
+Production remains fail closed unless
+`BB_VALIDATOR_ISOLATION_ATTESTATION` matches the frozen Validator image, QEMU
+launcher, guest image, and evaluation protocol. Rebuilding any of those
+artifacts requires a new isolation smoke test, real-Case acceptance run, and
+attestation. Both the API process and Full Evaluation Worker must load the
+generated isolation environment before starting. The organizer must
+additionally provide the frozen official Case-set version, digest and IDs,
+authentication policy, and `BB_FULL_EVALUATION_ENABLED=1`; the isolation
+acceptance file deliberately does not select or publish a competition dataset.
+
+```bash
+set -a
+. /path/to/production-worker.env
+set +a
+
+python3 -m backend.server ...
+python3 -m backend.evaluation_worker --until-idle
+```
+
+The accepted configuration is a project technical control and does not replace
+an independent security audit.
 
 The one-server authentication MVP reads bearer identities from
 `BB_AUTH_TOKENS_JSON` or `BB_AUTH_TOKENS_FILE`; set `BB_AUTH_REQUIRED=1` to
@@ -137,8 +162,19 @@ and may replace this token provider with an OIDC-aware reverse proxy.
 Full Evaluation Workers run separately from the website:
 
 ```bash
-python3 -m backend.evaluation_worker --until-idle
+./backend/run-evaluation-worker-supervised.sh
 ```
+
+The website deployment must run this as a long-lived supervised process.
+`--until-idle` is reserved for bounded acceptance scripts and local tests; it
+must not be used for the interactive website queue. The Worker records a
+process heartbeat in the shared evaluation database. `/api/health` reports
+Full Evaluation unavailable when no compatible heartbeat has been observed
+within `BB_WORKER_STALE_SECONDS` (15 seconds by default), and new evaluation
+creation then fails with HTTP 503 instead of entering an unconsumed queue.
+Set a stable, deployment-unique `BB_EVALUATION_WORKER_INSTANCE_ID` so a
+supervisor restart updates the existing heartbeat record instead of briefly
+advertising duplicate capacity.
 
 Retention cleanup is dry-run by default:
 

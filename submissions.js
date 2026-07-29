@@ -249,7 +249,7 @@
     if (item.status !== "smoke_passed") return "";
     const disabled = !evaluationReadiness.ready;
     const title = disabled ? evaluationReadiness.message : "Start Full Evaluation";
-    return `<button type="button" class="submission-row-action secondary" data-evaluation-action="${escapeHtml(item.id)}" ${disabled ? "disabled" : ""} title="${escapeHtml(t(title))}">
+    return `<button type="button" class="submission-row-action full-evaluation-trigger" data-evaluation-action="${escapeHtml(item.id)}" ${disabled ? "disabled" : ""} title="${escapeHtml(t(title))}">
       <i data-lucide="play" aria-hidden="true"></i>${escapeHtml(t("Start Full Evaluation"))}
     </button>`;
   }

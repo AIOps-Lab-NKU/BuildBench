@@ -97,6 +97,18 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("Development Cases", html)
         self.assertIn("Protocol Schemas", html)
         self.assertIn("Runtime Images", html)
+        self.assertIn(
+            "releases/download/v0.1.0-rc.1/"
+            "buildbench-starter-kit-0.1.0-rc.1.zip",
+            html,
+        )
+        self.assertIn(
+            "releases/download/v0.1.0-rc.1/SHA256SUMS",
+            html,
+        )
+        self.assertIn("Published pre-release", html)
+        self.assertNotIn('data-lucide="download"', html)
+        self.assertNotIn('data-lucide="shield-check"', html)
         self.assertNotIn('<th scope="row">Example Agent</th>', html)
         self.assertNotIn('<th scope="row">Local Smoke Cases</th>', html)
         self.assertNotIn('<th scope="row">Case Schema</th>', html)
@@ -125,7 +137,12 @@ class FrontendContractTests(unittest.TestCase):
             self.assertIn(hook, html)
         self.assertIn("/api/full-evaluations/", script)
         self.assertIn("EventSource", script)
+        self.assertIn("loadEventHistory", script)
+        self.assertIn("events?once=1", script)
         self.assertIn("schedulePolling", script)
+        self.assertIn("TIMELINE_PHASES", script)
+        self.assertIn("!isTimelineEvent(event)", script)
+        self.assertNotIn('t("Evaluation progress updated")', script)
         self.assertNotIn("case_id", script)
         self.assertNotIn("successful_cases", script)
 

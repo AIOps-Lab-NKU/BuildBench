@@ -34,7 +34,10 @@
 /* Full Evaluation participant workflow */
 
 .full-evaluation-table-wrap {
-  overflow-x: auto;
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   margin-top: 18px;
   border: 1px solid var(--line);
   border-top: 2px solid var(--blue);
@@ -42,7 +45,7 @@
 
 .full-evaluation-table {
   width: 100%;
-  min-width: 1120px;
+  min-width: 0;
   border-collapse: collapse;
   table-layout: fixed;
   background: #fff;
@@ -54,6 +57,7 @@
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 
 .full-evaluation-table th {
@@ -99,6 +103,13 @@
   margin-top: 3px;
   color: var(--muted);
   font-size: 12px;
+}
+
+.full-evaluation-table .submission-row-action {
+  max-width: 100%;
+  padding-inline: 10px;
+  text-align: center;
+  white-space: normal;
 }
 
 .submission-row-action {
@@ -5344,6 +5355,27 @@ pre {
   cursor: not-allowed;
 }
 
+.resource-download.available {
+  min-height: 0;
+  display: inline;
+  padding: 0;
+  color: var(--blue-dark);
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  cursor: pointer;
+  font-size: 12.5px;
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+.resource-download.available:hover,
+.resource-download.available:focus-visible {
+  color: #104b80;
+  text-decoration: underline;
+}
+
 .resource-release-note {
   display: grid;
   grid-template-columns: 22px minmax(0, 1fr);
@@ -5374,6 +5406,16 @@ pre {
 .submissions-dashboard {
   display: grid;
   gap: 42px;
+  min-width: 0;
+  width: 100%;
+}
+
+.submissions-dashboard > *,
+.submission-history-section,
+[data-agent-versions-list],
+[data-full-evaluations-list] {
+  min-width: 0;
+  max-width: 100%;
 }
 
 .submission-account-summary {
@@ -5542,7 +5584,10 @@ pre {
 }
 
 .agent-version-table-wrap {
-  overflow-x: auto;
+  overflow: visible;
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
   margin-top: 18px;
   border: 1px solid var(--line);
   border-top: 2px solid var(--blue);
@@ -5550,7 +5595,7 @@ pre {
 
 .agent-version-table {
   width: 100%;
-  min-width: 940px;
+  min-width: 0;
   border-collapse: collapse;
   table-layout: fixed;
   background: #fff;
@@ -5562,6 +5607,7 @@ pre {
   text-align: left;
   vertical-align: top;
   border-bottom: 1px solid var(--line);
+  overflow-wrap: anywhere;
 }
 
 .agent-version-table th {
@@ -6055,6 +6101,48 @@ pre {
   background: #eef5fa;
   border: 1px solid #b9d5e8;
   font-size: 12px;
+}
+
+.submission-row-action.full-evaluation-trigger {
+  min-height: 44px;
+  padding: 10px 15px;
+  color: #fff;
+  background: var(--blue-dark);
+  border: 1px solid #104b80;
+  border-radius: 5px;
+  box-shadow: 0 3px 0 #0b477d;
+  cursor: pointer;
+  font-size: 13.5px;
+  transition:
+    background-color 150ms ease,
+    border-color 150ms ease,
+    box-shadow 150ms ease,
+    transform 150ms ease;
+}
+
+.submission-row-action.full-evaluation-trigger:hover:not(:disabled) {
+  background: #1468ad;
+  border-color: #0f568f;
+  box-shadow: 0 4px 0 #0b477d;
+  transform: translateY(-1px);
+}
+
+.submission-row-action.full-evaluation-trigger:active:not(:disabled) {
+  box-shadow: 0 1px 0 #0b477d;
+  transform: translateY(2px);
+}
+
+.submission-row-action.full-evaluation-trigger:focus-visible {
+  outline: 3px solid rgb(40 120 200 / 28%);
+  outline-offset: 3px;
+}
+
+.submission-row-action.full-evaluation-trigger:disabled {
+  color: #6f8293;
+  background: #e7edf2;
+  border-color: #c4d0da;
+  box-shadow: none;
+  transform: none;
 }
 
 .smoke-test-state {

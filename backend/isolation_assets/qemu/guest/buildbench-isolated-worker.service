@@ -1,0 +1,14 @@
+[Unit]
+Description=Build-Bench one-shot isolated Case worker
+After=docker.service
+Requires=docker.service
+
+[Service]
+Type=oneshot
+ExecStart=/usr/local/bin/buildbench-run-isolated-job
+ExecStopPost=/sbin/poweroff -f
+TimeoutStartSec=0
+
+[Install]
+WantedBy=multi-user.target
+

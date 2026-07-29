@@ -330,6 +330,38 @@ class EvaluationWorkerTests(unittest.TestCase):
         }
         self.assertIn(2, versions)
         self.assertIn(3, versions)
+        self.assertIn(5, versions)
+        tables = {
+            str(row[0])
+            for row in sqlite3.connect(migrated.database_path).execute(
+                "SELECT name FROM sqlite_master WHERE type = 'table'"
+            )
+        }
+        self.assertIn("evaluation_workers", tables)
+
+    def test_until_idle_worker_registration_is_stopped_on_exit(self) -> None:
+        evaluation_id = self._evaluation(("case-a",))
+        config = evaluation_config(("case-a",))
+        pool = EvaluationWorkerPool(
+            store=self.store,
+            executor=FakeExecutor({1: ["succeeded"]}),
+            config=self._config(concurrency=1),
+            instance_id="bounded-worker",
+            evaluation_config=config,
+        )
+        self.assertEqual(pool.run_until_idle(idle_cycles=1), 1)
+        self.assertEqual(self.store.get(evaluation_id)["status"], "completed")
+        readiness = self.store.worker_readiness(
+            case_set_version=config.case_set_version,
+            case_set_digest=config.case_set_digest,
+            runtime_image_digest=config.runtime_image_digest,
+            validator_image_digest=config.validator_image_digest,
+            protocol_version=config.protocol_version,
+            protocol_config_hash=config.protocol_config_hash,
+            isolation_mode=config.validator_isolation,
+            stale_after_seconds=15,
+        )
+        self.assertFalse(readiness["available"])
 
 
 if __name__ == "__main__":

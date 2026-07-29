@@ -142,6 +142,8 @@ def validate_isolation_attestation(
     attestation_path: str | Path | None,
     validator_image_digest: str,
     protocol_config_hash: str,
+    launcher_image_digest: str = "",
+    guest_image_sha256: str = "",
 ) -> str | None:
     """Return a readiness error, or None for a valid production attestation."""
 
@@ -160,14 +162,25 @@ def validate_isolation_attestation(
     if not isinstance(payload, dict):
         return "Validator isolation attestation is invalid."
     required = {
-        "schema_version": "0.1",
+        "schema_version": "0.2",
         "isolation_mode": isolation_mode,
+        "provider": "qemu_kvm",
         "validator_image_digest": validator_image_digest,
         "protocol_config_hash": protocol_config_hash,
+        "launcher_image_digest": launcher_image_digest,
+        "guest_image_sha256": guest_image_sha256,
+        "kvm_acceleration": True,
         "docker_socket_exposed_to_agent": False,
+        "host_docker_socket_mounted_in_worker": False,
         "hidden_case_store_mounted_in_validator_vm": False,
         "worker_reused_between_cases": False,
+        "worker_overlay_discarded": True,
+        "job_input_scope": "single_case",
+        "output_scope": "dedicated_directory",
+        "network_mode": "none",
     }
+    if not launcher_image_digest or not guest_image_sha256:
+        return "Validator isolation runtime identity is incomplete."
     for key, expected in required.items():
         if payload.get(key) != expected:
             return f"Validator isolation attestation does not match {key}."

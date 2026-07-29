@@ -173,6 +173,10 @@ class EvaluationConfig:
     allow_unsafe_validator: bool = False
     validator_isolation: str = "unsafe_privileged"
     isolation_attestation: str = ""
+    isolation_launcher_image_digest: str = ""
+    isolation_guest_image_sha256: str = ""
+    require_live_worker: bool = False
+    worker_stale_seconds: int = 15
 
     @classmethod
     def from_environment(cls, data_root: Path) -> "EvaluationConfig":
@@ -226,6 +230,18 @@ class EvaluationConfig:
             isolation_attestation=os.environ.get(
                 "BB_VALIDATOR_ISOLATION_ATTESTATION", ""
             ).strip(),
+            isolation_launcher_image_digest=os.environ.get(
+                "BB_ISOLATION_LAUNCHER_IMAGE_DIGEST", ""
+            ).strip(),
+            isolation_guest_image_sha256=os.environ.get(
+                "BB_ISOLATION_GUEST_IMAGE_SHA256", ""
+            ).strip(),
+            require_live_worker=(
+                os.environ.get("BB_REQUIRE_EVALUATION_WORKER", "1") == "1"
+            ),
+            worker_stale_seconds=int(
+                os.environ.get("BB_WORKER_STALE_SECONDS", "15")
+            ),
         )
 
     @property
@@ -257,11 +273,15 @@ class EvaluationConfig:
             )
         if self.feedback_policy not in {"public_validation", "hidden"}:
             return "Full Evaluation feedback policy is invalid."
+        if self.worker_stale_seconds <= 0:
+            return "Evaluation Worker heartbeat expiry is invalid."
         isolation_error = validate_isolation_attestation(
             isolation_mode=self.validator_isolation,
             attestation_path=self.isolation_attestation,
             validator_image_digest=self.validator_image_digest,
             protocol_config_hash=self.protocol_config_hash,
+            launcher_image_digest=self.isolation_launcher_image_digest,
+            guest_image_sha256=self.isolation_guest_image_sha256,
         )
         if isolation_error and not self.allow_unsafe_validator:
             return isolation_error

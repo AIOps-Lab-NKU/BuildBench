@@ -140,6 +140,7 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
         path = parsed.path
         if path == "/api/health":
             evaluation = self.evaluation_service.readiness()
+            worker = dict(evaluation.get("worker") or {})
             self._json(
                 HTTPStatus.OK,
                 {
@@ -155,6 +156,18 @@ class BuildBenchHandler(SimpleHTTPRequestHandler):
                     "full_evaluation_enabled": evaluation["enabled"],
                     "full_evaluation_ready": evaluation["ready"],
                     "full_evaluation_message": evaluation["message"],
+                    "full_evaluation_worker_available": bool(
+                        worker.get("available")
+                    ),
+                    "full_evaluation_worker_count": int(
+                        worker.get("worker_count") or 0
+                    ),
+                    "full_evaluation_worker_capacity": int(
+                        worker.get("capacity") or 0
+                    ),
+                    "full_evaluation_worker_heartbeat_at": worker.get(
+                        "latest_heartbeat_at"
+                    ),
                 },
             )
             return

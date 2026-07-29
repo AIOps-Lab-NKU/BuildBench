@@ -1,10 +1,12 @@
 from __future__ import annotations
 
 import json
+import subprocess
 import tempfile
 import unittest
 from contextlib import contextmanager
 from pathlib import Path
+from unittest import mock
 
 from backend.build_gateway import (
     BuildGateway,
@@ -21,6 +23,7 @@ from backend.evaluation_runner import (
     DockerAgentConfig,
     DockerAgentExecutor,
     FormalCaseRunner,
+    _initial_log,
 )
 
 
@@ -41,6 +44,19 @@ def make_case(root: Path) -> Path:
         encoding="utf-8",
     )
     return case
+
+
+class CaseInputCompatibilityTests(unittest.TestCase):
+    def test_obs_target_log_is_accepted_as_initial_failure_evidence(
+        self,
+    ) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            case = Path(directory)
+            logs = case / "logs"
+            logs.mkdir()
+            target = logs / "obs-target.log"
+            target.write_text("historical target failure\n", encoding="utf-8")
+            self.assertEqual(_initial_log(case), target)
 
 
 class FakeValidator:
@@ -352,6 +368,67 @@ class DockerAgentBoundaryTests(unittest.TestCase):
         self.assertNotIn("secret-token-value", serialized)
         self.assertIn("BB_BUILD_GATEWAY_TOKEN_FILE", serialized)
         self.assertNotIn("--privileged", command)
+
+    def test_offline_local_image_reference_is_verified_against_digest(
+        self,
+    ) -> None:
+        root = Path(__file__).resolve().parents[1]
+        pinned = "sha256:" + "a" * 64
+        executor = DockerAgentExecutor(
+            DockerAgentConfig(
+                image=pinned,
+                local_image_reference="python:3.11.9-slim-bookworm",
+                local_image_digest=pinned,
+                entrypoint=("python", "-m", "src.main"),
+                timeout_seconds=60,
+            ),
+            root / "runner_assets" / "bb-build",
+        )
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout=pinned + "\n",
+            stderr="",
+        )
+        with mock.patch(
+            "backend.evaluation_runner.subprocess.run",
+            return_value=completed,
+        ) as run:
+            executor._verify_local_image_reference()
+        self.assertEqual(
+            run.call_args.args[0][:4],
+            ["docker", "image", "inspect", "python:3.11.9-slim-bookworm"],
+        )
+
+    def test_offline_local_image_reference_fails_closed_on_mismatch(
+        self,
+    ) -> None:
+        root = Path(__file__).resolve().parents[1]
+        executor = DockerAgentExecutor(
+            DockerAgentConfig(
+                image="sha256:" + "a" * 64,
+                local_image_reference="python:3.11.9-slim-bookworm",
+                local_image_digest="sha256:" + "a" * 64,
+                entrypoint=("python", "-m", "src.main"),
+                timeout_seconds=60,
+            ),
+            root / "runner_assets" / "bb-build",
+        )
+        completed = subprocess.CompletedProcess(
+            args=[],
+            returncode=0,
+            stdout="sha256:" + "b" * 64 + "\n",
+            stderr="",
+        )
+        with mock.patch(
+            "backend.evaluation_runner.subprocess.run",
+            return_value=completed,
+        ):
+            with self.assertRaisesRegex(
+                RuntimeError,
+                "does not match the pinned job digest",
+            ):
+                executor._verify_local_image_reference()
 
 
 if __name__ == "__main__":

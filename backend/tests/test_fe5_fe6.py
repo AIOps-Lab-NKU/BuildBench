@@ -76,13 +76,22 @@ class SecurityGateTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temporary:
             path = Path(temporary) / "attestation.json"
             payload: dict[str, object] = {
-                "schema_version": "0.1",
+                "schema_version": "0.2",
                 "isolation_mode": "ephemeral_vm",
+                "provider": "qemu_kvm",
                 "validator_image_digest": "sha256:" + "b" * 64,
                 "protocol_config_hash": "c" * 64,
+                "launcher_image_digest": "sha256:" + "e" * 64,
+                "guest_image_sha256": "sha256:" + "f" * 64,
+                "kvm_acceleration": True,
                 "docker_socket_exposed_to_agent": False,
+                "host_docker_socket_mounted_in_worker": False,
                 "hidden_case_store_mounted_in_validator_vm": False,
                 "worker_reused_between_cases": False,
+                "worker_overlay_discarded": True,
+                "job_input_scope": "single_case",
+                "output_scope": "dedicated_directory",
+                "network_mode": "none",
                 "approved_by": "security-reviewer",
                 "approved_at": "2026-07-27T00:00:00+00:00",
                 "expires_at": "2099-01-01T00:00:00+00:00",
@@ -102,6 +111,8 @@ class SecurityGateTests(unittest.TestCase):
                     attestation_path=path,
                     validator_image_digest="sha256:" + "b" * 64,
                     protocol_config_hash="c" * 64,
+                    launcher_image_digest="sha256:" + "e" * 64,
+                    guest_image_sha256="sha256:" + "f" * 64,
                 )
             )
             self.assertIn(
@@ -111,6 +122,8 @@ class SecurityGateTests(unittest.TestCase):
                     attestation_path=path,
                     validator_image_digest="sha256:" + "d" * 64,
                     protocol_config_hash="c" * 64,
+                    launcher_image_digest="sha256:" + "e" * 64,
+                    guest_image_sha256="sha256:" + "f" * 64,
                 )
                 or "",
             )

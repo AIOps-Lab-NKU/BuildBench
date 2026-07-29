@@ -51,6 +51,7 @@ window.BuildBenchI18nData.pages["my-submissions"] = Object.freeze({
     "每个 Agent 提交版本只能发起一次正式完整评测；如需再次评测，请上传新版本。",
   "Cancel": "取消",
   "Full Evaluation is not available yet.": "完整评测暂不可用。",
+  "No compatible Full Evaluation Worker is currently available. Please try again shortly.": "当前没有兼容的完整评测 Worker 在线，请稍后重试。",
   "Coming soon": "即将开放",
   "0 runs": "0 次运行",
   "No full evaluations yet": "尚无完整评测",

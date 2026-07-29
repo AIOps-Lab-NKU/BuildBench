@@ -7,6 +7,7 @@ import hashlib
 import json
 import logging
 import os
+import secrets
 import shlex
 import socket
 import subprocess
@@ -16,10 +17,11 @@ import time
 import uuid
 from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import Protocol
 
-from backend.evaluation_models import EvaluationConflict
+from backend.evaluation_models import EvaluationConfig, EvaluationConflict
 from backend.evaluation_runner import (
     CaseRunResult,
     CommandValidatorExecutor,
@@ -32,6 +34,14 @@ from backend.evaluation_store import EvaluationStore
 from backend.security import (
     SAFE_VALIDATOR_ISOLATION_MODES,
     validate_isolation_attestation,
+)
+from backend.isolation import (
+    IsolatedJobEnvelope,
+    QemuIsolationConfig,
+    QemuIsolationProvider,
+    sha256_file,
+    sha256_tree,
+    stage_isolated_job,
 )
 from backend.submissions import (
     ArchiveLimits,
@@ -79,7 +89,14 @@ class WorkerConfig:
     allow_unsafe_validator: bool = False
     validator_isolation: str = "unsafe_privileged"
     isolation_attestation: Path | None = None
+    isolation_launcher_image_digest: str = ""
+    isolation_guest_image_sha256: str = ""
+    isolation_launcher_image: str = ""
+    isolation_guest_image: Path | None = None
+    isolation_worker_cpus: int = 4
+    isolation_worker_memory_mb: int = 8192
     agent_workspace_bytes: int = 512 * 1024 * 1024
+    process_heartbeat_seconds: int = 5
 
     def validate(self) -> None:
         if self.concurrency <= 0:
@@ -108,6 +125,10 @@ class WorkerConfig:
             raise WorkerConfigurationError(
                 "Agent workspace quota must be positive."
             )
+        if self.process_heartbeat_seconds <= 0:
+            raise WorkerConfigurationError(
+                "Worker process heartbeat must be positive."
+            )
         if (
             not self.allow_unsafe_validator
             and self.validator_isolation not in SAFE_VALIDATOR_ISOLATION_MODES
@@ -116,6 +137,15 @@ class WorkerConfig:
                 "Untrusted evaluation requires a dedicated disposable "
                 "Validator VM/Worker isolation mode."
             )
+        if not self.allow_unsafe_validator:
+            if not self.isolation_launcher_image or not self.isolation_guest_image:
+                raise WorkerConfigurationError(
+                    "Production worker appliance is not configured."
+                )
+            if self.isolation_worker_cpus <= 0 or self.isolation_worker_memory_mb < 1024:
+                raise WorkerConfigurationError(
+                    "Production worker resource limits are invalid."
+                )
 
 
 def _sha256(path: Path) -> str:
@@ -189,6 +219,10 @@ class FormalEvaluationExecutor:
                 protocol_config_hash=str(
                     evaluation["protocol_config_hash"]
                 ),
+                launcher_image_digest=(
+                    self.config.isolation_launcher_image_digest
+                ),
+                guest_image_sha256=self.config.isolation_guest_image_sha256,
             )
             if isolation_error:
                 raise WorkerConfigurationError(isolation_error)
@@ -295,6 +329,93 @@ class FormalEvaluationExecutor:
             agent_dir=agent_dir,
             output_dir=run_output,
         )
+
+
+def _prefixed_digest(value: object) -> str:
+    raw = str(value)
+    return raw if raw.startswith("sha256:") else "sha256:" + raw
+
+
+class QemuEvaluationExecutor:
+    """Stage one Case and execute it inside a disposable QEMU/KVM Worker."""
+
+    def __init__(self, config: WorkerConfig, store: EvaluationStore):
+        self.config = config
+        self.store = store
+        self.resources = FormalEvaluationExecutor(config, store)
+        assert config.isolation_guest_image is not None
+        self.provider = QemuIsolationProvider(
+            QemuIsolationConfig(
+                launcher_image=config.isolation_launcher_image,
+                guest_image=config.isolation_guest_image,
+                guest_image_sha256=config.isolation_guest_image_sha256,
+                cpus=config.isolation_worker_cpus,
+                memory_mb=config.isolation_worker_memory_mb,
+                timeout_seconds=max(
+                    config.agent_timeout_seconds
+                    + config.build_timeout_seconds
+                    * max(config.build_attempt_limit + 1, 1)
+                    + 600,
+                    1800,
+                ),
+            )
+        )
+
+    def prepare(self, evaluation: dict[str, object]) -> None:
+        self.resources.prepare(evaluation)
+        self.provider.preflight()
+
+    def run(
+        self,
+        *,
+        claim: dict[str, object],
+        evaluation: dict[str, object],
+        attempt_root: Path,
+    ) -> CaseRunResult:
+        archive = (
+            self.resources._submission_directory(evaluation)
+            / "agent-submission.zip"
+        )
+        case_dir = self.resources._case_directory(claim)
+        now = datetime.now(timezone.utc)
+        envelope = IsolatedJobEnvelope(
+            schema_version="0.1",
+            job_id="JOB-" + uuid.uuid4().hex,
+            evaluation_id=str(claim["evaluation_id"]),
+            case_run_id=str(claim["case_run_id"]),
+            case_ordinal=int(claim["case_ordinal"]),
+            created_at=now.isoformat(),
+            expires_at=(now + timedelta(hours=12)).isoformat(),
+            submission_sha256=sha256_file(archive),
+            case_snapshot_sha256=sha256_tree(case_dir),
+            runtime_image_digest=str(evaluation["runtime_image_digest"]),
+            validator_image_digest=str(evaluation["validator_image_digest"]),
+            protocol_config_hash=_prefixed_digest(
+                evaluation["protocol_config_hash"]
+            ),
+            guest_image_sha256=self.config.isolation_guest_image_sha256,
+            nonce=secrets.token_hex(32),
+            agent_timeout_seconds=self.config.agent_timeout_seconds,
+            build_timeout_seconds=self.config.build_timeout_seconds,
+            build_attempt_limit=self.config.build_attempt_limit,
+            workspace_bytes=self.config.agent_workspace_bytes,
+        )
+        job_root = attempt_root / "isolated-worker"
+        stage_isolated_job(
+            job_root=job_root,
+            envelope=envelope,
+            submission_archive=archive,
+            case_snapshot=case_dir,
+        )
+        self.provider.run(job_root)
+        result_path = job_root / "output" / "case-run-result.json"
+        try:
+            payload = json.loads(result_path.read_text(encoding="utf-8"))
+            return CaseRunResult(**payload)
+        except (OSError, UnicodeError, json.JSONDecodeError, TypeError):
+            raise WorkerConfigurationError(
+                "Disposable worker returned an invalid Case result."
+            ) from None
 
 
 class EvaluationWorker:
@@ -466,6 +587,7 @@ class EvaluationWorkerPool:
         executor: CaseExecutor,
         config: WorkerConfig,
         instance_id: str | None = None,
+        evaluation_config: EvaluationConfig | None = None,
     ):
         config.validate()
         self.store = store
@@ -474,6 +596,8 @@ class EvaluationWorkerPool:
         base = instance_id or (
             f"{socket.gethostname()}-{os.getpid()}-{uuid.uuid4().hex[:8]}"
         )
+        self.instance_id = base
+        self.evaluation_config = evaluation_config
         self.scheduler = EvaluationScheduler(store, executor.prepare)
         self.workers = [
             EvaluationWorker(
@@ -487,6 +611,7 @@ class EvaluationWorkerPool:
         ]
 
     def run_until_idle(self, idle_cycles: int = 2) -> int:
+        stop_heartbeat, heartbeat_thread = self._start_process_heartbeat()
         processed = 0
         processed_lock = threading.Lock()
 
@@ -510,29 +635,36 @@ class EvaluationWorkerPool:
                 idle = 0 if active else idle + 1
                 time.sleep(self.config.poll_seconds)
 
-        with ThreadPoolExecutor(
-            max_workers=len(self.workers),
-            thread_name_prefix="bb-evaluation",
-        ) as pool:
-            futures = [
-                pool.submit(until_idle_loop, worker)
-                for worker in self.workers
-            ]
-            for future in futures:
-                future.result()
-        self.scheduler.maintain()
-        return processed
+        try:
+            with ThreadPoolExecutor(
+                max_workers=len(self.workers),
+                thread_name_prefix="bb-evaluation",
+            ) as pool:
+                futures = [
+                    pool.submit(until_idle_loop, worker)
+                    for worker in self.workers
+                ]
+                for future in futures:
+                    future.result()
+            self.scheduler.maintain()
+            return processed
+        finally:
+            self._stop_process_heartbeat(stop_heartbeat, heartbeat_thread)
 
     def run_forever(self) -> None:
-        with ThreadPoolExecutor(
-            max_workers=len(self.workers),
-            thread_name_prefix="bb-evaluation",
-        ) as pool:
-            futures = []
-            for worker in self.workers:
-                futures.append(pool.submit(self._worker_loop, worker))
-            for future in futures:
-                future.result()
+        stop_heartbeat, heartbeat_thread = self._start_process_heartbeat()
+        try:
+            with ThreadPoolExecutor(
+                max_workers=len(self.workers),
+                thread_name_prefix="bb-evaluation",
+            ) as pool:
+                futures = []
+                for worker in self.workers:
+                    futures.append(pool.submit(self._worker_loop, worker))
+                for future in futures:
+                    future.result()
+        finally:
+            self._stop_process_heartbeat(stop_heartbeat, heartbeat_thread)
 
     def _worker_loop(self, worker: EvaluationWorker) -> None:
         while True:
@@ -542,6 +674,76 @@ class EvaluationWorkerPool:
             except Exception:
                 LOGGER.exception("Evaluation Worker iteration failed")
                 time.sleep(self.config.poll_seconds)
+
+    def _start_process_heartbeat(
+        self,
+    ) -> tuple[threading.Event | None, threading.Thread | None]:
+        if self.evaluation_config is None:
+            return None, None
+        evaluation = self.evaluation_config
+        self.store.register_worker(
+            worker_id=self.instance_id,
+            concurrency=self.config.concurrency,
+            case_set_version=evaluation.case_set_version,
+            case_set_digest=evaluation.case_set_digest,
+            runtime_image_digest=evaluation.runtime_image_digest,
+            validator_image_digest=evaluation.validator_image_digest,
+            protocol_version=evaluation.protocol_version,
+            protocol_config_hash=evaluation.protocol_config_hash,
+            isolation_mode=self.config.validator_isolation,
+        )
+        stop = threading.Event()
+
+        def heartbeat_loop() -> None:
+            while not stop.wait(self.config.process_heartbeat_seconds):
+                try:
+                    if not self.store.heartbeat_worker(self.instance_id):
+                        LOGGER.error(
+                            "Evaluation Worker registration disappeared; "
+                            "registering it again"
+                        )
+                        self.store.register_worker(
+                            worker_id=self.instance_id,
+                            concurrency=self.config.concurrency,
+                            case_set_version=evaluation.case_set_version,
+                            case_set_digest=evaluation.case_set_digest,
+                            runtime_image_digest=evaluation.runtime_image_digest,
+                            validator_image_digest=evaluation.validator_image_digest,
+                            protocol_version=evaluation.protocol_version,
+                            protocol_config_hash=evaluation.protocol_config_hash,
+                            isolation_mode=self.config.validator_isolation,
+                        )
+                except Exception:
+                    LOGGER.exception(
+                        "Evaluation Worker process heartbeat failed"
+                    )
+
+        thread = threading.Thread(
+            target=heartbeat_loop,
+            name=f"{self.instance_id}-process-heartbeat",
+            daemon=True,
+        )
+        thread.start()
+        return stop, thread
+
+    def _stop_process_heartbeat(
+        self,
+        stop: threading.Event | None,
+        thread: threading.Thread | None,
+    ) -> None:
+        if stop is None:
+            return
+        stop.set()
+        if thread is not None:
+            thread.join(
+                timeout=max(self.config.process_heartbeat_seconds * 2, 1)
+            )
+        try:
+            self.store.stop_worker(self.instance_id)
+        except Exception:
+            LOGGER.exception(
+                "Failed to mark Evaluation Worker as stopped"
+            )
 
 
 def _default_path(environment: str, fallback: Path) -> Path:
@@ -609,6 +811,14 @@ def main() -> int:
         default=int(os.environ.get("BB_EVALUATION_WORKERS", "2")),
     )
     parser.add_argument(
+        "--instance-id",
+        default=os.environ.get("BB_EVALUATION_WORKER_INSTANCE_ID", ""),
+        help=(
+            "Stable process identity used by the Worker heartbeat. "
+            "Configure a unique value for each supervised Worker process."
+        ),
+    )
+    parser.add_argument(
         "--lease-seconds",
         type=int,
         default=int(os.environ.get("BB_CASE_LEASE_SECONDS", "120")),
@@ -617,6 +827,11 @@ def main() -> int:
         "--heartbeat-seconds",
         type=int,
         default=int(os.environ.get("BB_CASE_HEARTBEAT_SECONDS", "30")),
+    )
+    parser.add_argument(
+        "--process-heartbeat-seconds",
+        type=int,
+        default=int(os.environ.get("BB_WORKER_HEARTBEAT_SECONDS", "5")),
     )
     parser.add_argument(
         "--poll-seconds",
@@ -680,6 +895,37 @@ def main() -> int:
         ),
     )
     parser.add_argument(
+        "--isolation-launcher-image-digest",
+        default=os.environ.get("BB_ISOLATION_LAUNCHER_IMAGE_DIGEST", ""),
+    )
+    parser.add_argument(
+        "--isolation-guest-image-sha256",
+        default=os.environ.get("BB_ISOLATION_GUEST_IMAGE_SHA256", ""),
+    )
+    parser.add_argument(
+        "--isolation-launcher-image",
+        default=os.environ.get("BB_ISOLATION_LAUNCHER_IMAGE", ""),
+    )
+    parser.add_argument(
+        "--isolation-guest-image",
+        type=Path,
+        default=(
+            Path(os.environ["BB_ISOLATION_GUEST_IMAGE"])
+            if os.environ.get("BB_ISOLATION_GUEST_IMAGE")
+            else None
+        ),
+    )
+    parser.add_argument(
+        "--isolation-worker-cpus",
+        type=int,
+        default=int(os.environ.get("BB_ISOLATION_WORKER_CPUS", "4")),
+    )
+    parser.add_argument(
+        "--isolation-worker-memory-mb",
+        type=int,
+        default=int(os.environ.get("BB_ISOLATION_WORKER_MEMORY_MB", "8192")),
+    )
+    parser.add_argument(
         "--until-idle",
         action="store_true",
         help="Process available jobs, then exit after two idle polls.",
@@ -710,12 +956,31 @@ def main() -> int:
             if args.isolation_attestation
             else None
         ),
+        isolation_launcher_image_digest=(
+            args.isolation_launcher_image_digest.strip()
+        ),
+        isolation_guest_image_sha256=(
+            args.isolation_guest_image_sha256.strip()
+        ),
+        isolation_launcher_image=args.isolation_launcher_image.strip(),
+        isolation_guest_image=(
+            args.isolation_guest_image.resolve()
+            if args.isolation_guest_image
+            else None
+        ),
+        isolation_worker_cpus=args.isolation_worker_cpus,
+        isolation_worker_memory_mb=args.isolation_worker_memory_mb,
         agent_workspace_bytes=args.agent_workspace_bytes,
+        process_heartbeat_seconds=args.process_heartbeat_seconds,
     )
     config.validate()
     config.output_root.mkdir(parents=True, exist_ok=True)
     store = EvaluationStore(config.database_path)
-    executor = FormalEvaluationExecutor(config, store)
+    executor: CaseExecutor
+    if config.allow_unsafe_validator:
+        executor = FormalEvaluationExecutor(config, store)
+    else:
+        executor = QemuEvaluationExecutor(config, store)
     logging.basicConfig(
         level=os.environ.get("BB_WORKER_LOG_LEVEL", "INFO"),
         format="%(asctime)s %(levelname)s %(name)s %(message)s",
@@ -724,6 +989,10 @@ def main() -> int:
         store=store,
         executor=executor,
         config=config,
+        instance_id=args.instance_id.strip() or None,
+        evaluation_config=EvaluationConfig.from_environment(
+            website_root / "runtime-data"
+        ),
     )
     print(
         json.dumps(

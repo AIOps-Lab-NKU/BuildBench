@@ -87,6 +87,18 @@ class BuildGateway:
         with self._lock:
             return self._attempts
 
+    def _sensitive_paths(self) -> tuple[Path, ...]:
+        """Cover both fixed work trees and their private per-job root."""
+
+        return (
+            self.context.original_case,
+            self.context.worktree,
+            self.context.output_root,
+            self.context.original_case.parent,
+            self.context.worktree.parent,
+            self.context.output_root.parent,
+        )
+
     def handle(
         self, request: object, *, capability_token: str
     ) -> dict[str, object]:
@@ -128,7 +140,10 @@ class BuildGateway:
                 "attempt": attempt,
                 "attempt_limit": self.context.attempt_limit,
                 "status": "invalid_patch",
-                "message": sanitize_log(str(error)),
+                "message": sanitize_log(
+                    str(error),
+                    sensitive_paths=self._sensitive_paths(),
+                ),
                 "log_excerpt": "",
             }
 
@@ -148,14 +163,13 @@ class BuildGateway:
             "attempt": attempt,
             "attempt_limit": self.context.attempt_limit,
             "status": str(result.get("status") or "infrastructure_error"),
-            "message": sanitize_log(str(result.get("message") or "")),
+            "message": sanitize_log(
+                str(result.get("message") or ""),
+                sensitive_paths=self._sensitive_paths(),
+            ),
             "log_excerpt": sanitize_log(
                 log_text,
-                sensitive_paths=(
-                    self.context.original_case,
-                    self.context.worktree,
-                    self.context.output_root,
-                ),
+                sensitive_paths=self._sensitive_paths(),
             ),
         }
 

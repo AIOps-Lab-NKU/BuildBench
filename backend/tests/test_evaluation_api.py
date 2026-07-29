@@ -6,6 +6,7 @@ import tempfile
 import threading
 import time
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from backend.server import create_server
@@ -40,6 +41,10 @@ class EvaluationApiTests(unittest.TestCase):
                     "/fake/run",
                 )
 
+            config = replace(
+                evaluation_config(("hidden-a", "hidden-b")),
+                require_live_worker=True,
+            )
             server = create_server(
                 "127.0.0.1",
                 0,
@@ -50,7 +55,7 @@ class EvaluationApiTests(unittest.TestCase):
                 ArchiveLimits(),
                 checker=accepted_checker,
                 smoke_runner=smoke_runner,
-                evaluation_config=evaluation_config(("hidden-a", "hidden-b")),
+                evaluation_config=config,
             )
             thread = threading.Thread(target=server.serve_forever, daemon=True)
             thread.start()
@@ -60,6 +65,39 @@ class EvaluationApiTests(unittest.TestCase):
                 timeout=5,
             )
             try:
+                connection.request("GET", "/api/health")
+                response = connection.getresponse()
+                health = json.load(response)
+                self.assertFalse(health["full_evaluation_ready"])
+                self.assertFalse(
+                    health["full_evaluation_worker_available"]
+                )
+
+                server.evaluation_store.register_worker(  # type: ignore[attr-defined]
+                    worker_id="api-test-worker",
+                    concurrency=2,
+                    case_set_version=config.case_set_version,
+                    case_set_digest=config.case_set_digest,
+                    runtime_image_digest=config.runtime_image_digest,
+                    validator_image_digest=config.validator_image_digest,
+                    protocol_version=config.protocol_version,
+                    protocol_config_hash=config.protocol_config_hash,
+                    isolation_mode="unsafe_privileged",
+                )
+                connection.request("GET", "/api/health")
+                response = connection.getresponse()
+                health = json.load(response)
+                self.assertTrue(health["full_evaluation_ready"])
+                self.assertTrue(
+                    health["full_evaluation_worker_available"]
+                )
+                self.assertEqual(
+                    health["full_evaluation_worker_count"], 1
+                )
+                self.assertEqual(
+                    health["full_evaluation_worker_capacity"], 2
+                )
+
                 payload = valid_agent_zip()
                 connection.request(
                     "POST",
@@ -177,4 +215,3 @@ class EvaluationApiTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
-

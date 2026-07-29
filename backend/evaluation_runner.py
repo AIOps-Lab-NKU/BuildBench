@@ -100,12 +100,16 @@ class DockerAgentConfig:
     image: str
     entrypoint: tuple[str, ...]
     timeout_seconds: int
+    local_image_reference: str | None = None
+    local_image_digest: str | None = None
     cpus: str = "1"
     memory: str = "2g"
     pids_limit: int = 256
     build_feedback_timeout_seconds: int = 900
     workspace_bytes: int = 512 * 1024 * 1024
     docker_command: str = "docker"
+    run_as_uid: int | None = None
+    run_as_gid: int | None = None
 
 
 class DockerAgentExecutor:
@@ -141,6 +145,21 @@ class DockerAgentExecutor:
     ) -> list[str]:
         del gateway_token
         socket_dir = gateway_socket.parent
+        run_uid = (
+            self.config.run_as_uid
+            if self.config.run_as_uid is not None
+            else getattr(os, "getuid", lambda: 1000)()
+        )
+        run_gid = (
+            self.config.run_as_gid
+            if self.config.run_as_gid is not None
+            else getattr(os, "getgid", lambda: 1000)()
+        )
+        tool_tmpfs = "rw,exec,nosuid,nodev,size=1m"
+        if self.config.run_as_uid is not None:
+            tool_tmpfs += (
+                f",uid={run_uid},gid={run_gid},mode=0755"
+            )
         return [
             self.config.docker_command,
             "run",
@@ -163,10 +182,7 @@ class DockerAgentExecutor:
             "--ulimit",
             "nofile=1024:1024",
             "--user",
-            (
-                f"{getattr(os, 'getuid', lambda: 1000)()}:"
-                f"{getattr(os, 'getgid', lambda: 1000)()}"
-            ),
+            f"{run_uid}:{run_gid}",
             "-e",
             "HOME=/tmp",
             "-e",
@@ -189,7 +205,7 @@ class DockerAgentExecutor:
             "--tmpfs",
             "/tmp:rw,nosuid,nodev,size=64m",
             "--tmpfs",
-            "/opt/buildbench/bin:rw,exec,nosuid,nodev,size=1m",
+            f"/opt/buildbench/bin:{tool_tmpfs}",
             "-v",
             f"{agent_dir.resolve()}:/agent:ro",
             "-v",
@@ -204,7 +220,7 @@ class DockerAgentExecutor:
             f"{self.bb_build_client}:/opt/buildbench/assets/bb-build:ro",
             "-w",
             "/agent",
-            self.config.image,
+            self.config.local_image_reference or self.config.image,
             "sh",
             "-eu",
             "-c",
@@ -228,7 +244,12 @@ class DockerAgentExecutor:
         gateway_token: str,
     ) -> AgentExecution:
         started = time.monotonic()
+        self._verify_local_image_reference()
         container_name = "bb-agent-" + secrets.token_hex(8)
+        self._prepare_explicit_identity_paths(
+            workspace=workspace,
+            gateway_socket=gateway_socket,
+        )
         command = self.command(
             agent_dir=agent_dir,
             workspace=workspace,
@@ -303,6 +324,101 @@ class DockerAgentExecutor:
                 else f"Agent exited with code {return_code}."
             ),
         )
+
+    def _verify_local_image_reference(self) -> None:
+        """Bind an offline local tag to the immutable image ID in the job."""
+
+        reference = self.config.local_image_reference
+        if reference is None:
+            return
+        try:
+            completed = subprocess.run(
+                [
+                    self.config.docker_command,
+                    "image",
+                    "inspect",
+                    reference,
+                    "--format",
+                    "{{.Id}}",
+                ],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                text=True,
+                encoding="utf-8",
+                errors="replace",
+                check=False,
+                timeout=30,
+            )
+        except (OSError, subprocess.TimeoutExpired) as error:
+            raise RuntimeError(
+                "Pinned Agent runtime image could not be inspected."
+            ) from error
+        actual = completed.stdout.strip()
+        expected = self.config.local_image_digest or self.config.image
+        if completed.returncode != 0 or actual != expected:
+            raise RuntimeError(
+                "Local Agent runtime image does not match the pinned job "
+                f"digest (expected {expected}, got "
+                f"{actual or '<unavailable>'})."
+            )
+
+    def _prepare_explicit_identity_paths(
+        self,
+        *,
+        workspace: Path,
+        gateway_socket: Path,
+    ) -> None:
+        """Give only intended writable paths to an explicit non-root UID.
+
+        Production disposable workers create the workspace and gateway as
+        root, then run the Agent as UID/GID 1000. Trusted host runners omit
+        these explicit IDs and retain their existing ownership behavior.
+        """
+
+        uid = self.config.run_as_uid
+        gid = self.config.run_as_gid
+        if (
+            uid is None
+            or gid is None
+            or os.name == "nt"
+            or getattr(os, "geteuid", lambda: -1)() != 0
+        ):
+            return
+        for root in (workspace / "work", workspace / "output"):
+            for current, directories, files in os.walk(root):
+                os.chown(current, uid, gid)
+                current_path = Path(current)
+                current_path.chmod(
+                    current_path.stat().st_mode
+                    | stat.S_IRUSR
+                    | stat.S_IWUSR
+                    | stat.S_IXUSR
+                )
+                for name in directories:
+                    directory_path = Path(current) / name
+                    os.chown(directory_path, uid, gid)
+                    directory_path.chmod(
+                        directory_path.stat().st_mode
+                        | stat.S_IRUSR
+                        | stat.S_IWUSR
+                        | stat.S_IXUSR
+                    )
+                for name in files:
+                    file_path = Path(current) / name
+                    os.chown(file_path, uid, gid)
+                    file_path.chmod(
+                        file_path.stat().st_mode
+                        | stat.S_IRUSR
+                        | stat.S_IWUSR
+                    )
+        socket_dir = gateway_socket.parent
+        os.chown(socket_dir, uid, gid)
+        token_path = socket_dir / "capability-token"
+        if token_path.exists():
+            os.chown(token_path, uid, gid)
+        if gateway_socket.exists():
+            os.chown(gateway_socket, uid, gid)
+            gateway_socket.chmod(stat.S_IRUSR | stat.S_IWUSR)
 
     def _force_remove_container(self, container_name: str) -> None:
         """Best-effort, bounded cleanup even when the Docker daemon stalls."""
@@ -448,6 +564,7 @@ def _initial_log(case_dir: Path) -> Path:
     candidates = (
         case_dir / "logs" / "original-target-failed.log",
         case_dir / "logs" / "initial-build.log",
+        case_dir / "logs" / "obs-target.log",
         case_dir / "input" / "log_failed.txt",
         case_dir / "log_failed.txt",
     )
@@ -762,6 +879,14 @@ class FormalCaseRunner:
             source = final_root / name
             if source.is_file():
                 shutil.copyfile(source, output_dir / name)
+        validator_console = final_root.parent / (
+            f"{final_root.name}.console.log"
+        )
+        if validator_console.is_file():
+            shutil.copyfile(
+                validator_console,
+                output_dir / "validator-console.log",
+            )
         artifacts = final_root / "artifacts"
         if artifacts.is_dir():
             shutil.copytree(artifacts, output_dir / "artifacts")

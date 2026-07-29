@@ -1,13 +1,16 @@
 from __future__ import annotations
 
+import sqlite3
 import tempfile
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 from backend.evaluation_models import (
     EvaluationConfig,
     EvaluationConflict,
     EvaluationResultNotReady,
+    EvaluationUnavailable,
     stable_digest,
 )
 from backend.evaluation_service import EvaluationService
@@ -213,7 +216,101 @@ class EvaluationLifecycleTests(unittest.TestCase):
         ):
             self.store.finalize(evaluation_id)
 
+    def test_live_worker_is_required_and_compatibility_is_checked(self) -> None:
+        config = replace(
+            evaluation_config(),
+            require_live_worker=True,
+            worker_stale_seconds=15,
+        )
+        service = EvaluationService(
+            self.store,
+            self.submissions,
+            config,
+        )
+        submission = qualified_submission(self.submissions, "worker-gated")
+
+        readiness = service.readiness()
+        self.assertFalse(readiness["ready"])
+        self.assertFalse(readiness["worker"]["available"])
+        with self.assertRaisesRegex(
+            EvaluationUnavailable,
+            "No compatible Full Evaluation Worker",
+        ):
+            service.create(str(submission["id"]), "worker-gate-0001")
+
+        self.store.register_worker(
+            worker_id="incompatible-worker",
+            concurrency=4,
+            case_set_version=config.case_set_version,
+            case_set_digest=config.case_set_digest,
+            runtime_image_digest=config.runtime_image_digest,
+            validator_image_digest=config.validator_image_digest,
+            protocol_version=config.protocol_version,
+            protocol_config_hash="wrong-protocol-hash",
+            isolation_mode="unsafe_privileged",
+        )
+        self.assertFalse(service.readiness()["ready"])
+
+        self.store.register_worker(
+            worker_id="test-worker",
+            concurrency=2,
+            case_set_version=config.case_set_version,
+            case_set_digest=config.case_set_digest,
+            runtime_image_digest=config.runtime_image_digest,
+            validator_image_digest=config.validator_image_digest,
+            protocol_version=config.protocol_version,
+            protocol_config_hash=config.protocol_config_hash,
+            isolation_mode="unsafe_privileged",
+        )
+        readiness = service.readiness()
+        self.assertTrue(readiness["ready"])
+        self.assertEqual(readiness["worker"]["worker_count"], 1)
+        self.assertEqual(readiness["worker"]["capacity"], 2)
+
+        record, created = service.create(
+            str(submission["id"]),
+            "worker-gate-0001",
+        )
+        self.assertTrue(created)
+        self.assertEqual(record["status"], "queued")
+
+        self.store.stop_worker("test-worker")
+        self.assertFalse(service.readiness()["ready"])
+
+    def test_stale_worker_is_not_ready(self) -> None:
+        config = replace(
+            evaluation_config(),
+            require_live_worker=True,
+            worker_stale_seconds=15,
+        )
+        self.store.register_worker(
+            worker_id="stale-worker",
+            concurrency=1,
+            case_set_version=config.case_set_version,
+            case_set_digest=config.case_set_digest,
+            runtime_image_digest=config.runtime_image_digest,
+            validator_image_digest=config.validator_image_digest,
+            protocol_version=config.protocol_version,
+            protocol_config_hash=config.protocol_config_hash,
+            isolation_mode="unsafe_privileged",
+        )
+        with sqlite3.connect(self.store.database_path) as connection:
+            connection.execute(
+                """
+                UPDATE evaluation_workers
+                SET heartbeat_at = '2000-01-01T00:00:00+00:00'
+                WHERE worker_id = 'stale-worker'
+                """
+            )
+        service = EvaluationService(
+            self.store,
+            self.submissions,
+            config,
+        )
+        readiness = service.readiness()
+        self.assertFalse(readiness["ready"])
+        self.assertEqual(readiness["worker"]["worker_count"], 0)
+
 
 if __name__ == "__main__":
     unittest.main()
-
