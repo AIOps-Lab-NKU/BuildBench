@@ -33,7 +33,7 @@
           <div class="submission-hero-copy">
             <span class="page-kicker"><i data-lucide="package-open" aria-hidden="true"></i>Agent submission</span>
             <h1>Agent Submission Guide</h1>
-            <p>Submit a runnable Agent source bundle. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical <code>repair.diff</code>, and the Docker Validator verifies it on a clean Case.</p>
+            <p>Submit a runnable Agent source bundle, not case-specific answers or precomputed patches. The platform starts one isolated instance for each Case, captures the Agent's worktree changes, creates the canonical <code>repair.diff</code>, and verifies that repair with the Docker Validator.</p>
           </div>
         </div>
       </section>
@@ -64,7 +64,7 @@
           <section class="doc-section" id="quick-start">
             <span class="section-label">01 / Start</span>
             <h2>Quick start</h2>
-            <p>Run the official example first, then create, test, package, and upload your own Agent.</p>
+            <p>Register your team, get the Starter Kit, run the official example, test locally, upload one Agent bundle, pass the hosted Smoke Test, and select a qualified version for evaluation.</p>
 
             <div class="submission-guide-subsection quick-start-prerequisites">
               <h3>Before you begin</h3>
@@ -135,7 +135,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
 ./bb test --agent ./agents/my-agent</code></pre></div>
                   <dl class="quick-start-details">
-                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.1</code> contains one local Example Case, <code>hello</code>.</dd></div>
+                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.1</code> includes the local Example Case <code>hello</code>.</dd></div>
                     <div><dt>Agent behavior</dt><dd>The entrypoint declared in <code>agent.yaml</code> runs once per Case. It reads <code>/workspace/input</code>, edits <code>/workspace/work/repo</code>, and writes <code>/workspace/output/agent-result.json</code>.</dd></div>
                   </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case patches, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
@@ -177,14 +177,14 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                 <table class="submission-guide-table" aria-label="Case set scope">
                   <thead><tr><th scope="col">Case set</th><th scope="col">Purpose</th><th scope="col">Current scope</th></tr></thead>
                   <tbody>
-                    <tr><th scope="row">Local Example Cases</th><td>Verify the Starter Kit, Agent entrypoint, workspace protocol, patch generation, and local Validator path.</td><td>1 public Case: <code>hello</code></td></tr>
+                    <tr><th scope="row">Local Example Cases</th><td>Verify the Starter Kit, Agent entrypoint, workspace protocol, patch generation, and local Validator path.</td><td>Example Case: <code>hello</code></td></tr>
                     <tr><th scope="row">Development Cases</th><td>Public Cases for Agent development and broader local experiments.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
                     <tr><th scope="row">Hosted Smoke Cases</th><td>A lightweight hosted subset used to qualify an uploaded Agent version.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
                     <tr><th scope="row">Full Evaluation Cases</th><td>Organizer-controlled Cases used for formal scoring.</td><td><span class="requirement-tba">Count TBA</span></td></tr>
                   </tbody>
                 </table>
               </div>
-              <p class="submission-inline-note"><span>Scope</span>The original Build-Bench benchmark is the source of competition candidates; its historical total must not be read as the final competition Case count. Final set sizes and versions will be announced on <a href="data-downloads.html">Data &amp; Downloads</a>.</p>
+              <p class="submission-inline-note"><span>Scope</span>The original Build-Bench benchmark is the source of competition cases, but only a versioned release manifest defines the official competition set. Final split versions will be announced on <a href="data-downloads.html">Data &amp; Downloads</a>.</p>
             </div>
           </section>
 
@@ -269,7 +269,7 @@ protocol:
               </div>
               <ul class="runtime-rules">
                 <li><strong>Read <code>input/</code>.</strong><span>It contains the task metadata, initial failure evidence, and original package tree.</span></li>
-                <li><strong>Modify only <code>work/repo/</code>.</strong><span>This is the candidate package tree used for build requests.</span></li>
+                <li><strong>Modify only <code>work/repo/</code>.</strong><span>This is the writable package tree used for build requests.</span></li>
                 <li><strong>Use stdout and stderr for logs.</strong><span>The platform captures both streams for diagnostics.</span></li>
                 <li><strong>Write <code>agent-result.json</code>.</strong><span>Place machine-readable completion status and diagnostics in <code>output/</code>.</span></li>
               </ul>
@@ -346,7 +346,7 @@ protocol:
                 <li><code>/workspace/output/agent-result.json</code> contains <code>schema_version: "0.1"</code> and a supported status.</li>
                 <li>The Agent completes at least one released local Example Case.</li>
               </ul>
-              <p class="submission-inline-note"><span>Released</span>Starter Kit <code>v0.1.0-rc.1</code> provides the local Runner, managed-Python template, one <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
+              <p class="submission-inline-note"><span>Released</span>Starter Kit <code>v0.1.0-rc.1</code> provides the local Runner, managed-Python template, the <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
             </div>
 
             <div class="submission-guide-subsection">

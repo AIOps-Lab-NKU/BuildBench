@@ -17,7 +17,7 @@
   </head>
   <body data-page="evaluation">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Working evaluation</span><span>Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.</span></div>
+    <div class="status-strip" role="status"><span class="status-strip-label">Evaluation preview</span><span>Entries are ranked by official build outcomes. Denominator and tie-break details remain under review.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -31,15 +31,15 @@
     <main id="main-content">
       <section class="page-masthead draft-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker"><i data-lucide="file-clock" aria-hidden="true"></i>Draft protocol</span><h1>Evaluation</h1><p>The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.</p></div>
-          <dl class="masthead-facts"><div><dt>Oracle</dt><dd>Executable build</dd></div><div><dt>Primary metric</dt><dd>Build Success Rate</dd></div><div><dt>Open detail</dt><dd>Failure handling</dd></div></dl>
+          <div><span class="page-kicker"><i data-lucide="file-clock" aria-hidden="true"></i>Draft protocol</span><h1>Evaluation</h1><p>The score is based on whether the repaired package builds successfully in the official target-architecture environment.</p></div>
+          <dl class="masthead-facts"><div><dt>Success means</dt><dd>Validator passes</dd></div><div><dt>Primary metric</dt><dd>Build Success Rate</dd></div><div><dt>Open detail</dt><dd>Failure handling</dd></div></dl>
         </div>
       </section>
 
       <div class="content-wrap page-layout">
         <aside class="page-rail" aria-label="On this page">
           <strong>On this page</strong>
-          <nav><a href="#status">Protocol status</a><a href="#principle">Primary metric</a><a href="#harness">Evaluation harness</a><a href="#metrics">Reporting fields</a><a href="#feedback">Public vs. hidden</a><a href="#decisions">Open decisions</a></nav>
+          <nav><a href="#status">Protocol status</a><a href="#principle">What counts</a><a href="#harness">Evaluation harness</a><a href="#metrics">Reporting fields</a><a href="#feedback">Public vs. hidden</a><a href="#decisions">Open decisions</a></nav>
           <div class="rail-status review"><span>Working decision</span><p>One primary score ranks entries. Exact denominator and secondary ordering rules will be frozen before launch.</p></div>
         </aside>
 
@@ -53,8 +53,8 @@
           </section>
 
           <section class="doc-section" id="principle">
-            <span class="section-label">Core principle</span>
-            <h2>Executable outcomes are the oracle</h2>
+            <span class="section-label">What counts as success</span>
+            <h2>The repaired package must build</h2>
             <p class="lead">A repair is successful only when it applies cleanly, respects competition policy, and the repaired package passes the official validator on the target architecture.</p>
             <div class="metric-panel document-metric">
               <span class="section-label">Primary ranking metric</span>

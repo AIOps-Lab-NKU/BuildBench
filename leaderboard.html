@@ -109,7 +109,6 @@
                   <th scope="col">Rank</th>
                   <th scope="col">Team</th>
                   <th scope="col">Agent version</th>
-                  <th scope="col">Success</th>
                   <th scope="col">Success rate</th>
                   <th scope="col">Duration</th>
                   <th scope="col">Published</th>
@@ -140,7 +139,6 @@
           </div>
 
           <div class="board-summary" aria-label="Filtered leaderboard summary">
-            <div><strong data-board-packages>268</strong><span>packages in view</span></div>
             <div><strong data-board-models>7</strong><span>models in view</span></div>
             <div><strong data-board-best>63.19%</strong><span>best success rate</span></div>
             <div><strong>Build</strong><span>executable oracle</span></div>
@@ -166,33 +164,31 @@
                   <th scope="col">Rank</th>
                   <th scope="col">Model</th>
                   <th scope="col">Direction</th>
-                  <th scope="col">Success</th>
                   <th scope="col">Success rate</th>
                   <th scope="col">Avg. time</th>
                   <th scope="col">Avg. tokens</th>
                 </tr>
               </thead>
               <tbody>
-                <tr data-direction="forward" data-rate="63.19" data-total="163"><td data-rank>1</td><th scope="row">GPT-5</th><td>x86_64 &rarr; aarch64</td><td>103 / 163</td><td><strong>63.19%</strong></td><td>31.18 min</td><td>1,830.91K</td></tr>
-                <tr data-direction="forward" data-rate="28.83" data-total="163"><td data-rank>2</td><th scope="row">GPT-5-mini</th><td>x86_64 &rarr; aarch64</td><td>47 / 163</td><td><strong>28.83%</strong></td><td>13.80 min</td><td>1,683.95K</td></tr>
-                <tr data-direction="forward" data-rate="17.18" data-total="163"><td data-rank>3</td><th scope="row">Qwen3-max</th><td>x86_64 &rarr; aarch64</td><td>28 / 163</td><td><strong>17.18%</strong></td><td>35.69 min</td><td>505.39K</td></tr>
-                <tr data-direction="forward" data-rate="13.50" data-total="163"><td data-rank>4</td><th scope="row">GPT-4o</th><td>x86_64 &rarr; aarch64</td><td>22 / 163</td><td><strong>13.50%</strong></td><td>5.93 min</td><td>541.66K</td></tr>
-                <tr data-direction="forward" data-rate="9.82" data-total="163"><td data-rank>5</td><th scope="row">Claude Sonnet 4.5</th><td>x86_64 &rarr; aarch64</td><td>16 / 163</td><td><strong>9.82%</strong></td><td>6.27 min</td><td>328.76K</td></tr>
-                <tr data-direction="forward" data-rate="7.98" data-total="163"><td data-rank>6</td><th scope="row">DeepSeek V3</th><td>x86_64 &rarr; aarch64</td><td>13 / 163</td><td><strong>7.98%</strong></td><td>11.37 min</td><td>235.53K</td></tr>
-                <tr data-direction="forward" data-rate="4.91" data-total="163"><td data-rank>7</td><th scope="row">Qwen2.5-3B-Instruct</th><td>x86_64 &rarr; aarch64</td><td>8 / 163</td><td><strong>4.91%</strong></td><td>27.65 min</td><td>591.90K</td></tr>
-                <tr data-direction="reverse" data-rate="29.52" data-total="105"><td data-rank>1</td><th scope="row">GPT-5</th><td>aarch64 &rarr; x86_64</td><td>31 / 105</td><td><strong>29.52%</strong></td><td>18.55 min</td><td>1,518.66K</td></tr>
-                <tr data-direction="reverse" data-rate="26.67" data-total="105"><td data-rank>2</td><th scope="row">GPT-5-mini</th><td>aarch64 &rarr; x86_64</td><td>28 / 105</td><td><strong>26.67%</strong></td><td>14.37 min</td><td>1,894.60K</td></tr>
-                <tr data-direction="reverse" data-rate="12.38" data-total="105"><td data-rank>3</td><th scope="row">GPT-4o</th><td>aarch64 &rarr; x86_64</td><td>13 / 105</td><td><strong>12.38%</strong></td><td>5.82 min</td><td>614.12K</td></tr>
-                <tr data-direction="reverse" data-rate="5.71" data-total="105"><td data-rank>4</td><th scope="row">Qwen3-max</th><td>aarch64 &rarr; x86_64</td><td>6 / 105</td><td><strong>5.71%</strong></td><td>27.46 min</td><td>359.16K</td></tr>
-                <tr data-direction="reverse" data-rate="5.71" data-total="105"><td data-rank>5</td><th scope="row">Claude Sonnet 4.5</th><td>aarch64 &rarr; x86_64</td><td>6 / 105</td><td><strong>5.71%</strong></td><td>4.52 min</td><td>332.99K</td></tr>
-                <tr data-direction="reverse" data-rate="3.81" data-total="105"><td data-rank>6</td><th scope="row">DeepSeek V3</th><td>aarch64 &rarr; x86_64</td><td>4 / 105</td><td><strong>3.81%</strong></td><td>19.27 min</td><td>445.03K</td></tr>
-                <tr data-direction="reverse" data-rate="1.90" data-total="105"><td data-rank>7</td><th scope="row">Qwen2.5-3B-Instruct</th><td>aarch64 &rarr; x86_64</td><td>2 / 105</td><td><strong>1.90%</strong></td><td>24.33 min</td><td>373.81K</td></tr>
+                <tr data-direction="forward" data-rate="63.19"><td data-rank>1</td><th scope="row">GPT-5</th><td>x86_64 &rarr; aarch64</td><td><strong>63.19%</strong></td><td>31.18 min</td><td>1,830.91K</td></tr>
+                <tr data-direction="forward" data-rate="28.83"><td data-rank>2</td><th scope="row">GPT-5-mini</th><td>x86_64 &rarr; aarch64</td><td><strong>28.83%</strong></td><td>13.80 min</td><td>1,683.95K</td></tr>
+                <tr data-direction="forward" data-rate="17.18"><td data-rank>3</td><th scope="row">Qwen3-max</th><td>x86_64 &rarr; aarch64</td><td><strong>17.18%</strong></td><td>35.69 min</td><td>505.39K</td></tr>
+                <tr data-direction="forward" data-rate="13.50"><td data-rank>4</td><th scope="row">GPT-4o</th><td>x86_64 &rarr; aarch64</td><td><strong>13.50%</strong></td><td>5.93 min</td><td>541.66K</td></tr>
+                <tr data-direction="forward" data-rate="9.82"><td data-rank>5</td><th scope="row">Claude Sonnet 4.5</th><td>x86_64 &rarr; aarch64</td><td><strong>9.82%</strong></td><td>6.27 min</td><td>328.76K</td></tr>
+                <tr data-direction="forward" data-rate="7.98"><td data-rank>6</td><th scope="row">DeepSeek V3</th><td>x86_64 &rarr; aarch64</td><td><strong>7.98%</strong></td><td>11.37 min</td><td>235.53K</td></tr>
+                <tr data-direction="forward" data-rate="4.91"><td data-rank>7</td><th scope="row">Qwen2.5-3B-Instruct</th><td>x86_64 &rarr; aarch64</td><td><strong>4.91%</strong></td><td>27.65 min</td><td>591.90K</td></tr>
+                <tr data-direction="reverse" data-rate="29.52"><td data-rank>1</td><th scope="row">GPT-5</th><td>aarch64 &rarr; x86_64</td><td><strong>29.52%</strong></td><td>18.55 min</td><td>1,518.66K</td></tr>
+                <tr data-direction="reverse" data-rate="26.67"><td data-rank>2</td><th scope="row">GPT-5-mini</th><td>aarch64 &rarr; x86_64</td><td><strong>26.67%</strong></td><td>14.37 min</td><td>1,894.60K</td></tr>
+                <tr data-direction="reverse" data-rate="12.38"><td data-rank>3</td><th scope="row">GPT-4o</th><td>aarch64 &rarr; x86_64</td><td><strong>12.38%</strong></td><td>5.82 min</td><td>614.12K</td></tr>
+                <tr data-direction="reverse" data-rate="5.71"><td data-rank>4</td><th scope="row">Qwen3-max</th><td>aarch64 &rarr; x86_64</td><td><strong>5.71%</strong></td><td>27.46 min</td><td>359.16K</td></tr>
+                <tr data-direction="reverse" data-rate="5.71"><td data-rank>5</td><th scope="row">Claude Sonnet 4.5</th><td>aarch64 &rarr; x86_64</td><td><strong>5.71%</strong></td><td>4.52 min</td><td>332.99K</td></tr>
+                <tr data-direction="reverse" data-rate="3.81"><td data-rank>6</td><th scope="row">DeepSeek V3</th><td>aarch64 &rarr; x86_64</td><td><strong>3.81%</strong></td><td>19.27 min</td><td>445.03K</td></tr>
+                <tr data-direction="reverse" data-rate="1.90"><td data-rank>7</td><th scope="row">Qwen2.5-3B-Instruct</th><td>aarch64 &rarr; x86_64</td><td><strong>1.90%</strong></td><td>24.33 min</td><td>373.81K</td></tr>
               </tbody>
             </table>
           </div>
 
           <div class="board-footnotes">
-            <p><strong>Success</strong> is the number of packages successfully built on the target architecture.</p>
             <p><strong>Average time</strong> and <strong>average tokens</strong> follow the definitions reported in the paper and are not proposed competition tie-breakers except where explicitly stated in the official rules.</p>
             <p>The paper evaluates each model once per package under a fixed configuration. API and backend evolution may affect exact replication.</p>
           </div>

@@ -3,9 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="The Build-Bench Challenge at ICSE 2027 evaluates agents for executable cross-architecture package build repair." />
+    <meta name="description" content="The Build-Bench Challenge at ICSE 2027 evaluates runnable agents for executable cross-architecture package build repair." />
     <meta property="og:title" content="Build-Bench Challenge | ICSE 2027" />
-    <meta property="og:description" content="A competition for agent-driven repair of real package build failures across x86_64 and aarch64." />
+    <meta property="og:description" content="Submit a runnable repair Agent. Organizers run it on held-out package build cases and rank entries by executable build success." />
     <meta property="og:url" content="https://aiops-lab-nku.github.io/BuildBench/" />
     <meta property="og:image" content="https://aiops-lab-nku.github.io/BuildBench/assets/framework.png" />
     <meta name="theme-color" content="#ffffff" />
@@ -24,8 +24,8 @@
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <div class="status-strip" role="status">
-      <span class="status-strip-label">Organizer preview</span>
-      <span>Accepted to the ICSE 2027 Competition Track. Rules and infrastructure are being finalized.</span>
+      <span class="status-strip-label">Official preview</span>
+      <span>Accepted to the ICSE 2027 Competition Track. Rules, dates, and release artifacts will be frozen before launch.</span>
     </div>
 
     <header class="site-header">
@@ -62,16 +62,17 @@
           <h1 id="hero-title">Build-Bench Challenge</h1>
           <p class="hero-subtitle">Cross-Architecture Package Build Repair</p>
           <p class="hero-summary">
-            Build an agent that diagnoses and repairs real software packages which build on one
-            instruction set architecture but fail on another. Repairs are judged by executable builds
-            in a controlled environment.
+            Submit a runnable repair Agent. The organizers run it on held-out package build cases
+            and rank entries by whether repaired packages build successfully in the official
+            environment.
           </p>
           <div class="hero-links" aria-label="Primary actions">
-            <a href="task.html"><i data-lucide="scan-search" aria-hidden="true"></i>Explore the task</a>
-            <a href="submission.html"><i data-lucide="bot" aria-hidden="true"></i>Agent interface</a>
-            <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer"><i data-lucide="file-text" aria-hidden="true"></i>Research paper</a>
+            <a href="task.html"><i data-lucide="scan-search" aria-hidden="true"></i>Task &amp; Dataset</a>
+            <a href="submission.html"><i data-lucide="bot" aria-hidden="true"></i>Submit an Agent</a>
+            <a href="evaluation.html"><i data-lucide="gauge" aria-hidden="true"></i>How scoring works</a>
+            <a href="register.html"><i data-lucide="user-plus" aria-hidden="true"></i>Register team</a>
           </div>
-          <p class="release-state"><i data-lucide="construction" aria-hidden="true"></i>Competition data, starter kit, API contract, and submission portal are planned releases.</p>
+          <p class="release-state"><i data-lucide="construction" aria-hidden="true"></i>Starter kit, case releases, final deadlines, and platform rules will be announced as versioned releases.</p>
         </div>
       </section>
 
@@ -91,41 +92,27 @@
         </div>
       </section>
 
-      <section class="people-section" aria-labelledby="people-title">
-        <div class="content-wrap">
-          <div class="people-heading">
-            <div><span class="section-label">People</span><h2 id="people-title">Project and organizing team</h2></div>
-            <p>Build-Bench is organized by Nankai University with industry collaboration from Microsoft.</p>
-          </div>
-          <div class="people-groups">
-            <section aria-labelledby="project-team-title">
-              <h3 id="project-team-title">Project team</h3>
-              <ul class="people-list">
-                <li><strong>Chenyu Zhao</strong><span>Project lead</span><small>Nankai University</small></li>
-                <li><strong>Zihao Huang</strong><span>Project contributor</span><small>Nankai University</small></li>
-                <li><strong>Yihang Lin</strong><span>Project contributor</span><small>Nankai University</small></li>
-                <li><strong>An Xu</strong><span>Project contributor</span><small>Nankai University</small></li>
-                <li><strong>Chengtai Li</strong><span>Project contributor</span><small>Nankai University</small></li>
-              </ul>
-            </section>
-            <section aria-labelledby="advisors-title">
-              <h3 id="advisors-title">Academic and industry advisors</h3>
-              <ul class="people-list compact-people-list">
-                <li><strong>Shenglin Zhang</strong><span>Competition and evaluation</span><small>Nankai University</small></li>
-                <li><strong>Zeshun Huang</strong><span>Documentation and reproduction</span><small>Nankai University</small></li>
-                <li><strong>Minghua Ma</strong><span>Industry collaboration</span><small>Microsoft</small></li>
-              </ul>
-            </section>
-          </div>
+      <section class="fact-band" aria-label="Competition pillars">
+        <div class="fact-grid">
+          <div class="fact"><strong>Real builds</strong><span>Repair package failures that must pass executable validation.</span></div>
+          <div class="fact"><strong>Cross-ISA</strong><span>Handle architecture-specific assumptions and dependency behavior.</span></div>
+          <div class="fact"><strong>Agent run</strong><span>Submit one runnable system, not precomputed case answers.</span></div>
+          <div class="fact"><strong>Held-out test</strong><span>Final rankings come from organizer-run evaluation cases.</span></div>
         </div>
       </section>
 
-      <section class="fact-band" aria-label="Build-Bench research benchmark summary">
-        <div class="fact-grid">
-          <div class="fact"><strong>268</strong><span>paper-reported reproducible cases</span></div>
-          <div class="fact"><strong>163</strong><span>x86_64 to aarch64 cases</span></div>
-          <div class="fact"><strong>105</strong><span>aarch64 to x86_64 cases</span></div>
-          <div class="fact"><strong>200</strong><span>additional candidates under validation</span></div>
+      <section class="portal-section" aria-labelledby="guide-title">
+        <div class="content-wrap">
+          <div class="portal-heading">
+            <div><span class="section-label">Competition guide</span><h2 id="guide-title">Start with what matters</h2></div>
+            <p>The site is organized around the participant path: understand the case input, build a compliant Agent, test it through the platform, and read how executable scoring is applied.</p>
+          </div>
+          <div class="gateway-grid">
+            <a href="task.html"><i data-lucide="package-search" aria-hidden="true"></i><span><strong>Task &amp; Dataset</strong><small>What a case contains and what the repair must accomplish.</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+            <a href="submission.html"><i data-lucide="bot" aria-hidden="true"></i><span><strong>Agent Submission</strong><small>How to package, test, upload, and qualify one Agent version.</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+            <a href="evaluation.html"><i data-lucide="gauge" aria-hidden="true"></i><span><strong>Evaluation</strong><small>How the official harness converts repairs into ranked results.</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+            <a href="rules.html"><i data-lucide="shield-check" aria-hidden="true"></i><span><strong>Rules</strong><small>What is allowed, what must be disclosed, and what is prohibited.</small></span><i data-lucide="arrow-right" aria-hidden="true"></i></a>
+          </div>
         </div>
       </section>
 
@@ -149,17 +136,16 @@
       <section class="portal-section" aria-labelledby="schedule-title">
         <div class="content-wrap schedule-preview">
           <div>
-            <span class="section-label">Working schedule</span>
+            <span class="section-label">Competition schedule</span>
             <h2 id="schedule-title">From starter kit to ICSE 2027</h2>
-            <p>Dates below come from the accepted proposal and remain subject to alignment with the official ICSE 2027 schedule.</p>
+            <p>Milestones are shown as planning windows. Final dates will be announced after alignment with the official ICSE 2027 schedule.</p>
             <a class="text-link" href="timeline.html">View the complete timeline<i data-lucide="arrow-right" aria-hidden="true"></i></a>
           </div>
           <div class="milestone-preview">
-            <div><time datetime="2026-07-31">Jul 31, 2026</time><span>Internal preparation checkpoint</span></div>
-            <div><time datetime="2026-08">Aug 2026</time><span>Development set and baselines</span></div>
-            <div><time datetime="2026-09">Sep 2026</time><span>Public validation leaderboard</span></div>
-            <div><time datetime="2026-11">Nov 2026</time><span>Final submission freeze</span></div>
-            <div><time datetime="2026-12">Dec 2026</time><span>Results and participant reports</span></div>
+            <div><time datetime="2026-08">Aug 2026</time><span>Starter kit and development resources</span></div>
+            <div><time datetime="2026-09">Sep 2026</time><span>Public validation platform</span></div>
+            <div><time datetime="2026-11">Nov 2026</time><span>Final Agent freeze</span></div>
+            <div><time datetime="2026-12">Dec 2026</time><span>Hidden evaluation and result audit</span></div>
             <div><time datetime="2027">ICSE 2027</time><span>Competition session and presentation</span></div>
           </div>
         </div>

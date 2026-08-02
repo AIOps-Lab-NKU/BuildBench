@@ -36,10 +36,8 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "Team-size, affiliation, registration, and conflict-of-interest rules have not yet been announced. They will follow the ICSE Competition Track requirements and the released competition rulebook.": "团队规模、所属机构、注册和利益冲突规则尚未公布，后续将遵循 ICSE Competition Track 的要求及正式发布的竞赛规则。",
   "Runtime and API questions": "运行环境与 API 问题",
   "Will the Agent be submitted as a Docker image?": "Agent 是否以 Docker 镜像形式提交？",
-  "Managed Python is the default runtime. Teams that need a different environment may include a":
-    "托管 Python 是默认运行环境。需要其他环境的团队可以在自定义运行路径中提供",
-  "for the custom runtime path. The platform builds and stores the immutable image; teams do not upload or run an image directly.":
-    "。平台负责构建并保存不可变镜像；团队不直接上传或运行镜像。",
+  "The current submission path uses a managed Python Agent bundle. If custom runtimes are introduced later, the platform will publish a new protocol version and build any required image under organizer control.":
+    "当前提交路径使用托管 Python Agent 包。如果后续引入自定义运行环境，平台会发布新的协议版本，并由主办方控制构建所需镜像。",
   "What input will the Agent receive?": "Agent 会收到哪些输入？",
   "Each run mounts read-only task metadata, the original failed build log, and the untouched package tree under":
     "每次运行都会在以下目录挂载只读任务元数据、原始失败构建日志和未经修改的软件包目录：",
@@ -73,8 +71,9 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "Those rows reproduce research results from the Build-Bench paper so participants can understand the benchmark. They are not competition entries and will remain visibly separated from the future public competition ranking.": "这些行复现了 Build-Bench 论文中的研究结果，帮助参赛者了解该基准。它们不是竞赛提交，后续也会与公开竞赛排名明确分开展示。",
   "Data and builds": "数据与构建",
   "Cases, architectures, and OBS": "Case、架构与 OBS",
-  "How many Build-Bench cases are there?": "Build-Bench 共有多少个 Case？",
-  "The latest paper reports 268 reproducible cases: 163 for x86_64-to-aarch64 and 105 for aarch64-to-x86_64. Another 200 public package candidates are under validation and are not yet accepted benchmark cases. Final split counts will be frozen before launch.": "最新论文报告了 268 个可复现 Case：其中 163 个为 x86_64 到 aarch64，105 个为 aarch64 到 x86_64。另有 200 个公开软件包候选正在验证，目前还不是正式 Benchmark Case。最终数据划分数量将在上线前冻结。",
+  "What data will be public?": "哪些数据会公开？",
+  "Public releases will provide versioned case manifests, allowed paths, checksums, development resources, and reconstruction instructions when direct redistribution is not appropriate. Final split sizes will be announced only with the corresponding frozen release.":
+    "公开发布会提供版本化 Case manifest、允许修改路径、校验和、开发资源，以及不适合直接再分发时使用的重建说明。最终划分规模只会随对应冻结版本一同公布。",
   "What is OBS and why is it used?": "OBS 是什么，为什么要使用它？",
   "Open Build Service is a platform for building packages across distributions and architectures. Build-Bench uses it as an executable validation backend: after a repair is applied, OBS rebuilds the package for the target architecture and reports whether the real build succeeds.": "Open Build Service 是一个支持跨发行版、跨架构构建软件包的平台。Build-Bench 将其用作实际构建验证后端：应用修复后，OBS 会针对目标架构重新构建软件包，并报告真实构建是否成功。",
   "Can participants validate locally?": "参赛者能否在本地验证？",
@@ -84,7 +83,8 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "Schedule and support": "日程与支持",
   "Releases, deadlines, and updates": "发布、截止日期与更新",
   "When will public validation open?": "公开验证何时开放？",
-  "July 31, 2026 is an internal preparation checkpoint, not a participant deadline. The accepted proposal targets September 2026 for public validation, but the exact date will be aligned with the official ICSE 2027 schedule.": "2026 年 7 月 31 日是内部准备检查点，不是参赛者截止时间。获批提案计划于 2026 年 9 月开放公开验证，但准确日期仍需与 ICSE 2027 官方日程对齐。",
+  "The accepted proposal targets September 2026 for public validation, but the exact date will be aligned with the official ICSE 2027 schedule and announced on this website.":
+    "获批提案计划于 2026 年 9 月开放公开验证，但准确日期仍需与 ICSE 2027 官方日程对齐，并将在本网站公布。",
   "When is the final submission deadline?": "最终提交截止时间是什么时候？",
   "The proposal targets a November 2026 freeze for hidden evaluation. The exact date, timezone, artifact selection procedure, and rerun window remain TBA.": "提案计划于 2026 年 11 月冻结用于隐藏评测的提交。确切日期、时区、产物选择流程及重跑窗口仍待公布。",
   "Where will rule and evaluator changes be announced?": "规则和评测器变更会在哪里公布？",

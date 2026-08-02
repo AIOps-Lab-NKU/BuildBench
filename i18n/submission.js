@@ -5,9 +5,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "Build-Bench Challenge 的 Agent 提交指南，包括提交内容、运行目录、构建反馈、测试和提交要求。",
   "Agent submission": "Agent 提交",
   "Agent Submission Guide": "Agent 提交指南",
-  "Submit a runnable Agent source bundle. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
-    "提交一个可运行的 Agent 源码包。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
-  ", and the Docker Validator verifies it on a clean Case.": "，再由 Docker Validator 在干净的 Case 上完成验证。",
+  "Submit a runnable Agent source bundle, not case-specific answers or precomputed patches. The platform starts one isolated instance for each Case, captures the Agent's worktree changes, creates the canonical":
+    "提交一个可运行的 Agent 源码包，而不是特定 Case 答案或预先生成的补丁。平台为每个 Case 启动一个独立实例，捕获 Agent 工作树变更，生成 canonical",
+  ", and verifies that repair with the Docker Validator.": "，并使用 Docker Validator 验证该修复。",
   "Submission guide navigation": "提交指南导航",
   "Competition": "竞赛",
   "Competition pages": "竞赛页面",
@@ -23,8 +23,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "01 / Start": "01 / 开始",
   "Prepare and qualify one Agent version before requesting a full evaluation.":
     "在申请完整评测前，先准备并验证一个 Agent 版本。",
-  "Run the official example first, then create, test, package, and upload your own Agent.":
-    "先运行官方示例，再创建、测试、打包并上传你自己的 Agent。",
+  "Register your team, get the Starter Kit, run the official example, test locally, upload one Agent bundle, pass the hosted Smoke Test, and select a qualified version for evaluation.":
+    "注册团队，获取 Starter Kit，运行官方示例，在本地测试，上传一个 Agent 包，通过平台 Smoke Test，然后选择合格版本进入评测。",
   "Submission preparation steps": "提交准备步骤",
   "Get the Starter Kit": "获取 Starter Kit",
   "Download the archive from": "从",
@@ -102,7 +102,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "It contains the task metadata, initial failure evidence, and original package tree.":
     "其中包含任务元数据、初始失败证据和原始软件包目录。",
   "Modify only": "只修改",
-  "This is the candidate package tree used for build requests.": "构建请求使用这里的候选软件包目录。",
+  "This is the writable package tree used for build requests.": "构建请求使用这里的可写软件包目录。",
   "Use stdout and stderr for logs.": "使用 stdout 和 stderr 输出日志。",
   "The platform captures both streams for diagnostics.": "平台采集两种输出用于诊断。",
   "Optionally write": "可选写入",
@@ -291,7 +291,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "must point to the Agent directory that contains": "必须指向包含",
   ". The command runs each ID listed in": "的 Agent 目录。该命令会运行",
   "; release": "中列出的每个 ID；版本",
-  "contains one local Example Case,": "包含 1 个本地 Example Case：",
+  "includes the local Example Case": "包含本地 Example Case",
   "Agent behavior": "Agent 行为",
   "The entrypoint declared in": "在",
   "runs once per Case. It reads": "中声明的入口会为每个 Case 运行一次。它读取",
@@ -320,7 +320,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Local Example Cases": "本地 Example Case",
   "Verify the Starter Kit, Agent entrypoint, workspace protocol, patch generation, and local Validator path.":
     "验证 Starter Kit、Agent 入口、工作区协议、补丁生成和本地 Validator 链路。",
-  "1 public Case:": "1 个公开 Case：",
+  "Example Case:": "示例 Case：",
   "Development Cases": "开发 Case",
   "Public Cases for Agent development and broader local experiments.":
     "用于 Agent 开发和更广泛本地实验的公开 Case。",
@@ -331,8 +331,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Full Evaluation Cases": "完整评测 Case",
   "Organizer-controlled Cases used for formal scoring.": "由组织方控制、用于正式计分的 Case。",
   "Scope": "范围",
-  "The original Build-Bench benchmark is the source of competition candidates; its historical total must not be read as the final competition Case count. Final set sizes and versions will be announced on":
-    "原始 Build-Bench benchmark 是竞赛候选 Case 的来源；其历史总数不等于最终竞赛 Case 数量。最终集合规模和版本将在",
+  "The original Build-Bench benchmark is the source of competition cases, but only a versioned release manifest defines the official competition set. Final split versions will be announced on":
+    "原始 Build-Bench benchmark 是竞赛 Case 的来源，但正式竞赛集合只由版本化发布清单定义。最终划分版本将在",
   "agent-submission.zip": "agent-submission.zip",
   "Declares Agent identity, managed runtime, entrypoint, and protocol version.":
     "声明 Agent 身份、托管运行环境、入口命令和协议版本。",
@@ -398,7 +398,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "Agent 至少能够完成一个已发布的本地 Example Case。",
   "Released": "已发布",
   "Starter Kit": "Starter Kit",
-  "provides the local Runner, managed-Python template, one": "提供本地 Runner、托管 Python 模板、1 个",
+  "provides the local Runner, managed-Python template, the": "提供本地 Runner、托管 Python 模板、",
   "Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.":
     "Example Case、合规检查和确定性打包。Development Case 和独立协议 Schema 仍在后续发布计划中。",
   "Version": "版本",

@@ -36,7 +36,6 @@
         row.append(cell(entry.rank));
         row.append(cell(entry.team_name, true));
         row.append(cell(`${entry.agent_name} ${entry.agent_version}`));
-        row.append(cell(`${entry.successful_cases} / ${entry.total_cases}`));
         row.append(cell(`${(Number(entry.score) * 100).toFixed(2)}%`));
         row.append(cell(duration(entry.duration_seconds)));
         row.append(cell(new Date(entry.published_at).toLocaleString()));

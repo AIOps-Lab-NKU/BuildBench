@@ -10,7 +10,6 @@ window.BuildBenchI18nData.pages.leaderboard = Object.freeze({
   "Research baseline reference, not competition entries": "研究基线参考，并非竞赛提交",
   "These values are reproduced from Table 2 of the Build-Bench paper. Models were evaluated once per package under a fixed configuration with up to three repair iterations and 20 tool calls per iteration, using OBS for executable validation.": "这些数值复现自 Build-Bench 论文的表 2。各模型在固定配置下对每个软件包评测一次，最多进行三轮修复迭代，每轮最多调用 20 次工具，并使用 OBS 进行实际构建验证。",
   "Read paper": "阅读论文",
-  "packages in view": "当前软件包数",
   "models in view": "当前模型数",
   "best success rate": "最高成功率",
   "Build": "构建",

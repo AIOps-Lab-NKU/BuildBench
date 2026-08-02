@@ -31,15 +31,15 @@
     <main id="main-content">
       <section class="page-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker">Challenge specification</span><h1>Task &amp; Dataset</h1><p>Repair a reproducible package build failure on a target instruction set architecture, then prove the repaired package builds in the official environment.</p></div>
-          <dl class="masthead-facts"><div><dt>Research corpus</dt><dd>268 packages</dd></div><div><dt>Architectures</dt><dd>x86_64 and aarch64</dd></div><div><dt>Success oracle</dt><dd>Executable build</dd></div></dl>
+          <div><span class="page-kicker">Challenge specification</span><h1>Task &amp; Dataset</h1><p>Each case asks an Agent to repair a package that fails on the target architecture and to make the official build validator succeed.</p></div>
+          <dl class="masthead-facts"><div><dt>Case unit</dt><dd>One package build failure</dd></div><div><dt>Input</dt><dd>Source, metadata, and logs</dd></div><div><dt>Success oracle</dt><dd>Executable build</dd></div></dl>
         </div>
       </section>
 
       <div class="content-wrap page-layout">
         <aside class="page-rail" aria-label="On this page">
           <strong>On this page</strong>
-          <nav><a href="#objective">Objective</a><a href="#case">Case anatomy</a><a href="#workflow">Repair workflow</a><a href="#dataset">Research corpus</a><a href="#splits">Competition splits</a><a href="#provenance">Provenance</a></nav>
+          <nav><a href="#objective">Objective</a><a href="#case">Case anatomy</a><a href="#workflow">Repair workflow</a><a href="#dataset">Dataset release</a><a href="#splits">Competition splits</a><a href="#provenance">Provenance</a></nav>
           <div class="rail-note"><span>Source basis</span><p>Build-Bench paper and accepted ICSE competition proposal</p></div>
         </aside>
 
@@ -87,21 +87,19 @@
           </section>
 
           <section class="doc-section" id="dataset">
-            <span class="section-label">Research corpus</span>
-            <h2>268 reproducible real-world failures</h2>
-            <div class="source-callout"><i data-lucide="book-open-check" aria-hidden="true"></i><p>This preview follows the latest Build-Bench paper: <strong>163 x86_64-to-aarch64</strong> cases and <strong>105 aarch64-to-x86_64</strong> cases. The original 268 cases are being revalidated before the competition dataset is frozen.</p></div>
-            <div class="direction-grid compact-directions">
-              <div><strong>163</strong><span>x86_64 &rarr; aarch64</span><small>Paper-reported corpus</small></div>
-              <div><strong>105</strong><span>aarch64 &rarr; x86_64</span><small>Paper-reported corpus</small></div>
-            </div>
-            <div class="source-callout warning-callout"><i data-lucide="search-check" aria-hidden="true"></i><p><strong>Expansion status:</strong> 200 additional public package candidates have been discovered. They remain candidates, not accepted benchmark cases, until the original failure and repaired success are reproduced under a frozen environment.</p></div>
+            <span class="section-label">Dataset release</span>
+            <h2>Competition cases are frozen by release version</h2>
+            <p class="lead">The research corpus informs the competition, but the official case set is defined only by a versioned release manifest.</p>
+            <div class="source-callout"><i data-lucide="book-open-check" aria-hidden="true"></i><p>The final release will publish case identifiers, checksums, split membership, allowed paths, validator version, and reconstruction instructions where redistribution is constrained.</p></div>
+            <div class="source-callout warning-callout"><i data-lucide="search-check" aria-hidden="true"></i><p><strong>Release status:</strong> candidate packages are accepted only after both the original failure and the repaired success can be reproduced under a frozen environment.</p></div>
             <h3>Failure categories</h3>
-            <div class="category-list" aria-label="Build-Bench failure categories">
-              <div><span><i style="--value:100%"></i></span><strong>Compilation error</strong><small>116</small></div>
-              <div><span><i style="--value:67.24%"></i></span><strong>Build preparation error</strong><small>78</small></div>
-              <div><span><i style="--value:36.21%"></i></span><strong>Test failure</strong><small>42</small></div>
-              <div><span><i style="--value:20.69%"></i></span><strong>Packaging error</strong><small>24</small></div>
-              <div><span><i style="--value:6.90%"></i></span><strong>Environment / infrastructure</strong><small>8</small></div>
+            <p>Cases cover build failures where architecture portability affects compilation, preparation, testing, packaging, or the build environment.</p>
+            <div class="detail-rows" aria-label="Build-Bench failure categories">
+              <div><i data-lucide="terminal" aria-hidden="true"></i><span><strong>Compilation error</strong><small>Source or compiler behavior differs on the target architecture.</small></span></div>
+              <div><i data-lucide="wrench" aria-hidden="true"></i><span><strong>Build preparation error</strong><small>Configuration, dependency discovery, or generated build files fail before compilation.</small></span></div>
+              <div><i data-lucide="test-tube-2" aria-hidden="true"></i><span><strong>Test failure</strong><small>Architecture-sensitive tests block package completion.</small></span></div>
+              <div><i data-lucide="package-x" aria-hidden="true"></i><span><strong>Packaging error</strong><small>Spec files, macros, installed paths, or package manifests need repair.</small></span></div>
+              <div><i data-lucide="server-cog" aria-hidden="true"></i><span><strong>Environment and infrastructure</strong><small>Build-service assumptions or platform dependencies must be handled carefully.</small></span></div>
             </div>
           </section>
 

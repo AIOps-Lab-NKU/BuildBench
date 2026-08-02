@@ -143,14 +143,11 @@ function applyBoardFilter(direction) {
   });
 
   const visibleRows = sortedRows.filter((row) => !row.hidden);
-  const packageCount = direction === "forward" ? 163 : direction === "reverse" ? 105 : 268;
   const modelCount = new Set(visibleRows.map((row) => row.querySelector('th[scope="row"]').textContent)).size;
   const bestRate = Math.max(...visibleRows.map((row) => Number(row.dataset.rate)));
 
-  const packageStat = document.querySelector("[data-board-packages]");
   const modelStat = document.querySelector("[data-board-models]");
   const bestStat = document.querySelector("[data-board-best]");
-  if (packageStat) packageStat.textContent = String(packageCount);
   if (modelStat) modelStat.textContent = String(modelCount);
   if (bestStat) bestStat.textContent = `${bestRate.toFixed(2)}%`;
 }

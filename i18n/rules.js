@@ -56,7 +56,7 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "Reason over all released case evidence": "综合分析所有已发布 Case 的证据",
     "Specifications, sources, patches, logs, scripts, metadata, and architecture labels.":
       "spec 文件、源代码、补丁、日志、脚本、元数据和架构标签。",
-    "Use an internal toolchain": "使用内部工具链",
+    "Use your own toolchain": "使用自己的工具链",
     "Prompting, retrieval, code search, static analysis, log parsing, and iterative Agent loops.":
       "提示、检索、代码搜索、静态分析、日志解析和迭代式 Agent 循环。",
     "Modify permitted package paths": "修改允许变更的软件包路径",

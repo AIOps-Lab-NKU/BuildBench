@@ -240,8 +240,9 @@ The site separates verified research results from planned competition
 infrastructure and uses focused pages instead of one long landing page:
 
 - `index.html` is the competition overview and navigation hub.
-- `task.html` distinguishes the 268-case paper corpus from 200 additional
-  candidates that are still under validation.
+- `task.html` explains the repair task, case anatomy, release manifest, and
+  planned public/hidden split model without treating research counts as final
+  competition data.
 - `submission.html` documents the immutable Agent ZIP, managed runtime,
   workspace contract, local test loop, and platform-generated canonical diff.
 - `evaluation.html` uses Build Success Rate as the single primary ranking
@@ -251,7 +252,7 @@ infrastructure and uses focused pages instead of one long landing page:
   administrator-published, version-compatible Full Evaluation results.
 
 The Agent packaging format, exact ZIP schemas, resource and network policies,
-denominator semantics, tie-breaker, final split counts, submission limits, and
+denominator semantics, tie-breaker, final split sizes, submission limits, and
 deadlines remain draft or organizer-preview content. Confirm them against the
 released evaluator and starter kit before removing the preview banners.
 

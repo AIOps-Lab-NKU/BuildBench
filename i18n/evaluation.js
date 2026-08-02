@@ -1,12 +1,14 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.evaluation = Object.freeze({
   "Evaluation | Build-Bench Challenge": "评测 | Build-Bench Challenge",
-  "Working evaluation": "当前评测方案",
-  "Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.":
-    "Build Success Rate 是唯一的主要排名指标；分母和同分判定细节仍在审核中。",
+  "Evaluation preview": "评测预览",
+  "Entries are ranked by official build outcomes. Denominator and tie-break details remain under review.":
+    "参赛结果按官方构建结果排名；分母和同分判定细节仍在审核中。",
   "Draft protocol": "评测方案草案",
-  "The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.":
-    "评测框架在受控 Case 上运行提交的 Agent，应用其修复并执行目标架构构建，再将结果转换为可复现的指标。",
+  "The score is based on whether the repaired package builds successfully in the official target-architecture environment.":
+    "分数取决于修复后的软件包能否在官方目标架构环境中成功构建。",
+  "Success means": "成功含义",
+  "Validator passes": "验证器通过",
   "Oracle": "判据",
   "Executable build": "实际构建",
   "Primary metric": "主要指标",
@@ -15,7 +17,7 @@ window.BuildBenchI18nData.pages.evaluation = Object.freeze({
   "Pending approval": "待批准",
   "On this page": "本页内容",
   "Protocol status": "方案状态",
-  "Core principle": "核心原则",
+  "What counts": "成功标准",
   "Evaluation harness": "评测框架",
   "Proposed metrics": "拟定指标",
   "Public vs. hidden": "公开评测与隐藏评测",
@@ -41,6 +43,8 @@ window.BuildBenchI18nData.pages.evaluation = Object.freeze({
     "Agent 运行时间、模型成本、token 用量、重试和迭代预算",
   "Not fully specified": "尚未充分说明",
   "Open": "待定",
+  "What counts as success": "什么算成功",
+  "The repaired package must build": "修复后的软件包必须构建成功",
   "Executable outcomes are the oracle": "以实际执行结果作为判据",
   "A repair is successful only when it applies cleanly, respects competition policy, and the repaired package passes the official validator on the target architecture.":
     "只有当修复能够顺利应用、符合竞赛规则，并且修复后的软件包在目标架构上通过官方验证器时，才算成功。",
