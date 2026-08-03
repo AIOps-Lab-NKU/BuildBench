@@ -406,27 +406,58 @@
 }
 
 .overview-page .overview-date-list {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  margin: 22px 0 0;
-  padding: 0;
+  gap: 0;
+  margin: 34px 0 0;
+  padding: 44px 0 0;
   color: var(--ink-soft);
   font-size: 14px;
   line-height: 1.55;
   list-style: none;
-  border-top: 1px solid var(--line-strong);
-  border-bottom: 1px solid var(--line-strong);
+}
+
+.overview-page .overview-date-list::before {
+  content: "";
+  position: absolute;
+  top: 14px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--blue), var(--coral) 48%, var(--green));
 }
 
 .overview-page .overview-date-list li {
+  position: relative;
   min-width: 0;
   margin: 0;
-  padding: 18px 18px 20px;
-  border-left: 1px solid var(--line);
+  padding: 0 26px 0 0;
 }
 
-.overview-page .overview-date-list li:first-child {
-  border-left: 0;
+.overview-page .overview-date-list li::before {
+  content: "";
+  position: absolute;
+  top: -37px;
+  left: 0;
+  width: 16px;
+  height: 16px;
+  background: #fff;
+  border: 4px solid var(--blue);
+  border-radius: 50%;
+  box-shadow: 0 0 0 5px #fff;
+}
+
+.overview-page .overview-date-list li:nth-child(2)::before {
+  border-color: var(--coral);
+}
+
+.overview-page .overview-date-list li:nth-child(3)::before {
+  border-color: var(--amber);
+}
+
+.overview-page .overview-date-list li:nth-child(4)::before {
+  border-color: var(--green);
 }
 
 .overview-page .overview-date-list strong {
@@ -440,23 +471,31 @@
 .overview-page .overview-organizer-list {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px 12px;
+  gap: 0;
   margin: 20px 0 0;
   padding: 0;
   list-style: none;
 }
 
 .overview-page .overview-organizer-list li {
-  min-width: 116px;
-  padding: 10px 16px;
+  min-width: 0;
+  padding: 0 22px;
   color: var(--ink);
-  background: #f8fafc;
-  border: 1px solid var(--line-strong);
-  border-radius: 6px;
-  font-size: 15px;
+  background: transparent;
+  border: 0;
+  border-radius: 0;
+  font-size: 17px;
   font-weight: 850;
   line-height: 1.25;
   text-align: center;
+}
+
+.overview-page .overview-organizer-list li:first-child {
+  padding-left: 0;
+}
+
+.overview-page .overview-organizer-list li + li {
+  border-left: 1px solid var(--line-strong);
 }
 
 .overview-page .overview-organizer-list strong {
@@ -501,23 +540,17 @@
 
 .overview-page .overview-organizer-list {
   justify-content: flex-start;
-  gap: 10px;
-  margin-top: 22px;
+  row-gap: 13px;
+  margin-top: 28px;
 }
 
 .overview-page .overview-organizer-list li {
-  min-width: 124px;
   color: #fff;
-  background: rgb(255 255 255 / 7%);
-  border-color: rgb(255 255 255 / 18%);
+  font-size: 19px;
 }
 
-.overview-page .overview-organizer-list li:nth-child(2n) {
-  border-bottom-color: var(--blue);
-}
-
-.overview-page .overview-organizer-list li:nth-child(2n + 1) {
-  border-bottom-color: var(--coral);
+.overview-page .overview-organizer-list li + li {
+  border-left-color: rgb(255 255 255 / 24%);
 }
 
 .overview-page .overview-footer .footer-inner {
@@ -557,12 +590,16 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .overview-page .overview-date-list li:nth-child(2n + 1) {
-    border-left: 0;
+  .overview-page .overview-date-list {
+    row-gap: 36px;
   }
 
-  .overview-page .overview-date-list li:nth-child(n + 3) {
-    border-top: 1px solid var(--line);
+  .overview-page .overview-date-list::before {
+    display: none;
+  }
+
+  .overview-page .overview-date-list li::before {
+    top: -30px;
   }
 
   .overview-page .overview-footer .footer-inner {
@@ -684,17 +721,39 @@
     min-height: 0;
   }
 
-  .overview-page .overview-date-list li,
-  .overview-page .overview-date-list li:nth-child(2n + 1) {
-    border-top: 1px solid var(--line);
-    border-left: 0;
+  .overview-page .overview-date-list {
+    gap: 24px;
+    margin-top: 26px;
+    padding: 0 0 0 24px;
   }
 
-  .overview-page .overview-date-list li:first-child {
-    border-top: 0;
+  .overview-page .overview-date-list::before {
+    display: block;
+    top: 4px;
+    bottom: 4px;
+    left: 7px;
+    width: 2px;
+    height: auto;
+    background: linear-gradient(180deg, var(--blue), var(--coral) 48%, var(--green));
+  }
+
+  .overview-page .overview-date-list li,
+  .overview-page .overview-date-list li:nth-child(2n + 1) {
+    padding: 0 0 0 18px;
+    border: 0;
+  }
+
+  .overview-page .overview-date-list li::before {
+    top: 3px;
+    left: -23px;
+    width: 14px;
+    height: 14px;
+    border-width: 3px;
+    box-shadow: 0 0 0 4px #fff;
   }
 
   .overview-page .overview-organizer-list li {
+    padding: 0 14px;
     font-size: 15px;
   }
 
