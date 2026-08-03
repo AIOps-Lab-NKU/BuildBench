@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Frequently asked questions about the Build-Bench Challenge Agent submission, evaluation, dataset, and timeline." />
+    <meta name="description" content="Participant answers for Build-Bench registration, local Agent development, submission, evaluation, data, dates, and results." />
     <title>FAQ | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/faq.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260803-4" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/faq.js?v=20260720-1" defer></script>
-    <script src="i18n.js?v=20260716-3" defer></script>
-    <script src="auth-client.js?v=20260729-1" defer></script>
-    <script src="app.js?v=20260716-3" defer></script>
+    <script src="i18n/faq.js?v=20260803-3" defer></script>
+    <script src="i18n.js?v=20260803-5" defer></script>
+    <script src="auth-client.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260803-2" defer></script>
   </head>
-  <body data-page="faq">
+  <body class="faq-page docs-page" data-page="faq">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Living document</span><span>Answers will be updated as the Agent contract, evaluator, and schedule are finalized.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -29,79 +28,134 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead">
+      <section class="page-masthead faq-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker">Participant help</span><h1>Frequently Asked Questions</h1><p>Current answers distinguish confirmed competition direction, proposal-derived plans, and details that still require an organizer decision.</p></div>
-          <dl class="masthead-facts"><div><dt>Submission</dt><dd>One Agent</dd></div><div><dt>Validation</dt><dd>Executable builds</dd></div><div><dt>Open details</dt><dd>Marked Draft or TBA</dd></div></dl>
+          <div>
+            <span class="page-kicker">Participant help</span>
+            <h1>Frequently Asked Questions</h1>
+            <p>Short answers to common questions from Team registration and local development through Agent submission, evaluation, and official results.</p>
+          </div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout faq-page-layout">
-        <aside class="page-rail" aria-label="FAQ categories">
-          <strong>Categories</strong>
-          <nav><a href="#participation">Participation</a><a href="#agent">Agent interface</a><a href="#evaluation">Evaluation</a><a href="#data">Data &amp; builds</a><a href="#schedule">Schedule &amp; support</a></nav>
-          <div class="rail-note"><span>Need context?</span><p>Read the dedicated page linked from each answer for the complete specification.</p></div>
-        </aside>
+      <div class="content-wrap faq-content">
+        <article class="faq-document">
+          <nav class="faq-index" aria-label="FAQ categories">
+            <strong>Browse by stage</strong>
+            <a href="#start">Start and register</a>
+            <a href="#develop">Develop locally</a>
+            <a href="#submit">Upload and qualify</a>
+            <a href="#evaluate">Evaluation and scoring</a>
+            <a href="#data-dates">Data, dates, and results</a>
+          </nav>
 
-        <article class="page-document">
-          <section class="doc-section faq-group" id="participation">
-            <span class="section-label">Participation</span>
-            <h2>Entering the competition</h2>
+          <section class="faq-section" id="start">
+            <h2>1. Start and register</h2>
             <div class="faq-list">
-              <details open><summary>What exactly does a team submit?<i data-lucide="plus" aria-hidden="true"></i></summary><p>One versioned <code>agent-submission.zip</code> containing <code>agent.yaml</code>, Agent source, and locked dependencies. The platform builds and runs the Agent; teams do not submit precomputed <code>repair.diff</code> answers. See the <a href="submission.html">Agent Submission Contract</a>.</p></details>
-              <details><summary>Are patch output and Agent container separate submission modes?<i data-lucide="plus" aria-hidden="true"></i></summary><p>No. The competition uses one Agent submission model. The platform derives a canonical unified diff from the Agent's final worktree and passes it to the evaluator. That diff is an internal evaluation artifact, not a second entry path.</p></details>
-              <details><summary>Must the Agent use an LLM?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The primary leaderboard is intended for LLM-based and agentic repair systems. Traditional non-LLM systems may be included as clearly labeled comparison baselines, subject to the final rulebook.</p></details>
-              <details><summary>How large can a team be?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Team-size, affiliation, registration, and conflict-of-interest rules have not yet been announced. They will follow the ICSE Competition Track requirements and the released competition rulebook.</p></details>
+              <details open>
+                <summary>What is Build-Bench, and what does a Team submit?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Build-Bench evaluates runnable software repair Agents on real package build failures. A Team submits Agent source and a versioned runtime manifest; the organizers run that Agent independently on competition Cases. Teams do not submit pre-generated repair patches or a Docker image as their competition entry.</p><p class="faq-reference"><a href="task.html#task-definition">Read the task definition</a></p></div>
+              </details>
+              <details>
+                <summary>How does Team registration work?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>One Team leader creates the account and enters the complete roster. A Team may contain up to five people including the leader. Every member email is required, and the same email cannot appear in another Team.</p><p class="faq-reference"><a href="register.html">Register a Team</a><span aria-hidden="true"> · </span><a href="rules.html#teams">Read the Team rules</a></p></div>
+              </details>
+              <details>
+                <summary>Where should a first-time participant begin?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Download the current Starter Kit, run its environment check and official demo, create an Agent from the template, and test that Agent locally before uploading it. The Submission Guide provides the copy-and-run commands.</p><p class="faq-reference"><a href="data-downloads.html">Get the Starter Kit</a><span aria-hidden="true"> · </span><a href="submission.html#quick-start">Follow the Quick Start</a></p></div>
+              </details>
+              <details>
+                <summary>Must an Agent use a large language model?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>A competition entry must be a runnable repair Agent, but its internal method may combine language models, retrieval, static analysis, log processing, search, or other compliant tools. Case-specific answer tables and pre-generated repair patches are prohibited.</p><p class="faq-reference"><a href="rules.html#data-tools">Read the models and tools policy</a></p></div>
+              </details>
             </div>
           </section>
 
-          <section class="doc-section faq-group" id="agent">
-            <span class="section-label">Agent interface</span>
-            <h2>Runtime and API questions</h2>
+          <section class="faq-section" id="develop">
+            <h2>2. Develop locally</h2>
             <div class="faq-list">
-              <details><summary>Will the Agent be submitted as a Docker image?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Managed Python is the default runtime. Teams that need a different environment may include a <code>Dockerfile</code> for the custom runtime path. The platform builds and stores the immutable image; teams do not upload or run an image directly.</p></details>
-              <details><summary>What input will the Agent receive?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Each run mounts read-only task metadata, the original failed build log, and the untouched package tree under <code>/workspace/input</code>. The Agent edits a writable copy under <code>/workspace/work/repo</code> and writes structured status under <code>/workspace/output</code>.</p></details>
-              <details><summary>What must the Agent return?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The Agent must write <code>/workspace/output/agent-result.json</code> and leave its candidate repair in the writable worktree. The platform computes the canonical <code>repair.diff</code> from the clean input and final worktree.</p></details>
-              <details><summary>Can an Agent request more than one build attempt?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Yes, when <code>protocol.build_feedback</code> is enabled. The Agent calls the platform-provided <code>bb-build</code> CLI; the maximum attempts, returned feedback, and time budget remain TBA.</p></details>
-              <details><summary>Can the Agent call external model APIs?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The model and network policy is still open. Organizers may disable general outbound access and provide allowlisted or brokered model APIs. Participants must not embed personal or production secrets in an Agent artifact.</p></details>
+              <details>
+                <summary>What do I need to run the Starter Kit?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. Starter Kit v0.1.0-rc.1 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.</p><p class="faq-reference"><a href="submission.html#quick-start">Check the local setup</a></p></div>
+              </details>
+              <details>
+                <summary>What can the Agent read, modify, and return?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>The Agent reads task evidence from the read-only input directory, modifies only the writable package worktree, and may write machine-readable status to the output directory. It must follow the workspace paths and agent-result.json schema defined by protocol v0.1.</p><p class="faq-reference"><a href="submission.html#runtime-interface">Read the runtime interface</a></p></div>
+              </details>
+              <details>
+                <summary>Can I submit a custom Docker runtime?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Not in Starter Kit v0.1.0-rc.1. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.</p><p class="faq-reference"><a href="submission.html#submission-contents">Read the current package contract</a></p></div>
+              </details>
+              <details>
+                <summary>Can the Agent request build feedback while it runs?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Not in the current Starter Kit release. Bounded hosted build feedback is a planned feature; its command, limits, and response schema will be introduced only in a later protocol release. Do not assume that bb-build is currently available.</p><p class="faq-reference"><a href="submission.html#runtime-interface">Check the current runtime contract</a></p></div>
+              </details>
+              <details>
+                <summary>Can an Agent call external model APIs or include API keys?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Do not include API keys, .env files, or other secrets in the uploaded bundle. The final network-access and organizer-managed credential policy will be published with the frozen rules and resource limits on August 31, 2026.</p><p class="faq-reference"><a href="rules.html#publication">Read the pending-policy notice</a></p></div>
+              </details>
             </div>
           </section>
 
-          <section class="doc-section faq-group" id="evaluation">
-            <span class="section-label">Evaluation</span>
-            <h2>Scoring and leaderboard questions</h2>
+          <section class="faq-section" id="submit">
+            <h2>3. Upload and qualify a version</h2>
             <div class="faq-list">
-              <details><summary>How is a repair judged?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The platform computes and audits the canonical diff, then runs the official target-architecture Docker Build Validator on the repaired package. Textual similarity to an organizer patch is not the success criterion.</p></details>
-              <details><summary>Are the current metrics final?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Build Success Rate is the working single primary ranking metric. Exact denominator semantics, failure handling, and any tie-breaker remain draft on the <a href="evaluation.html">Evaluation page</a>.</p></details>
-              <details><summary>What happens if the Agent crashes or times out?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The platform records Agent status separately from Validator status, distinguishing Agent failure, invalid output, build failure, and organizer infrastructure errors. The final scoring denominator and rerun policy remain TBA.</p></details>
-              <details><summary>Will model cost or token usage affect ranking?<i data-lucide="plus" aria-hidden="true"></i></summary><p>This has not been decided. The organizer must determine whether Agent runtime, model cost, token use, build time, and repair iterations are ranking metrics, tie-breakers, or informational columns.</p></details>
-              <details><summary>Why does the current leaderboard show model results?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Those rows reproduce research results from the Build-Bench paper so participants can understand the benchmark. They are not competition entries and will remain visibly separated from the future public competition ranking.</p></details>
+              <details>
+                <summary>What file should I upload?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Upload the dist/agent-submission.zip archive produced by ./bb package. Do not upload the entire Starter Kit directory or assemble the competition archive manually. Every accepted upload is stored as an immutable Agent version with its own identifier and content digest.</p><p class="faq-reference"><a href="submission.html#submission-contents">Review the submission contents</a></p></div>
+              </details>
+              <details>
+                <summary>What does the Hosted Smoke Test check?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>It checks the uploaded bundle, entrypoint, dependencies, workspace permissions, and output contract on a small lightweight Case set. Passing it qualifies that immutable version for Full Evaluation, but produces no official score and does not guarantee success on the full Case set.</p><p class="faq-reference"><a href="submission.html#test-submission">Read the testing guidance</a></p></div>
+              </details>
+              <details>
+                <summary>Can I upload a revised Agent or replace a running evaluation?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>You may upload a revised bundle before the applicable deadline and within the published limits; it becomes a new immutable version. A later upload does not alter an active or completed evaluation. Full Evaluation begins only after the Team explicitly selects a qualified version.</p><p class="faq-reference"><a href="my-submissions.html">Manage Agent versions</a><span aria-hidden="true"> · </span><a href="rules.html#submissions">Read the version-control rules</a></p></div>
+              </details>
             </div>
           </section>
 
-          <section class="doc-section faq-group" id="data">
-            <span class="section-label">Data and builds</span>
-            <h2>Cases, architectures, and OBS</h2>
+          <section class="faq-section" id="evaluate">
+            <h2>4. Evaluation and scoring</h2>
             <div class="faq-list">
-              <details><summary>How many Build-Bench cases are there?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The latest paper reports 268 reproducible cases: 163 for x86_64-to-aarch64 and 105 for aarch64-to-x86_64. Another 200 public package candidates are under validation and are not yet accepted benchmark cases. Final split counts will be frozen before launch.</p></details>
-              <details><summary>What is OBS and why is it used?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Open Build Service is a platform for building packages across distributions and architectures. Build-Bench uses it as an executable validation backend: after a repair is applied, OBS rebuilds the package for the target architecture and reports whether the real build succeeds.</p></details>
-              <details><summary>Can participants validate locally?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Yes. The working environment prioritizes a Docker-based local validator for reproducible development. OBS remains useful for research-corpus reconstruction and organizer-side evidence checks. The starter kit will document prerequisites and architecture-emulation limitations.</p></details>
-              <details><summary>Will every package artifact be redistributed?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Only when licensing permits. For cases with unclear redistribution status, organizers may release scripts that reconstruct the case from public package sources.</p></details>
+              <details>
+                <summary>How is a proposed repair judged?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>The platform derives a canonical patch from the Agent's modified worktree, checks the permitted paths and repair policy, reapplies the patch to a clean Case, and invokes the official target-architecture Docker Validator. A repair succeeds because the genuine package build succeeds, not because it resembles a reference patch.</p><p class="faq-reference"><a href="evaluation.html#case-evaluation">See how each Case is evaluated</a></p></div>
+              </details>
+              <details>
+                <summary>How is the competition score calculated?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Build Success Rate is the primary metric: successful Cases divided by the official evaluation denominator. The exact denominator semantics, any tie-breaker, and remaining resource and rerun rules will be published with the frozen Evaluation Protocol on August 31, 2026.</p><p class="faq-reference"><a href="evaluation.html#scoring">Read the scoring protocol</a></p></div>
+              </details>
+              <details>
+                <summary>How are failures, timeouts, and infrastructure errors handled?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Build failure, Agent error, timeout, and an invalid patch are unsuccessful Case outcomes. An organizer-controlled infrastructure error is handled separately: no partial score is published, and the affected work is reviewed or rerun under the competition procedure.</p><p class="faq-reference"><a href="evaluation.html#outcomes">Review all outcome categories</a></p></div>
+              </details>
+              <details>
+                <summary>What is the difference between Smoke Test, Full Evaluation, and hidden evaluation?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Hosted Smoke Test is a small qualification run with detailed diagnostics and no score. Public-phase Full Evaluation measures a selected qualified version on the versioned validation set. Final hidden evaluation runs the Team's frozen final Agent on held-out organizer-controlled Cases and releases only the permitted aggregate results and diagnostics.</p><p class="faq-reference"><a href="evaluation.html#stages">Compare the evaluation stages</a></p></div>
+              </details>
             </div>
           </section>
 
-          <section class="doc-section faq-group" id="schedule">
-            <span class="section-label">Schedule and support</span>
-            <h2>Releases, deadlines, and updates</h2>
+          <section class="faq-section" id="data-dates">
+            <h2>5. Data, dates, and results</h2>
             <div class="faq-list">
-              <details><summary>When will public validation open?<i data-lucide="plus" aria-hidden="true"></i></summary><p>July 31, 2026 is an internal preparation checkpoint, not a participant deadline. The accepted proposal targets September 2026 for public validation, but the exact date will be aligned with the official ICSE 2027 schedule.</p></details>
-              <details><summary>When is the final submission deadline?<i data-lucide="plus" aria-hidden="true"></i></summary><p>The proposal targets a November 2026 freeze for hidden evaluation. The exact date, timezone, artifact selection procedure, and rerun window remain TBA.</p></details>
-              <details><summary>Where will rule and evaluator changes be announced?<i data-lucide="plus" aria-hidden="true"></i></summary><p>Changes will be versioned on the competition website and announced through the public support channel selected by the organizers. A frozen evaluator version will be announced before final submission.</p></details>
-              <details><summary>Will teams be able to submit solution papers?<i data-lucide="plus" aria-hidden="true"></i></summary><p>If the ICSE track invites solution papers, eligible teams are expected to need a valid final entry, rule compliance, system disclosure, and performance above an announced baseline. Track-chair policy and page limits will control the final process.</p></details>
+              <details>
+                <summary>Which Case sets are used, and how large is the benchmark?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>Local examples, public development resources, Hosted Smoke Test, Full Evaluation, and final hidden evaluation use separate versioned Case sets. The published benchmark contains 268 x86_64 and aarch64 migration failures. The organizers aim to retain approximately 1,000 Cases for final hidden evaluation, subject to final integrity, licensing, deduplication, and reproducibility checks.</p><p class="faq-reference"><a href="task.html#dataset">Read the dataset status</a><span aria-hidden="true"> · </span><a href="data-downloads.html">See released resources</a></p></div>
+              </details>
+              <details>
+                <summary>What are the key participant dates?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>The website beta opens August 14; the invited pilot runs August 17–28; rules and limits freeze August 31; public development and validation open September 7; final Agent versions freeze November 13; and final results are published by November 20, 2026.</p><p class="faq-reference"><a href="timeline.html">Read the full Timeline</a></p></div>
+              </details>
+              <details>
+                <summary>Where can I see status, results, and authoritative updates?<i data-lucide="plus" aria-hidden="true"></i></summary>
+                <div class="faq-answer"><p>My Submissions shows uploaded Agent versions, qualification logs, Full Evaluation progress, and completed results. The Leaderboard shows published rankings. Versioned changes to dates, resources, rules, and evaluation policy appear on their corresponding competition pages; any official support channel will be identified on this website when available.</p><p class="faq-reference"><a href="my-submissions.html">Open My Submissions</a><span aria-hidden="true"> · </span><a href="leaderboard.html">Open the Leaderboard</a></p></div>
+              </details>
             </div>
           </section>
 
-          <nav class="next-page" aria-label="Next page"><span>Explore</span><a href="leaderboard.html"><strong>Research Leaderboard</strong><small>View paper-reported baseline results</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
+          <p class="faq-closing"><strong>Still unsure?</strong> Use the linked detail page as the authoritative source. If an answer and a versioned rule or protocol differ, the latest published rule or protocol controls.</p>
         </article>
       </div>
     </main>

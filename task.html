@@ -8,14 +8,14 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/task.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260803-4" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/task.js?v=20260720-1" defer></script>
-    <script src="i18n.js?v=20260716-3" defer></script>
-    <script src="auth-client.js?v=20260729-1" defer></script>
-    <script src="app.js?v=20260716-3" defer></script>
+    <script src="i18n/task.js?v=20260802-3" defer></script>
+    <script src="i18n.js?v=20260803-5" defer></script>
+    <script src="auth-client.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260803-2" defer></script>
   </head>
-  <body data-page="task">
+  <body class="task-page docs-page" data-page="task">
     <a class="skip-link" href="#main-content">Skip to main content</a>
     <div class="status-strip" role="status"><span class="status-strip-label">Organizer preview</span><span>Dataset splits and the final case schema will be frozen before launch.</span></div>
     <header class="site-header">
@@ -29,101 +29,125 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead">
+      <section class="page-masthead task-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker">Challenge specification</span><h1>Task &amp; Dataset</h1><p>Repair a reproducible package build failure on a target instruction set architecture, then prove the repaired package builds in the official environment.</p></div>
-          <dl class="masthead-facts"><div><dt>Research corpus</dt><dd>268 packages</dd></div><div><dt>Architectures</dt><dd>x86_64 and aarch64</dd></div><div><dt>Success oracle</dt><dd>Executable build</dd></div></dl>
+          <div class="task-masthead-copy">
+            <span class="page-kicker">Challenge specification</span>
+            <h1>Task &amp; Dataset</h1>
+            <p>Build-Bench evaluates whether an Agent can repair a software package that builds successfully on one architecture but fails on another. The platform converts the Agent's final changes into a canonical patch and validates the repair in the official target-architecture build environment.</p>
+            <ol class="task-flow" aria-label="Task flow">
+              <li>Cross-architecture failure</li>
+              <li>Agent diagnosis and repair</li>
+              <li>Clean target build</li>
+            </ol>
+          </div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout">
-        <aside class="page-rail" aria-label="On this page">
-          <strong>On this page</strong>
-          <nav><a href="#objective">Objective</a><a href="#case">Case anatomy</a><a href="#workflow">Repair workflow</a><a href="#dataset">Research corpus</a><a href="#splits">Competition splits</a><a href="#provenance">Provenance</a></nav>
-          <div class="rail-note"><span>Source basis</span><p>Build-Bench paper and accepted ICSE competition proposal</p></div>
+      <div class="content-wrap task-doc-layout">
+        <aside class="page-rail task-toc" aria-label="On this page">
+          <strong>In this article</strong>
+          <nav>
+            <a href="#task-definition">Task definition</a>
+            <a href="#case-contents">Case contents</a>
+            <a href="#repair-evaluation">Repair and evaluation</a>
+            <a href="#dataset">Dataset</a>
+            <a href="#splits-integrity">Splits and data integrity</a>
+          </nav>
         </aside>
 
-        <article class="page-document">
-          <section class="doc-section" id="objective">
-            <span class="section-label">Objective</span>
-            <h2>Repair portability failures at system scale</h2>
-            <p class="lead">Each task starts from a package that builds on a source architecture but fails when rebuilt on a target architecture. The Agent must inspect the supplied evidence and produce a focused repair.</p>
-            <div class="definition-strip">
-              <div><span>Given</span><strong>A reproducible failed package case</strong></div>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-              <div><span>Produce</span><strong>A valid repair artifact</strong></div>
-              <i data-lucide="arrow-right" aria-hidden="true"></i>
-              <div><span>Pass</span><strong>The official target build</strong></div>
-            </div>
-            <p>The evaluator does not require a repair to match an organizer-authored reference patch. A repair succeeds only when it applies cleanly, respects the modification policy, and completes the configured build validator.</p>
+        <article class="page-document task-document">
+          <section class="docs-section" id="task-definition">
+            <h2>Task definition</h2>
+            <p>Each Case begins with a software package that builds on a source instruction set architecture but fails when rebuilt on a target architecture. The Agent receives the package materials, architecture metadata, and initial failure evidence needed to diagnose that portability failure.</p>
+            <p>The Agent may modify only the permitted package files. When the run ends, the platform derives a canonical <code>repair.diff</code> from the final workspace. The repair does not need to match an organizer-authored patch; it succeeds only when it passes the modification policy and completes the official target build on a clean Case.</p>
           </section>
 
-          <section class="doc-section" id="case">
-            <span class="section-label">Case anatomy</span>
-            <h2>What an Agent receives</h2>
-            <p>Released cases will use a stable directory layout. The exact manifest schema and immutable paths will be versioned with the starter kit.</p>
-            <div class="detail-rows">
-              <div><i data-lucide="file-code-2" aria-hidden="true"></i><span><strong>Package specifications</strong><small>RPM <code>.spec</code> files or equivalent package metadata</small></span></div>
-              <div><i data-lucide="archive" aria-hidden="true"></i><span><strong>Package artifacts</strong><small>Source archives, existing patches, service files, and auxiliary build-service files</small></span></div>
-              <div><i data-lucide="scroll-text" aria-hidden="true"></i><span><strong>Failure evidence</strong><small>The original failed build log from the target architecture</small></span></div>
-              <div><i data-lucide="cpu" aria-hidden="true"></i><span><strong>Architecture labels</strong><small>Source architecture, target architecture, and validator backend metadata</small></span></div>
-              <div><i data-lucide="fingerprint" aria-hidden="true"></i><span><strong>Integrity metadata</strong><small>Case identifier, checksums, constraints, and paths that must remain immutable</small></span></div>
-            </div>
+          <section class="docs-section" id="case-contents">
+            <h2>Case contents</h2>
+            <p>The downloadable Case schema is still being finalized. At the protocol level, every Case provides the following information:</p>
+            <ul class="task-reference-list">
+              <li><strong>Package sources and packaging metadata.</strong> Source archives, package specifications, existing patches, and auxiliary build files required by the task.</li>
+              <li><strong>Architecture information.</strong> The source architecture, target architecture, and build constraints used for validation.</li>
+              <li><strong>Initial failure evidence.</strong> The failed target-architecture build log and related task metadata.</li>
+              <li><strong>Build configuration.</strong> The configuration and dependency constraints required to reproduce the build environment.</li>
+              <li><strong>Integrity and modification policy.</strong> Case identifiers, checksums, immutable inputs, and the paths the Agent may change.</li>
+            </ul>
+            <p>A downloaded Case bundle, the Agent's runtime <code>/workspace/</code>, and the Validator's internal dependency storage are separate interfaces. The final Case schema will be versioned with the Starter Kit; see the <a href="submission.html#runtime-interface">runtime interface</a> for the directories visible to an Agent.</p>
           </section>
 
-          <section class="doc-section" id="workflow">
-            <span class="section-label">Repair workflow</span>
-            <h2>Inspect, diagnose, repair, verify</h2>
-            <figure class="framework-figure document-figure">
-              <img src="assets/framework.png" alt="Build-Bench workflow from failed package context through agent repair to Open Build Service validation" width="1934" height="912" />
-              <figcaption>The research workflow is being adapted into an organizer-run competition harness.</figcaption>
-            </figure>
-            <ol class="numbered-details">
-              <li><span>1</span><div><strong>Inspect the package context</strong><p>Read manifests, specifications, source files, build scripts, existing patches, and the failed log.</p></div></li>
-              <li><span>2</span><div><strong>Diagnose the cross-architecture fault</strong><p>Identify architecture assumptions, unavailable dependencies, compiler differences, packaging errors, or target-sensitive tests.</p></div></li>
-              <li><span>3</span><div><strong>Generate a repair</strong><p>Modify only permitted package files and emit the required repair artifact through the Agent interface.</p></div></li>
-              <li><span>4</span><div><strong>Validate by building</strong><p>The official evaluator applies the repair to a clean copy and rebuilds on the target architecture.</p></div></li>
+          <section class="docs-section" id="repair-evaluation">
+            <h2>Repair and evaluation</h2>
+            <ol class="task-steps">
+              <li><div><strong>The platform prepares an isolated Case workspace.</strong><p>Immutable inputs and a writable package worktree are created for one Case run.</p></div></li>
+              <li><div><strong>The Agent inspects the inputs and modifies the writable repository.</strong><p>It can analyze the failure evidence, edit permitted files, and request build feedback within the published limits.</p></div></li>
+              <li><div><strong>The platform generates the canonical patch.</strong><p>The final workspace is compared with the clean Case to produce the official <code>repair.diff</code>.</p></div></li>
+              <li><div><strong>The official Validator performs the target build.</strong><p>The patch is applied to a clean Case and verified in the target-architecture build environment.</p></div></li>
             </ol>
+            <p>See the <a href="evaluation.html">Evaluation Protocol</a> for build feedback, status transitions, scoring, logs, and infrastructure-error handling.</p>
           </section>
 
-          <section class="doc-section" id="dataset">
-            <span class="section-label">Research corpus</span>
-            <h2>268 reproducible real-world failures</h2>
-            <div class="source-callout"><i data-lucide="book-open-check" aria-hidden="true"></i><p>This preview follows the latest Build-Bench paper: <strong>163 x86_64-to-aarch64</strong> cases and <strong>105 aarch64-to-x86_64</strong> cases. The original 268 cases are being revalidated before the competition dataset is frozen.</p></div>
-            <div class="direction-grid compact-directions">
-              <div><strong>163</strong><span>x86_64 &rarr; aarch64</span><small>Paper-reported corpus</small></div>
-              <div><strong>105</strong><span>aarch64 &rarr; x86_64</span><small>Paper-reported corpus</small></div>
+          <section class="docs-section" id="dataset">
+            <h2>Dataset</h2>
+            <p>The published Build-Bench benchmark contains 268 reproducible failures collected from real open-source package builds. It covers system configuration issues, missing dependencies, architecture-specific source problems, and build-script incompatibilities.</p>
+
+            <div class="task-table-wrap" tabindex="0" aria-label="Published benchmark by migration direction">
+              <table class="task-table">
+                <caption>Published benchmark</caption>
+                <thead><tr><th scope="col">Migration direction</th><th class="numeric" scope="col">Cases</th></tr></thead>
+                <tbody>
+                  <tr><td>x86_64 &rarr; aarch64</td><td class="numeric">163</td></tr>
+                  <tr><td>aarch64 &rarr; x86_64</td><td class="numeric">105</td></tr>
+                  <tr class="task-table-total"><th scope="row">Total</th><td class="numeric">268</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div class="source-callout warning-callout"><i data-lucide="search-check" aria-hidden="true"></i><p><strong>Expansion status:</strong> 200 additional public package candidates have been discovered. They remain candidates, not accepted benchmark cases, until the original failure and repaired success are reproduced under a frozen environment.</p></div>
-            <h3>Failure categories</h3>
-            <div class="category-list" aria-label="Build-Bench failure categories">
-              <div><span><i style="--value:100%"></i></span><strong>Compilation error</strong><small>116</small></div>
-              <div><span><i style="--value:67.24%"></i></span><strong>Build preparation error</strong><small>78</small></div>
-              <div><span><i style="--value:36.21%"></i></span><strong>Test failure</strong><small>42</small></div>
-              <div><span><i style="--value:20.69%"></i></span><strong>Packaging error</strong><small>24</small></div>
-              <div><span><i style="--value:6.90%"></i></span><strong>Environment / infrastructure</strong><small>8</small></div>
+
+            <p>The competition dataset is being prepared from a larger, independently audited candidate pool. Candidate counts describe preparation progress, not the final number of accepted evaluation Cases.</p>
+            <div class="task-table-wrap" tabindex="0" aria-label="Competition candidate pool status">
+              <table class="task-table">
+                <caption>Competition candidate pool</caption>
+                <thead><tr><th scope="col">Dataset status</th><th class="numeric" scope="col">Cases</th><th scope="col">Publication state</th></tr></thead>
+                <tbody>
+                  <tr><td>Published benchmark</td><td class="numeric">268</td><td>Public</td></tr>
+                  <tr><td>Structurally complete candidates</td><td class="numeric">1,687</td><td>Under audit</td></tr>
+                  <tr><td>Build or validation attempted</td><td class="numeric">1,074</td><td>Deduplicated candidates</td></tr>
+                  <tr><td>Target hidden-set size</td><td class="numeric">&asymp;1,000</td><td>Not yet frozen</td></tr>
+                </tbody>
+              </table>
             </div>
+            <p>Based on the current pool and audit progress, the organizers aim to retain approximately 1,000 Cases for the final hidden evaluation. The exact number remains subject to integrity, licensing, deduplication, and reproducibility checks.</p>
           </section>
 
-          <section class="doc-section" id="splits">
-            <span class="section-label">Planned competition splits</span>
-            <h2>Development, validation, and hidden test</h2>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable competition split table">
-              <table class="spec-table"><thead><tr><th>Split</th><th>Visibility</th><th>Purpose</th></tr></thead><tbody><tr><td>Development</td><td><span class="tag public">Public</span></td><td>Local debugging, tutorials, and method development</td></tr><tr><td>Validation</td><td><span class="tag public">Public inputs and scores</span></td><td>Leaderboard feedback during the public phase</td></tr><tr><td>Test</td><td><span class="tag hidden">Held out</span></td><td>Organizer-run final ranking</td></tr></tbody></table>
+          <section class="docs-section" id="splits-integrity">
+            <h2>Splits and data integrity</h2>
+            <div class="task-table-wrap" tabindex="0" aria-label="Competition dataset splits">
+              <table class="task-table">
+                <caption>Competition splits</caption>
+                <thead><tr><th scope="col">Split</th><th scope="col">Participant access</th><th scope="col">Purpose</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Development</th><td>Downloadable public Cases</td><td>Local development and testing</td></tr>
+                  <tr><th scope="row">Validation</th><td>Hosted evaluation with controlled feedback</td><td>Public competition phase</td></tr>
+                  <tr><th scope="row">Hidden test</th><td>Organizer-only</td><td>Final ranking</td></tr>
+                </tbody>
+              </table>
             </div>
-            <p>Cases will be grouped by package so that near-duplicate packages do not appear across splits. Final counts and package assignments are not yet published.</p>
+            <p>Cases will be grouped by package family and checked for semantic similarity so that near-duplicate packages do not leak across splits. The hidden set will be frozen from the competition-specific candidate pool rather than mixed with the published benchmark.</p>
+            <p>Before a Case is accepted, organizers review its provenance, license and redistribution conditions, reproducibility, and integrity metadata. When direct redistribution is not permitted, the release may provide reconstruction instructions instead of the original artifact.</p>
+            <aside class="task-note info-note" aria-label="Data status">
+              <strong>Data status</strong>
+              <p>Final split sizes, per-Case timeouts, submission limits, and the validation protocol will be frozen and published before the public competition phase.</p>
+            </aside>
           </section>
 
-          <section class="doc-section" id="provenance">
-            <span class="section-label">Provenance and licensing</span>
-            <h2>Release only what can be shared responsibly</h2>
-            <p>The paper corpus originates from public openSUSE build scenarios. Dataset expansion is also investigating other distributions, package ecosystems, and ISA directions that can be reproduced in a containerized build environment.</p>
-            <p>Before release, organizers will audit license metadata, remove local credentials and personal paths, document redistribution constraints, and group semantic duplicates.</p>
-            <p>When redistribution is unclear, the starter kit may provide reconstruction scripts that retrieve artifacts from public package sources instead of distributing original archives.</p>
-            <div class="source-callout"><i data-lucide="database" aria-hidden="true"></i><p><strong>Hugging Face dataset:</strong> the public repository link will be added after the first dataset version passes validation, licensing, and deduplication review.</p></div>
+          <section class="task-next-steps" aria-labelledby="next-steps-heading">
+            <h2 id="next-steps-heading">Next steps</h2>
+            <ul>
+              <li><a href="data-downloads.html"><strong>Data &amp; Downloads</strong><span>Get the Starter Kit and released competition resources.</span></a></li>
+              <li><a href="submission.html"><strong>Agent Submission Guide</strong><span>Prepare, test, and package a runnable Agent.</span></a></li>
+              <li><a href="evaluation.html"><strong>Evaluation Protocol</strong><span>Review build feedback, status handling, and scoring.</span></a></li>
+            </ul>
           </section>
-
-          <nav class="next-page" aria-label="Next page"><span>Next</span><a href="submission.html"><strong>Agent Submission</strong><small>Understand the single submission model</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
         </article>
       </div>
     </main>

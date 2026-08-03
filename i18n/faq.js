@@ -1,99 +1,112 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.faq = Object.freeze({
+  "Participant answers for Build-Bench registration, local Agent development, submission, evaluation, data, dates, and results.":
+    "关于 Build-Bench 团队注册、Agent 本地开发、提交、评测、数据、日期和结果的参赛者常见问题。",
   "FAQ | Build-Bench Challenge": "常见问题 | Build-Bench Challenge",
-  "Frequently asked questions about the Build-Bench Challenge Agent submission, evaluation, dataset, and timeline.": "关于 Build-Bench Challenge 的 Agent 提交、评测、数据集和时间安排的常见问题。",
-  "Living document": "持续更新",
-  "Answers will be updated as the Agent contract, evaluator, and schedule are finalized.": "随着 Agent 合约、评测器和时间安排逐步确定，此处答案也会持续更新。",
   "Participant help": "参赛帮助",
   "Frequently Asked Questions": "常见问题",
-  "Current answers distinguish confirmed competition direction, proposal-derived plans, and details that still require an organizer decision.": "以下回答会区分已确认的竞赛方向、源自提案的计划，以及仍需主办方决定的细节。",
-  "One Agent": "一个 Agent",
-  "Validation": "验证方式",
-  "Executable builds": "实际构建",
-  "Open details": "待定细节",
-  "Marked Draft or TBA": "标注为 Draft 或 TBA",
-  "Categories": "问题分类",
-  "Participation": "参赛相关",
-  "Agent interface": "Agent 接口",
-  "Data & builds": "数据与构建",
-  "Schedule & support": "日程与支持",
-  "Need context?": "需要了解背景？",
-  "Read the dedicated page linked from each answer for the complete specification.": "每个回答中链接的专题页面提供了完整规范。",
-  "Entering the competition": "参加竞赛",
-  "What exactly does a team submit?": "团队具体需要提交什么？",
-  "One versioned": "一个带版本的",
-  containing: "，其中包含",
-  ", Agent source, and locked dependencies. The platform builds and runs the Agent; teams do not submit precomputed":
-    "、Agent 源码和锁定依赖。平台负责构建并运行 Agent；团队不能提交预先计算的",
-  "answers. See the": "答案。具体见",
-  "Agent Submission Contract": "Agent 提交合约",
-  "Are patch output and Agent container separate submission modes?": "补丁输出和 Agent 容器是两种独立的提交方式吗？",
-  "No. The competition uses one Agent submission model. The platform derives a canonical unified diff from the Agent's final worktree and passes it to the evaluator. That diff is an internal evaluation artifact, not a second entry path.":
-    "不是。竞赛只采用一种 Agent 提交模式。平台根据 Agent 最终工作树生成规范统一 diff，并将其交给评测器。该 diff 是内部评测制品，而不是第二种参赛入口。",
-  "Must the Agent use an LLM?": "Agent 必须使用 LLM 吗？",
-  "The primary leaderboard is intended for LLM-based and agentic repair systems. Traditional non-LLM systems may be included as clearly labeled comparison baselines, subject to the final rulebook.": "主排行榜面向基于 LLM 的 Agent 修复系统。传统非 LLM 系统可作为明确标注的对比基线，是否纳入以最终规则为准。",
-  "How large can a team be?": "团队人数上限是多少？",
-  "Team-size, affiliation, registration, and conflict-of-interest rules have not yet been announced. They will follow the ICSE Competition Track requirements and the released competition rulebook.": "团队规模、所属机构、注册和利益冲突规则尚未公布，后续将遵循 ICSE Competition Track 的要求及正式发布的竞赛规则。",
-  "Runtime and API questions": "运行环境与 API 问题",
-  "Will the Agent be submitted as a Docker image?": "Agent 是否以 Docker 镜像形式提交？",
-  "Managed Python is the default runtime. Teams that need a different environment may include a":
-    "托管 Python 是默认运行环境。需要其他环境的团队可以在自定义运行路径中提供",
-  "for the custom runtime path. The platform builds and stores the immutable image; teams do not upload or run an image directly.":
-    "。平台负责构建并保存不可变镜像；团队不直接上传或运行镜像。",
-  "What input will the Agent receive?": "Agent 会收到哪些输入？",
-  "Each run mounts read-only task metadata, the original failed build log, and the untouched package tree under":
-    "每次运行都会在以下目录挂载只读任务元数据、原始失败构建日志和未经修改的软件包目录：",
-  ". The Agent edits a writable copy under": "。Agent 在以下目录中修改可写副本：",
-  "and writes structured status under": "，并在以下目录写入结构化状态：",
-  "What must the Agent return?": "Agent 必须返回什么？",
-  "The Agent must write": "Agent 必须写入",
-  "and leave its candidate repair in the writable worktree. The platform computes the canonical":
-    "，并将候选修复保留在可写工作树中。平台根据干净输入和最终工作树计算规范",
-  "from the clean input and final worktree.": "。",
-  "Can an Agent request more than one build attempt?": "Agent 能否请求多次构建尝试？",
-  "Yes, when": "可以，前提是启用",
-  "is enabled. The Agent calls the platform-provided": "。Agent 调用平台提供的",
-  "CLI; the maximum attempts, returned feedback, and time budget remain TBA.":
-    "CLI；最大尝试次数、返回反馈和时间预算仍待公布。",
-  "Can the Agent call external model APIs?": "Agent 能否调用外部模型 API？",
-  "The model and network policy is still open. Organizers may disable general outbound access and provide allowlisted or brokered model APIs. Participants must not embed personal or production secrets in an Agent artifact.": "模型与网络策略仍待确定。主办方可能会禁用普通外网访问，并提供加入白名单或经代理调用的模型 API。参赛者不得在 Agent 产物中嵌入个人或生产环境密钥。",
-  "Scoring and leaderboard questions": "评分与排行榜问题",
-  "How is a repair judged?": "如何判定修复是否成功？",
-  "The platform computes and audits the canonical diff, then runs the official target-architecture Docker Build Validator on the repaired package. Textual similarity to an organizer patch is not the success criterion.":
-    "平台计算并审核规范 diff，随后使用官方目标架构 Docker Build Validator 构建修复后的软件包。与主办方补丁的文本相似度不是成功标准。",
-  "Are the current metrics final?": "当前指标是否已经确定？",
-  "Build Success Rate is the working single primary ranking metric. Exact denominator semantics, failure handling, and any tie-breaker remain draft on the": "Build Success Rate 是当前唯一的主要排名指标。准确分母语义、失败处理和任何同分判定规则仍是草案，具体见",
-  "Evaluation page": "评测页面",
-  "What happens if the Agent crashes or times out?": "如果 Agent 崩溃或超时，会如何处理？",
-  "The platform records Agent status separately from Validator status, distinguishing Agent failure, invalid output, build failure, and organizer infrastructure errors. The final scoring denominator and rerun policy remain TBA.":
-    "平台分别记录 Agent 状态和 Validator 状态，以区分 Agent 故障、无效输出、构建失败和主办方基础设施错误。最终评分分母和重跑政策仍待公布。",
-  "Will model cost or token usage affect ranking?": "模型成本或 Token 用量会影响排名吗？",
-  "This has not been decided. The organizer must determine whether Agent runtime, model cost, token use, build time, and repair iterations are ranking metrics, tie-breakers, or informational columns.": "尚未决定。主办方需要确定 Agent 运行时间、模型成本、Token 用量、构建时间和修复迭代次数是排名指标、同分判定指标，还是仅供参考的展示列。",
-  "Why does the current leaderboard show model results?": "为什么当前排行榜展示的是模型结果？",
-  "Those rows reproduce research results from the Build-Bench paper so participants can understand the benchmark. They are not competition entries and will remain visibly separated from the future public competition ranking.": "这些行复现了 Build-Bench 论文中的研究结果，帮助参赛者了解该基准。它们不是竞赛提交，后续也会与公开竞赛排名明确分开展示。",
-  "Data and builds": "数据与构建",
-  "Cases, architectures, and OBS": "Case、架构与 OBS",
-  "How many Build-Bench cases are there?": "Build-Bench 共有多少个 Case？",
-  "The latest paper reports 268 reproducible cases: 163 for x86_64-to-aarch64 and 105 for aarch64-to-x86_64. Another 200 public package candidates are under validation and are not yet accepted benchmark cases. Final split counts will be frozen before launch.": "最新论文报告了 268 个可复现 Case：其中 163 个为 x86_64 到 aarch64，105 个为 aarch64 到 x86_64。另有 200 个公开软件包候选正在验证，目前还不是正式 Benchmark Case。最终数据划分数量将在上线前冻结。",
-  "What is OBS and why is it used?": "OBS 是什么，为什么要使用它？",
-  "Open Build Service is a platform for building packages across distributions and architectures. Build-Bench uses it as an executable validation backend: after a repair is applied, OBS rebuilds the package for the target architecture and reports whether the real build succeeds.": "Open Build Service 是一个支持跨发行版、跨架构构建软件包的平台。Build-Bench 将其用作实际构建验证后端：应用修复后，OBS 会针对目标架构重新构建软件包，并报告真实构建是否成功。",
-  "Can participants validate locally?": "参赛者能否在本地验证？",
-  "Yes. The working environment prioritizes a Docker-based local validator for reproducible development. OBS remains useful for research-corpus reconstruction and organizer-side evidence checks. The starter kit will document prerequisites and architecture-emulation limitations.": "可以。当前环境优先使用基于 Docker 的本地验证器进行可复现开发。OBS 仍用于研究数据集重建和主办方证据检查。入门套件将说明前置条件及架构模拟限制。",
-  "Will every package artifact be redistributed?": "是否会重新分发所有软件包产物？",
-  "Only when licensing permits. For cases with unclear redistribution status, organizers may release scripts that reconstruct the case from public package sources.": "仅在许可证允许时重新分发。对于再分发状态不明确的 Case，主办方可能发布脚本，从公开软件包来源重建 Case。",
-  "Schedule and support": "日程与支持",
-  "Releases, deadlines, and updates": "发布、截止日期与更新",
-  "When will public validation open?": "公开验证何时开放？",
-  "July 31, 2026 is an internal preparation checkpoint, not a participant deadline. The accepted proposal targets September 2026 for public validation, but the exact date will be aligned with the official ICSE 2027 schedule.": "2026 年 7 月 31 日是内部准备检查点，不是参赛者截止时间。获批提案计划于 2026 年 9 月开放公开验证，但准确日期仍需与 ICSE 2027 官方日程对齐。",
-  "When is the final submission deadline?": "最终提交截止时间是什么时候？",
-  "The proposal targets a November 2026 freeze for hidden evaluation. The exact date, timezone, artifact selection procedure, and rerun window remain TBA.": "提案计划于 2026 年 11 月冻结用于隐藏评测的提交。确切日期、时区、产物选择流程及重跑窗口仍待公布。",
-  "Where will rule and evaluator changes be announced?": "规则和评测器变更会在哪里公布？",
-  "Changes will be versioned on the competition website and announced through the public support channel selected by the organizers. A frozen evaluator version will be announced before final submission.": "变更将在竞赛网站上进行版本管理，并通过主办方选定的公开支持渠道发布。最终提交前会公布冻结的评测器版本。",
-  "Will teams be able to submit solution papers?": "团队能否提交方案论文？",
-  "If the ICSE track invites solution papers, eligible teams are expected to need a valid final entry, rule compliance, system disclosure, and performance above an announced baseline. Track-chair policy and page limits will control the final process.": "如果 ICSE 赛道征集方案论文，符合条件的团队预计需要具备有效的最终提交、遵守规则、完成系统披露，并达到高于已公布基线的成绩。最终流程以赛道主席政策和篇幅限制为准。",
-  "Explore": "继续浏览",
-  "Research Leaderboard": "研究排行榜",
-  "View paper-reported baseline results": "查看论文报告的基线结果",
+  "Short answers to common questions from Team registration and local development through Agent submission, evaluation, and official results.":
+    "简要解答从团队注册、本地开发到 Agent 提交、评测和正式结果发布过程中的常见问题。",
   "FAQ categories": "常见问题分类",
-  "Next page": "下一页"
+  "Browse by stage": "按参赛阶段浏览",
+  "Start and register": "开始与注册",
+  "Develop locally": "本地开发",
+  "Upload and qualify": "上传与资格检查",
+  "Evaluation and scoring": "评测与计分",
+  "Data, dates, and results": "数据、日期与结果",
+
+  "1. Start and register": "1. 开始与注册",
+  "What is Build-Bench, and what does a Team submit?": "Build-Bench 是什么，团队需要提交什么？",
+  "Build-Bench evaluates runnable software repair Agents on real package build failures. A Team submits Agent source and a versioned runtime manifest; the organizers run that Agent independently on competition Cases. Teams do not submit pre-generated repair patches or a Docker image as their competition entry.":
+    "Build-Bench 使用真实软件包构建失败来评测可运行的软件修复 Agent。团队提交 Agent 源码和版本化运行清单，由组织者在竞赛 Case 上独立运行该 Agent。团队不以预生成修复补丁或 Docker 镜像作为竞赛提交。",
+  "Read the task definition": "阅读任务定义",
+  "How does Team registration work?": "团队如何注册？",
+  "One Team leader creates the account and enters the complete roster. A Team may contain up to five people including the leader. Every member email is required, and the same email cannot appear in another Team.":
+    "由一名团队负责人创建账号并录入完整成员名单。每支团队最多五人，包括负责人。每位成员必须填写邮箱，同一邮箱不能出现在其他团队中。",
+  "Register a Team": "注册团队",
+  "Read the Team rules": "阅读团队规则",
+  "Where should a first-time participant begin?": "首次参赛应该从哪里开始？",
+  "Download the current Starter Kit, run its environment check and official demo, create an Agent from the template, and test that Agent locally before uploading it. The Submission Guide provides the copy-and-run commands.":
+    "下载当前 Starter Kit，运行环境检查和官方示例，从模板创建 Agent，并在上传前完成本地测试。《提交指南》提供了可直接复制运行的命令。",
+  "Get the Starter Kit": "获取 Starter Kit",
+  "Follow the Quick Start": "按照快速开始操作",
+  "Must an Agent use a large language model?": "Agent 必须使用大语言模型吗？",
+  "A competition entry must be a runnable repair Agent, but its internal method may combine language models, retrieval, static analysis, log processing, search, or other compliant tools. Case-specific answer tables and pre-generated repair patches are prohibited.":
+    "竞赛提交必须是可运行的修复 Agent，但内部方法可以组合语言模型、检索、静态分析、日志处理、搜索或其他合规工具。禁止使用针对特定 Case 的答案表或预生成修复补丁。",
+  "Read the models and tools policy": "阅读模型与工具政策",
+
+  "2. Develop locally": "2. 本地开发",
+  "What do I need to run the Starter Kit?": "运行 Starter Kit 需要什么？",
+  "You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. Starter Kit v0.1.0-rc.1 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.":
+    "你需要 Linux 或 WSL2 Shell、Git、Docker Engine 24 及以上版本，或使用 Linux 容器的 Docker Desktop。Starter Kit v0.1.0-rc.1 包含 bb 命令、托管 Python Agent 模板、示例 Agent、hello 示例 Case、本地检查和确定性打包功能。",
+  "Check the local setup": "检查本地环境",
+  "What can the Agent read, modify, and return?": "Agent 可以读取、修改和返回什么？",
+  "The Agent reads task evidence from the read-only input directory, modifies only the writable package worktree, and may write machine-readable status to the output directory. It must follow the workspace paths and agent-result.json schema defined by protocol v0.1.":
+    "Agent 从只读输入目录读取任务证据，只修改可写的软件包工作树，并可向输出目录写入机器可读状态。它必须遵守协议 v0.1 定义的工作区路径和 agent-result.json Schema。",
+  "Read the runtime interface": "阅读运行接口",
+  "Can I submit a custom Docker runtime?": "可以提交自定义 Docker 运行环境吗？",
+  "Not in Starter Kit v0.1.0-rc.1. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.":
+    "Starter Kit v0.1.0-rc.1 暂不支持。当前提交合约仅支持托管 Python 3.11 配置。如果以后增加其他运行配置，将通过版本化协议更新正式发布，而不会静默启用。",
+  "Read the current package contract": "阅读当前提交包合约",
+  "Can the Agent request build feedback while it runs?": "Agent 运行时可以请求构建反馈吗？",
+  "Not in the current Starter Kit release. Bounded hosted build feedback is a planned feature; its command, limits, and response schema will be introduced only in a later protocol release. Do not assume that bb-build is currently available.":
+    "当前 Starter Kit 版本暂不支持。有限次数的托管构建反馈属于计划功能，其命令、限制和响应 Schema 只会在后续协议版本中引入。请勿假设 bb-build 当前可用。",
+  "Check the current runtime contract": "查看当前运行合约",
+  "Can an Agent call external model APIs or include API keys?": "Agent 可以调用外部模型 API 或包含 API Key 吗？",
+  "Do not include API keys, .env files, or other secrets in the uploaded bundle. The final network-access and organizer-managed credential policy will be published with the frozen rules and resource limits on August 31, 2026.":
+    "上传包中不得包含 API Key、.env 文件或其他密钥。最终网络访问政策和组织者托管凭据政策将随冻结后的规则与资源限制于 2026 年 8 月 31 日公布。",
+  "Read the pending-policy notice": "阅读待发布政策说明",
+
+  "3. Upload and qualify a version": "3. 上传并通过版本检查",
+  "What file should I upload?": "应该上传哪个文件？",
+  "Upload the dist/agent-submission.zip archive produced by ./bb package. Do not upload the entire Starter Kit directory or assemble the competition archive manually. Every accepted upload is stored as an immutable Agent version with its own identifier and content digest.":
+    "请上传由 ./bb package 生成的 dist/agent-submission.zip。不要上传整个 Starter Kit 目录，也不要手工组装竞赛压缩包。每次通过接收的上传都会保存为不可变 Agent 版本，并具有独立标识符和内容摘要。",
+  "Review the submission contents": "查看提交内容要求",
+  "What does the Hosted Smoke Test check?": "Hosted Smoke Test 检查什么？",
+  "It checks the uploaded bundle, entrypoint, dependencies, workspace permissions, and output contract on a small lightweight Case set. Passing it qualifies that immutable version for Full Evaluation, but produces no official score and does not guarantee success on the full Case set.":
+    "它会在一组轻量 Case 上检查上传包、入口命令、依赖、工作区权限和输出合约。通过测试后，该不可变版本具备进行 Full Evaluation 的资格，但不会产生正式分数，也不保证在完整 Case 集上成功。",
+  "Read the testing guidance": "阅读测试说明",
+  "Can I upload a revised Agent or replace a running evaluation?": "可以上传修订后的 Agent 或替换正在运行的评测吗？",
+  "You may upload a revised bundle before the applicable deadline and within the published limits; it becomes a new immutable version. A later upload does not alter an active or completed evaluation. Full Evaluation begins only after the Team explicitly selects a qualified version.":
+    "你可以在相应截止日期前、已公布限制范围内上传修订包；它会成为新的不可变版本。后续上传不会更改正在运行或已经完成的评测。只有团队明确选择通过检查的版本后，Full Evaluation 才会开始。",
+  "Manage Agent versions": "管理 Agent 版本",
+  "Read the version-control rules": "阅读版本控制规则",
+
+  "4. Evaluation and scoring": "4. 评测与计分",
+  "How is a proposed repair judged?": "候选修复如何判定？",
+  "The platform derives a canonical patch from the Agent's modified worktree, checks the permitted paths and repair policy, reapplies the patch to a clean Case, and invokes the official target-architecture Docker Validator. A repair succeeds because the genuine package build succeeds, not because it resembles a reference patch.":
+    "平台根据 Agent 修改后的工作树生成规范补丁，检查允许修改的路径和修复政策，将补丁重新应用到干净 Case，并调用正式的目标架构 Docker Validator。修复成功取决于真实软件包构建成功，而不是与参考补丁相似。",
+  "See how each Case is evaluated": "查看单个 Case 的评测方式",
+  "How is the competition score calculated?": "竞赛分数如何计算？",
+  "Build Success Rate is the primary metric: successful Cases divided by the official evaluation denominator. The exact denominator semantics, any tie-breaker, and remaining resource and rerun rules will be published with the frozen Evaluation Protocol on August 31, 2026.":
+    "Build Success Rate 是主要指标，即成功 Case 数除以正式评测分母。精确的分母语义、同分判定方式以及其余资源和重跑规则，将随冻结后的《评测协议》于 2026 年 8 月 31 日公布。",
+  "Read the scoring protocol": "阅读计分协议",
+  "How are failures, timeouts, and infrastructure errors handled?": "构建失败、超时和基础设施错误如何处理？",
+  "Build failure, Agent error, timeout, and an invalid patch are unsuccessful Case outcomes. An organizer-controlled infrastructure error is handled separately: no partial score is published, and the affected work is reviewed or rerun under the competition procedure.":
+    "构建失败、Agent 错误、超时和无效补丁均属于未成功的 Case 结果。组织者控制范围内的基础设施错误会单独处理：平台不会发布部分分数，并会按照竞赛程序复核或重新运行受影响的任务。",
+  "Review all outcome categories": "查看全部结果类别",
+  "What is the difference between Smoke Test, Full Evaluation, and hidden evaluation?": "Smoke Test、Full Evaluation 和隐藏评测有什么区别？",
+  "Hosted Smoke Test is a small qualification run with detailed diagnostics and no score. Public-phase Full Evaluation measures a selected qualified version on the versioned validation set. Final hidden evaluation runs the Team's frozen final Agent on held-out organizer-controlled Cases and releases only the permitted aggregate results and diagnostics.":
+    "Hosted Smoke Test 是提供详细诊断但不计分的小规模资格测试。公开阶段的 Full Evaluation 在版本化验证集上评测团队选定的合格版本。最终隐藏评测在组织者控制的留出 Case 上运行团队冻结的最终 Agent，并仅发布允许公开的汇总结果与诊断信息。",
+  "Compare the evaluation stages": "比较不同评测阶段",
+
+  "5. Data, dates, and results": "5. 数据、日期与结果",
+  "Which Case sets are used, and how large is the benchmark?": "竞赛使用哪些 Case 集，Benchmark 有多大？",
+  "Local examples, public development resources, Hosted Smoke Test, Full Evaluation, and final hidden evaluation use separate versioned Case sets. The published benchmark contains 268 x86_64 and aarch64 migration failures. The organizers aim to retain approximately 1,000 Cases for final hidden evaluation, subject to final integrity, licensing, deduplication, and reproducibility checks.":
+    "本地示例、公开开发资源、Hosted Smoke Test、Full Evaluation 和最终隐藏评测使用相互独立的版本化 Case 集。已发布 Benchmark 包含 268 个 x86_64 与 aarch64 迁移失败 Case。组织者计划为最终隐藏评测保留约 1,000 个 Case，具体数量仍取决于最终完整性、许可、去重和可复现性检查。",
+  "Read the dataset status": "查看数据集状态",
+  "See released resources": "查看已发布资源",
+  "What are the key participant dates?": "参赛者需要关注哪些关键日期？",
+  "The website beta opens August 14; the invited pilot runs August 17\u201328; rules and limits freeze August 31; public development and validation open September 7; final Agent versions freeze November 13; and final results are published by November 20, 2026.":
+    "网站 Beta 于 8 月 14 日开放；邀请制 Pilot 在 8 月 17\u201328 日进行；规则与限制于 8 月 31 日冻结；公开开发与验证于 9 月 7 日开放；最终 Agent 版本于 11 月 13 日冻结；最终结果在 2026 年 11 月 20 日前公布。",
+  "Read the full Timeline": "查看完整时间安排",
+  "Where can I see status, results, and authoritative updates?": "在哪里查看状态、结果和权威更新？",
+  "My Submissions shows uploaded Agent versions, qualification logs, Full Evaluation progress, and completed results. The Leaderboard shows published rankings. Versioned changes to dates, resources, rules, and evaluation policy appear on their corresponding competition pages; any official support channel will be identified on this website when available.":
+    "“我的提交”展示已上传的 Agent 版本、资格检查日志、Full Evaluation 进度和已完成结果；排行榜展示已发布排名。日期、资源、规则和评测政策的版本化变更会发布在对应竞赛页面；正式支持渠道确定后也将在本网站说明。",
+  "Open My Submissions": "打开“我的提交”",
+  "Open the Leaderboard": "打开排行榜",
+
+  "Still unsure?": "仍有疑问？",
+  "Use the linked detail page as the authoritative source. If an answer and a versioned rule or protocol differ, the latest published rule or protocol controls.":
+    "请以回答中链接的详情页为权威来源。如果本页回答与版本化规则或协议不一致，以最新发布的规则或协议为准。",
 });

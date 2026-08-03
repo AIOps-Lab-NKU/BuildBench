@@ -261,6 +261,18 @@
       setLanguage(button.dataset.languageOption);
     });
     actions.appendChild(control);
+
+    // Create the account controls in the same synchronous pass as the
+    // language control. app.js subsequently verifies the server session and
+    // hydrates this shell, but the header never renders a language-only state.
+    const account = document.createElement("div");
+    account.className = "account-navigation";
+    account.setAttribute("data-account-navigation", "");
+    account.innerHTML = `
+      <a href="login.html">Sign in</a>
+      <a class="account-register-link" href="register.html">Register team</a>
+    `;
+    actions.appendChild(account);
   }
 
   function audit() {

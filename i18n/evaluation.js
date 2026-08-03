@@ -1,187 +1,125 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.evaluation = Object.freeze({
-  "Evaluation | Build-Bench Challenge": "评测 | Build-Bench Challenge",
-  "Working evaluation": "当前评测方案",
-  "Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.":
-    "Build Success Rate 是唯一的主要排名指标；分母和同分判定细节仍在审核中。",
-  "Draft protocol": "评测方案草案",
-  "The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.":
-    "评测框架在受控 Case 上运行提交的 Agent，应用其修复并执行目标架构构建，再将结果转换为可复现的指标。",
-  "Oracle": "判据",
-  "Executable build": "实际构建",
-  "Primary metric": "主要指标",
-  "Proposed success rate": "拟定成功率",
-  "Final definitions": "最终定义",
-  "Pending approval": "待批准",
+  "Evaluation Protocol | Build-Bench Challenge": "评测协议 | Build-Bench Challenge",
+  "Participant-facing evaluation protocol, Case outcomes, scoring, and evaluation stages for the Build-Bench Challenge.":
+    "Build-Bench Challenge 面向参赛者的评测协议、Case 结果处理、计分方式和评测阶段说明。",
+  "Participant protocol": "参赛者评测协议",
+  "Evaluation Protocol": "评测协议",
+  "This page explains what happens after you select a qualified, immutable Agent version for evaluation: how the platform runs it, validates each repair, records outcomes, and produces a score. For packaging and upload instructions, see the":
+    "本页说明选定通过检查且不可变的 Agent 版本后，平台如何运行 Agent、验证每项修复、记录结果并计算分数。有关打包和上传说明，请参阅",
+  "Submission Guide": "Agent 提交指南",
   "On this page": "本页内容",
-  "Protocol status": "方案状态",
+  "Successful repair": "成功修复",
+  "Per-Case evaluation": "逐 Case 评测",
+  "Outcome handling": "结果处理",
+  "Scoring and diagnostics": "计分与诊断",
+  "Evaluation stages": "评测阶段",
+  "To be announced": "待公布内容",
   "Core principle": "核心原则",
-  "Evaluation harness": "评测框架",
-  "Proposed metrics": "拟定指标",
-  "Public vs. hidden": "公开评测与隐藏评测",
-  "Open decisions": "待定事项",
-  "Metrics originate from the accepted proposal, not a completed post-acceptance team decision.":
-    "这些指标来自已接收的提案，并非提案接收后团队已完成的正式决策。",
-  "Not yet the official scoring specification": "尚非官方评分规范",
-  "The accepted proposal names build success rate and several tie-breakers. They are reproduced here as a reviewable draft. Exact formulas, budgets, failure handling, ranking frequency, and tie-breakers must be confirmed before launch.":
-    "已接收的提案提出了构建成功率和若干同分判定项。本页将其整理为可供评审的草案；准确公式、预算、失败处理、排名更新频率和同分判定规则都必须在启动前确认。",
-  "Separate source material from final rules": "区分提案内容与最终规则",
-  "Item": "项目",
-  "Basis": "依据",
-  "Status": "状态",
-  "Executable build as the success oracle": "以实际构建结果作为成功判据",
-  "Build-Bench paper and accepted proposal": "Build-Bench 论文和已接收的提案",
-  "Strong basis": "依据充分",
-  "Build success rate as primary metric": "以构建成功率作为主要指标",
-  "Accepted proposal": "已接收的提案",
-  "Team review": "团队评审",
-  "Invalid patch, patch size, file count, build time tie-breakers":
-    "无效补丁、补丁大小、文件数量和构建时间同分判定项",
-  "Agent runtime, model cost, token use, retries, and iteration budget":
-    "Agent 运行时间、模型成本、token 用量、重试和迭代预算",
-  "Not fully specified": "尚未充分说明",
-  "Open": "待定",
-  "Executable outcomes are the oracle": "以实际执行结果作为判据",
-  "A repair is successful only when it applies cleanly, respects competition policy, and the repaired package passes the official validator on the target architecture.":
-    "只有当修复能够顺利应用、符合竞赛规则，并且修复后的软件包在目标架构上通过官方验证器时，才算成功。",
-  "Proposal-derived primary metric": "提案提出的主要指标",
-  "successfully built cases": "成功构建的 Case 数",
-  "evaluated cases": "参与评测的 Case 数",
-  "Textual similarity to an organizer patch is not the criterion. A different repair may receive credit when it produces a compliant, successful build.":
-    "与主办方补丁的文本相似度不是评判标准。只要其他修复符合规则并能成功构建，同样可以得分。",
-  "Seven observable stages": "七个可观测阶段",
-  "Validate entry": "验证参赛制品",
-  "Verify the Agent artifact, configuration, version, and submission metadata.":
-    "检查 Agent 制品、配置、版本和提交元数据。",
-  "Harness": "评测框架",
-  "Prepare clean case": "准备干净 Case",
-  "Check case checksums and create an isolated working copy.":
-    "检查 Case 校验和，并创建隔离的工作副本。",
-  "Invoke Agent": "调用 Agent",
-  "Provide standardized input and enforce runtime, API, network, and resource policy.":
-    "提供标准化输入，并执行运行时间、API、网络和资源策略。",
-  "Capture final worktree": "捕获最终工作树",
-  "Validate": "验证",
-  "and compute the canonical diff from the clean input and final worktree.":
-    "，并根据干净输入和最终工作树计算规范 diff。",
-  "Audit canonical repair": "审核规范修复",
-  "Reject forbidden path changes, policy violations, or build bypasses before final validation.":
-    "在最终验证前拒绝禁止路径修改、政策违规或绕过构建的行为。",
-  "Evaluator": "评测器",
-  "Run target build": "运行目标架构构建",
-  "Launch the official containerized validator on the target architecture under the published resource policy.":
-    "在公布的资源策略下，于目标架构上启动官方容器化验证器。",
-  "Validator": "验证器",
-  "Record outcome": "记录结果",
-  "Write structured status, durations, patch statistics, and permitted logs.":
-    "写入结构化状态、耗时、补丁统计和允许公开的日志。",
-  "Results": "结果",
-  "What the accepted proposal currently suggests": "已接收提案目前给出的建议",
-  "Order": "顺序",
-  "Metric": "指标",
-  "Draft definition": "草案定义",
-  "Primary": "主要指标",
-  "Build success rate": "构建成功率",
-  "Successfully built cases divided by evaluated cases": "成功构建的 Case 数除以参与评测的 Case 数",
-  "Review": "待复核",
-  "Tie-break 1": "同分判定 1",
-  "Invalid repairs": "无效修复",
-  "Fewer malformed, non-applying, or policy-invalid repair outputs":
-    "格式错误、无法应用或违反规则的修复输出更少",
-  "Tie-break 2": "同分判定 2",
-  "Total patch size": "补丁总大小",
-  "Smaller cumulative repair diff": "累计修复 diff 更小",
-  "Tie-break 3": "同分判定 3",
-  "Modified files": "修改的文件",
-  "Fewer files changed across evaluated cases": "所有评测 Case 中修改的文件更少",
-  "Tie-break 4": "同分判定 4",
-  "Build time": "构建时间",
-  "Lower total build time in the organizer environment": "在主办方环境中的总构建时间更短",
-  "These metrics were proposed before the unified Agent contract was finalized. Agent execution cost, model/API budget, repair iterations, and reproducibility may need additional reporting or ranking rules.":
-    "这些指标提出时，统一的 Agent 合约尚未最终确定。Agent 执行成本、模型/API 预算、修复迭代次数和可复现性可能需要补充报告或排名规则。",
-  "Feedback policy": "反馈策略",
-  "Public development without leaking the hidden test": "在不泄露隐藏测试集的前提下公开开发",
-  "Public validation": "公开验证",
-  "Actionable feedback": "可用于改进的反馈",
-  "Aggregate leaderboard score": "排行榜汇总得分",
-  "Per-case outcome on released validation inputs": "已发布验证输入上的逐 Case 结果",
-  "Permitted build logs and evaluator status": "允许公开的构建日志和评测器状态",
-  "Versioned evaluator and case manifests": "带版本的评测器和 Case manifest",
-  "Submission-frequency limit to reduce overfitting": "限制提交频率以减少过拟合",
-  "Hidden final": "隐藏最终评测",
-  "Controlled disclosure": "受控披露",
-  "Organizer-run held-out cases": "由主办方运行的不公开 Case",
-  "Frozen Agent artifact and evaluator version": "冻结的 Agent 制品和评测器版本",
-  "Aggregate results after the deadline": "截止后公布汇总结果",
-  "Limited diagnostic categories": "有限的诊断类别",
-  "Audit and rerun of suspicious or affected entries": "审核并重新运行可疑或受影响的参赛制品",
-  "Items the organizing team must resolve": "主办团队必须解决的事项",
-  "Denominator semantics": "分母定义",
-  "Decide how Agent crashes, invalid output, organizer faults, and canceled cases affect evaluated-case counts.":
-    "明确 Agent 崩溃、无效输出、主办方故障和取消的 Case 如何影响参与评测的 Case 数。",
-  "Budget policy": "预算策略",
-  "Freeze wall time, build attempts, iterations, tool calls, CPU, memory, storage, and concurrent cases.":
-    "冻结实际运行时间、构建次数、迭代次数、工具调用次数、CPU、内存、存储和并发 Case 数限制。",
-  "Cost reporting": "成本报告",
-  "Decide whether token use, model/API spend, Agent runtime, and build time are ranking metrics or informational columns.":
-    "明确 token 用量、模型/API 支出、Agent 运行时间和构建时间是排名指标还是仅展示的信息列。",
-  "Tie-break precision": "同分判定细则",
-  "Define invalid-repair classes, patch-size calculation, file counting, and build-time aggregation.":
-    "定义无效修复类别、补丁大小计算方式、文件计数方式和构建时间汇总方式。",
-  "Leaderboard cadence": "排行榜更新频率",
-  "Set submission limits, queue rules, rerun policy, score visibility, and the final-entry selection deadline.":
-    "确定提交限制、队列规则、重跑策略、分数可见性和最终参赛版本选择截止时间。",
-  "Reproducibility checks": "可复现性检查",
-  "Define artifact retention, rerun tolerance, nondeterminism policy, and required disclosures.":
-    "定义制品保留、重跑容差、非确定性策略和必须披露的信息。",
+  "What counts as a successful repair?": "什么算成功修复？",
+  "A repair succeeds only when the platform can generate a valid canonical patch, apply it to a clean copy of the Case, and build the expected package artifacts on the target architecture under the official Validator.":
+    "只有当平台能够生成有效的规范补丁，将其应用到 Case 的干净副本，并在官方 Validator 中于目标架构上构建出预期软件包产物时，该修复才算成功。",
+  "The repair does not need to match an organizer reference patch. A different change receives credit when it respects the published policy and produces a genuine successful build.":
+    "修复不需要与组织者的参考补丁一致。只要修改符合已公布规则并实现真实、成功的构建，即可获得成功判定。",
+  "Primary metric: Build Success Rate": "主要指标：构建成功率",
+  "successful Cases ÷ evaluated Cases": "成功 Case 数 ÷ 参与评测的 Case 数",
+  "Per-Case protocol": "逐 Case 协议",
+  "How each Case is evaluated": "每个 Case 如何评测",
+  "Each Case is an independent run. One slow or unsuccessful Case does not stop other scheduled Cases, and the selected Agent archive remains immutable throughout the evaluation.":
+    "每个 Case 都是独立运行任务。某个 Case 运行缓慢或修复失败不会阻止其他已调度 Case，且选定的 Agent 压缩包在整个评测期间保持不可变。",
+  "Freeze the run inputs.": "冻结本次运行输入。",
+  "The platform records the Agent archive and its checksum together with the Case-set, runtime, Validator, and protocol versions.":
+    "平台记录 Agent 压缩包及其校验和，同时记录 Case 集、运行时、Validator 和协议版本。",
+  "Prepare a clean Case.": "准备干净 Case。",
+  "The Case checksum is verified and an isolated writable worktree is created from the original package materials.":
+    "平台验证 Case 校验和，并根据原始软件包材料创建隔离的可写工作树。",
+  "Run the Agent.": "运行 Agent。",
+  "The declared entrypoint receives the standard workspace and runs under the published time, resource, network, and build-feedback policy.":
+    "声明的入口命令接收标准工作区，并在已公布的时间、资源、网络和构建反馈策略下运行。",
+  "Generate the canonical patch.": "生成规范补丁。",
+  "After the Agent exits, the platform validates": "Agent 退出后，平台验证",
+  "and derives": "并根据原始工作树和修改后工作树生成",
+  "from the original and modified worktrees.": "。",
+  "Audit the repair.": "审核修复。",
+  "The canonical patch is checked for forbidden paths, policy violations, and build-bypass behavior described in the":
+    "平台检查规范补丁是否包含禁止路径、违反策略或",
+  "Rules": "规则页面",
+  "Rebuild from clean inputs.": "从干净输入重新构建。",
+  "The platform reapplies the canonical patch to a fresh Case and invokes the official Docker Validator for the target architecture.":
+    "平台将规范补丁重新应用到全新的 Case，并为目标架构调用官方 Docker Validator。",
+  "Record the outcome.": "记录结果。",
+  "Agent status, Validator status, duration, patch statistics, and permitted logs are stored as structured evidence.":
+    "Agent 状态、Validator 状态、耗时、补丁统计和允许展示的日志均以结构化证据保存。",
+  "Case results": "Case 结果",
+  "How outcomes are handled": "如何处理各类结果",
+  "The platform records Agent execution and final build validation separately. An evaluation can complete normally even when many Cases are unsuccessful; an evaluation-level":
+    "平台分别记录 Agent 执行结果和最终构建验证结果。即使多个 Case 未成功，整次评测仍可正常完成；评测级别的",
+  "System Error": "系统错误",
+  "is reserved for organizer-controlled failures.": "仅用于组织者可控基础设施发生故障的情况。",
+  "Scrollable Case outcome table": "可横向滚动的 Case 结果表",
+  "Outcome": "结果",
+  "What it means": "含义",
+  "Evaluation treatment": "评测处理",
+  "The audited patch produces the expected package artifacts in the clean target build.":
+    "通过审核的补丁在干净的目标构建中生成预期软件包产物。",
+  "Successful Case.": "记为成功 Case。",
+  "The target build fails, dependencies cannot be resolved, or the Agent proposes no allowed change.":
+    "目标构建失败、依赖无法解析，或 Agent 未提出允许的修改。",
+  "Unsuccessful Case result.": "记为未成功 Case。",
+  "The Agent crashes, exits abnormally, or omits a valid": "Agent 崩溃、异常退出，或未提供有效的",
+  "The Agent or its permitted build work exceeds the applicable Case-level limit.":
+    "Agent 或其允许执行的构建工作超过适用的 Case 级限制。",
+  "The canonical repair cannot be applied or violates path, output, or repair policy.":
+    "规范修复无法应用，或违反路径、输出或修复策略。",
+  "An organizer-controlled Worker, storage service, runtime, or Validator fails independently of the Agent repair.":
+    "组织者控制的 Worker、存储服务、运行时或 Validator 发生与 Agent 修复无关的故障。",
+  "No partial score is published; the affected evaluation is reviewed or rerun.":
+    "不公布不完整分数；受影响的评测将接受复核或重新运行。",
+  "Ranking": "排名",
+  "How scoring works": "如何计分",
+  "Build Success Rate is the primary ranking metric. The platform freezes an aggregate score only after all Cases have terminal outcomes and any organizer infrastructure errors have been resolved. A completed evaluation therefore reports both the number of successful Cases and the total number of evaluated Cases.":
+    "构建成功率是主要排名指标。只有当所有 Case 均得到终态结果，且组织者基础设施错误均已解决后，平台才会冻结汇总分数。因此，完成的评测会同时报告成功 Case 数和参与评测的 Case 总数。",
+  "Diagnostic information explains where time and failures occurred; it is not combined into a weighted score.":
+    "诊断信息用于说明耗时和失败发生的位置，不会组合成加权分数。",
+  "Case outcomes grouped by result category": "按结果类别汇总的 Case 结果",
+  "Agent runtime and final build duration": "Agent 运行时间和最终构建耗时",
+  "Patch size, modified-file count, and policy validation status": "补丁大小、修改文件数量和策略验证状态",
+  "Build requests, retries, iterations, and model or tool usage when collected":
+    "在平台采集时记录构建请求、重试、迭代以及模型或工具使用情况",
+  "Case-set, runtime, Validator, and protocol versions used for the run":
+    "本次运行使用的 Case 集、运行时、Validator 和协议版本",
+  "Competition phases": "竞赛阶段",
+  "Evaluation stages and feedback": "评测阶段与反馈",
+  "The same Agent interface is used across stages, but the Case set, purpose, and visible feedback differ.":
+    "各阶段使用相同的 Agent 接口，但 Case 集、目的和可见反馈有所不同。",
+  "Scrollable evaluation stages table": "可横向滚动的评测阶段表",
+  "Stage": "阶段",
+  "Purpose": "目的",
+  "Version and feedback": "版本与反馈",
+  "Hosted Smoke Test": "托管冒烟测试",
+  "Check the uploaded bundle, entrypoint, dependencies, workspace behavior, and output contract on a small lightweight set.":
+    "在少量轻量 Case 上检查上传包、入口命令、依赖、工作区行为和输出协议。",
+  "Runs the uploaded immutable version and returns detailed qualification diagnostics. It does not produce an official score.":
+    "运行上传后的不可变版本并返回详细的资格检查诊断信息，不产生正式分数。",
+  "Full Evaluation during the public phase": "公开阶段的完整评测",
+  "Measure repair performance on the versioned validation set and produce the public evaluation result.":
+    "在版本化验证集上衡量修复能力并产生公开评测结果。",
+  "Starts only after the team selects a qualified immutable version. Progress and the completed aggregate result appear in My Submissions.":
+    "仅在团队选定通过检查的不可变版本后开始。进度和完成后的汇总结果会显示在“我的提交”中。",
+  "Hidden final evaluation": "隐藏最终评测",
+  "Evaluate the team's frozen final Agent on organizer-controlled held-out Cases.":
+    "在组织者控制的保留 Case 上评测团队冻结的最终 Agent。",
+  "Uses the frozen Agent, Case set, runtime, Validator, and protocol versions. Aggregate results and permitted diagnostics are released after the deadline.":
+    "使用冻结的 Agent、Case 集、运行时、Validator 和协议版本；截止时间后公布汇总结果和允许公开的诊断信息。",
+  "Versioned release": "版本化发布",
+  "Rules to be published before evaluation opens": "评测开放前将公布的规则",
+  "To be announced in the final Evaluation Protocol.": "将在最终版评测协议中公布。",
+  "The organizers will publish the exact score-denominator and cancellation semantics; any tie-breaker; Agent and build timeouts; build-feedback, iteration, and tool-call budgets; CPU, memory, storage, concurrency, network, and credential policies; submission frequency and rerun rules; and the feedback visible during public and hidden evaluation. Current pilot settings do not define these competition limits.":
+    "组织者将公布准确的计分分母与取消语义、同分判定规则、Agent 和构建超时、构建反馈与迭代及工具调用预算、CPU/内存/存储/并发/网络/凭据策略、提交频率与重跑规则，以及公开和隐藏评测期间可见的反馈。当前试运行设置不代表正式竞赛限制。",
+  "See": "参阅",
+  "for integrity, disclosure, and enforcement requirements, and": "了解诚信、披露和执行要求，并参阅",
+  "Timeline": "时间安排",
+  "for the publication and evaluation schedule.": "了解规则发布和评测日程。",
   "Next": "下一页",
-  "Review integrity and reproducibility requirements": "查看诚信与可复现性要求",
-  "Draft evaluation protocol, metrics, and organizer-run harness for the Build-Bench Challenge.":
-    "Build-Bench Challenge 的评测方案草案、指标及由主办方运行的评测框架。",
-  "Scrollable evaluation protocol status table": "可横向滚动的评测方案状态表",
-  "Success rate equals successfully built cases divided by evaluated cases":
-    "成功率等于成功构建的 Case 数除以参与评测的 Case 数",
-  "Scrollable draft metrics table": "可横向滚动的指标草案表",
-  "Build Success Rate": "构建成功率",
-  "Open detail": "待定细节",
-  "Failure handling": "失败处理",
-  "Primary metric": "主要指标",
-  "Reporting fields": "结果记录字段",
-  "Working decision": "当前决定",
-  "One primary score ranks entries. Exact denominator and secondary ordering rules will be frozen before launch.":
-    "一个主要得分用于排名。准确分母和次级排序规则将在启动前冻结。",
-  "Primary metric selected; full scoring semantics remain draft": "主要指标已选定；完整评分语义仍是草案",
-  "Entries are ranked first by Build Success Rate. Exact denominator rules, resource budgets, failure handling, ranking frequency, and any tie-breaker must still be frozen before launch.":
-    "参赛结果首先按构建成功率排名。准确分母规则、资源预算、失败处理、排名频率和任何同分判定规则仍需在启动前冻结。",
-  "Selected": "已选定",
-  "Build Success Rate as the single primary metric": "以 Build Success Rate 作为唯一主要指标",
-  "Accepted proposal and organizer working decision": "已接收提案和主办方当前决定",
-  "Failure categories and denominator semantics": "失败类别与分母语义",
-  "Required for reproducible scoring": "可复现评分所必需",
-  "Tie-breaker and informational fields": "同分判定与信息字段",
-  "Secondary to the primary metric": "次于主要指标",
-  "Primary ranking metric": "主要排名指标",
-  "One ranking score, with separate diagnostics": "一个排名得分，配合独立诊断字段",
-  "Role": "作用",
-  "Field": "字段",
-  "Working definition": "当前定义",
-  "Primary ranking": "主要排名",
-  "Successfully built cases divided by valid evaluated cases": "成功构建 Case 数除以有效评测 Case 数",
-  "Diagnostic": "诊断",
-  "Outcome categories": "结果类别",
-  "Successful build, build failure, invalid output, Agent failure, or organizer fault":
-    "成功构建、构建失败、无效输出、Agent 失败或主办方故障",
-  "Definition review": "定义审核中",
-  "Runtime and model use": "运行时间与模型使用",
-  "Agent runtime, build time, token use, model/API cost, retries, and iterations":
-    "Agent 运行时间、构建时间、Token 用量、模型/API 成本、重试与迭代次数",
-  "Informational": "仅供参考",
-  "Repair statistics": "修复统计",
-  "Patch size, modified files, and policy validation status": "补丁大小、修改文件和规则验证状态",
-  "Secondary ordering": "次级排序",
-  "Tie-breaker": "同分判定",
-  "Applied only when primary scores are equal": "仅在主要得分相同时使用",
-  "To be announced": "待公布",
-  "Diagnostic fields explain results but do not form a weighted multi-factor score. The final rulebook will state whether any one field is used only to break an exact tie.":
-    "诊断字段用于解释结果，不会组成加权多因素得分。最终规则将说明是否仅在完全同分时使用某个字段进行判定。",
+  "Review integrity and reproducibility requirements": "查看诚信与可复现性要求"
 });

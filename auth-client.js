@@ -1,7 +1,33 @@
 (function () {
   "use strict";
 
+  const SESSION_HINT_KEY = "buildbench.session-hint.v1";
   let sessionPromise = null;
+
+  function writeSessionHint(session) {
+    const hint = session?.team
+      ? { authenticated: true, team_name: String(session.team.name || "") }
+      : { authenticated: false, team_name: "" };
+    try {
+      window.sessionStorage.setItem(SESSION_HINT_KEY, JSON.stringify(hint));
+    } catch {
+      // Storage may be unavailable in hardened or file:// previews.
+    }
+    return hint;
+  }
+
+  function getSessionHint() {
+    try {
+      const value = JSON.parse(window.sessionStorage.getItem(SESSION_HINT_KEY) || "null");
+      if (!value || typeof value.authenticated !== "boolean") return null;
+      return {
+        authenticated: value.authenticated,
+        team_name: typeof value.team_name === "string" ? value.team_name : "",
+      };
+    } catch {
+      return null;
+    }
+  }
 
   async function readJson(response) {
     try {
@@ -48,8 +74,13 @@
         credentials: "same-origin",
         headers: { Accept: "application/json" },
       });
-      if (!response.ok) return null;
-      return await readJson(response);
+      if (!response.ok) {
+        writeSessionHint(null);
+        return null;
+      }
+      const session = await readJson(response);
+      writeSessionHint(session);
+      return session;
     } catch {
       return null;
     }
@@ -62,6 +93,7 @@
 
   function clearSession() {
     sessionPromise = Promise.resolve(null);
+    writeSessionHint(null);
   }
 
   function safeReturnUrl(fallback = "index.html") {
@@ -91,6 +123,7 @@
 
   window.BuildBenchAuth = Object.freeze({
     clearSession,
+    getSessionHint,
     getSession,
     logout,
     request,

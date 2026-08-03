@@ -11,20 +11,25 @@ function renderIcons() {
   window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
 }
 
-async function renderAccountNavigation() {
-  const actions = document.querySelector(".header-actions");
-  if (!actions || actions.querySelector("[data-account-navigation]")) return;
-  const account = document.createElement("div");
-  account.className = "account-navigation";
-  account.dataset.accountNavigation = "";
-  account.hidden = true;
-  actions.append(account);
-  const session = await window.BuildBenchAuth?.getSession?.();
-  if (session?.team) {
+function escapeHtml(value) {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
+
+function renderAccountState(account, session) {
+  const teamName = session?.team?.name ? String(session.team.name) : "";
+  const stateKey = teamName ? `team:${teamName}` : "anonymous";
+  if (account.dataset.accountState === stateKey) return;
+
+  if (teamName) {
     account.innerHTML = `
       <a href="team.html" class="account-team-link">
         <i data-lucide="users" aria-hidden="true"></i>
-        <span>${session.team.name}</span>
+        <span>${escapeHtml(teamName)}</span>
       </a>
       <a href="my-submissions.html">${translate("My Submissions")}</a>
       <button type="button" data-account-signout>${translate("Sign out")}</button>
@@ -42,8 +47,33 @@ async function renderAccountNavigation() {
       <a class="account-register-link" href="register.html">${translate("Register team")}</a>
     `;
   }
+  account.dataset.accountState = stateKey;
   account.hidden = false;
   renderIcons();
+}
+
+async function renderAccountNavigation() {
+  const actions = document.querySelector(".header-actions");
+  if (!actions) return;
+  let account = actions.querySelector("[data-account-navigation]");
+  if (!account) {
+    account = document.createElement("div");
+    account.className = "account-navigation";
+    account.dataset.accountNavigation = "";
+    actions.append(account);
+  }
+  if (account.dataset.accountHydrating === "true") return;
+  account.dataset.accountHydrating = "true";
+
+  const hint = window.BuildBenchAuth?.getSessionHint?.();
+  const hintedSession = hint?.authenticated
+    ? { team: { name: hint.team_name } }
+    : null;
+  renderAccountState(account, hintedSession);
+
+  const session = await window.BuildBenchAuth?.getSession?.();
+  renderAccountState(account, session);
+  delete account.dataset.accountHydrating;
 }
 
 function setMenu(open) {
@@ -161,8 +191,9 @@ boardFilters.forEach((button) => {
 
 if (boardRows.length) applyBoardFilter("all");
 
+renderAccountNavigation();
+
 window.addEventListener("DOMContentLoaded", () => {
   updateMobileNavGeometry();
   renderIcons();
-  renderAccountNavigation();
 });

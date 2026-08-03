@@ -84,6 +84,103 @@ class FrontendContractTests(unittest.TestCase):
         self.assertEqual(html.count('class="quick-start-number"'), 6)
         self.assertEqual(html.count('class="quick-start-result"'), 6)
 
+    def test_submission_guide_keeps_participant_contract_in_scope(self) -> None:
+        html = (ROOT / "submission.html").read_text(encoding="utf-8")
+        evaluation = (ROOT / "evaluation.html").read_text(encoding="utf-8")
+
+        for expected in (
+            "You need a Linux or WSL2 shell",
+            "Different versioned Case sets are used",
+            "Planned feature.",
+            "The platform derives the canonical patch from the modified worktree.",
+            "Final submission checklist",
+            "Runtime and policy",
+        ):
+            self.assertIn(expected, html)
+
+        for removed in (
+            "Planned CLI example",
+            "Build feedback flow",
+            "Canonical patch validation flow",
+            'class="compact-flow',
+            'class="boundary-list',
+        ):
+            self.assertNotIn(removed, html)
+
+        self.assertIn("How each Case is evaluated", evaluation)
+        self.assertIn("official Docker Validator", evaluation)
+        self.assertIn("evaluation.html#case-evaluation", html)
+
+    def test_evaluation_protocol_is_participant_facing(self) -> None:
+        html = (ROOT / "evaluation.html").read_text(encoding="utf-8")
+
+        for expected in (
+            "What counts as a successful repair?",
+            "How each Case is evaluated",
+            "How outcomes are handled",
+            "How scoring works",
+            "Evaluation stages and feedback",
+            "Rules to be published before evaluation opens",
+            "infrastructure_error",
+            "No partial score is published",
+        ):
+            self.assertIn(expected, html)
+
+        for organizer_only in (
+            "Working evaluation",
+            "Working decision",
+            "Open decisions",
+            "Team review",
+            "Seven observable stages",
+            'class="metric-panel',
+        ):
+            self.assertNotIn(organizer_only, html)
+
+        self.assertNotIn('class="status-strip', html)
+        self.assertEqual(html.count('class="protocol-table'), 2)
+
+    def test_rules_page_is_a_plain_numbered_participant_rulebook(self) -> None:
+        html = (ROOT / "rules.html").read_text(encoding="utf-8")
+        translations = (ROOT / "i18n" / "rules.js").read_text(
+            encoding="utf-8"
+        )
+
+        for expected in (
+            "REGISTERING A TEAM OR SUBMITTING AN AGENT",
+            "1. Competition scope",
+            "2. Team registration and eligibility",
+            "3. Agent submission and version control",
+            "4. Competition data, models, and tools",
+            "5. Evaluation and scoring",
+            "6. Prohibited conduct",
+            "7. Hidden evaluation and confidentiality",
+            "8. Method disclosure and reproducibility",
+            "9. Review, correction, and enforcement",
+            "10. Versioned rules and pending parameters",
+            "A Team may contain no more than five members",
+            "Build Success Rate is the primary ranking metric",
+        ):
+            self.assertIn(expected, html)
+            self.assertIn(f'"{expected}', translations)
+
+        for removed in (
+            'class="status-strip',
+            'class="masthead-facts',
+            'class="rule-points',
+            'class="allowed-grid',
+            'class="prohibited-list',
+            'class="numbered-rules',
+            'class="decision-table',
+            "Rules preview",
+            "Working Decision",
+            "Team Review",
+        ):
+            self.assertNotIn(removed, html)
+
+        self.assertNotIn("<table", html)
+        self.assertEqual(html.count('class="rules-section'), 10)
+        self.assertIn('class="page-rail rules-outline"', html)
+
     def test_agent_version_pagination_is_six_per_page(self) -> None:
         script = (ROOT / "submissions.js").read_text(encoding="utf-8")
         self.assertIn("const PAGE_SIZE = 6", script)
@@ -206,6 +303,143 @@ class FrontendContractTests(unittest.TestCase):
                 html,
                 msg=f"{path.name} does not load the shared session client",
             )
+
+    def test_timeline_is_a_participant_facing_date_list(self) -> None:
+        html = (ROOT / "timeline.html").read_text(encoding="utf-8")
+        translations = (ROOT / "i18n" / "timeline.js").read_text(
+            encoding="utf-8"
+        )
+
+        for expected in (
+            "Website beta and initial documentation",
+            "Invited pilot",
+            "Rules and resource limits frozen",
+            "Public development and validation open",
+            "Final Agent version freeze",
+            "Final results published",
+        ):
+            self.assertIn(expected, html)
+            self.assertIn(f'"{expected}"', translations)
+
+        for date in (
+            'datetime="2026-08-14"',
+            'datetime="2026-08-17"',
+            'datetime="2026-08-31"',
+            'datetime="2026-09-07"',
+            'datetime="2026-11-13"',
+            'datetime="2026-11-20"',
+        ):
+            self.assertIn(date, html)
+
+        for removed in (
+            'class="status-strip',
+            'class="masthead-facts',
+            'class="page-rail',
+            'class="source-callout',
+            'class="roadmap',
+            'class="gate-list',
+            'class="phase-sequence',
+            'class="notification-row',
+            "July 31, 2026",
+            "Proposal milestones",
+        ):
+            self.assertNotIn(removed, html)
+
+        self.assertIn('class="participant-schedule"', html)
+        self.assertEqual(html.count("<time "), 6)
+        self.assertNotIn("<table", html)
+
+    def test_faq_follows_the_participant_journey_and_current_protocol(self) -> None:
+        html = (ROOT / "faq.html").read_text(encoding="utf-8")
+        translations = (ROOT / "i18n" / "faq.js").read_text(
+            encoding="utf-8"
+        )
+
+        for expected in (
+            "1. Start and register",
+            "2. Develop locally",
+            "3. Upload and qualify a version",
+            "4. Evaluation and scoring",
+            "5. Data, dates, and results",
+            "How does Team registration work?",
+            "Can I submit a custom Docker runtime?",
+            "Can the Agent request build feedback while it runs?",
+            "What does the Hosted Smoke Test check?",
+            "How are failures, timeouts, and infrastructure errors handled?",
+            "Which Case sets are used, and how large is the benchmark?",
+            "What are the key participant dates?",
+        ):
+            self.assertIn(expected, html)
+            self.assertIn(f'"{expected}"', translations)
+
+        for current_fact in (
+            "up to five people",
+            "managed Python 3.11",
+            "Do not assume that bb-build is currently available",
+            "Every accepted upload is stored as an immutable Agent version",
+            "Build Success Rate is the primary metric",
+            "approximately 1,000 Cases",
+            "August 17\u201328",
+            "November 13",
+        ):
+            self.assertIn(current_fact, html)
+
+        for obsolete in (
+            'class="status-strip',
+            'class="masthead-facts',
+            'class="page-rail',
+            'class="section-label',
+            "Agent Submission Contract",
+            "Are patch output and Agent container separate submission modes?",
+            "Yes, when protocol.build_feedback",
+            "Open Build Service is a platform",
+            "Another 200 public package candidates",
+            "July 31, 2026",
+            "Research Leaderboard",
+            "Team-size, affiliation, registration, and conflict-of-interest rules have not yet been announced",
+        ):
+            self.assertNotIn(obsolete, html)
+
+        self.assertEqual(html.count('class="faq-section"'), 5)
+        self.assertEqual(html.count("<details"), 19)
+        self.assertNotIn("<table", html)
+
+    def test_submission_and_evaluation_use_right_hand_document_navigation(self) -> None:
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+
+        for filename in ("submission.html", "evaluation.html"):
+            html = (ROOT / filename).read_text(encoding="utf-8")
+            self.assertIn("page-layout right-doc-layout", html)
+            self.assertIn('class="page-rail', html)
+            self.assertIn('class="page-document', html)
+
+        submission = (ROOT / "submission.html").read_text(encoding="utf-8")
+        self.assertIn("Competition", submission)
+        self.assertIn("On this page", submission)
+        self.assertIn(".right-doc-layout > .page-rail", styles)
+        self.assertIn("grid-column: 2", styles)
+
+    def test_account_navigation_is_stable_across_page_loads(self) -> None:
+        auth_client = (ROOT / "auth-client.js").read_text(encoding="utf-8")
+        app = (ROOT / "app.js").read_text(encoding="utf-8")
+        i18n = (ROOT / "i18n.js").read_text(encoding="utf-8")
+        styles = (ROOT / "styles.css").read_text(encoding="utf-8")
+
+        self.assertIn("buildbench.session-hint.v1", auth_client)
+        self.assertIn("getSessionHint", auth_client)
+        self.assertIn("renderAccountState(account, hintedSession)", app)
+        self.assertLess(
+            app.index("renderAccountState(account, hintedSession)"),
+            app.index("await window.BuildBenchAuth?.getSession?.()"),
+        )
+        self.assertIn("renderAccountNavigation();", app)
+        self.assertIn('account.setAttribute("data-account-navigation", "")', i18n)
+        self.assertIn('href="login.html">Sign in</a>', i18n)
+        self.assertLess(
+            i18n.index('className = "language-control"'),
+            i18n.index('className = "account-navigation"'),
+        )
+        self.assertIn("min-width: 176px", styles)
 
 
 if __name__ == "__main__":

@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Participation, integrity, disclosure, and reproducibility rules for the Build-Bench Challenge." />
-    <title>Rules | Build-Bench Challenge</title>
+    <meta name="description" content="Official participant rules for team registration, Agent submissions, evaluation integrity, and result verification in the Build-Bench Challenge." />
+    <title>Competition Rules | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/rules.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260803-4" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/rules.js?v=20260716-3" defer></script>
-    <script src="i18n.js?v=20260716-3" defer></script>
-    <script src="auth-client.js?v=20260729-1" defer></script>
-    <script src="app.js?v=20260716-3" defer></script>
+    <script src="i18n/rules.js?v=20260803-1" defer></script>
+    <script src="i18n.js?v=20260803-5" defer></script>
+    <script src="auth-client.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260803-2" defer></script>
   </head>
-  <body data-page="rules">
+  <body class="rules-page" data-page="rules">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Rules preview</span><span>Integrity principles come from the accepted proposal; operational thresholds remain TBA.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -29,71 +28,233 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead">
+      <section class="page-masthead rules-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker">Competition policy</span><h1>Rules</h1><p>Build real repairs, disclose the system that produced them, preserve the evaluator, and make final results reproducible under organizer control.</p></div>
-          <dl class="masthead-facts"><div><dt>Primary focus</dt><dd>LLM-based repair Agents</dd></div><div><dt>Final validation</dt><dd>Organizer audit and rerun</dd></div><div><dt>Thresholds</dt><dd>Published before launch</dd></div></dl>
+          <div>
+            <span class="page-kicker">Participant rulebook</span>
+            <h1>Competition Rules</h1>
+            <p>These rules govern team registration, Agent submissions, evaluation integrity, and result verification for the Build-Bench Challenge.</p>
+          </div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout">
-        <aside class="page-rail" aria-label="On this page">
-          <strong>On this page</strong>
-          <nav><a href="#eligibility">Eligibility</a><a href="#disclosure">Disclosure</a><a href="#allowed">Allowed work</a><a href="#prohibited">Prohibited conduct</a><a href="#resources">Resources</a><a href="#hidden">Hidden evaluation</a><a href="#enforcement">Enforcement</a></nav>
-          <div class="rail-note"><span>Notice</span><p>The versioned rulebook released with the starter kit will supersede this preview.</p></div>
-        </aside>
+      <div class="content-wrap page-layout rules-rulebook-layout">
+        <article class="page-document rules-document">
+          <header class="rules-introduction" id="acceptance">
+            <p class="rules-acceptance">REGISTERING A TEAM OR SUBMITTING AN AGENT CONSTITUTES ACCEPTANCE OF THESE COMPETITION RULES.</p>
+            <p class="rules-lead">Build-Bench is a skills-based software engineering competition. Teams develop repair Agents; organizers run qualified Agent versions on competition Cases and validate each proposed repair through an executable target-architecture build.</p>
+            <p>The Rules apply together with the versioned Submission Guide, Evaluation Protocol, Timeline, and published data notices. Participants should read those documents before registering or starting an official evaluation.</p>
+          </header>
 
-        <article class="page-document">
-          <div class="source-callout"><i data-lucide="info" aria-hidden="true"></i><p>This page preserves the accepted proposal's integrity principles while avoiding unconfirmed limits. Team size, submission frequency, API allowlists, and exact resource budgets will be added after organizer approval.</p></div>
-
-          <section class="doc-section" id="eligibility">
-            <span class="section-label">Eligibility and entry</span>
-            <h2>Who the competition is designed for</h2>
-            <p>The primary leaderboard is intended for LLM-based and agentic repair systems from academic, industry, and independent teams. Registration rules, team-size limits, affiliation restrictions, and conflict-of-interest procedures will follow the official ICSE Competition Track requirements and the released rulebook.</p>
-            <div class="rule-points"><div><i data-lucide="users" aria-hidden="true"></i><span><strong>One team, one declared entry</strong><p>Final registration and team-composition rules are TBA.</p></span></div><div><i data-lucide="bot" aria-hidden="true"></i><span><strong>Agent-focused ranking</strong><p>Non-LLM systems may appear as clearly labeled comparison baselines, subject to final policy.</p></span></div><div><i data-lucide="badge-check" aria-hidden="true"></i><span><strong>Valid final run required</strong><p>A team must submit a conforming Agent and complete organizer-run evaluation to receive a final result.</p></span></div></div>
+          <section class="rules-section" id="scope">
+            <h2>1. Competition scope</h2>
+            <div class="rule-clause">
+              <h3>1.1 Competition title</h3>
+              <p>The competition is the Build-Bench Challenge, organized for the ICSE 2027 Competition Track.</p>
+            </div>
+            <div class="rule-clause">
+              <h3>1.2 Competition task</h3>
+              <p>A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.</p>
+            </div>
+            <div class="rule-clause">
+              <h3>1.3 Participant documentation</h3>
+              <p>The Task &amp; Data page defines the challenge and released Case sets. The Submission Guide defines the Agent package and runtime interface. The Evaluation Protocol defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.</p>
+              <p class="rules-related-links"><a href="task.html">Task &amp; Data</a><a href="submission.html">Submission Guide</a><a href="evaluation.html">Evaluation Protocol</a><a href="timeline.html">Timeline</a></p>
+            </div>
           </section>
 
-          <section class="doc-section" id="disclosure">
-            <span class="section-label">Method disclosure</span>
-            <h2>Describe what the Agent actually uses</h2>
-            <p>Each final entry must disclose enough information for organizers to understand and rerun the method without revealing hidden evaluator data.</p>
-            <ul class="requirement-list"><li><i data-lucide="check" aria-hidden="true"></i>Base model names and exact versions when available</li><li><i data-lucide="check" aria-hidden="true"></i>Major prompts, retrieval sources, external tools, static analyzers, and repair-loop design</li><li><i data-lucide="check" aria-hidden="true"></i>Training, fine-tuning, external knowledge bases, or private data used for the entry</li><li><i data-lucide="check" aria-hidden="true"></i>Third-party APIs and services contacted during Agent execution</li><li><i data-lucide="check" aria-hidden="true"></i>Known nondeterminism, caching, preprocessing, and reproducibility constraints</li></ul>
+          <section class="rules-section" id="teams">
+            <h2>2. Team registration and eligibility</h2>
+            <div class="rule-clause">
+              <h3>2.1 Team registration</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Each Team is registered by one Team leader, who provides the Team name and member information through the competition website.</li>
+                <li>A Team may contain no more than five members, including the Team leader.</li>
+                <li>An email address is required for every member and may not appear in more than one Team in this competition.</li>
+                <li>A person may participate through only one Team. Duplicate, misleading, or false registration information may be rejected or investigated.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>2.2 Team responsibilities</h3>
+              <ol class="rules-clauses" type="a">
+                <li>The Team leader manages the roster, uploaded Agent versions, and selection of versions for official evaluation.</li>
+                <li>The Team must keep its registration information accurate and complete before the applicable deadline.</li>
+                <li>Participants are responsible for confirming that their participation and use of third-party materials are permitted by their institution, employer, and applicable licenses.</li>
+                <li>Any actual or potential conflict of interest involving the organizers must be disclosed through the official support channel.</li>
+              </ol>
+            </div>
           </section>
 
-          <section class="doc-section" id="allowed">
-            <span class="section-label">Allowed work</span>
-            <h2>Repair package content through the official interface</h2>
-            <div class="allowed-grid"><div><strong>Reason over all released case evidence</strong><p>Specifications, sources, patches, logs, scripts, metadata, and architecture labels.</p></div><div><strong>Use an internal toolchain</strong><p>Prompting, retrieval, code search, static analysis, log parsing, and iterative Agent loops.</p></div><div><strong>Modify permitted package paths</strong><p>Specifications, build scripts, source code, tests, packaging macros, and related package files.</p></div><div><strong>Return a different valid repair</strong><p>Repairs need not match an organizer reference patch when they pass policy and executable validation.</p></div></div>
+          <section class="rules-section" id="submissions">
+            <h2>3. Agent submission and version control</h2>
+            <div class="rule-clause">
+              <h3>3.1 Conforming Agent bundle</h3>
+              <ol class="rules-clauses" type="a">
+                <li>The submitted ZIP must contain a runnable Agent source bundle that conforms to the current Submission Guide, manifest schema, and permitted runtime profile.</li>
+                <li>The entrypoint must be non-interactive and must complete without organizer or participant intervention.</li>
+                <li>The bundle must contain only the Agent code, declared dependencies, configuration, and supporting documentation needed to run it.</li>
+                <li>Secrets, personal credentials, hidden Case information, pre-generated Case repairs, caches, and previous run artifacts must not be included.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>3.2 Immutable versions</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Every accepted upload creates an immutable Agent version identified by its submission record and content digest.</li>
+                <li>Any code, dependency, manifest, or configuration change requires a new upload and creates a new version.</li>
+                <li>A version must pass the platform checks and Hosted Smoke Test before it can be selected for Full Evaluation.</li>
+                <li>Uploading a version does not automatically start Full Evaluation. The Team must explicitly select a qualified version.</li>
+                <li>A later upload does not alter an active or completed evaluation snapshot.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>3.3 Organizer-run execution</h3>
+              <ol class="rules-clauses" type="a">
+                <li>The organizer starts an independent Agent instance for each Case under the published interface and resource policy.</li>
+                <li>The Agent may read the provided inputs and modify only the permitted worktree and output locations.</li>
+                <li>The Agent may not directly access the Docker socket, the final Validator, hidden evaluator files, or organizer infrastructure.</li>
+                <li>Stdout, stderr, declared result files, and platform events may be retained for diagnosis, auditing, and reproducibility.</li>
+              </ol>
+            </div>
           </section>
 
-          <section class="doc-section" id="prohibited">
-            <span class="section-label">Prohibited conduct</span>
-            <h2>Do not bypass the task or evaluator</h2>
-            <div class="prohibited-list"><div><i data-lucide="ban" aria-hidden="true"></i><span><strong>Hard-code hidden solutions</strong><p>No embedded hidden patches, case-specific answers, leaked labels, or lookup tables.</p></span></div><div><i data-lucide="shield-off" aria-hidden="true"></i><span><strong>Exploit evaluator bugs</strong><p>No attempts to escape isolation, alter evaluator metadata, spoof results, or rely on unintended validator behavior.</p></span></div><div><i data-lucide="test-tube-diagonal" aria-hidden="true"></i><span><strong>Disable meaningful validation</strong><p>No deleting essential tests, bypassing the build, or suppressing failures without a legitimate repair.</p></span></div><div><i data-lucide="package-x" aria-hidden="true"></i><span><strong>Replace the package with a dummy artifact</strong><p>The repaired output must remain the intended package and preserve its meaningful functionality.</p></span></div><div><i data-lucide="file-warning" aria-hidden="true"></i><span><strong>Modify forbidden paths</strong><p>Case manifests, checksums, hidden metadata, evaluator files, and other immutable inputs must remain unchanged.</p></span></div><div><i data-lucide="user-round-x" aria-hidden="true"></i><span><strong>Use undeclared manual intervention</strong><p>Organizer-run cases must be processed by the submitted Agent under the announced interface and policy.</p></span></div></div>
+          <section class="rules-section" id="data-tools">
+            <h2>4. Competition data, models, and tools</h2>
+            <div class="rule-clause">
+              <h3>4.1 Competition materials</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Released Cases, schemas, examples, logs, and Starter Kit materials may be used for participation subject to their published licenses and data notices.</li>
+                <li>Participants must preserve applicable copyright, attribution, redistribution, and open-source license obligations.</li>
+                <li>Unreleased Cases, hidden evaluator assets, and confidential organizer materials may not be obtained, used, shared, or redistributed.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>4.2 Models, external data, and tools</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Teams may develop Agents using language models, prompting, retrieval, code search, static analysis, log processing, and other repair tools that comply with the published runtime and network policy.</li>
+                <li>External models, datasets, knowledge bases, APIs, and tools must be lawfully accessible to the Team and disclosed as required by Section 8.</li>
+                <li>Use of a third-party service does not transfer responsibility for compliance, reproducibility, cost, availability, or licensing to the organizers.</li>
+                <li>Participants must not embed API keys or personal credentials in an Agent bundle. Any organizer-managed credential mechanism will be described separately if external calls are permitted.</li>
+              </ol>
+            </div>
           </section>
 
-          <section class="doc-section" id="resources">
-            <span class="section-label">Models, network, and secrets</span>
-            <h2>Do not assume unrestricted external access</h2>
-            <p>The unified Agent model requires an explicit policy for model APIs and network access. That policy is not final. The release will state whether calls are disabled, allowlisted, or brokered through organizer-managed APIs.</p>
-            <div class="source-callout warning-callout"><i data-lucide="key-round" aria-hidden="true"></i><p>Participants must never embed production API keys or personal credentials in submitted artifacts. Secret injection, logging, accounting, and redaction will be defined by the official platform.</p></div>
+          <section class="rules-section" id="evaluation-scoring">
+            <h2>5. Evaluation and scoring</h2>
+            <div class="rule-clause">
+              <h3>5.1 Per-Case validation</h3>
+              <ol class="rules-clauses" type="a">
+                <li>The organizer runs the frozen Agent version on a Case and derives a canonical patch from the modified worktree.</li>
+                <li>The platform checks that patch for allowed paths, required structure, and prohibited build-bypass behavior.</li>
+                <li>The canonical patch is applied to a clean copy of the Case and rebuilt in the official target-architecture environment.</li>
+                <li>A repair is not compared textually with a reference patch. It succeeds only when the clean target build and expected artifact validation succeed.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>5.2 Outcomes</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Agent errors, no-fix outcomes, build failures, dependency-resolution failures, timeouts, and invalid patches are unsuccessful Case outcomes under the final Evaluation Protocol.</li>
+                <li>A verified organizer infrastructure error is not treated as a participant repair failure. The affected Case or evaluation may be retried or recovered under the published correction procedure.</li>
+                <li>No partial official score is published while unresolved infrastructure errors prevent the aggregate result from being finalized.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>5.3 Primary metric</h3>
+              <p>Build Success Rate is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The final denominator definition and any tie-breaker will be published with the frozen Evaluation Protocol.</p>
+              <p class="rules-related-links"><a href="evaluation.html">Read the Evaluation Protocol</a></p>
+            </div>
           </section>
 
-          <section class="doc-section" id="hidden">
-            <span class="section-label">Hidden evaluation</span>
-            <h2>Held-out cases stay under organizer control</h2>
-            <ul class="numbered-rules"><li><span>1</span><p>The hidden test set will not be distributed before final evaluation.</p></li><li><span>2</span><p>Final Agents run with a frozen interface, evaluator version, and resource policy.</p></li><li><span>3</span><p>Only aggregate results and limited diagnostic categories will be released after the deadline.</p></li><li><span>4</span><p>Organizers may inspect successful, unusually small, suspicious, or policy-sensitive repairs.</p></li><li><span>5</span><p>Entries affected by an evaluator defect may be rerun under a documented correction policy.</p></li></ul>
+          <section class="rules-section" id="prohibited">
+            <h2>6. Prohibited conduct</h2>
+            <p>Participants must not obtain an advantage by bypassing the repair task, evaluator, resource policy, or Team-registration rules.</p>
+            <ol class="rules-clauses" type="a">
+              <li>Do not embed hidden solutions, leaked labels, Case-specific lookup tables, pre-generated repair patches, or other undisclosed answers in the Agent or its dependencies.</li>
+              <li>Do not exploit or attempt to escape the Agent runtime, Build Gateway, Validator, sandbox, authentication system, storage, scheduler, or network controls.</li>
+              <li>Do not suppress failures, delete essential tests, replace the package with a dummy artifact, or disable meaningful functionality merely to obtain a successful build result.</li>
+              <li>Do not alter immutable Case inputs, manifests, checksums, hidden metadata, evaluator files, result records, or any path outside the permitted worktree.</li>
+              <li>Do not use undeclared manual, remote, or third-party intervention to make Case-by-Case decisions during organizer-run evaluation.</li>
+              <li>Do not use multiple Teams, accounts, identities, or automated requests to evade registration, submission, evaluation, or resource limits.</li>
+              <li>Do not run unrelated workloads, mine cryptocurrency, interfere with other participants, or attempt to degrade competition services.</li>
+            </ol>
           </section>
 
-          <section class="doc-section" id="enforcement">
-            <span class="section-label">Audit and enforcement</span>
-            <h2>Results must survive review and rerun</h2>
-            <p>Organizers may request source, logs, configuration, method documentation, or a reproducible artifact for finalist verification. A result may be corrected, removed, or disqualified when it cannot be reproduced or violates the released rules.</p>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable enforcement action table"><table class="decision-table"><thead><tr><th>Situation</th><th>Potential action</th></tr></thead><tbody><tr><td>Malformed or nonconforming Agent output</td><td>Case failure or invalid submission under the final scoring policy</td></tr><tr><td>Accidental evaluator defect</td><td>Announced fix and affected-entry rerun where feasible</td></tr><tr><td>Undeclared dependency or unreproducible finalist</td><td>Request clarification, corrected artifact, or result removal</td></tr><tr><td>Build bypass, hidden-answer leakage, or sandbox abuse</td><td>Disqualification and removal from the leaderboard</td></tr></tbody></table></div>
+          <section class="rules-section" id="hidden-evaluation">
+            <h2>7. Hidden evaluation and confidentiality</h2>
+            <ol class="rules-clauses" type="a">
+              <li>Hidden evaluation Cases remain under organizer control and are not distributed before final evaluation.</li>
+              <li>Official hidden evaluation uses a frozen Agent version, Case-set version, runtime image, Validator image, and protocol version.</li>
+              <li>Teams may use only the feedback intentionally released by the platform and must not probe the service to infer hidden Case contents, labels, reference repairs, or evaluator internals.</li>
+              <li>Organizers may inspect successful, unusually small, suspicious, or policy-sensitive repairs and may rerun an entry to verify its result.</li>
+              <li>Any accidental exposure of hidden or confidential material must be reported promptly and must not be used or shared.</li>
+            </ol>
           </section>
 
-          <nav class="next-page" aria-label="Next page"><span>Next</span><a href="timeline.html"><strong>Timeline</strong><small>Review the proposed competition schedule</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
+          <section class="rules-section" id="disclosure">
+            <h2>8. Method disclosure and reproducibility</h2>
+            <div class="rule-clause">
+              <h3>8.1 Required disclosure</h3>
+              <p>A final entry must describe the system that produced its result. The disclosure must identify, as applicable:</p>
+              <ol class="rules-clauses" type="a">
+                <li>base model names, providers, and versions when available;</li>
+                <li>major prompt templates or prompting strategy, repair-loop design, retrieval sources, static analyzers, and external tools;</li>
+                <li>training, fine-tuning, external datasets, private knowledge bases, and pre-processing used by the entry;</li>
+                <li>third-party APIs or services contacted during execution; and</li>
+                <li>known nondeterminism, caching, dependency, and reproducibility constraints.</li>
+              </ol>
+            </div>
+            <div class="rule-clause">
+              <h3>8.2 Verification materials</h3>
+              <ol class="rules-clauses" type="a">
+                <li>Teams must retain the submitted source, lockfiles, configuration, and method documentation needed to explain and rerun the evaluated version.</li>
+                <li>Organizers may request logs, configuration details, or a reproducibility demonstration for result review.</li>
+                <li>Any public solution description or solution paper must correspond to the Agent version that produced the reported official result.</li>
+              </ol>
+            </div>
+          </section>
+
+          <section class="rules-section" id="enforcement">
+            <h2>9. Review, correction, and enforcement</h2>
+            <ol class="rules-clauses" type="a">
+              <li>A malformed or nonconforming Agent, output, or patch may be rejected or recorded as unsuccessful under the Evaluation Protocol.</li>
+              <li>When an organizer-controlled infrastructure defect affects an evaluation, organizers may correct the defect and rerun the affected work under a documented procedure.</li>
+              <li>Organizers may request clarification or verification when an entry is unreproducible, incomplete, anomalous, or potentially noncompliant.</li>
+              <li>A result may be corrected, withheld, or removed when it cannot be verified or when the Team fails to provide required disclosure or reproducibility materials.</li>
+              <li>Deliberate hidden-answer use, build bypass, evaluator exploitation, credential abuse, false registration, or other serious misconduct may result in disqualification and removal from the leaderboard.</li>
+            </ol>
+          </section>
+
+          <section class="rules-section rules-publication" id="publication">
+            <h2>10. Versioned rules and pending parameters</h2>
+            <p>Several operational values require pilot measurements and organizer approval. Before public evaluation opens, the organizers will publish and version the following:</p>
+            <ol class="rules-clauses" type="a">
+              <li>upload, Hosted Smoke Test, and Full Evaluation frequency limits;</li>
+              <li>Case-level Agent and build timeouts, CPU, memory, storage, and build-feedback budgets;</li>
+              <li>network access, external API, and organizer-managed credential policies;</li>
+              <li>the official scoring denominator, tie-breaker, feedback visibility, cancellation, rerun, and correction procedures; and</li>
+              <li>any remaining eligibility, conflict-of-interest, or final-result verification procedures required by the ICSE Competition Track.</li>
+            </ol>
+            <p>Material updates will carry a version and publication date. The Timeline page governs competition dates, and the frozen Evaluation Protocol governs official scoring.</p>
+          </section>
+
+          <nav class="next-page" aria-label="Next page"><span>Next</span><a href="timeline.html"><strong>Timeline</strong><small>Review the competition schedule</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
         </article>
+
+        <aside class="page-rail rules-outline" aria-label="Rules contents">
+          <strong>Rules</strong>
+          <nav>
+            <a href="#acceptance">Acceptance</a>
+            <a href="#scope">1. Competition scope</a>
+            <a href="#teams">2. Teams</a>
+            <a href="#submissions">3. Agent submissions</a>
+            <a href="#data-tools">4. Data, models, and tools</a>
+            <a href="#evaluation-scoring">5. Evaluation and scoring</a>
+            <a href="#prohibited">6. Prohibited conduct</a>
+            <a href="#hidden-evaluation">7. Hidden evaluation</a>
+            <a href="#disclosure">8. Disclosure</a>
+            <a href="#enforcement">9. Enforcement</a>
+            <a href="#publication">10. Versioned rules</a>
+          </nav>
+        </aside>
       </div>
     </main>
 

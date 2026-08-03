@@ -1,121 +1,210 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.rules = Object.freeze({
-    "Participation, integrity, disclosure, and reproducibility rules for the Build-Bench Challenge.":
-      "Build-Bench Challenge 的参赛、诚信、披露与可复现性规则。",
-    "Rules | Build-Bench Challenge": "规则 | Build-Bench Challenge",
-    "Rules preview": "规则预览",
-    "Integrity principles come from the accepted proposal; operational thresholds remain TBA.":
-      "诚信原则沿用获批提案，具体执行阈值仍待确定。",
-    "Competition policy": "竞赛政策",
-    "Build real repairs, disclose the system that produced them, preserve the evaluator, and make final results reproducible under organizer control.":
-      "实现真实有效的修复，披露生成修复的系统，确保评测器完整，并使最终结果能在主办方控制的环境中复现。",
-    "Primary focus": "主要关注",
-    "LLM-based repair Agents": "基于 LLM 的修复 Agent",
-    "Final validation": "最终验证",
-    "Organizer audit and rerun": "主办方审核并重新运行",
-    "Thresholds": "阈值",
-    "Published before launch": "将在启动前公布",
-    "On this page": "本页内容",
-    "Eligibility": "参赛资格",
-    "Disclosure": "信息披露",
-    "Allowed work": "允许的操作",
-    "Prohibited conduct": "禁止行为",
-    "Resources": "资源",
-    "Hidden evaluation": "隐藏评测",
-    "Enforcement": "规则执行",
-    "Notice": "注意",
-    "The versioned rulebook released with the starter kit will supersede this preview.":
-      "随入门套件发布的版本化规则手册将取代本预览内容。",
-    "This page preserves the accepted proposal's integrity principles while avoiding unconfirmed limits. Team size, submission frequency, API allowlists, and exact resource budgets will be added after organizer approval.":
-      "本页保留获批提案中的诚信原则，但不列出尚未确认的限制。团队规模、提交频率、API 允许列表和具体资源预算将在主办方批准后补充。",
-    "Eligibility and entry": "参赛资格与报名",
-    "Who the competition is designed for": "本竞赛面向哪些参赛者",
-    "The primary leaderboard is intended for LLM-based and agentic repair systems from academic, industry, and independent teams. Registration rules, team-size limits, affiliation restrictions, and conflict-of-interest procedures will follow the official ICSE Competition Track requirements and the released rulebook.":
-      "主排行榜面向来自学术界、工业界和独立团队的 LLM 及 Agent 修复系统。报名规则、团队人数限制、单位限制和利益冲突处理流程将遵循 ICSE Competition Track 官方要求及发布的规则手册。",
-    "One team, one declared entry": "每支团队仅可申报一个参赛项目",
-    "Final registration and team-composition rules are TBA.": "最终报名和团队组成规则待定。",
-    "Agent-focused ranking": "以 Agent 为核心的排名",
-    "Non-LLM systems may appear as clearly labeled comparison baselines, subject to final policy.":
-      "非 LLM 系统可作为明确标注的对比基线展示，具体以最终政策为准。",
-    "Valid final run required": "必须完成有效的最终运行",
-    "A team must submit a conforming Agent and complete organizer-run evaluation to receive a final result.":
-      "团队必须提交符合要求的 Agent，并完成由主办方运行的评测，才能获得最终成绩。",
-    "Method disclosure": "方法披露",
-    "Describe what the Agent actually uses": "说明 Agent 实际使用的内容",
-    "Each final entry must disclose enough information for organizers to understand and rerun the method without revealing hidden evaluator data.":
-      "每个最终参赛项目必须披露足够的信息，使主办方能在不泄露隐藏评测数据的前提下理解并重新运行该方法。",
-    "Base model names and exact versions when available": "基础模型名称，以及可获取时的准确版本",
-    "Major prompts, retrieval sources, external tools, static analyzers, and repair-loop design":
-      "主要提示词、检索来源、外部工具、静态分析器和修复循环设计",
-    "Training, fine-tuning, external knowledge bases, or private data used for the entry":
-      "参赛项目使用的训练、微调、外部知识库或私有数据",
-    "Third-party APIs and services contacted during Agent execution": "Agent 运行期间调用的第三方 API 和服务",
-    "Known nondeterminism, caching, preprocessing, and reproducibility constraints":
-      "已知的非确定性、缓存、预处理和可复现性限制",
-    "Repair package content through the official interface": "通过官方接口修复软件包内容",
-    "Reason over all released case evidence": "综合分析所有已发布 Case 的证据",
-    "Specifications, sources, patches, logs, scripts, metadata, and architecture labels.":
-      "spec 文件、源代码、补丁、日志、脚本、元数据和架构标签。",
-    "Use an internal toolchain": "使用内部工具链",
-    "Prompting, retrieval, code search, static analysis, log parsing, and iterative Agent loops.":
-      "提示、检索、代码搜索、静态分析、日志解析和迭代式 Agent 循环。",
-    "Modify permitted package paths": "修改允许变更的软件包路径",
-    "Specifications, build scripts, source code, tests, packaging macros, and related package files.":
-      "spec 文件、构建脚本、源代码、测试、打包宏及相关软件包文件。",
-    "Return a different valid repair": "返回不同但有效的修复",
-    "Repairs need not match an organizer reference patch when they pass policy and executable validation.":
-      "只要修复符合规则并通过实际构建验证，就不必与主办方的参考补丁一致。",
-    "Do not bypass the task or evaluator": "不得绕过任务或评测器",
-    "Hard-code hidden solutions": "硬编码隐藏解法",
-    "No embedded hidden patches, case-specific answers, leaked labels, or lookup tables.":
-      "不得嵌入隐藏补丁、特定 Case 答案、泄露的标签或查找表。",
-    "Exploit evaluator bugs": "利用评测器漏洞",
-    "No attempts to escape isolation, alter evaluator metadata, spoof results, or rely on unintended validator behavior.":
-      "不得尝试逃逸隔离环境、修改评测器元数据、伪造结果或依赖验证器的非预期行为。",
-    "Disable meaningful validation": "破坏有效验证",
-    "No deleting essential tests, bypassing the build, or suppressing failures without a legitimate repair.":
-      "不得删除必要测试、绕过构建，或在没有合理修复的情况下掩盖失败。",
-    "Replace the package with a dummy artifact": "用无效产物替换软件包",
-    "The repaired output must remain the intended package and preserve its meaningful functionality.":
-      "修复后的输出必须仍是目标软件包，并保留其实际功能。",
-    "Modify forbidden paths": "修改禁止变更的路径",
-    "Case manifests, checksums, hidden metadata, evaluator files, and other immutable inputs must remain unchanged.":
-      "Case 清单、校验和、隐藏元数据、评测器文件及其他不可变输入必须保持不变。",
-    "Use undeclared manual intervention": "使用未披露的人工干预",
-    "Organizer-run cases must be processed by the submitted Agent under the announced interface and policy.":
-      "由主办方运行的 Case 必须由提交的 Agent 按照公布的接口和政策处理。",
-    "Models, network, and secrets": "模型、网络与密钥",
-    "Do not assume unrestricted external access": "不要假定可以不受限制地访问外部资源",
-    "The unified Agent model requires an explicit policy for model APIs and network access. That policy is not final. The release will state whether calls are disabled, allowlisted, or brokered through organizer-managed APIs.":
-      "统一 Agent 模式需要明确规定模型 API 和网络访问政策。该政策尚未最终确定。正式发布时将说明外部调用是被禁用、仅限允许列表，还是通过主办方管理的 API 代理。",
-    "Participants must never embed production API keys or personal credentials in submitted artifacts. Secret injection, logging, accounting, and redaction will be defined by the official platform.":
-      "参赛者不得在提交产物中嵌入生产环境 API 密钥或个人凭据。密钥注入、日志记录、用量统计和脱敏方式将由官方平台规定。",
-    "Held-out cases stay under organizer control": "保留 Case 由主办方管理",
-    "The hidden test set will not be distributed before final evaluation.": "隐藏测试集不会在最终评测前发布。",
-    "Final Agents run with a frozen interface, evaluator version, and resource policy.":
-      "最终 Agent 将在接口、评测器版本和资源政策均冻结的条件下运行。",
-    "Only aggregate results and limited diagnostic categories will be released after the deadline.":
-      "截止日期后仅发布汇总结果和有限的诊断类别。",
-    "Organizers may inspect successful, unusually small, suspicious, or policy-sensitive repairs.":
-      "主办方可检查成功的、异常小的、可疑的或涉及政策边界的修复。",
-    "Entries affected by an evaluator defect may be rerun under a documented correction policy.":
-      "受评测器缺陷影响的参赛项目，可依据有记录的修正政策重新运行。",
-    "Audit and enforcement": "审核与规则执行",
-    "Results must survive review and rerun": "结果必须通过审查与重新运行",
-    "Organizers may request source, logs, configuration, method documentation, or a reproducible artifact for finalist verification. A result may be corrected, removed, or disqualified when it cannot be reproduced or violates the released rules.":
-      "为核验决赛入围者，主办方可要求提供源代码、日志、配置、方法文档或可复现产物。如果结果无法复现或违反已发布规则，主办方可更正或移除该结果，也可取消参赛资格。",
-    "Scrollable enforcement action table": "可滚动的规则处置表",
-    "Situation": "情形",
-    "Potential action": "可能采取的措施",
-    "Malformed or nonconforming Agent output": "Agent 输出格式错误或不符合要求",
-    "Case failure or invalid submission under the final scoring policy":
-      "根据最终评分政策判定该 Case 失败或提交无效",
-    "Accidental evaluator defect": "非故意的评测器缺陷",
-    "Announced fix and affected-entry rerun where feasible": "公布修复，并在可行时重新运行受影响的参赛项目",
-    "Undeclared dependency or unreproducible finalist": "存在未披露依赖，或决赛入围结果无法复现",
-    "Request clarification, corrected artifact, or result removal": "要求说明情况、提交修正产物或移除结果",
-    "Build bypass, hidden-answer leakage, or sandbox abuse": "绕过构建、泄露隐藏答案或滥用沙箱",
-    "Disqualification and removal from the leaderboard": "取消参赛资格并从排行榜中移除",
-    "Next": "下一页",
-    "Review the proposed competition schedule": "查看拟定的竞赛时间安排",
+  "Official participant rules for team registration, Agent submissions, evaluation integrity, and result verification in the Build-Bench Challenge.":
+    "Build-Bench Challenge 关于团队注册、Agent 提交、评测诚信和结果核验的正式参赛规则。",
+  "Competition Rules | Build-Bench Challenge": "竞赛规则 | Build-Bench Challenge",
+  "Participant rulebook": "参赛规则手册",
+  "Competition Rules": "竞赛规则",
+  "These rules govern team registration, Agent submissions, evaluation integrity, and result verification for the Build-Bench Challenge.":
+    "本规则规定 Build-Bench Challenge 的团队注册、Agent 提交、评测诚信和结果核验要求。",
+  "REGISTERING A TEAM OR SUBMITTING AN AGENT CONSTITUTES ACCEPTANCE OF THESE COMPETITION RULES.":
+    "注册团队或提交 Agent 即表示接受本竞赛规则。",
+  "Build-Bench is a skills-based software engineering competition. Teams develop repair Agents; organizers run qualified Agent versions on competition Cases and validate each proposed repair through an executable target-architecture build.":
+    "Build-Bench 是一项以能力为基础的软件工程竞赛。团队开发修复 Agent；主办方在竞赛 Case 上运行通过检查的 Agent 版本，并通过目标架构上的真实可执行构建验证每项修复。",
+  "The Rules apply together with the versioned Submission Guide, Evaluation Protocol, Timeline, and published data notices. Participants should read those documents before registering or starting an official evaluation.":
+    "本规则与版本化的《提交指南》《评测协议》《时间安排》及已发布的数据说明共同适用。参赛者应在注册或启动正式评测前阅读这些文件。",
+
+  "1. Competition scope": "1. 竞赛范围",
+  "1.1 Competition title": "1.1 竞赛名称",
+  "The competition is the Build-Bench Challenge, organized for the ICSE 2027 Competition Track.":
+    "本竞赛名称为 Build-Bench Challenge，面向 ICSE 2027 Competition Track 举办。",
+  "1.2 Competition task": "1.2 竞赛任务",
+  "A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.":
+    "团队提交一个可运行的软件修复 Agent。对于每个 Case，Agent 接收已发布的软件包材料和构建失败证据，诊断故障并修改允许变更的软件包工作区。主办方在正式目标环境中评测由此产生的修改。",
+  "1.3 Participant documentation": "1.3 参赛文档",
+  "The Task & Data page defines the challenge and released Case sets. The Submission Guide defines the Agent package and runtime interface. The Evaluation Protocol defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
+    "“任务与数据”页面定义竞赛任务和已发布的 Case 集；“提交指南”定义 Agent 包和运行接口；“评测协议”定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
+  "Submission Guide": "提交指南",
+  "Evaluation Protocol": "评测协议",
+
+  "2. Team registration and eligibility": "2. 团队注册与参赛资格",
+  "2.1 Team registration": "2.1 团队注册",
+  "Each Team is registered by one Team leader, who provides the Team name and member information through the competition website.":
+    "每支团队由一名组长注册，组长通过竞赛网站填写团队名称和成员信息。",
+  "A Team may contain no more than five members, including the Team leader.":
+    "每支团队最多包含五名成员，其中包括组长。",
+  "An email address is required for every member and may not appear in more than one Team in this competition.":
+    "每位成员均须提供邮箱地址，同一邮箱不得出现在本竞赛的不同团队中。",
+  "A person may participate through only one Team. Duplicate, misleading, or false registration information may be rejected or investigated.":
+    "每位参赛者只能通过一支团队参赛。重复、误导或虚假的注册信息可能被拒绝或调查。",
+  "2.2 Team responsibilities": "2.2 团队责任",
+  "The Team leader manages the roster, uploaded Agent versions, and selection of versions for official evaluation.":
+    "组长负责管理团队成员、已上传的 Agent 版本以及正式评测版本的选择。",
+  "The Team must keep its registration information accurate and complete before the applicable deadline.":
+    "团队必须在相应截止日期前确保注册信息准确、完整。",
+  "Participants are responsible for confirming that their participation and use of third-party materials are permitted by their institution, employer, and applicable licenses.":
+    "参赛者有责任确认其所在机构或雇主以及相关许可证允许其参赛并使用第三方材料。",
+  "Any actual or potential conflict of interest involving the organizers must be disclosed through the official support channel.":
+    "任何涉及主办方的实际或潜在利益冲突，均须通过官方支持渠道披露。",
+
+  "3. Agent submission and version control": "3. Agent 提交与版本控制",
+  "3.1 Conforming Agent bundle": "3.1 符合要求的 Agent 包",
+  "The submitted ZIP must contain a runnable Agent source bundle that conforms to the current Submission Guide, manifest schema, and permitted runtime profile.":
+    "提交的 ZIP 必须包含可运行的 Agent 源码包，并符合当前《提交指南》、清单 Schema 和允许的运行环境配置。",
+  "The entrypoint must be non-interactive and must complete without organizer or participant intervention.":
+    "入口命令必须采用非交互方式运行，并在无需主办方或参赛者干预的情况下完成。",
+  "The bundle must contain only the Agent code, declared dependencies, configuration, and supporting documentation needed to run it.":
+    "提交包只能包含运行 Agent 所需的代码、已声明依赖、配置和说明文档。",
+  "Secrets, personal credentials, hidden Case information, pre-generated Case repairs, caches, and previous run artifacts must not be included.":
+    "提交包不得包含密钥、个人凭据、隐藏 Case 信息、预生成的 Case 修复、缓存或此前运行产物。",
+  "3.2 Immutable versions": "3.2 不可变版本",
+  "Every accepted upload creates an immutable Agent version identified by its submission record and content digest.":
+    "每次通过接收的上传都会创建一个不可变 Agent 版本，并由提交记录和内容摘要标识。",
+  "Any code, dependency, manifest, or configuration change requires a new upload and creates a new version.":
+    "代码、依赖、清单或配置发生任何变化，都必须重新上传并创建新版本。",
+  "A version must pass the platform checks and Hosted Smoke Test before it can be selected for Full Evaluation.":
+    "一个版本必须通过平台检查和 Hosted Smoke Test，才能被选择用于 Full Evaluation。",
+  "Uploading a version does not automatically start Full Evaluation. The Team must explicitly select a qualified version.":
+    "上传版本不会自动启动 Full Evaluation；团队必须主动选择一个已通过检查的版本。",
+  "A later upload does not alter an active or completed evaluation snapshot.":
+    "后续上传不会改变正在进行或已完成的评测快照。",
+  "3.3 Organizer-run execution": "3.3 由主办方运行",
+  "The organizer starts an independent Agent instance for each Case under the published interface and resource policy.":
+    "主办方依据已发布的接口和资源政策，为每个 Case 启动独立的 Agent 实例。",
+  "The Agent may read the provided inputs and modify only the permitted worktree and output locations.":
+    "Agent 可以读取提供的输入，但只能修改允许的工作区和输出位置。",
+  "The Agent may not directly access the Docker socket, the final Validator, hidden evaluator files, or organizer infrastructure.":
+    "Agent 不得直接访问 Docker Socket、最终 Validator、隐藏评测文件或主办方基础设施。",
+  "Stdout, stderr, declared result files, and platform events may be retained for diagnosis, auditing, and reproducibility.":
+    "平台可保留标准输出、标准错误、声明的结果文件和平台事件，用于诊断、审计和复现。",
+
+  "4. Competition data, models, and tools": "4. 竞赛数据、模型与工具",
+  "4.1 Competition materials": "4.1 竞赛材料",
+  "Released Cases, schemas, examples, logs, and Starter Kit materials may be used for participation subject to their published licenses and data notices.":
+    "已发布的 Case、Schema、示例、日志和 Starter Kit 材料可用于参赛，但须遵守其已发布许可证和数据说明。",
+  "Participants must preserve applicable copyright, attribution, redistribution, and open-source license obligations.":
+    "参赛者必须遵守适用的版权、署名、再分发和开源许可证义务。",
+  "Unreleased Cases, hidden evaluator assets, and confidential organizer materials may not be obtained, used, shared, or redistributed.":
+    "不得获取、使用、共享或再分发未发布的 Case、隐藏评测资产和主办方保密材料。",
+  "4.2 Models, external data, and tools": "4.2 模型、外部数据与工具",
+  "Teams may develop Agents using language models, prompting, retrieval, code search, static analysis, log processing, and other repair tools that comply with the published runtime and network policy.":
+    "团队可以使用符合已发布运行和网络政策的语言模型、提示、检索、代码搜索、静态分析、日志处理及其他修复工具开发 Agent。",
+  "External models, datasets, knowledge bases, APIs, and tools must be lawfully accessible to the Team and disclosed as required by Section 8.":
+    "团队必须能够合法访问外部模型、数据集、知识库、API 和工具，并按照第 8 节要求进行披露。",
+  "Use of a third-party service does not transfer responsibility for compliance, reproducibility, cost, availability, or licensing to the organizers.":
+    "使用第三方服务不会将合规、可复现性、成本、可用性或许可责任转移给主办方。",
+  "Participants must not embed API keys or personal credentials in an Agent bundle. Any organizer-managed credential mechanism will be described separately if external calls are permitted.":
+    "参赛者不得在 Agent 包中嵌入 API Key 或个人凭据。如果允许外部调用，主办方管理的凭据机制将另行说明。",
+
+  "5. Evaluation and scoring": "5. 评测与计分",
+  "5.1 Per-Case validation": "5.1 逐 Case 验证",
+  "The organizer runs the frozen Agent version on a Case and derives a canonical patch from the modified worktree.":
+    "主办方在 Case 上运行冻结的 Agent 版本，并从修改后的工作区生成 canonical patch。",
+  "The platform checks that patch for allowed paths, required structure, and prohibited build-bypass behavior.":
+    "平台检查补丁的允许路径、必要结构以及被禁止的构建绕过行为。",
+  "The canonical patch is applied to a clean copy of the Case and rebuilt in the official target-architecture environment.":
+    "canonical patch 会被应用到 Case 的干净副本，并在正式目标架构环境中重新构建。",
+  "A repair is not compared textually with a reference patch. It succeeds only when the clean target build and expected artifact validation succeed.":
+    "修复不会与参考补丁进行文本比较；只有干净目标构建和预期产物验证均成功时，才算修复成功。",
+  "5.2 Outcomes": "5.2 结果处理",
+  "Agent errors, no-fix outcomes, build failures, dependency-resolution failures, timeouts, and invalid patches are unsuccessful Case outcomes under the final Evaluation Protocol.":
+    "根据最终《评测协议》，Agent 错误、未生成修复、构建失败、依赖无法解析、超时和无效补丁均属于未成功的 Case 结果。",
+  "A verified organizer infrastructure error is not treated as a participant repair failure. The affected Case or evaluation may be retried or recovered under the published correction procedure.":
+    "经确认的主办方基础设施错误不视为参赛者修复失败；受影响的 Case 或评测可依据已发布的修正流程重试或恢复。",
+  "No partial official score is published while unresolved infrastructure errors prevent the aggregate result from being finalized.":
+    "当未解决的基础设施错误导致汇总结果无法最终确定时，不发布不完整的正式分数。",
+  "5.3 Primary metric": "5.3 主要指标",
+  "Build Success Rate is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The final denominator definition and any tie-breaker will be published with the frozen Evaluation Protocol.":
+    "Build Success Rate 是主要排名指标，即成功修复的 Case 数除以正式评测分母。最终分母定义及同分判定规则将随冻结版《评测协议》公布。",
+  "Read the Evaluation Protocol": "阅读评测协议",
+
+  "6. Prohibited conduct": "6. 禁止行为",
+  "Participants must not obtain an advantage by bypassing the repair task, evaluator, resource policy, or Team-registration rules.":
+    "参赛者不得通过绕过修复任务、评测器、资源政策或团队注册规则获取优势。",
+  "Do not embed hidden solutions, leaked labels, Case-specific lookup tables, pre-generated repair patches, or other undisclosed answers in the Agent or its dependencies.":
+    "不得在 Agent 或其依赖中嵌入隐藏解法、泄露标签、特定 Case 查找表、预生成修复补丁或其他未披露答案。",
+  "Do not exploit or attempt to escape the Agent runtime, Build Gateway, Validator, sandbox, authentication system, storage, scheduler, or network controls.":
+    "不得利用或试图逃逸 Agent 运行环境、Build Gateway、Validator、沙箱、认证系统、存储、调度器或网络控制。",
+  "Do not suppress failures, delete essential tests, replace the package with a dummy artifact, or disable meaningful functionality merely to obtain a successful build result.":
+    "不得仅为获得构建成功而掩盖失败、删除必要测试、用虚假产物替换软件包或关闭关键功能。",
+  "Do not alter immutable Case inputs, manifests, checksums, hidden metadata, evaluator files, result records, or any path outside the permitted worktree.":
+    "不得修改不可变 Case 输入、清单、校验和、隐藏元数据、评测器文件、结果记录或允许工作区以外的任何路径。",
+  "Do not use undeclared manual, remote, or third-party intervention to make Case-by-Case decisions during organizer-run evaluation.":
+    "在主办方运行的评测中，不得使用未披露的人工、远程或第三方干预逐 Case 作出决策。",
+  "Do not use multiple Teams, accounts, identities, or automated requests to evade registration, submission, evaluation, or resource limits.":
+    "不得使用多个团队、账户、身份或自动化请求规避注册、提交、评测或资源限制。",
+  "Do not run unrelated workloads, mine cryptocurrency, interfere with other participants, or attempt to degrade competition services.":
+    "不得运行无关工作负载、挖掘加密货币、干扰其他参赛者或试图降低竞赛服务可用性。",
+
+  "7. Hidden evaluation and confidentiality": "7. 隐藏评测与保密",
+  "Hidden evaluation Cases remain under organizer control and are not distributed before final evaluation.":
+    "隐藏评测 Case 由主办方控制，在最终评测前不会分发。",
+  "Official hidden evaluation uses a frozen Agent version, Case-set version, runtime image, Validator image, and protocol version.":
+    "正式隐藏评测使用冻结的 Agent 版本、Case 集版本、运行镜像、Validator 镜像和协议版本。",
+  "Teams may use only the feedback intentionally released by the platform and must not probe the service to infer hidden Case contents, labels, reference repairs, or evaluator internals.":
+    "团队只能使用平台有意发布的反馈，不得探测服务以推断隐藏 Case 内容、标签、参考修复或评测器内部信息。",
+  "Organizers may inspect successful, unusually small, suspicious, or policy-sensitive repairs and may rerun an entry to verify its result.":
+    "主办方可以检查成功、异常小、可疑或涉及规则边界的修复，并可重新运行参赛项目以核验结果。",
+  "Any accidental exposure of hidden or confidential material must be reported promptly and must not be used or shared.":
+    "如意外接触隐藏或保密材料，必须立即报告，且不得使用或共享。",
+
+  "8. Method disclosure and reproducibility": "8. 方法披露与可复现性",
+  "8.1 Required disclosure": "8.1 必须披露的信息",
+  "A final entry must describe the system that produced its result. The disclosure must identify, as applicable:":
+    "最终参赛项目必须说明产生其结果的系统。披露内容应根据实际情况包括：",
+  "base model names, providers, and versions when available;": "基础模型名称、提供方及可获取时的版本；",
+  "major prompt templates or prompting strategy, repair-loop design, retrieval sources, static analyzers, and external tools;":
+    "主要提示词模板或提示策略、修复循环设计、检索来源、静态分析器和外部工具；",
+  "training, fine-tuning, external datasets, private knowledge bases, and pre-processing used by the entry;":
+    "参赛项目使用的训练、微调、外部数据集、私有知识库和预处理；",
+  "third-party APIs or services contacted during execution; and": "运行期间调用的第三方 API 或服务；以及",
+  "known nondeterminism, caching, dependency, and reproducibility constraints.":
+    "已知的非确定性、缓存、依赖和可复现性限制。",
+  "8.2 Verification materials": "8.2 核验材料",
+  "Teams must retain the submitted source, lockfiles, configuration, and method documentation needed to explain and rerun the evaluated version.":
+    "团队必须保留用于说明和重新运行被评测版本的提交源码、锁定文件、配置和方法文档。",
+  "Organizers may request logs, configuration details, or a reproducibility demonstration for result review.":
+    "主办方可在结果审查时要求提供日志、配置细节或可复现性演示。",
+  "Any public solution description or solution paper must correspond to the Agent version that produced the reported official result.":
+    "任何公开方案说明或 solution paper 必须与产生所报告正式结果的 Agent 版本相对应。",
+
+  "9. Review, correction, and enforcement": "9. 审查、修正与规则执行",
+  "A malformed or nonconforming Agent, output, or patch may be rejected or recorded as unsuccessful under the Evaluation Protocol.":
+    "格式错误或不符合要求的 Agent、输出或补丁，可依据《评测协议》被拒绝或记录为未成功。",
+  "When an organizer-controlled infrastructure defect affects an evaluation, organizers may correct the defect and rerun the affected work under a documented procedure.":
+    "当主办方控制的基础设施缺陷影响评测时，主办方可修正缺陷，并依据有记录的流程重新运行受影响任务。",
+  "Organizers may request clarification or verification when an entry is unreproducible, incomplete, anomalous, or potentially noncompliant.":
+    "当参赛项目无法复现、不完整、异常或可能不合规时，主办方可要求说明或核验。",
+  "A result may be corrected, withheld, or removed when it cannot be verified or when the Team fails to provide required disclosure or reproducibility materials.":
+    "如果结果无法核验，或团队未提供要求的披露和复现材料，主办方可更正、暂缓发布或移除结果。",
+  "Deliberate hidden-answer use, build bypass, evaluator exploitation, credential abuse, false registration, or other serious misconduct may result in disqualification and removal from the leaderboard.":
+    "故意使用隐藏答案、绕过构建、利用评测器、滥用凭据、虚假注册或其他严重不当行为，可能导致取消资格并从排行榜移除。",
+
+  "10. Versioned rules and pending parameters": "10. 版本化规则与待公布参数",
+  "Several operational values require pilot measurements and organizer approval. Before public evaluation opens, the organizers will publish and version the following:":
+    "部分运行参数需要通过试运行测量并获得主办方批准。在公开评测开放前，主办方将发布并版本化以下内容：",
+  "upload, Hosted Smoke Test, and Full Evaluation frequency limits;":
+    "上传、Hosted Smoke Test 和 Full Evaluation 的频率限制；",
+  "Case-level Agent and build timeouts, CPU, memory, storage, and build-feedback budgets;":
+    "逐 Case 的 Agent 与构建超时、CPU、内存、存储和构建反馈预算；",
+  "network access, external API, and organizer-managed credential policies;":
+    "网络访问、外部 API 和主办方管理凭据的政策；",
+  "the official scoring denominator, tie-breaker, feedback visibility, cancellation, rerun, and correction procedures; and":
+    "正式评分分母、同分判定、反馈可见性、取消、重试和修正流程；以及",
+  "any remaining eligibility, conflict-of-interest, or final-result verification procedures required by the ICSE Competition Track.":
+    "ICSE Competition Track 要求的其他参赛资格、利益冲突或最终结果核验流程。",
+  "Material updates will carry a version and publication date. The Timeline page governs competition dates, and the frozen Evaluation Protocol governs official scoring.":
+    "重要更新将注明版本和发布日期。竞赛日期以“时间安排”页面为准，正式评分以冻结版《评测协议》为准。",
+
+  "Rules contents": "规则目录",
+  "Acceptance": "接受规则",
+  "2. Teams": "2. 团队",
+  "3. Agent submissions": "3. Agent 提交",
+  "4. Data, models, and tools": "4. 数据、模型与工具",
+  "7. Hidden evaluation": "7. 隐藏评测",
+  "8. Disclosure": "8. 信息披露",
+  "9. Enforcement": "9. 规则执行",
+  "10. Versioned rules": "10. 版本化规则",
+  "Next": "下一页",
+  "Review the competition schedule": "查看竞赛时间安排",
 });

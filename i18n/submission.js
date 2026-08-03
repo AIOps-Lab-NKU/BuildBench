@@ -5,8 +5,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "Build-Bench Challenge 的 Agent 提交指南，包括提交内容、运行目录、构建反馈、测试和提交要求。",
   "Agent submission": "Agent 提交",
   "Agent Submission Guide": "Agent 提交指南",
-  "Submit a runnable Agent source bundle. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
-    "提交一个可运行的 Agent 源码包。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
+  "Submit a runnable Agent source bundle, not Case-specific answers or pre-generated patches. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
+    "提交一个可运行的 Agent 源码包，而不是针对特定 Case 的答案或预先生成的补丁。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
   ", and the Docker Validator verifies it on a clean Case.": "，再由 Docker Validator 在干净的 Case 上完成验证。",
   "Submission guide navigation": "提交指南导航",
   "Competition": "竞赛",
@@ -136,6 +136,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the hosted Smoke Test checks that the same bundle can run under the competition protocol.":
     "请测试计划用于评测的同一个 Agent 版本。本地检查用于发现打包错误；平台 Smoke Test 用于确认同一提交包能够按照竞赛协议运行。",
   "Before full evaluation": "完整评测前",
+  "Before using a full-evaluation attempt, run the Starter Kit checks locally, confirm the Agent can process an Example Case through the published workspace interface, package that exact version, and pass its hosted Smoke Test. Start full evaluation only after selecting the qualified version in My Submissions; uploading a new version alone does not place it in the evaluation queue.":
+    "在使用完整评测机会前，请先在本地运行 Starter Kit 检查，确认 Agent 能通过已发布的工作区接口处理一个 Example Case，打包该确切版本，并通过平台 Hosted Smoke Test。只有在“我的提交”中选择已通过的版本后才启动完整评测；仅上传新版本不会使其进入评测队列。",
   "Complete these checks in order before using a full-evaluation attempt:":
     "在使用一次完整评测机会前，请按顺序完成以下检查：",
   "Prepare the released tools.": "准备已发布的工具。",
@@ -422,6 +424,41 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "之后。如果后续引入，将通过新的提交协议版本发布受支持的基础镜像和镜像构建策略，而不会静默修改当前协议。",
   "Agent runtime network access, model credential injection, maximum ZIP size, submission frequency, and formal CPU, memory, storage, wall-time, and build-request limits are":
     "Agent 运行时网络访问、模型凭据注入、ZIP 大小上限、提交频率，以及正式评测的 CPU、内存、存储、运行时长和构建请求限制均为",
+  "You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. Run":
+    "你需要 Linux 或 WSL2 Shell、Git，以及 Docker Engine 24+ 或使用 Linux 容器的 Docker Desktop。下载 Starter Kit 后运行",
+  "after downloading the Starter Kit to verify the local setup.":
+    "，以检查本地环境。",
+  "Different versioned Case sets are used for local examples, development, hosted Smoke Tests, and Full Evaluation. See":
+    "本地示例、开发、平台 Smoke Test 和完整评测使用不同的版本化 Case 集。请查看",
+  "for their scope and release status.": "，了解各 Case 集的范围和发布状态。",
+  "Planned feature.": "计划功能。",
+  "Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit":
+    "受限的平台构建反馈将在后续协议版本中引入。其 CLI、限制和响应 Schema 不属于 Starter Kit",
+  "Canonical patch": "Canonical 补丁",
+  "The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in the":
+    "平台根据修改后的工作树生成 canonical 补丁。该补丁的检查和重新构建方式由",
+  "Evaluation Protocol": "评测协议",
+  "Before spending a Full Evaluation attempt, run": "在使用一次完整评测机会前，请运行",
+  ", test the Agent on all released Example Cases, package that exact version, upload it, and pass the Hosted Smoke Test. Full Evaluation begins only after you explicitly select the qualified immutable version.":
+    "，在所有已发布的 Example Case 上测试 Agent，打包并上传这个确切版本，再通过平台 Smoke Test。只有显式选择已通过的不可变版本后，完整评测才会开始。",
+  "Use this checklist on the exact immutable Agent version that you intend to upload and evaluate.":
+    "请对准备上传和评测的确切不可变 Agent 版本逐项检查。",
+  "Final submission checklist": "最终提交清单",
+  "Required files exist at the ZIP root.": "必需文件位于 ZIP 根目录。",
+  "passes.": "检查通过。",
+  "The entrypoint is deterministic and non-interactive.": "入口命令是确定性的，且不需要交互输入。",
+  "All dependencies are exactly pinned.": "所有依赖均已精确锁定版本。",
+  "No secrets, caches, generated patches, or run artifacts are included.":
+    "提交中不包含密钥、缓存、预生成补丁或运行产物。",
+  "Only": "仅修改",
+  "is modified.": "。",
+  "follows protocol": "遵循协议",
+  "The uploaded version passes the Hosted Smoke Test.": "上传的版本通过平台 Smoke Test。",
+  "The intended immutable version is selected for Full Evaluation.": "已选择预期的不可变版本用于完整评测。",
+  "Runtime and policy": "运行环境与政策",
+  "The Agent runs as a non-root user in an isolated runtime,": "Agent 以非 root 用户身份在隔离环境中运行，",
+  "is read-only, and the Docker Socket is not provided. Remaining network, resource, quota, and submission policies will be published before submissions open.":
+    "为只读目录，且不提供 Docker Socket。其余网络、资源、配额和提交政策将在提交开放前公布。",
   "Next page": "下一页",
   "Next": "下一页",
   "See the competition resources and release status": "查看竞赛资源及其发布状态",

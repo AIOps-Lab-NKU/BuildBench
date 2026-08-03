@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Proposed Build-Bench Challenge timeline from preparation through the ICSE 2027 competition session." />
+    <meta name="description" content="Participant dates for the Build-Bench Challenge, from the website beta and invited pilot through public evaluation, the final Agent freeze, and final results." />
     <title>Timeline | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/timeline.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260803-4" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/timeline.js?v=20260720-1" defer></script>
-    <script src="i18n.js?v=20260716-3" defer></script>
-    <script src="auth-client.js?v=20260729-1" defer></script>
-    <script src="app.js?v=20260716-3" defer></script>
+    <script src="i18n/timeline.js?v=20260803-2" defer></script>
+    <script src="i18n.js?v=20260803-5" defer></script>
+    <script src="auth-client.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260803-2" defer></script>
   </head>
-  <body data-page="timeline">
+  <body class="timeline-page" data-page="timeline">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Working timeline</span><span>July 31 is an internal preparation checkpoint; public competition deadlines remain TBA.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -29,55 +28,51 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead">
+      <section class="page-masthead timeline-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker">Competition schedule</span><h1>Timeline</h1><p>A staged launch separates interface stabilization, development resources, public validation, hidden evaluation, and the ICSE 2027 competition session.</p></div>
-          <dl class="masthead-facts"><div><dt>Current phase</dt><dd>Data and protocol preparation</dd></div><div><dt>Internal checkpoint</dt><dd>July 31, 2026</dd></div><div><dt>Final session</dt><dd>ICSE 2027</dd></div></dl>
+          <div>
+            <span class="page-kicker">Competition dates</span>
+            <h1>Timeline</h1>
+            <p>The participant schedule from the website beta and invited pilot through public evaluation, the final Agent freeze, and publication of the official results.</p>
+          </div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout">
-        <aside class="page-rail" aria-label="On this page">
-          <strong>On this page</strong>
-          <nav><a href="#schedule">Proposed schedule</a><a href="#release-gates">Release gates</a><a href="#final-phase">Final evaluation</a><a href="#notifications">Updates</a></nav>
-          <div class="rail-status review"><span>Proposed</span><p>Exact days will be aligned with the official ICSE 2027 Competition Track schedule.</p></div>
-        </aside>
+      <div class="content-wrap timeline-content">
+        <article class="timeline-document">
+          <header class="timeline-introduction">
+            <h2>Competition schedule</h2>
+            <p>Use these dates to plan Agent development, testing, and final-version selection. Operational limits published on August 31 will apply when public development and validation open.</p>
+          </header>
 
-        <article class="page-document">
-          <div class="source-callout"><i data-lucide="calendar-clock" aria-hidden="true"></i><p>The accepted proposal specifies milestone months rather than final deadlines. Dates below should be used for planning, not as binding submission cutoffs.</p></div>
+          <ol class="participant-schedule">
+            <li>
+              <time datetime="2026-08-14"><strong>August 14</strong><span>2026</span></time>
+              <div><h3>Website beta and initial documentation</h3><p>The participant-facing website beta, updated dataset and Starter Kit information, and initial competition documentation are released. Teams can begin reviewing the task, submission format, and local development workflow.</p></div>
+            </li>
+            <li>
+              <time datetime="2026-08-17"><strong>August 17&ndash;28</strong><span>2026</span></time>
+              <div><h3>Invited pilot</h3><p>Invited teams test registration, Agent upload, Hosted Smoke Test, Full Evaluation, and the supporting infrastructure. Pilot feedback may be used to correct the interface before the public phase.</p></div>
+            </li>
+            <li>
+              <time datetime="2026-08-31"><strong>August 31</strong><span>2026</span></time>
+              <div><h3>Rules and resource limits frozen</h3><p>The organizers publish the frozen dataset split sizes, per-Case timeouts, submission limits, resource policy, build-bypass policy, and validation protocol.</p></div>
+            </li>
+            <li>
+              <time datetime="2026-09-07"><strong>September 7</strong><span>2026</span></time>
+              <div><h3>Public development and validation open</h3><p>Registration, public development resources, Agent submission, Hosted Smoke Test, and public validation open to eligible teams.</p></div>
+            </li>
+            <li>
+              <time datetime="2026-11-13"><strong>November 13</strong><span>2026</span></time>
+              <div><h3>Final Agent version freeze</h3><p>Each Team must select the qualified, immutable Agent version to be used for final hidden evaluation. Later uploads will not replace the selected final version.</p></div>
+            </li>
+            <li>
+              <time datetime="2026-11-20"><strong>By November 20</strong><span>2026</span></time>
+              <div><h3>Final results published</h3><p>Hidden evaluation and result review conclude, and the official final results are published by this date.</p></div>
+            </li>
+          </ol>
 
-          <section class="doc-section" id="schedule">
-            <span class="section-label">Proposal milestones</span>
-            <h2>Planned competition sequence</h2>
-            <ol class="roadmap">
-              <li class="active"><time datetime="2026-07-31"><strong>July 31, 2026</strong><span>Internal preparation checkpoint</span></time><div><span class="roadmap-status current">In progress</span><h3>Complete the first data, validator, and protocol pass</h3><p>Finish the first audit of the original cases, package the first validated new cases, run the Docker validator proof of concept, and publish working input/output and evaluation drafts.</p><ul><li>Original 268-case audit status</li><li>First validated expansion cases</li><li>Agent Contract v0.1 and conformance draft</li><li>Docker validator end-to-end record</li><li>Website and Dataset Card draft</li></ul></div></li>
-              <li><time datetime="2026-08"><strong>August 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Development set and baselines released</h3><p>Release public development cases, conformance examples, evaluator documentation, and reproducible baseline Agents.</p></div></li>
-              <li><time datetime="2026-09"><strong>September 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Public validation leaderboard opens</h3><p>Accept versioned Agent entries, run public validation cases, and return bounded diagnostic feedback.</p></div></li>
-              <li><time datetime="2026-11"><strong>November 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Final submission freeze</h3><p>Freeze each team's selected Agent artifact, the interface version, evaluator, case manifests, and resource policy for hidden evaluation.</p></div></li>
-              <li><time datetime="2026-12"><strong>December 2026</strong><span>Proposed</span></time><div><span class="roadmap-status">Planned</span><h3>Final results and participant reports</h3><p>Complete hidden evaluation, audit finalist repairs, publish aggregate results, and collect eligible participant reports.</p></div></li>
-              <li><time datetime="2027"><strong>ICSE 2027</strong><span>Official conference schedule TBA</span></time><div><span class="roadmap-status conference">Conference</span><h3>Competition session and results presentation</h3><p>Present the benchmark, leading systems, common failure modes, and final competition outcomes to the ICSE community.</p></div></li>
-            </ol>
-          </section>
-
-          <section class="doc-section" id="release-gates">
-            <span class="section-label">Release gates</span>
-            <h2>What must be ready before public validation</h2>
-            <div class="gate-list"><div><span>Gate A</span><strong>Agent contract frozen</strong><p>Entrypoint, input/output schemas, packaging, conformance tests, and failure semantics are versioned.</p></div><div><span>Gate B</span><strong>Evaluation policy frozen</strong><p>Metrics, budgets, allowed APIs, network policy, tie-breakers, and submission limits are published.</p></div><div><span>Gate C</span><strong>Dataset release audited</strong><p>Splits, licensing, checksums, immutable paths, and near-duplicate grouping are verified.</p></div><div><span>Gate D</span><strong>End-to-end path tested</strong><p>Example Agent submission, case execution, containerized build validation, structured result, and leaderboard update all succeed.</p></div></div>
-          </section>
-
-          <section class="doc-section" id="final-phase">
-            <span class="section-label">Final evaluation</span>
-            <h2>Freeze first, then run hidden cases</h2>
-            <div class="phase-sequence"><div><span>1</span><strong>Select final entry</strong></div><i data-lucide="chevron-right" aria-hidden="true"></i><div><span>2</span><strong>Freeze versions</strong></div><i data-lucide="chevron-right" aria-hidden="true"></i><div><span>3</span><strong>Run hidden set</strong></div><i data-lucide="chevron-right" aria-hidden="true"></i><div><span>4</span><strong>Audit results</strong></div><i data-lucide="chevron-right" aria-hidden="true"></i><div><span>5</span><strong>Publish ranking</strong></div></div>
-            <p>The final hidden evaluation is expected to finish within one day under the initial proposal target. The exact queue, rerun window, and result publication time will be announced with final deadlines.</p>
-          </section>
-
-          <section class="doc-section" id="notifications">
-            <span class="section-label">Schedule updates</span>
-            <h2>Where authoritative changes will appear</h2>
-            <p>Any change to a milestone, interface, evaluator, dataset, or rule will be versioned and announced through the official competition website and the support channel selected by the organizers.</p>
-            <div class="notification-row"><a href="https://conf.researchr.org/track/icse-2027/icse-2027-competition-track" target="_blank" rel="noreferrer"><i data-lucide="landmark" aria-hidden="true"></i><span><strong>ICSE 2027 Competition Track</strong><small>Official conference dates and track policy</small></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a><a href="https://github.com/zcyyc/Build-bench" target="_blank" rel="noreferrer"><i data-lucide="github" aria-hidden="true"></i><span><strong>Build-Bench repository</strong><small>Research framework and future release artifacts</small></span><i data-lucide="arrow-up-right" aria-hidden="true"></i></a></div>
-          </section>
+          <p class="timeline-update"><strong>Schedule updates.</strong> If a date changes, this page will be versioned and the change will be announced through the official competition website.</p>
 
           <nav class="next-page" aria-label="Next page"><span>Next</span><a href="faq.html"><strong>FAQ</strong><small>Read answers to common competition questions</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
         </article>

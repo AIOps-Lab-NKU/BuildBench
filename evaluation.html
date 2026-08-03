@@ -3,21 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Draft evaluation protocol, metrics, and organizer-run harness for the Build-Bench Challenge." />
-    <title>Evaluation | Build-Bench Challenge</title>
+    <meta name="description" content="Participant-facing evaluation protocol, Case outcomes, scoring, and evaluation stages for the Build-Bench Challenge." />
+    <title>Evaluation Protocol | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/evaluation.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260720-1" />
+    <link rel="stylesheet" href="styles.css?v=20260803-4" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/evaluation.js?v=20260720-1" defer></script>
-    <script src="i18n.js?v=20260716-3" defer></script>
-    <script src="auth-client.js?v=20260729-1" defer></script>
-    <script src="app.js?v=20260716-3" defer></script>
+    <script src="i18n/evaluation.js?v=20260803-1" defer></script>
+    <script src="i18n.js?v=20260803-5" defer></script>
+    <script src="auth-client.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260803-2" defer></script>
   </head>
-  <body data-page="evaluation">
+  <body class="evaluation-protocol-page" data-page="evaluation">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Working evaluation</span><span>Build Success Rate is the single primary ranking metric; denominator and tie-break details remain under review.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
@@ -29,83 +28,99 @@
     </header>
 
     <main id="main-content">
-      <section class="page-masthead draft-masthead">
+      <section class="page-masthead evaluation-protocol-masthead">
         <div class="content-wrap">
-          <div><span class="page-kicker"><i data-lucide="file-clock" aria-hidden="true"></i>Draft protocol</span><h1>Evaluation</h1><p>The harness runs submitted Agents on controlled cases, applies their repairs, executes the target build, and converts those outcomes into reproducible metrics.</p></div>
-          <dl class="masthead-facts"><div><dt>Oracle</dt><dd>Executable build</dd></div><div><dt>Primary metric</dt><dd>Build Success Rate</dd></div><div><dt>Open detail</dt><dd>Failure handling</dd></div></dl>
+          <div><span class="page-kicker">Participant protocol</span><h1>Evaluation Protocol</h1><p>This page explains what happens after you select a qualified, immutable Agent version for evaluation: how the platform runs it, validates each repair, records outcomes, and produces a score. For packaging and upload instructions, see the <a href="submission.html">Submission Guide</a>.</p></div>
         </div>
       </section>
 
-      <div class="content-wrap page-layout">
+      <div class="content-wrap page-layout right-doc-layout evaluation-protocol-layout">
         <aside class="page-rail" aria-label="On this page">
           <strong>On this page</strong>
-          <nav><a href="#status">Protocol status</a><a href="#principle">Primary metric</a><a href="#harness">Evaluation harness</a><a href="#metrics">Reporting fields</a><a href="#feedback">Public vs. hidden</a><a href="#decisions">Open decisions</a></nav>
-          <div class="rail-status review"><span>Working decision</span><p>One primary score ranks entries. Exact denominator and secondary ordering rules will be frozen before launch.</p></div>
+          <nav><a href="#success">Successful repair</a><a href="#case-evaluation">Per-Case evaluation</a><a href="#outcomes">Outcome handling</a><a href="#scoring">Scoring and diagnostics</a><a href="#stages">Evaluation stages</a><a href="#pending">To be announced</a></nav>
         </aside>
 
-        <article class="page-document">
-          <div class="draft-banner"><i data-lucide="triangle-alert" aria-hidden="true"></i><div><strong>Primary metric selected; full scoring semantics remain draft</strong><p>Entries are ranked first by Build Success Rate. Exact denominator rules, resource budgets, failure handling, ranking frequency, and any tie-breaker must still be frozen before launch.</p></div></div>
-
-          <section class="doc-section" id="status">
-            <span class="section-label">Protocol status</span>
-            <h2>Separate source material from final rules</h2>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable evaluation protocol status table"><table class="decision-table"><thead><tr><th>Item</th><th>Basis</th><th>Status</th></tr></thead><tbody><tr><td>Executable build as the success oracle</td><td>Build-Bench paper and accepted proposal</td><td><span class="decision-intended">Selected</span></td></tr><tr><td>Build Success Rate as the single primary metric</td><td>Accepted proposal and organizer working decision</td><td><span class="decision-intended">Selected</span></td></tr><tr><td>Failure categories and denominator semantics</td><td>Required for reproducible scoring</td><td><span class="decision-review">Team review</span></td></tr><tr><td>Tie-breaker and informational fields</td><td>Secondary to the primary metric</td><td><span class="decision-open">Open</span></td></tr></tbody></table></div>
-          </section>
-
-          <section class="doc-section" id="principle">
+        <article class="page-document evaluation-protocol-document">
+          <section class="doc-section" id="success">
             <span class="section-label">Core principle</span>
-            <h2>Executable outcomes are the oracle</h2>
-            <p class="lead">A repair is successful only when it applies cleanly, respects competition policy, and the repaired package passes the official validator on the target architecture.</p>
-            <div class="metric-panel document-metric">
-              <span class="section-label">Primary ranking metric</span>
-              <div class="formula" aria-label="Success rate equals successfully built cases divided by evaluated cases"><span>SuccessRate</span><span>=</span><span class="fraction"><span>successfully built cases</span><span>evaluated cases</span></span></div>
-              <p>Textual similarity to an organizer patch is not the criterion. A different repair may receive credit when it produces a compliant, successful build.</p>
-            </div>
+            <h2>What counts as a successful repair?</h2>
+            <p class="lead">A repair succeeds only when the platform can generate a valid canonical patch, apply it to a clean copy of the Case, and build the expected package artifacts on the target architecture under the official Validator.</p>
+            <p>The repair does not need to match an organizer reference patch. A different change receives credit when it respects the published policy and produces a genuine successful build.</p>
+            <p class="protocol-metric-line"><strong>Primary metric: Build Success Rate</strong><span>successful Cases ÷ evaluated Cases</span></p>
           </section>
 
-          <section class="doc-section" id="harness">
-            <span class="section-label">Evaluation harness</span>
-            <h2>Seven observable stages</h2>
-            <ol class="harness-stages">
-              <li><span>1</span><div><strong>Validate entry</strong><p>Verify the Agent artifact, configuration, version, and submission metadata.</p></div><small>Harness</small></li>
-              <li><span>2</span><div><strong>Prepare clean case</strong><p>Check case checksums and create an isolated working copy.</p></div><small>Harness</small></li>
-              <li><span>3</span><div><strong>Invoke Agent</strong><p>Provide standardized input and enforce runtime, API, network, and resource policy.</p></div><small>Agent</small></li>
-              <li><span>4</span><div><strong>Capture final worktree</strong><p>Validate <code>agent-result.json</code> and compute the canonical diff from the clean input and final worktree.</p></div><small>Harness</small></li>
-              <li><span>5</span><div><strong>Audit canonical repair</strong><p>Reject forbidden path changes, policy violations, or build bypasses before final validation.</p></div><small>Evaluator</small></li>
-              <li><span>6</span><div><strong>Run target build</strong><p>Launch the official containerized validator on the target architecture under the published resource policy.</p></div><small>Validator</small></li>
-              <li><span>7</span><div><strong>Record outcome</strong><p>Write structured status, durations, patch statistics, and permitted logs.</p></div><small>Results</small></li>
+          <section class="doc-section" id="case-evaluation">
+            <span class="section-label">Per-Case protocol</span>
+            <h2>How each Case is evaluated</h2>
+            <p>Each Case is an independent run. One slow or unsuccessful Case does not stop other scheduled Cases, and the selected Agent archive remains immutable throughout the evaluation.</p>
+            <ol class="protocol-steps">
+              <li><strong>Freeze the run inputs.</strong><p>The platform records the Agent archive and its checksum together with the Case-set, runtime, Validator, and protocol versions.</p></li>
+              <li><strong>Prepare a clean Case.</strong><p>The Case checksum is verified and an isolated writable worktree is created from the original package materials.</p></li>
+              <li><strong>Run the Agent.</strong><p>The declared entrypoint receives the standard workspace and runs under the published time, resource, network, and build-feedback policy.</p></li>
+              <li><strong>Generate the canonical patch.</strong><p>After the Agent exits, the platform validates <code>agent-result.json</code> and derives <code>repair.diff</code> from the original and modified worktrees.</p></li>
+              <li><strong>Audit the repair.</strong><p>The canonical patch is checked for forbidden paths, policy violations, and build-bypass behavior described in the <a href="rules.html">Rules</a>.</p></li>
+              <li><strong>Rebuild from clean inputs.</strong><p>The platform reapplies the canonical patch to a fresh Case and invokes the official Docker Validator for the target architecture.</p></li>
+              <li><strong>Record the outcome.</strong><p>Agent status, Validator status, duration, patch statistics, and permitted logs are stored as structured evidence.</p></li>
             </ol>
           </section>
 
-          <section class="doc-section" id="metrics">
-            <span class="section-label">Reporting fields</span>
-            <h2>One ranking score, with separate diagnostics</h2>
-            <div class="table-scroll document-table" tabindex="0" aria-label="Scrollable draft metrics table">
-              <table class="spec-table metric-table"><thead><tr><th>Role</th><th>Field</th><th>Working definition</th><th>Status</th></tr></thead><tbody><tr><td>Primary ranking</td><td>Build Success Rate</td><td>Successfully built cases divided by valid evaluated cases</td><td><span class="contract-state intended">Selected</span></td></tr><tr><td>Diagnostic</td><td>Outcome categories</td><td>Successful build, build failure, invalid output, Agent failure, or organizer fault</td><td><span class="contract-state review">Definition review</span></td></tr><tr><td>Diagnostic</td><td>Runtime and model use</td><td>Agent runtime, build time, token use, model/API cost, retries, and iterations</td><td><span class="contract-state tba">Informational</span></td></tr><tr><td>Diagnostic</td><td>Repair statistics</td><td>Patch size, modified files, and policy validation status</td><td><span class="contract-state tba">Informational</span></td></tr><tr><td>Secondary ordering</td><td>Tie-breaker</td><td>Applied only when primary scores are equal</td><td><span class="contract-state tba">To be announced</span></td></tr></tbody></table>
+          <section class="doc-section" id="outcomes">
+            <span class="section-label">Case results</span>
+            <h2>How outcomes are handled</h2>
+            <p>The platform records Agent execution and final build validation separately. An evaluation can complete normally even when many Cases are unsuccessful; an evaluation-level <strong>System Error</strong> is reserved for organizer-controlled failures.</p>
+            <div class="table-scroll document-table protocol-table-wrap" tabindex="0" aria-label="Scrollable Case outcome table">
+              <table class="protocol-table">
+                <thead><tr><th>Outcome</th><th>What it means</th><th>Evaluation treatment</th></tr></thead>
+                <tbody>
+                  <tr><td><code>succeeded</code></td><td>The audited patch produces the expected package artifacts in the clean target build.</td><td>Successful Case.</td></tr>
+                  <tr><td><code>failed</code>, <code>unresolvable</code>, or <code>no_fix</code></td><td>The target build fails, dependencies cannot be resolved, or the Agent proposes no allowed change.</td><td>Unsuccessful Case result.</td></tr>
+                  <tr><td><code>agent_error</code></td><td>The Agent crashes, exits abnormally, or omits a valid <code>agent-result.json</code>.</td><td>Unsuccessful Case result.</td></tr>
+                  <tr><td><code>timeout</code></td><td>The Agent or its permitted build work exceeds the applicable Case-level limit.</td><td>Unsuccessful Case result.</td></tr>
+                  <tr><td><code>invalid_patch</code></td><td>The canonical repair cannot be applied or violates path, output, or repair policy.</td><td>Unsuccessful Case result.</td></tr>
+                  <tr><td><code>infrastructure_error</code></td><td>An organizer-controlled Worker, storage service, runtime, or Validator fails independently of the Agent repair.</td><td>No partial score is published; the affected evaluation is reviewed or rerun.</td></tr>
+                </tbody>
+              </table>
             </div>
-            <div class="source-callout"><i data-lucide="scale" aria-hidden="true"></i><p>Diagnostic fields explain results but do not form a weighted multi-factor score. The final rulebook will state whether any one field is used only to break an exact tie.</p></div>
           </section>
 
-          <section class="doc-section" id="feedback">
-            <span class="section-label">Feedback policy</span>
-            <h2>Public development without leaking the hidden test</h2>
-            <div class="comparison-columns">
-              <div><span class="contract-state intended">Public validation</span><h3>Actionable feedback</h3><ul><li>Aggregate leaderboard score</li><li>Per-case outcome on released validation inputs</li><li>Permitted build logs and evaluator status</li><li>Versioned evaluator and case manifests</li><li>Submission-frequency limit to reduce overfitting</li></ul></div>
-              <div><span class="contract-state tba">Hidden final</span><h3>Controlled disclosure</h3><ul><li>Organizer-run held-out cases</li><li>Frozen Agent artifact and evaluator version</li><li>Aggregate results after the deadline</li><li>Limited diagnostic categories</li><li>Audit and rerun of suspicious or affected entries</li></ul></div>
+          <section class="doc-section" id="scoring">
+            <span class="section-label">Ranking</span>
+            <h2>How scoring works</h2>
+            <p>Build Success Rate is the primary ranking metric. The platform freezes an aggregate score only after all Cases have terminal outcomes and any organizer infrastructure errors have been resolved. A completed evaluation therefore reports both the number of successful Cases and the total number of evaluated Cases.</p>
+            <p>Diagnostic information explains where time and failures occurred; it is not combined into a weighted score.</p>
+            <ul class="protocol-diagnostics">
+              <li>Case outcomes grouped by result category</li>
+              <li>Agent runtime and final build duration</li>
+              <li>Patch size, modified-file count, and policy validation status</li>
+              <li>Build requests, retries, iterations, and model or tool usage when collected</li>
+              <li>Case-set, runtime, Validator, and protocol versions used for the run</li>
+            </ul>
+          </section>
+
+          <section class="doc-section" id="stages">
+            <span class="section-label">Competition phases</span>
+            <h2>Evaluation stages and feedback</h2>
+            <p>The same Agent interface is used across stages, but the Case set, purpose, and visible feedback differ.</p>
+            <div class="table-scroll document-table protocol-table-wrap" tabindex="0" aria-label="Scrollable evaluation stages table">
+              <table class="protocol-table protocol-stage-table">
+                <thead><tr><th>Stage</th><th>Purpose</th><th>Version and feedback</th></tr></thead>
+                <tbody>
+                  <tr><td>Hosted Smoke Test</td><td>Check the uploaded bundle, entrypoint, dependencies, workspace behavior, and output contract on a small lightweight set.</td><td>Runs the uploaded immutable version and returns detailed qualification diagnostics. It does not produce an official score.</td></tr>
+                  <tr><td>Full Evaluation during the public phase</td><td>Measure repair performance on the versioned validation set and produce the public evaluation result.</td><td>Starts only after the team selects a qualified immutable version. Progress and the completed aggregate result appear in My Submissions.</td></tr>
+                  <tr><td>Hidden final evaluation</td><td>Evaluate the team's frozen final Agent on organizer-controlled held-out Cases.</td><td>Uses the frozen Agent, Case set, runtime, Validator, and protocol versions. Aggregate results and permitted diagnostics are released after the deadline.</td></tr>
+                </tbody>
+              </table>
             </div>
           </section>
 
-          <section class="doc-section" id="decisions">
-            <span class="section-label">Open decisions</span>
-            <h2>Items the organizing team must resolve</h2>
-            <div class="decision-checklist">
-              <div><span>01</span><p><strong>Denominator semantics</strong> Decide how Agent crashes, invalid output, organizer faults, and canceled cases affect evaluated-case counts.</p></div>
-              <div><span>02</span><p><strong>Budget policy</strong> Freeze wall time, build attempts, iterations, tool calls, CPU, memory, storage, and concurrent cases.</p></div>
-              <div><span>03</span><p><strong>Cost reporting</strong> Decide whether token use, model/API spend, Agent runtime, and build time are ranking metrics or informational columns.</p></div>
-              <div><span>04</span><p><strong>Tie-break precision</strong> Define invalid-repair classes, patch-size calculation, file counting, and build-time aggregation.</p></div>
-              <div><span>05</span><p><strong>Leaderboard cadence</strong> Set submission limits, queue rules, rerun policy, score visibility, and the final-entry selection deadline.</p></div>
-              <div><span>06</span><p><strong>Reproducibility checks</strong> Define artifact retention, rerun tolerance, nondeterminism policy, and required disclosures.</p></div>
+          <section class="doc-section" id="pending">
+            <span class="section-label">Versioned release</span>
+            <h2>Rules to be published before evaluation opens</h2>
+            <div class="protocol-pending info-note">
+              <strong>To be announced in the final Evaluation Protocol.</strong>
+              <p>The organizers will publish the exact score-denominator and cancellation semantics; any tie-breaker; Agent and build timeouts; build-feedback, iteration, and tool-call budgets; CPU, memory, storage, concurrency, network, and credential policies; submission frequency and rerun rules; and the feedback visible during public and hidden evaluation. Current pilot settings do not define these competition limits.</p>
             </div>
+            <p>See <a href="rules.html">Rules</a> for integrity, disclosure, and enforcement requirements, and <a href="timeline.html">Timeline</a> for the publication and evaluation schedule.</p>
           </section>
 
           <nav class="next-page" aria-label="Next page"><span>Next</span><a href="rules.html"><strong>Rules</strong><small>Review integrity and reproducibility requirements</small><i data-lucide="arrow-right" aria-hidden="true"></i></a></nav>
