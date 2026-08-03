@@ -14,6 +14,20 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Get the Starter Kit": "获取 Starter Kit",
   "Explore Task & Dataset": "查看任务与数据集",
   "Primary actions": "主要操作",
+  "Competition snapshot": "竞赛概览",
+  "Published benchmark": "已发布基准",
+  "268 failures": "268 个失败 Case",
+  "Architectures": "架构方向",
+  "x86_64 ↔ aarch64": "x86_64 ↔ aarch64",
+  "Evaluation": "评测方式",
+  "Executable rebuilds": "可执行重构建",
+  "Benchmark workflow": "基准工作流",
+  "From failed package to verified repair": "从失败软件包到验证修复",
+  "Build-Bench connects failed build evidence, Agent repair work, and independent target-architecture validation into one reproducible loop.":
+    "Build-Bench 将失败构建证据、Agent 修复过程和独立目标架构验证串联为一个可复现闭环。",
+  "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
+  "The repair Agent works on package sources; the validator rebuilds a clean target environment and records success or failure.":
+    "修复 Agent 在软件包源码上工作；验证器在干净的目标环境中重新构建，并记录成功或失败结果。",
   "Organizers": "主办方",
   "The current organizing members coordinate case curation, platform construction, validation, and competition operations.":
     "当前主办方成员负责 Case 整理、平台建设、验证流程和竞赛运行协调。",
