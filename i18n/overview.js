@@ -14,6 +14,11 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Get the Starter Kit": "获取 Starter Kit",
   "Explore Task & Dataset": "查看任务与数据集",
   "Primary actions": "主要操作",
+  "Organizers": "主办方",
+  "The current organizing members coordinate case curation, platform construction, validation, and competition operations.":
+    "当前主办方成员负责 Case 整理、平台建设、验证流程和竞赛运行协调。",
+  "Organizing team members": "主办方成员名单",
+  "Organizing member": "主办方成员",
   "What is the challenge?": "竞赛任务是什么？",
   "A Case represents a real software package that builds on a source instruction-set architecture but fails when rebuilt for a target architecture. The published Build-Bench benchmark contains 268 reproducible failures across x86_64 and aarch64 migration directions.":
     "每个 Case 都对应一个真实软件包：它能在源指令集架构上完成构建，但迁移到目标架构后构建失败。已发布的 Build-Bench Benchmark 包含 268 个可复现失败，覆盖 x86_64 与 aarch64 迁移方向。",
