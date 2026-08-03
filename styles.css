@@ -248,6 +248,32 @@
   color: var(--ink);
 }
 
+.overview-page .overview-organizer-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 12px;
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.overview-page .overview-organizer-list li {
+  min-width: 116px;
+  padding: 10px 16px;
+  color: var(--ink);
+  background: #f8fafc;
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  font-size: 15px;
+  font-weight: 850;
+  line-height: 1.25;
+  text-align: center;
+}
+
+.overview-page .overview-organizer-list strong {
+  font: inherit;
+}
+
 .overview-page .overview-page-links {
   display: flex;
   flex-wrap: wrap;
@@ -353,7 +379,8 @@
 
   .overview-page .overview-section p,
   .overview-page .overview-prose-list,
-  .overview-page .overview-date-list {
+  .overview-page .overview-date-list,
+  .overview-page .overview-organizer-list li {
     font-size: 15px;
   }
 
