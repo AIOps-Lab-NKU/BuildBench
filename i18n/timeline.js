@@ -10,13 +10,25 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
   "Use these dates to plan Agent development, testing, and final-version selection. Operational limits published on August 31 will apply when public development and validation open.":
     "请根据以下日期规划 Agent 开发、测试和最终版本选择。8 月 31 日公布的运行限制将在公开开发与验证开放后生效。",
 
-  "August 14": "8 月 14 日",
-  "August 17\u201328": "8 月 17\u201328 日",
-  "August 31": "8 月 31 日",
-  "September 7": "9 月 7 日",
-  "November 13": "11 月 13 日",
-  "By November 20": "11 月 20 日前",
-  "2026": "2026 年",
+  "Build-Bench competition milestones": "Build-Bench 竞赛里程碑",
+  "August 14, 2026": "2026 年 8 月 14 日",
+  "August 17\u201328, 2026": "2026 年 8 月 17\u201328 日",
+  "August 31, 2026": "2026 年 8 月 31 日",
+  "September 7, 2026": "2026 年 9 月 7 日",
+  "November 13, 2026": "2026 年 11 月 13 日",
+  "By November 20, 2026": "2026 年 11 月 20 日前",
+  "Release": "发布",
+  "Pilot": "Pilot",
+  "Policy freeze": "政策冻结",
+  "Opening": "开放",
+  "Deadline": "截止日期",
+  "Results": "结果",
+  "Participant release": "参赛资源发布",
+  "Pre-launch test": "公开前测试",
+  "Protocol freeze": "协议冻结",
+  "Public phase": "公开阶段",
+  "Final selection": "最终版本选择",
+  "Official publication": "正式发布",
 
   "Website beta and initial documentation": "网站 Beta 与初始文档",
   "The participant-facing website beta, updated dataset and Starter Kit information, and initial competition documentation are released. Teams can begin reviewing the task, submission format, and local development workflow.":
@@ -36,6 +48,7 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
   "Final results published": "公布最终结果",
   "Hidden evaluation and result review conclude, and the official final results are published by this date.":
     "隐藏评测和结果复核将在该日期前完成，并公布正式最终结果。",
+
 
   "Schedule updates.": "日程更新。",
   "If a date changes, this page will be versioned and the change will be announced through the official competition website.":

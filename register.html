@@ -6,19 +6,23 @@
     <meta name="description" content="Register a Build-Bench competition team and captain account." />
     <title>Team Registration | Build-Bench Challenge</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260803-4" />
+    <link rel="stylesheet" href="styles.css?v=20260805-3" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/auth.js?v=20260729-1" defer></script>
+    <script src="i18n/auth.js?v=20260805-1" defer></script>
     <script src="i18n.js?v=20260803-5" defer></script>
     <script src="auth-client.js?v=20260803-2" defer></script>
-    <script src="app.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260805-2" defer></script>
     <script src="register.js?v=20260729-1" defer></script>
   </head>
-  <body data-page="register">
+  <body class="auth-page auth-register-page" data-page="register">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header">
+
+    <header class="site-header auth-site-header">
       <div class="header-inner">
-        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
+        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span>
+          <span>Build-Bench</span>
+        </a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
           <a href="index.html">Overview</a><a href="task.html">Task &amp; Data</a><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
@@ -26,78 +30,107 @@
       </div>
     </header>
 
-    <main id="main-content" class="account-page">
-      <section class="account-masthead">
-        <div class="content-wrap">
-          <a class="submission-log-back" href="login.html"><i data-lucide="arrow-left" aria-hidden="true"></i>Already registered? Sign in</a>
-          <span class="page-kicker"><i data-lucide="users" aria-hidden="true"></i>Competition registration</span>
-          <h1>Register your team</h1>
-          <p>The team captain creates one account and records the complete team roster. Other members do not need separate accounts.</p>
-        </div>
-      </section>
+    <main id="main-content" class="auth-main">
+      <section class="auth-card auth-register-card" aria-labelledby="registration-title">
+        <a class="auth-card-brand" href="index.html" aria-label="Build-Bench Challenge home">
+          <img src="assets/logo.svg" alt="" />
+          <span>Build-Bench</span>
+        </a>
 
-      <div class="content-wrap registration-layout">
-        <form class="registration-form" data-registration-form>
+        <header class="auth-card-header">
+          <p class="auth-eyebrow">Competition registration</p>
+          <h1 id="registration-title">Create your team</h1>
+          <p>The captain creates the team account and records the complete roster. Other members do not need separate accounts.</p>
+        </header>
+
+        <form class="auth-form registration-form" data-registration-form>
           <div class="auth-form-error" role="alert" tabindex="-1" hidden data-form-error></div>
 
-          <section class="registration-section" aria-labelledby="captain-title">
-            <header><span>01</span><div><h2 id="captain-title">Captain account</h2><p>This person manages submissions and the team roster.</p></div></header>
-            <div class="form-grid">
-              <label><span>Full name</span><input name="captain_name" autocomplete="name" maxlength="100" required /></label>
-              <label><span>Email</span><input name="captain_email" type="email" autocomplete="email" maxlength="254" required /></label>
-              <label class="form-grid-wide"><span>Institution</span><input name="captain_institution" autocomplete="organization" maxlength="200" required /></label>
-              <label><span>Password</span><input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="256" required /><small>At least 12 characters.</small></label>
-              <label><span>Confirm password</span><input name="confirm_password" type="password" autocomplete="new-password" minlength="12" maxlength="256" required /></label>
+          <section class="auth-form-section" aria-labelledby="captain-title">
+            <header>
+              <h2 id="captain-title">Captain account</h2>
+              <p>This account manages submissions, evaluations, and the team roster.</p>
+            </header>
+
+            <div class="auth-field-list">
+              <label class="auth-field">
+                <span>Full name</span>
+                <input name="captain_name" autocomplete="name" maxlength="100" placeholder="Enter the captain's full name" required />
+              </label>
+              <label class="auth-field">
+                <span>Email</span>
+                <input name="captain_email" type="email" autocomplete="email" maxlength="254" placeholder="Enter the captain email" required />
+              </label>
+              <label class="auth-field">
+                <span>Institution</span>
+                <input name="captain_institution" autocomplete="organization" maxlength="200" placeholder="University, company, or organization" required />
+              </label>
+              <label class="auth-field">
+                <span>Password</span>
+                <input name="password" type="password" autocomplete="new-password" minlength="12" maxlength="256" placeholder="Create a password" aria-describedby="password-hint" required />
+                <small id="password-hint">Use at least 12 characters.</small>
+              </label>
+              <label class="auth-field">
+                <span>Confirm password</span>
+                <input name="confirm_password" type="password" autocomplete="new-password" minlength="12" maxlength="256" placeholder="Re-enter the password" required />
+              </label>
             </div>
           </section>
 
-          <section class="registration-section" aria-labelledby="team-title">
-            <header><span>02</span><div><h2 id="team-title">Team details</h2><p>Team names and member emails must be unique within this competition.</p></div></header>
-            <label class="form-field"><span>Team name</span><input name="team_name" maxlength="100" required /></label>
-            <div class="member-editor-heading">
-              <div><h3>Team roster</h3><p>The captain is member 1. Add up to four additional members.</p></div>
+          <section class="auth-form-section" aria-labelledby="team-title">
+            <header>
+              <h2 id="team-title">Team details</h2>
+              <p>Team names and all member email addresses must be unique in this competition.</p>
+            </header>
+
+            <label class="auth-field">
+              <span>Team name</span>
+              <input name="team_name" maxlength="100" placeholder="Choose a public team name" required />
+            </label>
+
+            <div class="auth-roster-heading">
+              <div>
+                <h3>Additional team members</h3>
+                <p>The captain is member 1. You may add up to four more members.</p>
+              </div>
               <strong data-team-count>1 / 5</strong>
             </div>
+
             <div class="member-list" data-member-list></div>
-            <button class="secondary-form-button" type="button" data-add-member><i data-lucide="user-plus" aria-hidden="true"></i>Add team member</button>
+            <button class="auth-secondary-button" type="button" data-add-member>
+              <i data-lucide="user-plus" aria-hidden="true"></i>Add team member
+            </button>
           </section>
 
-          <section class="registration-section registration-confirm" aria-labelledby="confirm-title">
-            <header><span>03</span><div><h2 id="confirm-title">Confirm registration</h2><p>Check the roster carefully before creating the team.</p></div></header>
-            <label class="check-field">
+          <section class="auth-form-section auth-confirm-section" aria-labelledby="confirm-title">
+            <header>
+              <h2 id="confirm-title">Confirm registration</h2>
+              <p>Review the team information before creating the account.</p>
+            </header>
+
+            <label class="auth-check-field">
               <input type="checkbox" name="accept_rules" required />
               <span>I confirm that the information is accurate and accept the <a href="rules.html" target="_blank">competition rules</a>.</span>
             </label>
-            <button class="primary-form-button" type="submit" data-register-submit>Create team account</button>
-            <p class="form-footnote">Email verification is not required in the current registration phase.</p>
+
+            <button class="auth-primary-button" type="submit" data-register-submit>Create team account</button>
+            <p class="auth-form-footnote">Teams may contain 1–5 people. Email verification is not required during the current registration phase.</p>
           </section>
         </form>
 
-        <aside class="registration-policy" aria-label="Registration rules">
-          <span class="section-label">Registration rules</span>
-          <h2>One captain, one team</h2>
-          <ul>
-            <li><i data-lucide="check" aria-hidden="true"></i><span>One captain account manages the team.</span></li>
-            <li><i data-lucide="check" aria-hidden="true"></i><span>Teams may contain 1–5 people, including the captain.</span></li>
-            <li><i data-lucide="check" aria-hidden="true"></i><span>Every member email is required.</span></li>
-            <li><i data-lucide="check" aria-hidden="true"></i><span>An email cannot appear in another team.</span></li>
-            <li><i data-lucide="check" aria-hidden="true"></i><span>The leaderboard displays the team name only.</span></li>
-          </ul>
-          <div class="registration-policy-note info-note"><strong>Roster lock</strong><p>The organizer will announce when rosters become immutable. Until then, the captain may update non-captain members.</p></div>
-        </aside>
-      </div>
+        <p class="auth-switch">Already registered? <a href="login.html">Sign in</a></p>
+        <a class="auth-overview-link" href="index.html"><i data-lucide="arrow-left" aria-hidden="true"></i>Back to competition overview</a>
+      </section>
     </main>
 
     <template data-member-template>
-      <fieldset class="member-row" data-member-row>
+      <fieldset class="member-row auth-member-row" data-member-row>
         <legend>Member <span data-member-number></span></legend>
         <button type="button" class="member-remove" aria-label="Remove member" title="Remove member" data-remove-member><i data-lucide="x" aria-hidden="true"></i></button>
-        <label><span>Full name</span><input data-member-field="name" maxlength="100" required /></label>
-        <label><span>Email</span><input data-member-field="email" type="email" maxlength="254" required /></label>
-        <label class="form-grid-wide"><span>Institution</span><input data-member-field="institution" maxlength="200" required /></label>
+        <label class="auth-field"><span>Full name</span><input data-member-field="name" maxlength="100" placeholder="Enter the member's full name" required /></label>
+        <label class="auth-field"><span>Email</span><input data-member-field="email" type="email" maxlength="254" placeholder="Enter the member email" required /></label>
+        <label class="auth-field"><span>Institution</span><input data-member-field="institution" maxlength="200" placeholder="University, company, or organization" required /></label>
       </fieldset>
     </template>
-
-    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></nav><a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
   </body>
 </html>

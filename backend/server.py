@@ -810,12 +810,6 @@ def create_server(
             )
         )
     )
-    evaluation_store = EvaluationStore(resolved_evaluation_database)
-    evaluation_service = EvaluationService(
-        evaluation_store,
-        service,
-        resolved_evaluation_config,
-    )
     resolved_token_authenticator = authenticator or TokenAuthenticator.from_environment(
         resolved_evaluation_config.owner_id
     )
@@ -840,6 +834,13 @@ def create_server(
         )
     )
     resolved_auth_service = auth_service or AuthService(account_store)
+    evaluation_store = EvaluationStore(resolved_evaluation_database)
+    evaluation_service = EvaluationService(
+        evaluation_store,
+        service,
+        resolved_evaluation_config,
+        team_member_resolver=account_store.public_member_names,
+    )
     resolved_authenticator = HybridAuthenticator(
         resolved_token_authenticator,
         resolved_auth_service,

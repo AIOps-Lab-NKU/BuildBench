@@ -1,55 +1,111 @@
 (() => {
+  "use strict";
+
   const state = document.querySelector("[data-live-board-state]");
   const table = document.querySelector("[data-live-board-table]");
   const body = document.querySelector("[data-live-board-body]");
   const version = document.querySelector("[data-live-board-version]");
   if (!state || !table || !body || !version) return;
 
-  const text = (value) => document.createTextNode(String(value ?? ""));
-  const cell = (value, header = false) => {
-    const element = document.createElement(header ? "th" : "td");
-    if (header) element.scope = "row";
-    element.append(text(value));
-    return element;
-  };
-  const duration = (seconds) => {
-    const value = Number(seconds || 0);
-    if (value < 60) return `${value}s`;
-    const minutes = Math.floor(value / 60);
-    const remainder = value % 60;
-    return remainder ? `${minutes}m ${remainder}s` : `${minutes}m`;
-  };
+  let payload = null;
+  let loadError = false;
+
+  const translate = (value) => window.BuildBenchI18n?.t(value) || value;
+
+  function setState(title, detail) {
+    state.replaceChildren();
+    const heading = document.createElement("strong");
+    const message = document.createElement("span");
+    heading.textContent = translate(title);
+    message.textContent = translate(detail);
+    state.append(heading, message);
+    state.hidden = false;
+    table.hidden = true;
+    version.hidden = true;
+  }
+
+  function renderTeam(entry) {
+    const cell = document.createElement("th");
+    cell.scope = "row";
+    const name = document.createElement("strong");
+    const members = document.createElement("span");
+    name.className = "leaderboard-team-name";
+    members.className = "leaderboard-team-members";
+    name.textContent = String(entry.team_name || "—");
+    const memberNames = Array.isArray(entry.members)
+      ? entry.members.filter((value) => typeof value === "string" && value.trim())
+      : [];
+    members.textContent = memberNames.length
+      ? memberNames.join(" · ")
+      : translate("Members not published");
+    cell.append(name, members);
+    return cell;
+  }
+
+  function textCell(value, className = "") {
+    const cell = document.createElement("td");
+    cell.textContent = String(value);
+    if (className) cell.className = className;
+    return cell;
+  }
+
+  function render() {
+    if (loadError) {
+      setState(
+        "Leaderboard unavailable",
+        "The results service could not be reached. Please try again later.",
+      );
+      return;
+    }
+    if (!payload) return;
+
+    const entries = Array.isArray(payload.entries) ? payload.entries : [];
+    if (!entries.length) {
+      setState(
+        "No official results yet",
+        "Completed Full Evaluations will appear here after organizer review and publication.",
+      );
+      return;
+    }
+
+    body.replaceChildren();
+    entries.forEach((entry) => {
+      const row = document.createElement("tr");
+      row.append(textCell(entry.rank, "leaderboard-rank"));
+      row.append(renderTeam(entry));
+      row.append(
+        textCell(`${(Number(entry.score || 0) * 100).toFixed(2)}%`, "leaderboard-score"),
+      );
+      row.append(
+        textCell(
+          `${Number(entry.successful_cases || 0)} / ${Number(entry.total_cases || 0)}`,
+          "leaderboard-success-count",
+        ),
+      );
+      body.append(row);
+    });
+
+    state.hidden = true;
+    table.hidden = false;
+    const caseSet = payload.case_set_version || "—";
+    const protocol = payload.protocol_version || "—";
+    version.textContent = `${translate("Case set")} ${caseSet} · ${translate("Protocol")} ${protocol}`;
+    version.hidden = false;
+  }
 
   fetch("/api/leaderboard", { headers: { Accept: "application/json" } })
     .then((response) => {
       if (!response.ok) throw new Error(`HTTP ${response.status}`);
       return response.json();
     })
-    .then((payload) => {
-      const entries = Array.isArray(payload.entries) ? payload.entries : [];
-      if (!entries.length) {
-        state.textContent = "No official competition results have been published yet.";
-        return;
-      }
-      entries.forEach((entry) => {
-        const row = document.createElement("tr");
-        row.append(cell(entry.rank));
-        row.append(cell(entry.team_name, true));
-        row.append(cell(`${entry.agent_name} ${entry.agent_version}`));
-        row.append(cell(`${entry.successful_cases} / ${entry.total_cases}`));
-        row.append(cell(`${(Number(entry.score) * 100).toFixed(2)}%`));
-        row.append(cell(duration(entry.duration_seconds)));
-        row.append(cell(new Date(entry.published_at).toLocaleString()));
-        body.append(row);
-      });
-      state.hidden = true;
-      table.hidden = false;
-      const first = entries[0];
-      version.textContent = `Case set ${first.case_set_version} · Protocol ${first.protocol_version}`;
-      version.hidden = false;
+    .then((value) => {
+      payload = value;
+      render();
     })
     .catch(() => {
-      state.textContent =
-        "The live competition leaderboard is unavailable. Research baselines remain available below.";
+      loadError = true;
+      render();
     });
+
+  window.addEventListener("buildbench:languagechange", render);
 })();

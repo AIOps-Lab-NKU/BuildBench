@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import hashlib
+from collections.abc import Callable
 from datetime import datetime
 from pathlib import Path
 
@@ -26,10 +27,12 @@ class EvaluationService:
         store: EvaluationStore,
         submissions: SubmissionService,
         config: EvaluationConfig,
+        team_member_resolver: Callable[[str], list[str]] | None = None,
     ):
         self.store = store
         self.submissions = submissions
         self.config = config
+        self.team_member_resolver = team_member_resolver
 
     def readiness(self) -> dict[str, object]:
         error = self.config.readiness_error()
@@ -254,10 +257,27 @@ class EvaluationService:
         selected_protocol = (
             protocol_version or self.config.protocol_version or None
         )
-        entries = self.store.leaderboard(
+        stored_entries = self.store.leaderboard(
             case_set_version=selected_case_set,
             protocol_version=selected_protocol,
         )
+        entries = []
+        for stored in stored_entries:
+            owner_id = str(stored.get("owner_id", ""))
+            entries.append(
+                {
+                    "rank": stored["rank"],
+                    "team_name": stored["team_name"],
+                    "members": (
+                        self.team_member_resolver(owner_id)
+                        if self.team_member_resolver and owner_id
+                        else []
+                    ),
+                    "score": stored["score"],
+                    "successful_cases": stored["successful_cases"],
+                    "total_cases": stored["total_cases"],
+                }
+            )
         return {
             "schema_version": "0.1",
             "metric": "build_success_rate",

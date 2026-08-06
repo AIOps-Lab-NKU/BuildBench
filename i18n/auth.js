@@ -87,6 +87,37 @@ const buildBenchAuthTranslations = Object.freeze({
   "My Submissions": "我的提交",
   "Sign out": "退出登录",
   "Register team": "注册团队",
+  "Team portal": "团队入口",
+  "Welcome back": "欢迎回来",
+  "Sign in with the captain account to manage your team and Agent submissions.":
+    "使用队长账号登录，以管理团队和 Agent 提交。",
+  "Enter the captain email": "请输入队长邮箱",
+  "Enter your password": "请输入密码",
+  "Back to competition overview": "返回竞赛首页",
+  "Create your team": "创建参赛团队",
+  "The captain creates the team account and records the complete roster. Other members do not need separate accounts.":
+    "由队长创建团队账号并录入完整名单，其他组员无需单独注册账号。",
+  "This account manages submissions, evaluations, and the team roster.":
+    "此账号负责管理提交、评测和团队名单。",
+  "Enter the captain's full name": "请输入队长姓名",
+  "University, company, or organization": "大学、公司或其他机构",
+  "Create a password": "创建密码",
+  "Use at least 12 characters.": "请至少使用 12 个字符。",
+  "Re-enter the password": "请再次输入密码",
+  "Team names and all member email addresses must be unique in this competition.":
+    "团队名称及所有成员邮箱在本次竞赛中必须唯一。",
+  "Choose a public team name": "请输入公开展示的团队名称",
+  "Additional team members": "其他团队成员",
+  "The captain is member 1. You may add up to four more members.":
+    "队长为第 1 位成员，最多可以再添加 4 位组员。",
+  "Review the team information before creating the account.":
+    "创建账号前请核对团队信息。",
+  "Teams may contain 1–5 people. Email verification is not required during the current registration phase.":
+    "每队可包含 1–5 人；当前注册阶段暂不要求邮箱验证。",
+  "Enter the member's full name": "请输入组员姓名",
+  "Enter the member email": "请输入组员邮箱",
+  "Signing in…": "正在登录……",
+  "Creating team…": "正在创建团队……",
 });
 
 ["register", "login", "team"].forEach((page) => {

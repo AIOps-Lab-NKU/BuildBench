@@ -15,26 +15,21 @@
       "items": {
         "type": "object",
         "required": [
-          "entry_id", "evaluation_id", "team_name", "agent_name",
-          "agent_version", "score", "successful_cases", "total_cases",
-          "duration_seconds", "case_set_version", "protocol_version",
-          "published_at", "rank"
+          "team_name", "members", "score", "successful_cases",
+          "total_cases", "rank"
         ],
         "properties": {
-          "entry_id": { "type": "string" },
-          "evaluation_id": { "type": "string" },
           "team_name": { "type": "string" },
-          "agent_name": { "type": "string" },
-          "agent_version": { "type": "string" },
+          "members": {
+            "type": "array",
+            "items": { "type": "string", "minLength": 1 }
+          },
           "score": { "type": "number", "minimum": 0, "maximum": 1 },
           "successful_cases": { "type": "integer", "minimum": 0 },
           "total_cases": { "type": "integer", "minimum": 1 },
-          "duration_seconds": { "type": "integer", "minimum": 0 },
-          "case_set_version": { "type": "string" },
-          "protocol_version": { "type": "string" },
-          "published_at": { "type": "string" },
           "rank": { "type": "integer", "minimum": 1 }
-        }
+        },
+        "additionalProperties": false
       }
     }
   }

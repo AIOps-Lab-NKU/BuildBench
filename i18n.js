@@ -269,8 +269,8 @@
     account.className = "account-navigation";
     account.setAttribute("data-account-navigation", "");
     account.innerHTML = `
-      <a href="login.html">Sign in</a>
-      <a class="account-register-link" href="register.html">Register team</a>
+      <a class="account-action account-action--secondary" href="login.html">Sign in</a>
+      <a class="account-action account-action--primary account-register-link" href="register.html">Register team</a>
     `;
     actions.appendChild(account);
   }

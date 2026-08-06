@@ -412,6 +412,28 @@ class AccountStore:
                 },
             }
 
+    def public_member_names(self, team_id: str) -> list[str]:
+        """Return the display names that may appear on the public leaderboard."""
+        with self._connect() as connection:
+            team = connection.execute(
+                """
+                SELECT team_id FROM teams
+                WHERE competition_id = ? AND team_id = ? AND status = 'active'
+                """,
+                (self.competition_id, team_id),
+            ).fetchone()
+            if team is None:
+                return []
+            rows = connection.execute(
+                """
+                SELECT name FROM team_members
+                WHERE team_id = ?
+                ORDER BY display_order
+                """,
+                (team_id,),
+            ).fetchall()
+        return [str(row["name"]) for row in rows]
+
     def credential_by_email(self, email: object) -> dict[str, object] | None:
         _, normalized = normalize_email(email)
         with self._connect() as connection:

@@ -277,7 +277,14 @@ class AuthorizationAndLeaderboardTests(unittest.TestCase):
                 checker=accepted_checker,
             )
             store = EvaluationStore(root / "runtime" / "evaluations.sqlite3")
-            service = EvaluationService(store, submissions, _config("team-a"))
+            service = EvaluationService(
+                store,
+                submissions,
+                _config("team-a"),
+                team_member_resolver=lambda team_id: (
+                    ["Captain A", "Member A"] if team_id == "team-a" else []
+                ),
+            )
             first = qualified_submission(submissions, "agent-one")
             first_record, _ = service.create(str(first["id"]), "publish-0001")
             first_id = str(first_record["evaluation_id"])
@@ -296,7 +303,13 @@ class AuthorizationAndLeaderboardTests(unittest.TestCase):
             entry = board["entries"][0]
             self.assertEqual(entry["rank"], 1)
             self.assertEqual(entry["team_name"], "Team A")
+            self.assertEqual(entry["members"], ["Captain A", "Member A"])
             self.assertNotIn("owner_id", entry)
+            self.assertNotIn("evaluation_id", entry)
+            self.assertNotIn("entry_id", entry)
+            self.assertNotIn("agent_name", entry)
+            self.assertNotIn("agent_version", entry)
+            self.assertNotIn("duration_seconds", entry)
             self.assertNotIn("case_set_digest", entry)
             self.assertNotIn("protocol_config_hash", entry)
 

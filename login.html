@@ -6,19 +6,23 @@
     <meta name="description" content="Sign in to the Build-Bench competition portal." />
     <title>Sign In | Build-Bench Challenge</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260803-4" />
+    <link rel="stylesheet" href="styles.css?v=20260805-3" />
     <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/auth.js?v=20260729-1" defer></script>
+    <script src="i18n/auth.js?v=20260805-1" defer></script>
     <script src="i18n.js?v=20260803-5" defer></script>
     <script src="auth-client.js?v=20260803-2" defer></script>
-    <script src="app.js?v=20260803-2" defer></script>
+    <script src="app.js?v=20260805-2" defer></script>
     <script src="login.js?v=20260729-1" defer></script>
   </head>
-  <body data-page="login">
+  <body class="auth-page auth-login-page" data-page="login">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <header class="site-header">
+
+    <header class="site-header auth-site-header">
       <div class="header-inner">
-        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
+        <a class="brand" href="index.html" aria-label="Build-Bench Challenge home">
+          <span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span>
+          <span>Build-Bench</span>
+        </a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
           <a href="index.html">Overview</a><a href="task.html">Task &amp; Data</a><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
@@ -26,30 +30,50 @@
       </div>
     </header>
 
-    <main id="main-content" class="login-page">
-      <section class="login-panel">
-        <div class="login-brand-panel">
-          <span class="page-kicker"><i data-lucide="terminal-square" aria-hidden="true"></i>Agent Track</span>
-          <h1>Continue your Build-Bench submission</h1>
-          <p>Sign in as the team captain to manage the roster, upload Agent versions, and follow official evaluations.</p>
-          <ol>
-            <li><span>01</span>Manage one immutable Agent version at a time.</li>
-            <li><span>02</span>Run Hosted Smoke Tests before formal evaluation.</li>
-            <li><span>03</span>Track Full Evaluation results for your team.</li>
-          </ol>
-        </div>
-        <div class="login-form-panel">
-          <span class="section-label">Captain access</span>
-          <h2>Sign in</h2>
-          <p>Use the captain email registered for your team.</p>
-          <form data-login-form>
-            <div class="auth-form-error" role="alert" tabindex="-1" hidden data-form-error></div>
-            <label><span>Email</span><input name="email" type="email" autocomplete="email" required autofocus /></label>
-            <label><span>Password</span><input name="password" type="password" autocomplete="current-password" required /></label>
-            <button class="primary-form-button" type="submit" data-login-submit>Sign in</button>
-          </form>
-          <div class="login-register-link"><span>Not registered yet?</span><a href="register.html">Register a team</a></div>
-        </div>
+    <main id="main-content" class="auth-main">
+      <section class="auth-card auth-login-card" aria-labelledby="login-title">
+        <a class="auth-card-brand" href="index.html" aria-label="Build-Bench Challenge home">
+          <img src="assets/logo.svg" alt="" />
+          <span>Build-Bench</span>
+        </a>
+
+        <header class="auth-card-header">
+          <p class="auth-eyebrow">Team portal</p>
+          <h1 id="login-title">Welcome back</h1>
+          <p>Sign in with the captain account to manage your team and Agent submissions.</p>
+        </header>
+
+        <form class="auth-form" data-login-form>
+          <div class="auth-form-error" role="alert" tabindex="-1" hidden data-form-error></div>
+
+          <label class="auth-field">
+            <span>Email</span>
+            <input
+              name="email"
+              type="email"
+              autocomplete="email"
+              placeholder="Enter the captain email"
+              required
+              autofocus
+            />
+          </label>
+
+          <label class="auth-field">
+            <span>Password</span>
+            <input
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              placeholder="Enter your password"
+              required
+            />
+          </label>
+
+          <button class="auth-primary-button" type="submit" data-login-submit>Sign in</button>
+        </form>
+
+        <p class="auth-switch">Not registered yet? <a href="register.html">Register a team</a></p>
+        <a class="auth-overview-link" href="index.html"><i data-lucide="arrow-left" aria-hidden="true"></i>Back to competition overview</a>
       </section>
     </main>
   </body>

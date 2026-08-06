@@ -4,6 +4,7 @@
   const form = document.querySelector("[data-login-form]");
   const errorBox = document.querySelector("[data-form-error]");
   const submitButton = document.querySelector("[data-login-submit]");
+  const t = (value) => window.BuildBenchI18n?.t(value) || value;
 
   function setError(message) {
     errorBox.hidden = !message;
@@ -16,7 +17,7 @@
     setError("");
     const data = new FormData(form);
     submitButton.disabled = true;
-    submitButton.textContent = "Signing in…";
+    submitButton.textContent = t("Signing in…");
     try {
       await window.BuildBenchAuth.request("/api/auth/login", {
         method: "POST",
@@ -32,7 +33,7 @@
       setError(error.message || "Sign in failed.");
     } finally {
       submitButton.disabled = false;
-      submitButton.textContent = "Sign in";
+      submitButton.textContent = t("Sign in");
     }
   });
 })();

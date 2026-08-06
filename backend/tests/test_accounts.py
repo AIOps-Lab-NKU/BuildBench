@@ -59,6 +59,10 @@ class AccountStoreTests(unittest.TestCase):
         restored = self.store.context_for_user(context["user"]["user_id"])
         self.assertEqual(restored, context)
 
+        names = self.store.public_member_names(str(context["team"]["team_id"]))
+        self.assertEqual(names, ["Captain Example", "Member 2", "Member 3"])
+        self.assertEqual(self.store.public_member_names("missing-team"), [])
+
     def test_team_is_limited_to_five_and_all_emails_are_required(self) -> None:
         with self.assertRaisesRegex(AccountValidationError, "at most 5"):
             self.register(members=[member(index) for index in range(2, 7)])

@@ -27,12 +27,12 @@ function renderAccountState(account, session) {
 
   if (teamName) {
     account.innerHTML = `
-      <a href="team.html" class="account-team-link">
+      <a href="team.html" class="account-action account-action--team account-team-link">
         <i data-lucide="users" aria-hidden="true"></i>
         <span>${escapeHtml(teamName)}</span>
       </a>
-      <a href="my-submissions.html">${translate("My Submissions")}</a>
-      <button type="button" data-account-signout>${translate("Sign out")}</button>
+      <a class="account-action account-action--primary" href="my-submissions.html">${translate("My Submissions")}</a>
+      <button class="account-action account-action--danger" type="button" data-account-signout>${translate("Sign out")}</button>
     `;
     account.querySelector("[data-account-signout]")?.addEventListener("click", async () => {
       try {
@@ -43,8 +43,8 @@ function renderAccountState(account, session) {
     });
   } else {
     account.innerHTML = `
-      <a href="login.html">${translate("Sign in")}</a>
-      <a class="account-register-link" href="register.html">${translate("Register team")}</a>
+      <a class="account-action account-action--secondary" href="login.html">${translate("Sign in")}</a>
+      <a class="account-action account-action--primary account-register-link" href="register.html">${translate("Register team")}</a>
     `;
   }
   account.dataset.accountState = stateKey;
@@ -144,7 +144,7 @@ if ("IntersectionObserver" in window && localNavLinks.length) {
   sections.forEach((section) => observer.observe(section));
 }
 
-const boardRows = Array.from(document.querySelectorAll(".leaderboard-table tbody tr"));
+const boardRows = Array.from(document.querySelectorAll(".research-baseline-table tbody tr"));
 const boardFilters = Array.from(document.querySelectorAll("[data-board-filter]"));
 
 function applyBoardFilter(direction) {
@@ -171,18 +171,6 @@ function applyBoardFilter(direction) {
     button.classList.toggle("active", active);
     button.setAttribute("aria-pressed", String(active));
   });
-
-  const visibleRows = sortedRows.filter((row) => !row.hidden);
-  const packageCount = direction === "forward" ? 163 : direction === "reverse" ? 105 : 268;
-  const modelCount = new Set(visibleRows.map((row) => row.querySelector('th[scope="row"]').textContent)).size;
-  const bestRate = Math.max(...visibleRows.map((row) => Number(row.dataset.rate)));
-
-  const packageStat = document.querySelector("[data-board-packages]");
-  const modelStat = document.querySelector("[data-board-models]");
-  const bestStat = document.querySelector("[data-board-best]");
-  if (packageStat) packageStat.textContent = String(packageCount);
-  if (modelStat) modelStat.textContent = String(modelCount);
-  if (bestStat) bestStat.textContent = `${bestRate.toFixed(2)}%`;
 }
 
 boardFilters.forEach((button) => {

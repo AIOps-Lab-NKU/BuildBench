@@ -8,6 +8,48 @@ ROOT = Path(__file__).resolve().parents[2]
 
 
 class FrontendContractTests(unittest.TestCase):
+    def test_overview_uses_a_poster_style_competition_hero(self) -> None:
+        html = (ROOT / "index.html").read_text(encoding="utf-8")
+        for contract in (
+            'class="overview-shell overview-hero-shell"',
+            'class="overview-hero-copy"',
+            'class="overview-hero-art"',
+            'class="overview-hero-illustration"',
+            'src="assets/buildbench-repair-agent.png"',
+            'class="overview-hero-credits"',
+            'class="overview-credit-list"',
+            'src="assets/overview-icons/medal.png"',
+            'src="assets/overview-icons/graduation-hat.png"',
+            'src="assets/overview-icons/handshake.png"',
+            'src="assets/overview-icons/challenge.png"',
+            'src="assets/overview-icons/process.png"',
+            'src="assets/overview-icons/evaluated.png"',
+            'src="assets/overview-icons/calendar.png"',
+            "Competition partners",
+            "ICSE 2027 Competition Track",
+            "Nankai University · Build-Bench Team",
+            "Industry collaboration",
+            "Get the Starter Kit",
+            "Explore the Challenge",
+        ):
+            self.assertIn(contract, html)
+        self.assertTrue((ROOT / "assets" / "buildbench-repair-agent.png").is_file())
+        for icon in (
+            "medal.png",
+            "graduation-hat.png",
+            "handshake.png",
+            "challenge.png",
+            "process.png",
+            "evaluated.png",
+            "calendar.png",
+        ):
+            self.assertTrue((ROOT / "assets" / "overview-icons" / icon).is_file())
+        self.assertNotIn('class="status-strip"', html)
+        self.assertNotIn('class="overview-art-placeholder"', html)
+        self.assertNotIn('<dl class="overview-hero-credits"', html)
+        self.assertNotIn("Sponsored by", html)
+        self.assertNotIn('overview-credit-icon::before', (ROOT / "styles.css").read_text(encoding="utf-8"))
+
     def test_my_submissions_has_api_hooks(self) -> None:
         html = (ROOT / "my-submissions.html").read_text(encoding="utf-8")
         for hook in (
@@ -261,12 +303,21 @@ class FrontendContractTests(unittest.TestCase):
         schema = (
             ROOT / "backend" / "schema" / "leaderboard-public-v0.1.schema.json"
         )
-        self.assertIn("Published Full Evaluations", html)
+        self.assertIn("Each Team may run one Full Evaluation", html)
         self.assertIn("data-live-board-body", html)
         self.assertIn("leaderboard-live.js", html)
+        self.assertIn("Successful Cases", html)
+        self.assertNotIn("Agent version", html)
+        self.assertIn("Paper-reported model success rates", html)
+        self.assertEqual(html.count('data-direction="forward"'), 7)
+        self.assertEqual(html.count('data-direction="reverse"'), 7)
+        self.assertIn("data-board-filter", html)
+        self.assertIn("63.19%", html)
+        self.assertIn("29.52%", html)
         self.assertIn('fetch("/api/leaderboard"', script)
         self.assertIn("case_set_version", script)
         self.assertIn("protocol_version", script)
+        self.assertIn("entry.members", script)
         self.assertTrue(schema.is_file())
 
     def test_team_registration_and_session_frontend_contract(self) -> None:
@@ -288,6 +339,10 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("/api/auth/register", registration_script)
         self.assertIn("MAX_ADDITIONAL_MEMBERS = 4", registration_script)
         self.assertIn("data-login-form", login)
+        self.assertIn("auth-login-card", login)
+        self.assertNotIn("login-brand-panel", login)
+        self.assertIn("auth-register-card", register)
+        self.assertIn("auth-form-section", register)
         self.assertIn("data-team-page", team)
         self.assertIn("/api/team/members", team_script)
         self.assertIn("X-CSRF-Token", auth_client)
@@ -336,7 +391,6 @@ class FrontendContractTests(unittest.TestCase):
             'class="masthead-facts',
             'class="page-rail',
             'class="source-callout',
-            'class="roadmap',
             'class="gate-list',
             'class="phase-sequence',
             'class="notification-row',
@@ -345,7 +399,8 @@ class FrontendContractTests(unittest.TestCase):
         ):
             self.assertNotIn(removed, html)
 
-        self.assertIn('class="participant-schedule"', html)
+        self.assertIn('class="roadmap"', html)
+        self.assertEqual(html.count('class="roadmap-status '), 6)
         self.assertEqual(html.count("<time "), 6)
         self.assertNotIn("<table", html)
 

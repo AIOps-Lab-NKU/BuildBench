@@ -1539,7 +1539,6 @@ class EvaluationStore:
         result: list[dict[str, object]] = []
         for rank, row in enumerate(rows, start=1):
             item = dict(row)
-            item.pop("owner_id", None)
             item.pop("owner_rank", None)
             item.pop("case_set_digest", None)
             item.pop("protocol_config_hash", None)

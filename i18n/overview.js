@@ -6,6 +6,13 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "A competition for agent-driven repair of real package build failures across x86_64 and aarch64.":
     "面向 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64 与 aarch64 架构。",
   "ICSE 2027 Competition Track": "ICSE 2027 Competition Track",
+  "Website beta": "网站 Beta",
+  "Repair real cross-architecture package build failures with autonomous Agents.":
+    "让自主 Agent 修复真实的跨架构软件包构建失败。",
+  "Modern software must run across heterogeneous hardware, yet a package that builds on one architecture can fail on another. Build-Bench turns these real portability failures into an executable benchmark for repair Agents.":
+    "现代软件需要运行在异构硬件平台上，但能够在一种架构上构建的软件包，迁移到另一种架构时可能失败。Build-Bench 将这些真实的可移植性故障转化为面向修复 Agent 的可执行基准。",
+  "Teams submit a runnable repair Agent. Organizers run qualified versions, derive a canonical patch, and accept a repair only when the clean target-architecture build succeeds.":
+    "参赛团队提交可运行的修复 Agent。组织方运行通过检查的版本，生成规范化补丁，并且只有在干净的目标架构构建成功时才认定修复有效。",
   "Repair real cross-architecture software package build failures.": "修复真实的跨架构软件包构建失败。",
   "Software increasingly has to run across heterogeneous hardware, yet package portability failures often emerge only when a project is rebuilt for another instruction-set architecture. Diagnosing them requires reasoning across source code, package metadata, dependencies, build scripts, and logs.":
     "软件日益需要运行在异构硬件平台上，但软件包的可移植性问题往往只有在迁移到另一种指令集架构并重新构建时才会暴露。定位这类问题需要综合分析源码、包元数据、依赖、构建脚本和日志。",
@@ -13,7 +20,24 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "参赛团队提交一个可运行的修复 Agent。组织者在竞赛 Case 上运行每个通过检查的 Agent，根据其工作区生成规范化修复补丁，并在干净的目标环境中重新构建软件包以验证修复。",
   "Get the Starter Kit": "获取 Starter Kit",
   "Explore Task & Dataset": "查看任务与数据集",
+  "Explore the Challenge": "了解竞赛任务",
   "Primary actions": "主要操作",
+  "A repair Agent transforms a broken software package into a validated build artifact":
+    "修复 Agent 将构建失败的软件包转化为通过验证的构建产物",
+  "Competition hosts and collaborators": "竞赛主办与合作信息",
+  "Competition partners": "赛事组织与合作",
+  "Official track": "官方赛道",
+  "Organized by": "组织方",
+  "Nankai University · Build-Bench Team": "南开大学 · Build-Bench 团队",
+  "Industry collaboration": "产业合作",
+  "Microsoft": "微软",
+  "Benchmark workflow": "基准工作流",
+  "From failed package to verified repair": "从构建失败的软件包到通过验证的修复",
+  "Build-Bench connects failed build evidence, Agent repair work, and independent target-architecture validation into one reproducible loop.":
+    "Build-Bench 将失败构建证据、Agent 修复过程与独立的目标架构验证连接为一个可复现闭环。",
+  "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
+  "The published Build-Bench workflow connects package evidence, iterative Agent repair, and executable build verification.":
+    "Build-Bench 工作流将软件包证据、Agent 迭代修复与可执行的构建验证连接起来。",
   "What is the challenge?": "竞赛任务是什么？",
   "A Case represents a real software package that builds on a source instruction-set architecture but fails when rebuilt for a target architecture. The published Build-Bench benchmark contains 268 reproducible failures across x86_64 and aarch64 migration directions.":
     "每个 Case 都对应一个真实软件包：它能在源指令集架构上完成构建，但迁移到目标架构后构建失败。已发布的 Build-Bench Benchmark 包含 268 个可复现失败，覆盖 x86_64 与 aarch64 迁移方向。",
@@ -68,6 +92,10 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Rules": "规则",
   "Timeline": "时间安排",
   "FAQ": "常见问题",
+  "Organizing Team": "组织团队",
+  "The organizing team coordinates Case curation, platform development, validation, participant support, and competition operations.":
+    "组织团队负责 Case 整理、平台开发、构建验证、参赛者支持与竞赛运行。",
+  "Organizing team members": "组织团队成员",
   "Organized by Nankai University with industry collaboration from Microsoft.":
     "由南开大学组织，微软提供产业合作支持。",
   "Project links": "项目链接",

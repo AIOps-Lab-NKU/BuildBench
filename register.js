@@ -9,6 +9,7 @@
   const submitButton = document.querySelector("[data-register-submit]");
   const template = document.querySelector("[data-member-template]");
   const MAX_ADDITIONAL_MEMBERS = 4;
+  const t = (value) => window.BuildBenchI18n?.t(value) || value;
 
   function setError(message) {
     errorBox.hidden = !message;
@@ -36,9 +37,16 @@
   function addMemberRow() {
     if (rows().length >= MAX_ADDITIONAL_MEMBERS) return;
     members.append(template.content.cloneNode(true));
+    const row = rows().at(-1);
+    const nameInput = row?.querySelector('[data-member-field="name"]');
+    const emailInput = row?.querySelector('[data-member-field="email"]');
+    const institutionInput = row?.querySelector('[data-member-field="institution"]');
+    if (nameInput) nameInput.placeholder = t("Enter the member's full name");
+    if (emailInput) emailInput.placeholder = t("Enter the member email");
+    if (institutionInput) institutionInput.placeholder = t("University, company, or organization");
     updateCount();
     window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
-    rows().at(-1)?.querySelector("input")?.focus();
+    row?.querySelector("input")?.focus();
   }
 
   addMember?.addEventListener("click", addMemberRow);
@@ -76,7 +84,7 @@
       accept_rules: data.get("accept_rules") === "on",
     };
     submitButton.disabled = true;
-    submitButton.textContent = "Creating team…";
+    submitButton.textContent = t("Creating team…");
     try {
       await window.BuildBenchAuth.request("/api/auth/register", {
         method: "POST",
@@ -89,7 +97,7 @@
       setError(error.message || "Registration could not be completed.");
     } finally {
       submitButton.disabled = false;
-      submitButton.textContent = "Create team account";
+      submitButton.textContent = t("Create team account");
     }
   });
 
