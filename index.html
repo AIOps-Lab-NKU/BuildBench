@@ -13,12 +13,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260806-1" />
-    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/overview.js?v=20260806-1" defer></script>
-    <script src="i18n.js?v=20260803-5" defer></script>
-    <script src="auth-client.js?v=20260803-2" defer></script>
-    <script src="app.js?v=20260803-2" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260809-2" />
+    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
+    <script src="i18n/overview.js?v=20260809-1" defer></script>
+    <script src="i18n.js?v=20260809-2" defer></script>
+    <script src="auth-client.js?v=20260809-2" defer></script>
+    <script src="app.js?v=20260809-2" defer></script>
   </head>
   <body class="overview-page" data-page="overview">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -34,7 +34,7 @@
         </button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
           <a class="active" href="index.html" aria-current="page">Overview</a>
-          <a href="task.html">Task &amp; Data</a>
+          <a href="task.html">Challenge</a>
           <a href="submission.html">Submission</a>
           <a href="evaluation.html">Evaluation</a>
           <a href="rules.html">Rules</a>
@@ -103,20 +103,57 @@
                 </span>
                 <div>
                   <span class="overview-credit-label">Organized by</span>
-                  <strong>Nankai University · Build-Bench Team</strong>
-                </div>
-              </div>
-              <div class="overview-credit-item overview-credit-collaboration">
-                <span class="overview-credit-icon" aria-hidden="true">
-                  <img src="assets/overview-icons/handshake.png" width="512" height="512" alt="">
-                </span>
-                <div>
-                  <span class="overview-credit-label">Industry collaboration</span>
-                  <strong>Microsoft</strong>
+                  <strong>Build-Bench Team · Microsoft</strong>
                 </div>
               </div>
             </div>
           </section>
+        </div>
+      </section>
+
+      <section class="overview-section overview-organizers-section" aria-labelledby="organizers-title">
+        <div class="overview-shell overview-organizers-shell">
+          <h2 id="organizers-title" class="overview-section-heading overview-organizers-heading">
+            <img src="assets/overview-icons/organizers.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>Organizers</span>
+          </h2>
+          <ul class="overview-organizer-list" aria-label="Organizers and homepage links">
+            <li>
+              <strong>Chenyu Zhao</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <a class="overview-organizer-homepage" href="https://zcyyc.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Shenglin Zhang</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <a class="overview-organizer-homepage" href="https://nkcs.iops.ai/zhangshenglin/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Minghua Ma</strong>
+              <span class="overview-organizer-affiliation">Microsoft</span>
+              <a class="overview-organizer-homepage" href="https://marvin233.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Yihang Lin</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>Zihao Huang</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>An Xu</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>Chengtai Li</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+          </ul>
         </div>
       </section>
 
@@ -147,12 +184,9 @@
             <img src="assets/overview-icons/challenge.png" width="512" height="512" alt="" aria-hidden="true">
             <span>What is the challenge?</span>
           </h2>
-          <p>A Case represents a real software package that builds on a source instruction-set architecture but fails when rebuilt for a target architecture. The published Build-Bench benchmark contains 268 reproducible failures across x86_64 and aarch64 migration directions.</p>
-          <p>The Agent receives the package sources and packaging files, source and target architecture metadata, and the initial failed target-build log. It can inspect existing patches and auxiliary build files, then modify only the package paths permitted by the Case.</p>
-          <p>Repairs may involve dependency declarations, architecture-specific source code, unsupported compiler options, packaging rules, tests, or build scripts. The goal is to correct the portability failure without bypassing the required build or validation steps.</p>
-          <aside class="overview-example info-note" aria-label="Cross-architecture failure example">
-            <strong>Example.</strong> A compiler option accepted by an x86_64 toolchain may be rejected during an aarch64 build. A valid repair might apply that option only where it is supported while preserving the package's normal build and tests.
-          </aside>
+          <p>Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.</p>
+          <p>For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.</p>
+          <p class="overview-section-link"><a href="task.html">Explore the Challenge <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
 
@@ -162,12 +196,10 @@
             <img src="assets/overview-icons/process.png" width="512" height="512" alt="" aria-hidden="true">
             <span>How the competition works</span>
           </h2>
-          <ol class="overview-prose-list">
-            <li><strong>Read the challenge and rules.</strong> Review the Case scope, allowed modifications, evaluation policy, and participation requirements.</li>
-            <li><strong>Develop and test the Agent locally.</strong> Use the Starter Kit and example Cases to implement the repair strategy and check the submission package.</li>
-            <li><strong>Run the Hosted Smoke Test.</strong> Upload an Agent version and verify its package, entry point, runtime, and protocol on lightweight public Cases.</li>
-            <li><strong>Freeze a version for Full Evaluation.</strong> Select a qualified, immutable Agent version for the organizer-run evaluation.</li>
-            <li><strong>Check the official results and leaderboard.</strong> Review the completed evaluation and compare the verified score with other teams.</li>
+          <ol class="overview-prose-list overview-competition-steps">
+            <li><strong>Develop</strong> — Build and test your Agent with the Starter Kit and public Cases.</li>
+            <li><strong>Qualify</strong> — Upload an Agent version and pass the Hosted Smoke Test.</li>
+            <li><strong>Compete</strong> — Freeze a qualified version for organizer-run evaluation and leaderboard ranking.</li>
           </ol>
         </div>
       </section>
@@ -178,14 +210,45 @@
             <img src="assets/overview-icons/evaluated.png" width="512" height="512" alt="" aria-hidden="true">
             <span>How are repairs evaluated?</span>
           </h2>
-          <p>Organizers run the submitted Agent separately on each competition Case. The Agent works on a writable copy of the package, and the platform derives a canonical <code>repair.diff</code> from the final workspace.</p>
-          <p>The platform then applies that patch to a clean copy of the Case and rebuilds the package in the official target-architecture environment. The patch must comply with the allowed-path policy, the build must complete, and the expected package artifacts must pass validation.</p>
-          <p>Repairs are not compared with a reference patch. Different solutions are accepted when they satisfy the policy and produce a genuine successful build.</p>
-          <p><a href="evaluation.html">Read the Evaluation Protocol</a> for the full validation stages and result definitions.</p>
+          <p>A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
+          <p>Solutions are judged by verified build results, not by similarity to a reference patch.</p>
+          <p class="overview-section-link"><a href="evaluation.html">Read the Evaluation Protocol <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
 
-      <section class="overview-section overview-last-section" aria-labelledby="dates-title">
+      <section class="overview-section overview-prizes-section" aria-labelledby="prizes-title">
+        <div class="overview-shell overview-reading-column">
+          <h2 id="prizes-title" class="overview-section-heading">
+            <img src="assets/overview-icons/trophy.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>Prizes</span>
+          </h2>
+          <ul class="overview-prize-list" aria-label="Cash prize awards">
+            <li>
+              <h3><span class="overview-prize-medal" aria-hidden="true">🥇</span><span>1st Prize</span></h3>
+              <p class="overview-prize-amount">$1,000 USD (approx. ¥6,800 RMB)</p>
+              <p class="overview-prize-count">1 team</p>
+            </li>
+            <li>
+              <h3><span class="overview-prize-medal" aria-hidden="true">🥈</span><span>2nd Prize</span></h3>
+              <p class="overview-prize-amount">$500 USD (approx. ¥3,400 RMB)</p>
+              <p class="overview-prize-count">2 teams</p>
+            </li>
+            <li>
+              <h3><span class="overview-prize-medal" aria-hidden="true">🥉</span><span>3rd Prize</span></h3>
+              <p class="overview-prize-amount">$250 USD (approx. ¥1,700 RMB)</p>
+              <p class="overview-prize-count">3 teams</p>
+            </li>
+          </ul>
+          <p class="overview-prize-total"><strong>Total Cash Prize Pool:</strong> <span>$2,750 USD (approx. ¥18,600 RMB)</span></p>
+          <div class="overview-attendance-support">
+            <h3>ICSE 2027 Attendance Support</h3>
+            <p>Winning teams will receive conference registration support, with additional partial travel assistance available subject to funding. Travel assistance is intended to offset attendance costs and does not guarantee full reimbursement.</p>
+          </div>
+          <p class="overview-section-link"><a href="rules.html">Prize &amp; Attendance Details <span aria-hidden="true">→</span></a></p>
+        </div>
+      </section>
+
+      <section class="overview-section" aria-labelledby="dates-title">
         <div class="overview-shell overview-reading-column">
           <h2 id="dates-title" class="overview-section-heading">
             <img src="assets/overview-icons/calendar.png" width="512" height="512" alt="" aria-hidden="true">
@@ -200,7 +263,7 @@
 
           <nav class="overview-page-links" aria-label="Competition detail pages">
             <span>More information:</span>
-            <a href="task.html">Task &amp; Dataset</a>
+            <a href="task.html">Challenge</a>
             <a href="submission.html">Submission Guide</a>
             <a href="evaluation.html">Evaluation Protocol</a>
             <a href="rules.html">Rules</a>
@@ -210,19 +273,25 @@
         </div>
       </section>
 
-      <section class="overview-section overview-last-section overview-organizers-section" aria-labelledby="organizers-title">
+      <section class="overview-section overview-last-section overview-references-section" aria-labelledby="references-title">
         <div class="overview-shell overview-reading-column">
-          <h2 id="organizers-title">Organizing Team</h2>
-          <p>The organizing team coordinates Case curation, platform development, validation, participant support, and competition operations.</p>
-          <ul class="overview-organizer-list" aria-label="Organizing team members">
-            <li><strong>Chenyu Zhao</strong></li>
-            <li><strong>Yihang Lin</strong></li>
-            <li><strong>Zihao Huang</strong></li>
-            <li><strong>An Xu</strong></li>
-            <li><strong>Chengtai Li</strong></li>
-          </ul>
+          <h2 id="references-title" class="overview-section-heading">
+            <img src="assets/overview-icons/reference.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>References</span>
+          </h2>
+          <ol class="overview-reference-list" aria-label="Build-Bench publications">
+            <li>
+              <span>Chenyu Zhao, Shenglin Zhang*, Zeshun Huang, Weilin Jin, Yongqian Sun, Dan Pei, Chaoyun Zhang, Qingwei Lin, Chetan Bansal, Saravan Rajmohan, Minghua Ma. Can Language Models Go Beyond Coding? Assessing the Capability of Language Models to Build Real-World Systems. ACM Transactions on Software Engineering and Methodology (TOSEM), 2026. (CCF A)</span>
+              <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">[paper]</a>
+            </li>
+            <li>
+              <span>Chenyu Zhao, Minghua Ma*, Shenglin Zhang, Zeshun Huang, Yongqian Sun, Chetan Bansal, Saravan Rajmohan, Dan Pei. EvidenT: An Evidence-Preserving Framework for Iterative System-Level Package Repair. ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA), 2026. (CCF A)</span>
+              <a href="https://conf.researchr.org/details/issta-2026/issta-2026-research-papers/203/EvidenT-An-Evidence-Preserving-Framework-for-Iterative-System-Level-Package-Repair" target="_blank" rel="noreferrer">[paper]</a>
+            </li>
+          </ol>
         </div>
       </section>
+
     </main>
 
     <footer class="site-footer overview-footer">

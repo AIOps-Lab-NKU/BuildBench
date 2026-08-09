@@ -8,12 +8,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260803-4" />
-    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260809-2" />
+    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
     <script src="i18n/submission.js?v=20260802-5" defer></script>
-    <script src="i18n.js?v=20260803-5" defer></script>
-    <script src="auth-client.js?v=20260803-2" defer></script>
-    <script src="app.js?v=20260803-2" defer></script>
+    <script src="i18n.js?v=20260809-2" defer></script>
+    <script src="auth-client.js?v=20260809-2" defer></script>
+    <script src="app.js?v=20260809-2" defer></script>
   </head>
   <body data-page="submission">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -22,7 +22,7 @@
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
-          <a href="index.html">Overview</a><a href="task.html">Task &amp; Data</a><a class="active" href="submission.html" aria-current="page">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="index.html">Overview</a><a href="task.html">Challenge</a><a class="active" href="submission.html" aria-current="page">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
         </nav>
       </div>
     </header>
@@ -64,18 +64,41 @@
           <section class="doc-section" id="quick-start">
             <span class="section-label">01 / Start</span>
             <h2>Quick start</h2>
-            <p>Run the official example first, then create, test, package, and upload your own Agent.</p>
+            <p>Choose the coding-agent path for tools such as Codex, Claude Code, Cursor, or Copilot, or follow the same workflow manually. Both paths produce the same submission ZIP and are evaluated identically.</p>
 
-            <h3>Before you begin</h3>
-            <p>You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. Run <code>./bb doctor</code> after downloading the Starter Kit to verify the local setup.</p>
+            <nav class="quick-start-path-links" aria-label="Quick start paths">
+              <a href="#coding-agent-quick-start">Coding Agent Quick Start</a>
+              <a href="#human-quick-start">Human Quick Start</a>
+            </nav>
 
-            <ol class="quick-start-steps" aria-label="Submission preparation steps">
+            <section class="coding-agent-start" id="coding-agent-quick-start" aria-labelledby="coding-agent-quick-start-title">
+              <span class="quick-start-path-label">Recommended for coding assistants</span>
+              <h3 id="coding-agent-quick-start-title">Coding Agent Quick Start</h3>
+              <p>Download and extract Starter Kit <code>v0.1.0-rc.2</code>, open its root directory in your coding assistant, and give it this instruction:</p>
+              <div class="code-block quick-start-command coding-agent-prompt"><pre><code>Read AGENTS.md before changing files. Bootstrap my-agent, implement the Repair Agent only in the generated Agent directory, then run the readiness workflow. Explain any failed check before changing configuration.</code></pre></div>
+              <p>The coding assistant should use the versioned contract in <code>AGENTS.md</code> and run:</p>
+              <div class="code-block quick-start-command"><pre><code>./bb bootstrap my-agent --json
+# After implementing agents/my-agent/src/
+./bb ready --agent ./agents/my-agent --json</code></pre></div>
+              <ol class="coding-agent-checks">
+                <li><code>bootstrap</code> checks the local environment and creates <code>agents/my-agent/</code> without silently overwriting existing work.</li>
+                <li><code>ready</code> snapshots that Agent, runs the released Example Cases and submission checks, and packages only a passing version.</li>
+                <li>Completion requires a JSON result with <code>"status": "succeeded"</code>, an existing ZIP, and a matching SHA-256.</li>
+              </ol>
+              <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: <code>dist/agent-submission.zip</code> is ready to upload. The coding assistant should report changed files, checks run, test results, ZIP path, and SHA-256.</span></p>
+            </section>
+
+            <section class="human-quick-start" id="human-quick-start" aria-labelledby="human-quick-start-title">
+              <h3 id="human-quick-start-title">Human Quick Start</h3>
+              <p>You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. The following granular commands expose every preparation step for manual use and debugging.</p>
+
+            <ol class="quick-start-steps" aria-label="Manual submission preparation steps">
               <li>
                 <span class="quick-start-number">01</span>
                 <div class="quick-start-step">
                   <strong>Get the Starter Kit</strong>
                   <p>Download the current ZIP from <a href="data-downloads.html">Data &amp; Downloads</a>, extract it in a Linux or WSL2 shell, and enter the versioned directory.</p>
-                  <div class="code-block quick-start-command"><pre><code>KIT_VERSION=0.1.0-rc.1
+                  <div class="code-block quick-start-command"><pre><code>KIT_VERSION=0.1.0-rc.2
 unzip "buildbench-starter-kit-${KIT_VERSION}.zip"
 cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <dl class="quick-start-details">
@@ -120,7 +143,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
 ./bb test --agent ./agents/my-agent</code></pre></div>
                   <dl class="quick-start-details">
-                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.1</code> contains one local Example Case, <code>hello</code>.</dd></div>
+                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.2</code> contains one local Example Case, <code>hello</code>.</dd></div>
                     <div><dt>Agent behavior</dt><dd>The entrypoint declared in <code>agent.yaml</code> runs once per Case. It reads <code>/workspace/input</code>, edits <code>/workspace/work/repo</code>, and writes <code>/workspace/output/agent-result.json</code>.</dd></div>
                   </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case patches, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
@@ -154,6 +177,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                 </div>
               </li>
             </ol>
+            </section>
 
             <p class="submission-case-scope">Different versioned Case sets are used for local examples, development, hosted Smoke Tests, and Full Evaluation. See <a href="data-downloads.html">Data &amp; Downloads</a> for their scope and release status.</p>
           </section>
@@ -251,7 +275,7 @@ protocol:
             </div>
 
             <h3>Build feedback</h3>
-            <p class="submission-inline-note info-note"><strong>Planned feature.</strong> Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit <code>v0.1.0-rc.1</code>.</p>
+            <p class="submission-inline-note info-note"><strong>Planned feature.</strong> Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit <code>v0.1.0-rc.2</code>.</p>
 
             <h3>Canonical patch</h3>
             <p>The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in the <a href="evaluation.html#case-evaluation">Evaluation Protocol</a>.</p>
@@ -278,7 +302,7 @@ protocol:
                 <li><code>/workspace/output/agent-result.json</code> contains <code>schema_version: "0.1"</code> and a supported status.</li>
                 <li>The Agent completes at least one released local Example Case.</li>
               </ul>
-              <p class="submission-inline-note info-note"><span>Released</span>Starter Kit <code>v0.1.0-rc.1</code> provides the local Runner, managed-Python template, one <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
+              <p class="submission-inline-note info-note"><span>Release candidate</span>Starter Kit <code>v0.1.0-rc.2</code> adds the coding-agent guide and high-level readiness workflow while retaining the local Runner, managed-Python template, one <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
             </div>
 
             <div class="submission-guide-subsection">

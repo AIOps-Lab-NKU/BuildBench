@@ -20,7 +20,7 @@
     "Close navigation": "关闭导航",
     "Primary navigation": "主导航",
     Overview: "概览",
-    "Task & Data": "任务与数据",
+    Challenge: "竞赛任务",
     Submission: "提交",
     Evaluation: "评测",
     Rules: "规则",

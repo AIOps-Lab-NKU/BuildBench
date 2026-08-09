@@ -1,117 +1,79 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.task = Object.freeze({
-  "Task & Dataset | Build-Bench Challenge": "任务与数据集 | Build-Bench Challenge",
-  "Build-Bench Challenge task definition, case format, dataset, and planned competition splits.":
-    "Build-Bench Challenge 的任务定义、Case 内容、数据集及竞赛数据划分。",
-  "Dataset splits and the final case schema will be frozen before launch.":
-    "数据集划分和最终 Case 结构将在竞赛启动前冻结。",
-  "Challenge specification": "竞赛任务说明",
-  "Task & Dataset": "任务与数据集",
-  "Build-Bench evaluates whether an Agent can repair a software package that builds successfully on one architecture but fails on another. The platform converts the Agent's final changes into a canonical patch and validates the repair in the official target-architecture build environment.":
-    "Build-Bench 评测 Agent 能否修复一个在某种架构上构建成功、但在另一种架构上构建失败的软件包。平台将 Agent 的最终修改转换为规范补丁，并在官方目标架构构建环境中验证修复。",
-  "Task flow": "任务流程",
-  "Cross-architecture failure": "跨架构构建失败",
-  "Agent diagnosis and repair": "Agent 诊断与修复",
-  "Clean target build": "干净环境中的目标架构构建",
+  "Challenge | Build-Bench": "竞赛任务 | Build-Bench",
+  "Build a runnable Agent that diagnoses and repairs real cross-architecture package build failures under executable verification.":
+    "构建可运行的 Agent，诊断并修复经过可执行验证的真实跨架构软件包构建失败。",
+  "Agent competition": "Agent 竞赛任务",
+  Challenge: "竞赛任务",
+  "Build an Agent that repairs real cross-architecture build failures":
+    "构建能够修复真实跨架构构建失败的 Agent",
+  "Build-Bench challenges teams to develop a runnable software-repair Agent for real packages that build successfully on one instruction-set architecture but fail when rebuilt on another.":
+    "Build-Bench 要求参赛团队开发一个可运行的软件修复 Agent，用于处理真实软件包在一个指令集架构上能够成功构建、迁移到另一架构后却发生构建失败的问题。",
+  "For each Case, the Agent investigates a failed build inside a prepared package workspace, modifies the permitted package files, and produces a repair that can be independently verified by the competition platform.":
+    "对于每个 Case，Agent 将进入准备好的软件包工作区，分析目标架构上的构建失败，修改允许范围内的软件包文件，并产生能够由竞赛平台独立验证的修复结果。",
+  "You submit a runnable Agent — not precomputed Case-by-Case patches.":
+    "参赛者提交的是可运行的 Agent，而不是针对每个 Case 预先生成的补丁。",
+  "Challenge summary": "竞赛任务摘要",
+  "268 reproducible failures": "268 个可复现失败",
+  "x86_64 ↔ aarch64": "x86_64 ↔ aarch64",
+  "Executable verification": "可执行验证",
   "On this page": "本页内容",
-  "In this article": "本文内容",
-  "Task definition": "任务定义",
-  "Case contents": "Case 内容",
-  "Repair and evaluation": "修复与评测",
-  "Dataset": "数据集",
-  "Splits and data integrity": "数据划分与完整性",
-  "Each Case begins with a software package that builds on a source instruction set architecture but fails when rebuilt on a target architecture. The Agent receives the package materials, architecture metadata, and initial failure evidence needed to diagnose that portability failure.":
-    "每个 Case 都从一个能在源指令集架构上构建、但在目标架构上重新构建时失败的软件包开始。Agent 会获得诊断该移植失败所需的软件包材料、架构元数据和初始失败证据。",
-  "The Agent may modify only the permitted package files. When the run ends, the platform derives a canonical":
-    "Agent 只能修改允许变更的软件包文件。运行结束后，平台会生成规范的",
-  "from the final workspace. The repair does not need to match an organizer-authored patch; it succeeds only when it passes the modification policy and completes the official target build on a clean Case.":
-    "。修复不需要与主办方编写的补丁一致；只有通过修改规则检查，并在干净 Case 上完成官方目标架构构建时，才算成功。",
-  "The downloadable Case schema is still being finalized. At the protocol level, every Case provides the following information:":
-    "可下载 Case 的结构仍在最终确定中。在协议层面，每个 Case 都会提供以下信息：",
-  "Package sources and packaging metadata.": "软件包源码与打包元数据。",
-  "Source archives, package specifications, existing patches, and auxiliary build files required by the task.":
-    "任务所需的源码归档、软件包规范、已有补丁和辅助构建文件。",
-  "Architecture information.": "架构信息。",
-  "The source architecture, target architecture, and build constraints used for validation.":
-    "用于验证的源架构、目标架构和构建约束。",
-  "Initial failure evidence.": "初始失败证据。",
-  "The failed target-architecture build log and related task metadata.":
-    "目标架构上的失败构建日志及相关任务元数据。",
-  "Build configuration.": "构建配置。",
-  "The configuration and dependency constraints required to reproduce the build environment.":
-    "复现构建环境所需的配置和依赖约束。",
-  "Integrity and modification policy.": "完整性与修改规则。",
-  "Case identifiers, checksums, immutable inputs, and the paths the Agent may change.":
-    "Case 标识、校验和、不可变输入以及 Agent 可以修改的路径。",
-  "A downloaded Case bundle, the Agent's runtime": "下载的 Case 包、Agent 运行时的",
-  ", and the Validator's internal dependency storage are separate interfaces. The final Case schema will be versioned with the Starter Kit; see the":
-    "和 Validator 的内部依赖存储属于不同接口。最终 Case 结构将随 Starter Kit 进行版本管理；请参阅",
-  "runtime interface": "运行时接口",
-  "for the directories visible to an Agent.": "了解 Agent 可见的目录。",
-  "The platform prepares an isolated Case workspace.": "平台准备隔离的 Case 工作区。",
-  "Immutable inputs and a writable package worktree are created for one Case run.":
-    "平台为一次 Case 运行创建不可变输入和可写的软件包工作树。",
-  "The Agent inspects the inputs and modifies the writable repository.":
-    "Agent 检查输入并修改可写仓库。",
-  "It can analyze the failure evidence, edit permitted files, and request build feedback within the published limits.":
-    "Agent 可以分析失败证据、编辑允许修改的文件，并在公布的限制内请求构建反馈。",
-  "The platform generates the canonical patch.": "平台生成规范补丁。",
-  "The final workspace is compared with the clean Case to produce the official":
-    "平台将最终工作区与干净 Case 进行比较，生成官方",
-  "The official Validator performs the target build.": "官方 Validator 执行目标架构构建。",
-  "The patch is applied to a clean Case and verified in the target-architecture build environment.":
-    "补丁会应用到干净 Case，并在目标架构构建环境中完成验证。",
-  "See the": "请参阅",
-  "Evaluation Protocol": "评测协议",
-  "for build feedback, status transitions, scoring, logs, and infrastructure-error handling.":
-    "了解构建反馈、状态转换、评分、日志和基础设施错误处理。",
-  "The published Build-Bench benchmark contains 268 reproducible failures collected from real open-source package builds. It covers system configuration issues, missing dependencies, architecture-specific source problems, and build-script incompatibilities.":
-    "已发布的 Build-Bench benchmark 包含 268 个从真实开源软件包构建中收集的可复现失败，覆盖系统配置问题、依赖缺失、架构特定源码问题和构建脚本不兼容。",
-  "Published benchmark by migration direction": "按迁移方向划分的已发布 benchmark",
-  "Published benchmark": "已发布 benchmark",
-  "Migration direction": "迁移方向",
-  "Cases": "Case 数量",
-  "Total": "总计",
-  "The competition dataset is being prepared from a larger, independently audited candidate pool. Candidate counts describe preparation progress, not the final number of accepted evaluation Cases.":
-    "竞赛数据集正在从一个规模更大、独立审核的候选池中准备。候选数量反映的是准备进度，并不等于最终通过验收的评测 Case 数量。",
-  "Competition candidate pool status": "竞赛候选池状态",
-  "Competition candidate pool": "竞赛候选池",
-  "Dataset status": "数据状态",
-  "Publication state": "发布状态",
-  "Public": "公开",
-  "Structurally complete candidates": "结构完整的候选 Case",
-  "Under audit": "审核中",
-  "Build or validation attempted": "已发起构建或验证尝试",
-  "Deduplicated candidates": "已去重候选",
-  "Target hidden-set size": "隐藏测试集目标规模",
-  "Not yet frozen": "尚未冻结",
-  "Based on the current pool and audit progress, the organizers aim to retain approximately 1,000 Cases for the final hidden evaluation. The exact number remains subject to integrity, licensing, deduplication, and reproducibility checks.":
-    "根据当前候选池和审核进度，主办方计划为最终隐藏评测保留约 1,000 个 Case。准确数量仍取决于完整性、许可证、去重和可复现性检查。",
-  "Competition dataset splits": "竞赛数据划分",
-  "Competition splits": "竞赛数据划分",
-  "Split": "数据集",
-  "Participant access": "参赛者访问方式",
-  "Purpose": "用途",
-  "Development": "开发集",
-  "Downloadable public Cases": "可下载的公开 Case",
-  "Local development and testing": "本地开发与测试",
-  "Validation": "验证集",
-  "Hosted evaluation with controlled feedback": "提供受控反馈的托管评测",
-  "Public competition phase": "公开竞赛阶段",
-  "Hidden test": "隐藏测试集",
-  "Organizer-only": "仅主办方可见",
-  "Final ranking": "最终排名",
-  "Cases will be grouped by package family and checked for semantic similarity so that near-duplicate packages do not leak across splits. The hidden set will be frozen from the competition-specific candidate pool rather than mixed with the published benchmark.":
-    "Case 将按软件包家族分组并检查语义相似性，避免近似重复的软件包跨数据集泄漏。隐藏测试集将从竞赛专用候选池中冻结，不会与已发布 benchmark 混用。",
-  "Before a Case is accepted, organizers review its provenance, license and redistribution conditions, reproducibility, and integrity metadata. When direct redistribution is not permitted, the release may provide reconstruction instructions instead of the original artifact.":
-    "在接收 Case 前，主办方会审核其来源、许可证与再分发条件、可复现性和完整性元数据。若不允许直接再分发，发布内容可能提供重建说明，而不提供原始制品。",
-  "Data status": "数据状态",
-  "Final split sizes, per-Case timeouts, submission limits, and the validation protocol will be frozen and published before the public competition phase.":
-    "最终数据集规模、单 Case 超时、提交限制和验证协议将在公开竞赛阶段前冻结并发布。",
-  "Next steps": "后续步骤",
-  "Data & Downloads": "数据与下载",
-  "Get the Starter Kit and released competition resources.": "获取 Starter Kit 和已发布的竞赛资源。",
-  "Agent Submission Guide": "Agent 提交指南",
-  "Prepare, test, and package a runnable Agent.": "准备、测试并打包可运行的 Agent。",
-  "Review build feedback, status handling, and scoring.": "查看构建反馈、状态处理和评分规则。",
+  "Why this challenge?": "为什么设置这个 Challenge？",
+  "Your mission": "你的任务",
+  "What your Agent works with": "Agent 会获得什么？",
+  "What your Agent can do": "Agent 可以做什么？",
+  "The repair lifecycle": "修复过程",
+  "What counts as solved?": "怎样才算解决一个 Case？",
+  "Benchmark scope": "Benchmark 范围",
+  "Start building": "开始构建你的 Agent",
+  "Modern software increasingly needs to run across heterogeneous architectures, toolchains, dependencies, and packaging environments. A package that works on one architecture may fail on another because of architecture-specific code, build configuration, dependencies, compiler behavior, or packaging rules.":
+    "现代软件需要运行在越来越多样的硬件架构、工具链、依赖和软件包环境中。同一个软件包可能因为架构相关代码、构建配置、依赖、编译器行为或打包规则，在一种架构上正常构建，却在另一种架构上失败。",
+  "Can an autonomous Agent diagnose a real build failure and repair the package end to end?":
+    "自主 Agent 能否诊断真实构建失败，并端到端地完成软件包修复？",
+  "The challenge focuses on repairs that work in a real build environment, rather than changes that merely look similar to a reference solution.":
+    "Challenge 关注修复结果能否在真实构建环境中成立，而不是修复文本是否与某个参考答案相似。",
+  "Each Case starts from a real software package that builds successfully on a source architecture but fails on a target architecture.":
+    "每个 Case 都来自一个真实软件包：它能够在源架构上成功构建，但在目标架构上构建失败。",
+  "Your Agent receives a prepared package workspace and the initial failure context. It must investigate the cause of the failure and modify the permitted package files so that the package can be rebuilt successfully for the target architecture.":
+    "Agent 会获得准备好的软件包工作区和初始失败上下文，需要自主定位失败原因，并修改允许范围内的软件包文件，使软件包最终能够在目标架构上重新成功构建。",
+  "During official evaluation, the Agent must complete this task autonomously under the competition runtime and rules.":
+    "正式评测期间，Agent 必须在竞赛规定的运行环境和规则下自主完成这一过程。",
+  "At the beginning of a Case, the Agent is given the package workspace, source and target architecture information, the initial failed-build evidence, and the packaging and build context included with that Case.":
+    "在每个 Case 开始时，Agent 会获得软件包工作区、源架构与目标架构信息、初始构建失败证据，以及 Case 中包含的打包和构建上下文。",
+  "The workspace may contain source code, packaging files, build scripts, existing package-side patches, metadata, and other files relevant to diagnosing the failure.":
+    "工作区可能包括源码、软件包配置文件、构建脚本、已有的软件包补丁、元数据以及其他与故障诊断相关的文件。",
+  "See the detailed, versioned runtime specification": "查看详细的版本化运行时规范",
+  "The Agent may inspect the available package and build context, reason about the failure, and modify files within the permitted package paths using the tools available in the official runtime.":
+    "Agent 可以检查软件包和构建上下文、分析失败原因，并使用官方运行环境提供的工具，在允许的路径范围内修改文件。",
+  "Runtime limits, network policy, resource limits, allowed modification scope, and other execution constraints are defined separately in the competition documentation.":
+    "具体的运行时限制、网络策略、资源限制、可修改范围和其他执行约束在竞赛文档中另行说明。",
+  "Read the Submission Guide": "查看 Submission Guide",
+  "Read the Rules": "查看 Rules",
+  "Repair lifecycle": "修复过程",
+  "Case workspace": "Case 工作区",
+  "Agent diagnosis & repair": "Agent 诊断与修复",
+  "Final workspace": "最终工作区",
+  "Clean target rebuild": "干净环境中的目标架构重新构建",
+  "The organizer runs each qualified Agent in a controlled Case workspace. After the run, the platform captures the Agent's final changes and derives the repair used for verification.":
+    "组织方会在受控的 Case 工作区中运行通过资格检查的 Agent。运行结束后，平台获取 Agent 的最终修改，并生成用于正式验证的修复结果。",
+  "The repair is then applied to a clean copy of the Case and evaluated in the official target-architecture build environment.":
+    "随后，该修复会被重新应用到一个干净的 Case 副本，并在官方目标架构构建环境中执行验证。",
+  "A Case is solved only when the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.":
+    "只有当 Agent 的最终修改能够重新应用到干净 Case，并使软件包在官方目标架构环境中成功完成构建时，该 Case 才被视为修复成功。",
+  "Repairs are judged by verified build results, not by similarity to a reference patch.":
+    "修复结果由真实构建结果判定，而不是通过与参考补丁进行文本相似度比较。",
+  "Read the Evaluation Protocol": "查看 Evaluation Protocol",
+  "The published Build-Bench benchmark contains 268 reproducible cross-architecture package build failures across two migration directions:":
+    "已公开的 Build-Bench benchmark 包含 268 个可复现的跨架构软件包构建失败，覆盖两个迁移方向：",
+  "Benchmark migration directions": "Benchmark 架构迁移方向",
+  "x86_64 → aarch64": "x86_64 → aarch64",
+  "aarch64 → x86_64": "aarch64 → x86_64",
+  "The published benchmark provides the research foundation and public development resources for the competition. Competition resources and evaluation Case sets follow the official versioned releases and evaluation protocol.":
+    "已公开 benchmark 为竞赛的研究基础和公开开发资源。竞赛使用的资源和评测 Case 以官方版本化发布及 Evaluation Protocol 为准。",
+  "View the Build-Bench Benchmark": "查看 Build-Bench Benchmark",
+  "Ready to build your Agent?": "准备开始了吗？",
+  "Use the Starter Kit and example Cases to understand the workspace, test your Agent locally, and prepare a qualified submission.":
+    "使用 Starter Kit 和 Example Cases 熟悉工作区、本地测试 Agent，并准备通过资格检查的正式提交。",
+  "Start building links": "开始构建链接",
+  "Get the Starter Kit": "获取 Starter Kit",
 });

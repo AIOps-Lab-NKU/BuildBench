@@ -19,7 +19,7 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "What is Build-Bench, and what does a Team submit?": "Build-Bench 是什么，团队需要提交什么？",
   "Build-Bench evaluates runnable software repair Agents on real package build failures. A Team submits Agent source and a versioned runtime manifest; the organizers run that Agent independently on competition Cases. Teams do not submit pre-generated repair patches or a Docker image as their competition entry.":
     "Build-Bench 使用真实软件包构建失败来评测可运行的软件修复 Agent。团队提交 Agent 源码和版本化运行清单，由组织者在竞赛 Case 上独立运行该 Agent。团队不以预生成修复补丁或 Docker 镜像作为竞赛提交。",
-  "Read the task definition": "阅读任务定义",
+  "Read the Challenge": "查看竞赛任务",
   "How does Team registration work?": "团队如何注册？",
   "One Team leader creates the account and enters the complete roster. A Team may contain up to five people including the leader. Every member email is required, and the same email cannot appear in another Team.":
     "由一名团队负责人创建账号并录入完整成员名单。每支团队最多五人，包括负责人。每位成员必须填写邮箱，同一邮箱不能出现在其他团队中。",

@@ -3,150 +3,132 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Build-Bench Challenge task definition, case format, dataset, and planned competition splits." />
-    <title>Task &amp; Dataset | Build-Bench Challenge</title>
+    <meta name="description" content="Build a runnable Agent that diagnoses and repairs real cross-architecture package build failures under executable verification." />
+    <title>Challenge | Build-Bench</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/task.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260803-4" />
-    <script src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js" defer></script>
-    <script src="i18n/task.js?v=20260802-3" defer></script>
-    <script src="i18n.js?v=20260803-5" defer></script>
-    <script src="auth-client.js?v=20260803-2" defer></script>
-    <script src="app.js?v=20260803-2" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260809-2" />
+    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
+    <script src="i18n/task.js?v=20260809-1" defer></script>
+    <script src="i18n.js?v=20260809-2" defer></script>
+    <script src="auth-client.js?v=20260809-2" defer></script>
+    <script src="app.js?v=20260809-2" defer></script>
   </head>
   <body class="task-page docs-page" data-page="task">
     <a class="skip-link" href="#main-content">Skip to main content</a>
-    <div class="status-strip" role="status"><span class="status-strip-label">Organizer preview</span><span>Dataset splits and the final case schema will be frozen before launch.</span></div>
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
-          <a href="index.html">Overview</a><a class="active" href="task.html" aria-current="page">Task &amp; Data</a><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="index.html">Overview</a><a class="active" href="task.html" aria-current="page">Challenge</a><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
         </nav>
       </div>
     </header>
 
     <main id="main-content">
-      <section class="page-masthead task-masthead">
+      <section class="page-masthead task-masthead" aria-labelledby="challenge-page-title">
         <div class="content-wrap">
           <div class="task-masthead-copy">
-            <span class="page-kicker">Challenge specification</span>
-            <h1>Task &amp; Dataset</h1>
-            <p>Build-Bench evaluates whether an Agent can repair a software package that builds successfully on one architecture but fails on another. The platform converts the Agent's final changes into a canonical patch and validates the repair in the official target-architecture build environment.</p>
-            <ol class="task-flow" aria-label="Task flow">
-              <li>Cross-architecture failure</li>
-              <li>Agent diagnosis and repair</li>
-              <li>Clean target build</li>
-            </ol>
+            <span class="page-kicker">Agent competition</span>
+            <h1 id="challenge-page-title">Challenge</h1>
+            <p class="challenge-headline">Build an Agent that repairs real cross-architecture build failures</p>
+            <p>Build-Bench challenges teams to develop a runnable software-repair Agent for real packages that build successfully on one instruction-set architecture but fail when rebuilt on another.</p>
+            <p>For each Case, the Agent investigates a failed build inside a prepared package workspace, modifies the permitted package files, and produces a repair that can be independently verified by the competition platform.</p>
+            <p class="challenge-submission-principle">You submit a runnable Agent — not precomputed Case-by-Case patches.</p>
+            <ul class="challenge-meta" aria-label="Challenge summary">
+              <li>268 reproducible failures</li>
+              <li>x86_64 ↔ aarch64</li>
+              <li>Executable verification</li>
+            </ul>
           </div>
         </div>
       </section>
 
       <div class="content-wrap task-doc-layout">
         <aside class="page-rail task-toc" aria-label="On this page">
-          <strong>In this article</strong>
+          <strong>On this page</strong>
           <nav>
-            <a href="#task-definition">Task definition</a>
-            <a href="#case-contents">Case contents</a>
-            <a href="#repair-evaluation">Repair and evaluation</a>
-            <a href="#dataset">Dataset</a>
-            <a href="#splits-integrity">Splits and data integrity</a>
+            <a href="#why-this-challenge">Why this challenge?</a>
+            <a href="#your-mission">Your mission</a>
+            <a href="#agent-inputs">What your Agent works with</a>
+            <a href="#agent-actions">What your Agent can do</a>
+            <a href="#repair-lifecycle">The repair lifecycle</a>
+            <a href="#solved">What counts as solved?</a>
+            <a href="#benchmark-scope">Benchmark scope</a>
+            <a href="#start-building">Start building</a>
           </nav>
         </aside>
 
         <article class="page-document task-document">
-          <section class="docs-section" id="task-definition">
-            <h2>Task definition</h2>
-            <p>Each Case begins with a software package that builds on a source instruction set architecture but fails when rebuilt on a target architecture. The Agent receives the package materials, architecture metadata, and initial failure evidence needed to diagnose that portability failure.</p>
-            <p>The Agent may modify only the permitted package files. When the run ends, the platform derives a canonical <code>repair.diff</code> from the final workspace. The repair does not need to match an organizer-authored patch; it succeeds only when it passes the modification policy and completes the official target build on a clean Case.</p>
+          <section class="docs-section" id="why-this-challenge">
+            <h2>Why this challenge?</h2>
+            <p>Modern software increasingly needs to run across heterogeneous architectures, toolchains, dependencies, and packaging environments. A package that works on one architecture may fail on another because of architecture-specific code, build configuration, dependencies, compiler behavior, or packaging rules.</p>
+            <p class="challenge-question">Can an autonomous Agent diagnose a real build failure and repair the package end to end?</p>
+            <p>The challenge focuses on repairs that work in a real build environment, rather than changes that merely look similar to a reference solution.</p>
           </section>
 
-          <section class="docs-section" id="case-contents">
-            <h2>Case contents</h2>
-            <p>The downloadable Case schema is still being finalized. At the protocol level, every Case provides the following information:</p>
-            <ul class="task-reference-list">
-              <li><strong>Package sources and packaging metadata.</strong> Source archives, package specifications, existing patches, and auxiliary build files required by the task.</li>
-              <li><strong>Architecture information.</strong> The source architecture, target architecture, and build constraints used for validation.</li>
-              <li><strong>Initial failure evidence.</strong> The failed target-architecture build log and related task metadata.</li>
-              <li><strong>Build configuration.</strong> The configuration and dependency constraints required to reproduce the build environment.</li>
-              <li><strong>Integrity and modification policy.</strong> Case identifiers, checksums, immutable inputs, and the paths the Agent may change.</li>
-            </ul>
-            <p>A downloaded Case bundle, the Agent's runtime <code>/workspace/</code>, and the Validator's internal dependency storage are separate interfaces. The final Case schema will be versioned with the Starter Kit; see the <a href="submission.html#runtime-interface">runtime interface</a> for the directories visible to an Agent.</p>
+          <section class="docs-section" id="your-mission">
+            <h2>Your mission</h2>
+            <p>Each Case starts from a real software package that builds successfully on a source architecture but fails on a target architecture.</p>
+            <p>Your Agent receives a prepared package workspace and the initial failure context. It must investigate the cause of the failure and modify the permitted package files so that the package can be rebuilt successfully for the target architecture.</p>
+            <p>During official evaluation, the Agent must complete this task autonomously under the competition runtime and rules.</p>
           </section>
 
-          <section class="docs-section" id="repair-evaluation">
-            <h2>Repair and evaluation</h2>
-            <ol class="task-steps">
-              <li><div><strong>The platform prepares an isolated Case workspace.</strong><p>Immutable inputs and a writable package worktree are created for one Case run.</p></div></li>
-              <li><div><strong>The Agent inspects the inputs and modifies the writable repository.</strong><p>It can analyze the failure evidence, edit permitted files, and request build feedback within the published limits.</p></div></li>
-              <li><div><strong>The platform generates the canonical patch.</strong><p>The final workspace is compared with the clean Case to produce the official <code>repair.diff</code>.</p></div></li>
-              <li><div><strong>The official Validator performs the target build.</strong><p>The patch is applied to a clean Case and verified in the target-architecture build environment.</p></div></li>
+          <section class="docs-section" id="agent-inputs">
+            <h2>What your Agent works with</h2>
+            <p>At the beginning of a Case, the Agent is given the package workspace, source and target architecture information, the initial failed-build evidence, and the packaging and build context included with that Case.</p>
+            <p>The workspace may contain source code, packaging files, build scripts, existing package-side patches, metadata, and other files relevant to diagnosing the failure.</p>
+            <p class="challenge-section-link"><a href="submission.html#runtime-interface">See the detailed, versioned runtime specification <span aria-hidden="true">→</span></a></p>
+          </section>
+
+          <section class="docs-section" id="agent-actions">
+            <h2>What your Agent can do</h2>
+            <p>The Agent may inspect the available package and build context, reason about the failure, and modify files within the permitted package paths using the tools available in the official runtime.</p>
+            <p>Runtime limits, network policy, resource limits, allowed modification scope, and other execution constraints are defined separately in the competition documentation.</p>
+            <p class="challenge-inline-links"><a href="submission.html">Read the Submission Guide <span aria-hidden="true">→</span></a><a href="rules.html">Read the Rules <span aria-hidden="true">→</span></a></p>
+          </section>
+
+          <section class="docs-section" id="repair-lifecycle">
+            <h2>The repair lifecycle</h2>
+            <ol class="challenge-lifecycle" aria-label="Repair lifecycle">
+              <li>Case workspace</li>
+              <li>Agent diagnosis &amp; repair</li>
+              <li>Final workspace</li>
+              <li>Clean target rebuild</li>
             </ol>
-            <p>See the <a href="evaluation.html">Evaluation Protocol</a> for build feedback, status transitions, scoring, logs, and infrastructure-error handling.</p>
+            <p>The organizer runs each qualified Agent in a controlled Case workspace. After the run, the platform captures the Agent's final changes and derives the repair used for verification.</p>
+            <p>The repair is then applied to a clean copy of the Case and evaluated in the official target-architecture build environment.</p>
           </section>
 
-          <section class="docs-section" id="dataset">
-            <h2>Dataset</h2>
-            <p>The published Build-Bench benchmark contains 268 reproducible failures collected from real open-source package builds. It covers system configuration issues, missing dependencies, architecture-specific source problems, and build-script incompatibilities.</p>
-
-            <div class="task-table-wrap" tabindex="0" aria-label="Published benchmark by migration direction">
-              <table class="task-table">
-                <caption>Published benchmark</caption>
-                <thead><tr><th scope="col">Migration direction</th><th class="numeric" scope="col">Cases</th></tr></thead>
-                <tbody>
-                  <tr><td>x86_64 &rarr; aarch64</td><td class="numeric">163</td></tr>
-                  <tr><td>aarch64 &rarr; x86_64</td><td class="numeric">105</td></tr>
-                  <tr class="task-table-total"><th scope="row">Total</th><td class="numeric">268</td></tr>
-                </tbody>
-              </table>
-            </div>
-
-            <p>The competition dataset is being prepared from a larger, independently audited candidate pool. Candidate counts describe preparation progress, not the final number of accepted evaluation Cases.</p>
-            <div class="task-table-wrap" tabindex="0" aria-label="Competition candidate pool status">
-              <table class="task-table">
-                <caption>Competition candidate pool</caption>
-                <thead><tr><th scope="col">Dataset status</th><th class="numeric" scope="col">Cases</th><th scope="col">Publication state</th></tr></thead>
-                <tbody>
-                  <tr><td>Published benchmark</td><td class="numeric">268</td><td>Public</td></tr>
-                  <tr><td>Structurally complete candidates</td><td class="numeric">1,687</td><td>Under audit</td></tr>
-                  <tr><td>Build or validation attempted</td><td class="numeric">1,074</td><td>Deduplicated candidates</td></tr>
-                  <tr><td>Target hidden-set size</td><td class="numeric">&asymp;1,000</td><td>Not yet frozen</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p>Based on the current pool and audit progress, the organizers aim to retain approximately 1,000 Cases for the final hidden evaluation. The exact number remains subject to integrity, licensing, deduplication, and reproducibility checks.</p>
+          <section class="docs-section" id="solved">
+            <h2>What counts as solved?</h2>
+            <p>A Case is solved only when the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
+            <p>Repairs are judged by verified build results, not by similarity to a reference patch.</p>
+            <p class="challenge-section-link"><a href="evaluation.html">Read the Evaluation Protocol <span aria-hidden="true">→</span></a></p>
           </section>
 
-          <section class="docs-section" id="splits-integrity">
-            <h2>Splits and data integrity</h2>
-            <div class="task-table-wrap" tabindex="0" aria-label="Competition dataset splits">
-              <table class="task-table">
-                <caption>Competition splits</caption>
-                <thead><tr><th scope="col">Split</th><th scope="col">Participant access</th><th scope="col">Purpose</th></tr></thead>
-                <tbody>
-                  <tr><th scope="row">Development</th><td>Downloadable public Cases</td><td>Local development and testing</td></tr>
-                  <tr><th scope="row">Validation</th><td>Hosted evaluation with controlled feedback</td><td>Public competition phase</td></tr>
-                  <tr><th scope="row">Hidden test</th><td>Organizer-only</td><td>Final ranking</td></tr>
-                </tbody>
-              </table>
-            </div>
-            <p>Cases will be grouped by package family and checked for semantic similarity so that near-duplicate packages do not leak across splits. The hidden set will be frozen from the competition-specific candidate pool rather than mixed with the published benchmark.</p>
-            <p>Before a Case is accepted, organizers review its provenance, license and redistribution conditions, reproducibility, and integrity metadata. When direct redistribution is not permitted, the release may provide reconstruction instructions instead of the original artifact.</p>
-            <aside class="task-note info-note" aria-label="Data status">
-              <strong>Data status</strong>
-              <p>Final split sizes, per-Case timeouts, submission limits, and the validation protocol will be frozen and published before the public competition phase.</p>
-            </aside>
+          <section class="docs-section" id="benchmark-scope">
+            <h2>Benchmark scope</h2>
+            <p>The published Build-Bench benchmark contains 268 reproducible cross-architecture package build failures across two migration directions:</p>
+            <dl class="challenge-benchmark-directions" aria-label="Benchmark migration directions">
+              <div><dt>163</dt><dd>x86_64 → aarch64</dd></div>
+              <div><dt>105</dt><dd>aarch64 → x86_64</dd></div>
+            </dl>
+            <p>The published benchmark provides the research foundation and public development resources for the competition. Competition resources and evaluation Case sets follow the official versioned releases and evaluation protocol.</p>
+            <p class="challenge-section-link"><a href="https://github.com/AIOps-Lab-NKU/BuildBench" target="_blank" rel="noreferrer">View the Build-Bench Benchmark <span aria-hidden="true">↗</span></a></p>
           </section>
 
-          <section class="task-next-steps" aria-labelledby="next-steps-heading">
-            <h2 id="next-steps-heading">Next steps</h2>
-            <ul>
-              <li><a href="data-downloads.html"><strong>Data &amp; Downloads</strong><span>Get the Starter Kit and released competition resources.</span></a></li>
-              <li><a href="submission.html"><strong>Agent Submission Guide</strong><span>Prepare, test, and package a runnable Agent.</span></a></li>
-              <li><a href="evaluation.html"><strong>Evaluation Protocol</strong><span>Review build feedback, status handling, and scoring.</span></a></li>
-            </ul>
+          <section class="docs-section challenge-start" id="start-building">
+            <h2>Start building</h2>
+            <p class="challenge-ready">Ready to build your Agent?</p>
+            <p>Use the Starter Kit and example Cases to understand the workspace, test your Agent locally, and prepare a qualified submission.</p>
+            <nav class="challenge-start-links" aria-label="Start building links">
+              <a href="data-downloads.html">Get the Starter Kit <span aria-hidden="true">→</span></a>
+              <a href="submission.html">Read the Submission Guide <span aria-hidden="true">→</span></a>
+              <a href="evaluation.html">Read the Evaluation Protocol <span aria-hidden="true">→</span></a>
+            </nav>
           </section>
         </article>
       </div>

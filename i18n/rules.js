@@ -22,8 +22,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
   "A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.":
     "团队提交一个可运行的软件修复 Agent。对于每个 Case，Agent 接收已发布的软件包材料和构建失败证据，诊断故障并修改允许变更的软件包工作区。主办方在正式目标环境中评测由此产生的修改。",
   "1.3 Participant documentation": "1.3 参赛文档",
-  "The Task & Data page defines the challenge and released Case sets. The Submission Guide defines the Agent package and runtime interface. The Evaluation Protocol defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
-    "“任务与数据”页面定义竞赛任务和已发布的 Case 集；“提交指南”定义 Agent 包和运行接口；“评测协议”定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
+  "The Challenge page defines the competition task and released Case sets. The Submission Guide defines the Agent package and runtime interface. The Evaluation Protocol defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
+    "“竞赛任务”页面定义竞赛任务和已发布的 Case 集；“提交指南”定义 Agent 包和运行接口；“评测协议”定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
   "Submission Guide": "提交指南",
   "Evaluation Protocol": "评测协议",
 

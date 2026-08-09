@@ -16,6 +16,28 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Upload Agent": "上传 Agent",
   "On this page": "本页目录",
   "Quick start": "快速开始",
+  "Choose the coding-agent path for tools such as Codex, Claude Code, Cursor, or Copilot, or follow the same workflow manually. Both paths produce the same submission ZIP and are evaluated identically.":
+    "使用 Codex、Claude Code、Cursor 或 Copilot 等工具时，可选择编程 Agent 路径；也可手动执行同一流程。两条路径生成相同的提交 ZIP，并按相同规则评测。",
+  "Quick start paths": "快速开始路径",
+  "Coding Agent Quick Start": "编程 Agent 快速开始",
+  "Human Quick Start": "人工操作快速开始",
+  "Recommended for coding assistants": "推荐编程助手使用",
+  "Download and extract Starter Kit": "下载并解压 Starter Kit",
+  ", open its root directory in your coding assistant, and give it this instruction:":
+    "，在编程助手中打开其根目录，然后向它提供以下指令：",
+  "The coding assistant should use the versioned contract in": "编程助手应使用以下文件中的版本化合约：",
+  "and run:": "并执行：",
+  "checks the local environment and creates": "检查本地环境并创建",
+  "without silently overwriting existing work.": "，不会静默覆盖现有工作。",
+  "snapshots that Agent, runs the released Example Cases and submission checks, and packages only a passing version.":
+    "对该 Agent 建立快照，运行已发布的 Example Case 和提交检查，并且只打包通过所有检查的版本。",
+  "Completion requires a JSON result with": "完成需要 JSON 结果中包含",
+  ", an existing ZIP, and a matching SHA-256.": "，同时 ZIP 必须存在且 SHA-256 匹配。",
+  "Expected:": "预期结果：",
+  "is ready to upload. The coding assistant should report changed files, checks run, test results, ZIP path, and SHA-256.":
+    "已可上传。编程助手应报告修改的文件、已执行的检查、测试结果、ZIP 路径和 SHA-256。",
+  "You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. The following granular commands expose every preparation step for manual use and debugging.":
+    "你需要 Linux 或 WSL2 Shell、Git，以及 Docker Engine 24+ 或使用 Linux 容器的 Docker Desktop。以下细粒度命令保留了所有准备步骤，便于手动使用和调试。",
   "Submission contents": "提交内容",
   "Runtime interface": "运行接口",
   "Test your submission": "测试你的提交",
@@ -399,6 +421,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "The Agent completes at least one released local Example Case.":
     "Agent 至少能够完成一个已发布的本地 Example Case。",
   "Released": "已发布",
+  "Release candidate": "发布候选版",
+  "adds the coding-agent guide and high-level readiness workflow while retaining the local Runner, managed-Python template, one":
+    "增加了编程 Agent 指南和高层就绪检查流程，同时保留本地 Runner、托管 Python 模板和一个",
   "Starter Kit": "Starter Kit",
   "provides the local Runner, managed-Python template, one": "提供本地 Runner、托管 Python 模板、1 个",
   "Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.":

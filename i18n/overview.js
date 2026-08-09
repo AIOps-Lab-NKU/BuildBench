@@ -19,7 +19,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Teams submit a runnable repair Agent. Organizers run each qualified Agent on competition Cases, generate a canonical repair patch from its work, and verify the repair by rebuilding the clean package in the target environment.":
     "参赛团队提交一个可运行的修复 Agent。组织者在竞赛 Case 上运行每个通过检查的 Agent，根据其工作区生成规范化修复补丁，并在干净的目标环境中重新构建软件包以验证修复。",
   "Get the Starter Kit": "获取 Starter Kit",
-  "Explore Task & Dataset": "查看任务与数据集",
   "Explore the Challenge": "了解竞赛任务",
   "Primary actions": "主要操作",
   "A repair Agent transforms a broken software package into a validated build artifact":
@@ -28,7 +27,7 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Competition partners": "赛事组织与合作",
   "Official track": "官方赛道",
   "Organized by": "组织方",
-  "Nankai University · Build-Bench Team": "南开大学 · Build-Bench 团队",
+  "Build-Bench Team · Microsoft": "Build-Bench 团队 · 微软",
   "Industry collaboration": "产业合作",
   "Microsoft": "微软",
   "Benchmark workflow": "基准工作流",
@@ -38,43 +37,48 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
   "The published Build-Bench workflow connects package evidence, iterative Agent repair, and executable build verification.":
     "Build-Bench 工作流将软件包证据、Agent 迭代修复与可执行的构建验证连接起来。",
+  "Organizers": "组织者",
+  "Organizers and homepage links": "组织者及其个人主页链接",
+  "Homepage": "个人主页",
+  "Homepage link to be announced": "个人主页链接待公布",
   "What is the challenge?": "竞赛任务是什么？",
-  "A Case represents a real software package that builds on a source instruction-set architecture but fails when rebuilt for a target architecture. The published Build-Bench benchmark contains 268 reproducible failures across x86_64 and aarch64 migration directions.":
-    "每个 Case 都对应一个真实软件包：它能在源指令集架构上完成构建，但迁移到目标架构后构建失败。已发布的 Build-Bench Benchmark 包含 268 个可复现失败，覆盖 x86_64 与 aarch64 迁移方向。",
-  "The Agent receives the package sources and packaging files, source and target architecture metadata, and the initial failed target-build log. It can inspect existing patches and auxiliary build files, then modify only the package paths permitted by the Case.":
-    "Agent 会获得软件包源码与打包文件、源架构和目标架构元数据，以及目标构建的初始失败日志。它可以检查已有补丁和辅助构建文件，但只能修改 Case 允许的软件包路径。",
-  "Repairs may involve dependency declarations, architecture-specific source code, unsupported compiler options, packaging rules, tests, or build scripts. The goal is to correct the portability failure without bypassing the required build or validation steps.":
-    "修复可能涉及依赖声明、架构相关源码、不受支持的编译器选项、打包规则、测试或构建脚本。目标是在不绕过必要构建与验证步骤的前提下解决可移植性故障。",
-  "Cross-architecture failure example": "跨架构构建失败示例",
-  "Example.": "示例。",
-  "A compiler option accepted by an x86_64 toolchain may be rejected during an aarch64 build. A valid repair might apply that option only where it is supported while preserving the package's normal build and tests.":
-    "某个被 x86_64 工具链接受的编译选项，可能在 aarch64 构建中被拒绝。有效修复可以只在支持该选项的环境中启用它，同时保留软件包的正常构建与测试。",
+  "Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.":
+    "Build-Bench 要求参赛团队开发一个 Agent，用于修复在一种架构上构建成功、迁移到另一种架构后构建失败的真实软件包。已发布的 Benchmark 包含 268 个可复现的 x86_64 ↔ aarch64 构建失败。",
+  "For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.":
+    "对于每个 Case，Agent 会获得软件包工作区和构建失败上下文，并通过修改允许的文件来恢复目标架构上的成功构建。",
   "How the competition works": "如何参加竞赛",
-  "Read the challenge and rules.": "阅读任务和规则。",
-  "Review the Case scope, allowed modifications, evaluation policy, and participation requirements.":
-    "了解 Case 范围、允许修改的内容、评测政策和参赛要求。",
-  "Develop and test the Agent locally.": "在本地开发并测试 Agent。",
-  "Use the Starter Kit and example Cases to implement the repair strategy and check the submission package.":
-    "使用 Starter Kit 和示例 Case 实现修复策略，并检查提交包。",
-  "Run the Hosted Smoke Test.": "运行平台冒烟测试。",
-  "Upload an Agent version and verify its package, entry point, runtime, and protocol on lightweight public Cases.":
-    "上传一个 Agent 版本，并通过轻量公开 Case 检查打包结构、入口、运行环境和协议。",
-  "Freeze a version for Full Evaluation.": "冻结用于完整评测的版本。",
-  "Select a qualified, immutable Agent version for the organizer-run evaluation.":
-    "选择一个已通过检查且不可变的 Agent 版本，由组织者运行评测。",
-  "Check the official results and leaderboard.": "查看官方结果和排行榜。",
-  "Review the completed evaluation and compare the verified score with other teams.":
-    "查看已完成的评测，并将经过验证的成绩与其他队伍进行比较。",
+  "Develop": "开发",
+  "— Build and test your Agent with the Starter Kit and public Cases.":
+    "— 使用 Starter Kit 和公开 Case 开发并测试你的 Agent。",
+  "Qualify": "资格验证",
+  "— Upload an Agent version and pass the Hosted Smoke Test.":
+    "— 上传一个 Agent 版本并通过 Hosted Smoke Test。",
+  "Compete": "正式竞赛",
+  "— Freeze a qualified version for organizer-run evaluation and leaderboard ranking.":
+    "— 冻结一个已通过资格验证的版本，由组织者运行评测并生成排行榜名次。",
   "How are repairs evaluated?": "修复如何评测？",
-  "Organizers run the submitted Agent separately on each competition Case. The Agent works on a writable copy of the package, and the platform derives a canonical":
-    "组织者会在每个竞赛 Case 上分别运行提交的 Agent。Agent 在软件包的可写副本上工作，平台根据最终工作区生成规范化",
-  "from the final workspace.": "。",
-  "The platform then applies that patch to a clean copy of the Case and rebuilds the package in the official target-architecture environment. The patch must comply with the allowed-path policy, the build must complete, and the expected package artifacts must pass validation.":
-    "随后，平台把该补丁应用到干净的 Case 副本，并在官方目标架构环境中重新构建软件包。补丁必须符合允许路径政策，构建必须完成，且预期的软件包产物必须通过校验。",
-  "Repairs are not compared with a reference patch. Different solutions are accepted when they satisfy the policy and produce a genuine successful build.":
-    "评测不会把修复与参考补丁进行文本比较。只要不同方案符合政策并真正完成构建，就可以被接受。",
+  "A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.":
+    "只有当 Agent 的最终修改能够应用到干净的 Case，且软件包能够在官方目标架构环境中成功构建时，修复才算成功。",
+  "Solutions are judged by verified build results, not by similarity to a reference patch.":
+    "解决方案依据经过验证的构建结果进行判定，而不是依据其与参考补丁的相似度。",
   "Read the Evaluation Protocol": "阅读评测协议",
-  "for the full validation stages and result definitions.": "，了解完整验证阶段和结果定义。",
+  "Prizes": "奖项与奖金",
+  "Cash prize awards": "现金奖项",
+  "1st Prize": "一等奖",
+  "$1,000 USD (approx. ¥6,800 RMB)": "$1,000 USD（约合人民币 ¥6,800）",
+  "1 team": "1 支团队",
+  "2nd Prize": "二等奖",
+  "$500 USD (approx. ¥3,400 RMB)": "$500 USD（约合人民币 ¥3,400）",
+  "2 teams": "2 支团队",
+  "3rd Prize": "三等奖",
+  "$250 USD (approx. ¥1,700 RMB)": "$250 USD（约合人民币 ¥1,700）",
+  "3 teams": "3 支团队",
+  "Total Cash Prize Pool:": "现金奖金总额：",
+  "$2,750 USD (approx. ¥18,600 RMB)": "$2,750 USD（约合人民币 ¥18,600）",
+  "ICSE 2027 Attendance Support": "ICSE 2027 参会支持",
+  "Winning teams will receive conference registration support, with additional partial travel assistance available subject to funding. Travel assistance is intended to offset attendance costs and does not guarantee full reimbursement.":
+    "获奖团队将获得会议注册支持；在经费允许的情况下，还可获得额外的部分差旅补助。差旅补助旨在分担参会成本，不保证全额报销。",
+  "Prize & Attendance Details": "奖金与参会支持详情",
   "Important dates": "重要日期",
   "7 September 2026": "2026 年 9 月 7 日",
   "— Public development and validation open": "— 公开开发与验证阶段开放",
@@ -86,16 +90,19 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "— Competition session and presentations": "— 竞赛现场环节与方案展示",
   "Competition detail pages": "竞赛详情页面",
   "More information:": "更多信息：",
-  "Task & Dataset": "任务与数据集",
+  Challenge: "竞赛任务",
   "Submission Guide": "提交指南",
   "Evaluation Protocol": "评测协议",
   "Rules": "规则",
   "Timeline": "时间安排",
   "FAQ": "常见问题",
-  "Organizing Team": "组织团队",
-  "The organizing team coordinates Case curation, platform development, validation, participant support, and competition operations.":
-    "组织团队负责 Case 整理、平台开发、构建验证、参赛者支持与竞赛运行。",
-  "Organizing team members": "组织团队成员",
+  "References": "参考文献",
+  "Build-Bench publications": "Build-Bench 相关论文",
+  "Chenyu Zhao, Shenglin Zhang*, Zeshun Huang, Weilin Jin, Yongqian Sun, Dan Pei, Chaoyun Zhang, Qingwei Lin, Chetan Bansal, Saravan Rajmohan, Minghua Ma. Can Language Models Go Beyond Coding? Assessing the Capability of Language Models to Build Real-World Systems. ACM Transactions on Software Engineering and Methodology (TOSEM), 2026. (CCF A)":
+    "Chenyu Zhao, Shenglin Zhang*, Zeshun Huang, Weilin Jin, Yongqian Sun, Dan Pei, Chaoyun Zhang, Qingwei Lin, Chetan Bansal, Saravan Rajmohan, Minghua Ma. Can Language Models Go Beyond Coding? Assessing the Capability of Language Models to Build Real-World Systems. ACM Transactions on Software Engineering and Methodology (TOSEM), 2026. (CCF A)",
+  "Chenyu Zhao, Minghua Ma*, Shenglin Zhang, Zeshun Huang, Yongqian Sun, Chetan Bansal, Saravan Rajmohan, Dan Pei. EvidenT: An Evidence-Preserving Framework for Iterative System-Level Package Repair. ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA), 2026. (CCF A)":
+    "Chenyu Zhao, Minghua Ma*, Shenglin Zhang, Zeshun Huang, Yongqian Sun, Chetan Bansal, Saravan Rajmohan, Dan Pei. EvidenT: An Evidence-Preserving Framework for Iterative System-Level Package Repair. ACM SIGSOFT International Symposium on Software Testing and Analysis (ISSTA), 2026. (CCF A)",
+  "[paper]": "[论文]",
   "Organized by Nankai University with industry collaboration from Microsoft.":
     "由南开大学组织，微软提供产业合作支持。",
   "Project links": "项目链接",
