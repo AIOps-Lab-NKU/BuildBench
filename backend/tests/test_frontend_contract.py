@@ -101,9 +101,10 @@ class FrontendContractTests(unittest.TestCase):
             "https://zcyyc.github.io/",
             "https://nkcs.iops.ai/zhangshenglin/",
             "https://marvin233.github.io/",
+            "https://worstwoof.github.io/",
         ):
             self.assertIn(homepage, html)
-        self.assertEqual(html.count('aria-label="Homepage link to be announced"'), 4)
+        self.assertEqual(html.count('aria-label="Homepage link to be announced"'), 3)
         self.assertIn('src="assets/overview-icons/organizers.png"', html)
         self.assertTrue((ROOT / "assets" / "overview-icons" / "organizers.png").is_file())
         self.assertNotIn(".overview-page .overview-organizer-list li + li", css)
