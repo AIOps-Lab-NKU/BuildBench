@@ -18,13 +18,21 @@ from backend.tests.test_submissions import accepted_checker, valid_agent_zip
 def registration_payload(
     *,
     captain_email: str = "captain@example.org",
+    captain_institutional_email: str | None = None,
     team_name: str = "Example Team",
     member_email: str = "member@example.org",
+    member_institutional_email: str | None = None,
 ) -> dict[str, object]:
+    captain_local = captain_email.split("@", 1)[0].casefold()
+    member_local = member_email.split("@", 1)[0].casefold()
     return {
         "captain": {
             "name": "Captain Example",
             "email": captain_email,
+            "institutional_email": (
+                captain_institutional_email
+                or f"{captain_local}@institution.example.edu"
+            ),
             "institution": "Example University",
             "password": "correct horse battery staple",
         },
@@ -34,6 +42,10 @@ def registration_payload(
                 {
                     "name": "Member Example",
                     "email": member_email,
+                    "institutional_email": (
+                        member_institutional_email
+                        or f"{member_local}@institution.example.edu"
+                    ),
                     "institution": "Example University",
                 }
             ],
@@ -163,6 +175,10 @@ class AuthApiTests(unittest.TestCase):
         )
         self.assertEqual(status, 200)
         self.assertEqual(me["user"]["email"], "captain@example.org")
+        self.assertEqual(
+            me["user"]["institutional_email"],
+            "captain@institution.example.edu",
+        )
 
         status, team, _ = self.request_json(
             "GET",
@@ -194,6 +210,7 @@ class AuthApiTests(unittest.TestCase):
             {
                 "name": "Third Member",
                 "email": "third@example.org",
+                "institutional_email": "third@example.edu",
                 "institution": "Another University",
             },
             headers={"Cookie": cookie},
@@ -206,6 +223,7 @@ class AuthApiTests(unittest.TestCase):
             {
                 "name": "Third Member",
                 "email": "third@example.org",
+                "institutional_email": "third@example.edu",
                 "institution": "Another University",
             },
             headers={"Cookie": cookie, "X-CSRF-Token": csrf},
@@ -235,6 +253,25 @@ class AuthApiTests(unittest.TestCase):
         )
         self.assertEqual(status, 409)
         self.assertIn("already registered", str(body["error"]))
+
+    def test_institutional_email_cannot_appear_in_different_teams(self) -> None:
+        self.register()
+        status, body, _ = self.request_json(
+            "POST",
+            "/api/auth/register",
+            registration_payload(
+                captain_email="captain-two@example.org",
+                captain_institutional_email="captain-two@example.edu",
+                team_name="Second Team",
+                member_email="different-member@example.org",
+                member_institutional_email=(
+                    "MEMBER@institution.example.edu"
+                ),
+            ),
+            headers={"Origin": f"http://127.0.0.1:{self.server.server_port}"},
+        )
+        self.assertEqual(status, 409)
+        self.assertIn("institutional email", str(body["error"]))
 
     def test_cross_site_registration_and_unauthenticated_team_are_rejected(
         self,

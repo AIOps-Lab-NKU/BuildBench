@@ -58,12 +58,18 @@ def normalize_text(value: object, label: str, *, maximum: int) -> str:
     return normalized
 
 
-def normalize_email(value: object) -> tuple[str, str]:
+def normalize_email(
+    value: object,
+    *,
+    label: str = "Email",
+) -> tuple[str, str]:
     display = unicodedata.normalize("NFKC", str(value or "")).strip()
     if not display:
-        raise AccountValidationError("Email is required.")
+        raise AccountValidationError(f"{label} is required.")
     if len(display) > 254 or not EMAIL_PATTERN.fullmatch(display):
-        raise AccountValidationError("Enter a valid email address.")
+        raise AccountValidationError(
+            f"Enter a valid {label.casefold()} address."
+        )
     return display, display.casefold()
 
 
@@ -77,6 +83,7 @@ def _public_user(row: sqlite3.Row) -> dict[str, object]:
         "user_id": row["user_id"],
         "name": row["name"],
         "email": row["email"],
+        "institutional_email": row["institutional_email"],
         "institution": row["institution"],
         "role": row["role"],
         "status": row["status"],
@@ -89,6 +96,7 @@ def _public_member(row: sqlite3.Row) -> dict[str, object]:
         "member_id": row["member_id"],
         "name": row["name"],
         "email": row["email"],
+        "institutional_email": row["institutional_email"],
         "institution": row["institution"],
         "is_captain": bool(row["is_captain"]),
         "display_order": int(row["display_order"]),
@@ -135,6 +143,87 @@ class AccountStore:
                 connection.execute("PRAGMA journal_mode = WAL")
                 connection.execute("PRAGMA synchronous = NORMAL")
                 connection.executescript(schema)
+                self._migrate_institutional_email(connection)
+
+    @staticmethod
+    def _migrate_institutional_email(
+        connection: sqlite3.Connection,
+    ) -> None:
+        """Upgrade existing v1 account databases without losing rosters."""
+        user_columns = {
+            str(row["name"])
+            for row in connection.execute("PRAGMA table_info(users)")
+        }
+        member_columns = {
+            str(row["name"])
+            for row in connection.execute("PRAGMA table_info(team_members)")
+        }
+        connection.execute("BEGIN IMMEDIATE")
+        try:
+            if "institutional_email" not in user_columns:
+                connection.execute(
+                    "ALTER TABLE users ADD COLUMN institutional_email TEXT"
+                )
+            if "institutional_email_normalized" not in user_columns:
+                connection.execute(
+                    "ALTER TABLE users ADD COLUMN "
+                    "institutional_email_normalized TEXT"
+                )
+            if "institutional_email" not in member_columns:
+                connection.execute(
+                    "ALTER TABLE team_members ADD COLUMN "
+                    "institutional_email TEXT"
+                )
+            if "institutional_email_normalized" not in member_columns:
+                connection.execute(
+                    "ALTER TABLE team_members ADD COLUMN "
+                    "institutional_email_normalized TEXT"
+                )
+            connection.execute(
+                """
+                UPDATE users
+                SET institutional_email = email,
+                    institutional_email_normalized = email_normalized
+                WHERE institutional_email IS NULL
+                   OR institutional_email = ''
+                   OR institutional_email_normalized IS NULL
+                   OR institutional_email_normalized = ''
+                """
+            )
+            connection.execute(
+                """
+                UPDATE team_members
+                SET institutional_email = email,
+                    institutional_email_normalized = email_normalized
+                WHERE institutional_email IS NULL
+                   OR institutional_email = ''
+                   OR institutional_email_normalized IS NULL
+                   OR institutional_email_normalized = ''
+                """
+            )
+            connection.execute(
+                """
+                CREATE UNIQUE INDEX IF NOT EXISTS
+                    team_members_competition_institutional_email
+                ON team_members(
+                    competition_id,
+                    institutional_email_normalized
+                )
+                """
+            )
+            connection.execute(
+                """
+                INSERT OR IGNORE INTO account_schema_versions(
+                    version,
+                    applied_at
+                ) VALUES (2, ?)
+                """,
+                (utc_now(),),
+            )
+            connection.execute("COMMIT")
+        except Exception:
+            connection.execute("ROLLBACK")
+            raise
 
     @contextmanager
     def _transaction(self) -> Iterator[sqlite3.Connection]:
@@ -194,6 +283,15 @@ class AccountStore:
                 "That captain email is already registered."
             ) from error
         if (
+            "team_members.competition_id, "
+            "team_members.institutional_email_normalized"
+            in message
+        ):
+            raise AccountConflict(
+                "That institutional email is already registered for this "
+                "competition."
+            ) from error
+        if (
             "team_members.competition_id, team_members.email_normalized"
             in message
         ):
@@ -213,6 +311,10 @@ class AccountStore:
         if not isinstance(payload, dict):
             raise AccountValidationError("Each team member must be an object.")
         email, email_normalized = normalize_email(payload.get("email"))
+        institutional_email, institutional_email_normalized = normalize_email(
+            payload.get("institutional_email"),
+            label="Institutional email",
+        )
         return {
             "name": normalize_text(
                 payload.get("name"),
@@ -221,6 +323,10 @@ class AccountStore:
             ),
             "email": email,
             "email_normalized": email_normalized,
+            "institutional_email": institutional_email,
+            "institutional_email_normalized": (
+                institutional_email_normalized
+            ),
             "institution": normalize_text(
                 payload.get("institution"),
                 "Member institution",
@@ -250,6 +356,13 @@ class AccountStore:
         captain_email, captain_email_normalized = normalize_email(
             captain.get("email")
         )
+        (
+            captain_institutional_email,
+            captain_institutional_email_normalized,
+        ) = normalize_email(
+            captain.get("institutional_email"),
+            label="Institutional email",
+        )
         captain_member = {
             "name": normalize_text(
                 captain.get("name"),
@@ -258,6 +371,10 @@ class AccountStore:
             ),
             "email": captain_email,
             "email_normalized": captain_email_normalized,
+            "institutional_email": captain_institutional_email,
+            "institutional_email_normalized": (
+                captain_institutional_email_normalized
+            ),
             "institution": normalize_text(
                 captain.get("institution"),
                 "Captain institution",
@@ -275,6 +392,19 @@ class AccountStore:
             raise AccountConflict(
                 "A member email cannot appear twice in one team."
             )
+        all_institutional_emails = [
+            captain_institutional_email_normalized,
+            *(
+                member["institutional_email_normalized"]
+                for member in normalized_members
+            ),
+        ]
+        if len(set(all_institutional_emails)) != len(
+            all_institutional_emails
+        ):
+            raise AccountConflict(
+                "An institutional email cannot appear twice in one team."
+            )
         display_team_name, normalized_team_name = normalize_team_name(team_name)
         if not password_hash:
             raise AccountValidationError("Password hash is required.")
@@ -288,15 +418,22 @@ class AccountStore:
                 connection.execute(
                     """
                     INSERT INTO users(
-                        user_id, name, email, email_normalized, institution,
+                        user_id, name, email, email_normalized,
+                        institutional_email,
+                        institutional_email_normalized, institution,
                         password_hash, role, status, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, 'participant', 'active', ?, ?)
+                    ) VALUES (
+                        ?, ?, ?, ?, ?, ?, ?, ?,
+                        'participant', 'active', ?, ?
+                    )
                     """,
                     (
                         user_id,
                         captain_member["name"],
                         captain_member["email"],
                         captain_member["email_normalized"],
+                        captain_member["institutional_email"],
+                        captain_member["institutional_email_normalized"],
                         captain_member["institution"],
                         password_hash,
                         now,
@@ -328,9 +465,10 @@ class AccountStore:
                         """
                         INSERT INTO team_members(
                             member_id, team_id, competition_id, name, email,
-                            email_normalized, institution, is_captain,
-                            display_order, created_at, updated_at
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                            email_normalized, institutional_email,
+                            institutional_email_normalized, institution,
+                            is_captain, display_order, created_at, updated_at
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
                         """,
                         (
                             _new_id("MEM"),
@@ -339,6 +477,8 @@ class AccountStore:
                             member["name"],
                             member["email"],
                             member["email_normalized"],
+                            member["institutional_email"],
+                            member["institutional_email_normalized"],
                             member["institution"],
                             1 if index == 1 else 0,
                             index,
@@ -539,9 +679,10 @@ class AccountStore:
                     """
                     INSERT INTO team_members(
                         member_id, team_id, competition_id, name, email,
-                        email_normalized, institution, is_captain,
-                        display_order, created_at, updated_at
-                    ) VALUES (?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
+                        email_normalized, institutional_email,
+                        institutional_email_normalized, institution,
+                        is_captain, display_order, created_at, updated_at
+                    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 0, ?, ?, ?)
                     """,
                     (
                         member_id,
@@ -550,6 +691,8 @@ class AccountStore:
                         normalized["name"],
                         normalized["email"],
                         normalized["email_normalized"],
+                        normalized["institutional_email"],
+                        normalized["institutional_email_normalized"],
                         normalized["institution"],
                         count + 1,
                         now,
@@ -604,6 +747,8 @@ class AccountStore:
                     """
                     UPDATE team_members
                     SET name = ?, email = ?, email_normalized = ?,
+                        institutional_email = ?,
+                        institutional_email_normalized = ?,
                         institution = ?, updated_at = ?
                     WHERE member_id = ?
                     """,
@@ -611,6 +756,8 @@ class AccountStore:
                         normalized["name"],
                         normalized["email"],
                         normalized["email_normalized"],
+                        normalized["institutional_email"],
+                        normalized["institutional_email_normalized"],
                         normalized["institution"],
                         now,
                         member_id,

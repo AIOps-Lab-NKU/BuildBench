@@ -41,9 +41,17 @@
     const nameInput = row?.querySelector('[data-member-field="name"]');
     const emailInput = row?.querySelector('[data-member-field="email"]');
     const institutionInput = row?.querySelector('[data-member-field="institution"]');
+    const institutionalEmailInput = row?.querySelector(
+      '[data-member-field="institutional_email"]',
+    );
     if (nameInput) nameInput.placeholder = t("Enter the member's full name");
     if (emailInput) emailInput.placeholder = t("Enter the member email");
     if (institutionInput) institutionInput.placeholder = t("University, company, or organization");
+    if (institutionalEmailInput) {
+      institutionalEmailInput.placeholder = t(
+        "Enter the member's university or organization email",
+      );
+    }
     updateCount();
     window.lucide?.createIcons({ attrs: { "stroke-width": 1.8 } });
     row?.querySelector("input")?.focus();
@@ -69,12 +77,26 @@
       name: row.querySelector('[data-member-field="name"]').value,
       email: row.querySelector('[data-member-field="email"]').value,
       institution: row.querySelector('[data-member-field="institution"]').value,
+      institutional_email: row.querySelector(
+        '[data-member-field="institutional_email"]',
+      ).value,
     }));
+    const institutionalEmails = [
+      data.get("captain_institutional_email"),
+      ...teamMembers.map((member) => member.institutional_email),
+    ].map((email) => String(email || "").trim().toLowerCase());
+    if (new Set(institutionalEmails).size !== institutionalEmails.length) {
+      setError(
+        t("Each institutional email can be used by only one participant in this competition."),
+      );
+      return;
+    }
     const payload = {
       captain: {
         name: data.get("captain_name"),
         email: data.get("captain_email"),
         institution: data.get("captain_institution"),
+        institutional_email: data.get("captain_institutional_email"),
         password: data.get("password"),
       },
       team: {

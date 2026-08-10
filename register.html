@@ -6,13 +6,13 @@
     <meta name="description" content="Register a Build-Bench competition team and captain account." />
     <title>Team Registration | Build-Bench Challenge</title>
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
-    <link rel="stylesheet" href="styles.css?v=20260809-2" />
-    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
-    <script src="i18n/auth.js?v=20260805-1" defer></script>
-    <script src="i18n.js?v=20260809-2" defer></script>
-    <script src="auth-client.js?v=20260809-2" defer></script>
-    <script src="app.js?v=20260809-2" defer></script>
-    <script src="register.js?v=20260729-1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260810-7" />
+    <script src="assets/vendor/lucide.min.js?v=20260810-7" defer></script>
+    <script src="i18n/auth.js?v=20260810-1" defer></script>
+    <script src="i18n.js?v=20260810-7" defer></script>
+    <script src="auth-client.js?v=20260810-7" defer></script>
+    <script src="app.js?v=20260810-7" defer></script>
+    <script src="register.js?v=20260810-1" defer></script>
   </head>
   <body class="auth-page auth-register-page" data-page="register">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -25,7 +25,21 @@
         </a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
-          <a href="index.html">Overview</a><a href="task.html">Challenge</a><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="index.html">Overview</a>
+          <a href="task.html">Challenge</a>
+          <a href="submission.html">Participate</a>
+          <a href="evaluation.html">Evaluation</a>
+          <a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="rules.html">Rules</a>
+          <div class="nav-more" data-nav-more>
+            <button class="nav-more-toggle" type="button" aria-expanded="false" aria-controls="nav-more-menu" data-nav-more-toggle>
+              <span>More</span><span class="nav-more-caret" aria-hidden="true">▾</span>
+            </button>
+            <div class="nav-more-menu" id="nav-more-menu" data-nav-more-menu>
+              <a href="timeline.html"><span>Timeline</span><small>Competition dates and milestones</small></a>
+              <a href="faq.html"><span>FAQ</span><small>Common questions and participant support</small></a>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
@@ -59,11 +73,17 @@
               </label>
               <label class="auth-field">
                 <span>Email</span>
-                <input name="captain_email" type="email" autocomplete="email" maxlength="254" placeholder="Enter the captain email" required />
+                <input name="captain_email" type="email" autocomplete="email" maxlength="254" placeholder="Enter the captain email" aria-describedby="captain-email-hint" required />
+                <small id="captain-email-hint">Used for sign-in and competition communication.</small>
               </label>
               <label class="auth-field">
                 <span>Institution</span>
                 <input name="captain_institution" autocomplete="organization" maxlength="200" placeholder="University, company, or organization" required />
+              </label>
+              <label class="auth-field">
+                <span>Institutional email</span>
+                <input name="captain_institutional_email" type="email" maxlength="254" placeholder="Enter your university or organization email" aria-describedby="captain-institutional-email-hint" required />
+                <small id="captain-institutional-email-hint">Used to verify your participant identity and prevent duplicate participation.</small>
               </label>
               <label class="auth-field">
                 <span>Password</span>
@@ -80,7 +100,7 @@
           <section class="auth-form-section" aria-labelledby="team-title">
             <header>
               <h2 id="team-title">Team details</h2>
-              <p>Team names and all member email addresses must be unique in this competition.</p>
+              <p>Team names and institutional email addresses must be unique in this competition.</p>
             </header>
 
             <label class="auth-field">
@@ -114,7 +134,7 @@
             </label>
 
             <button class="auth-primary-button" type="submit" data-register-submit>Create team account</button>
-            <p class="auth-form-footnote">Teams may contain 1–5 people. Email verification is not required during the current registration phase.</p>
+            <p class="auth-form-footnote">Teams may contain 1–5 people. Each institutional email may be used by only one participant.</p>
           </section>
         </form>
 
@@ -130,6 +150,7 @@
         <label class="auth-field"><span>Full name</span><input data-member-field="name" maxlength="100" placeholder="Enter the member's full name" required /></label>
         <label class="auth-field"><span>Email</span><input data-member-field="email" type="email" maxlength="254" placeholder="Enter the member email" required /></label>
         <label class="auth-field"><span>Institution</span><input data-member-field="institution" maxlength="200" placeholder="University, company, or organization" required /></label>
+        <label class="auth-field"><span>Institutional email</span><input data-member-field="institutional_email" type="email" maxlength="254" placeholder="Enter the member's university or organization email" required /><small>Must be unique in this competition.</small></label>
       </fieldset>
     </template>
   </body>

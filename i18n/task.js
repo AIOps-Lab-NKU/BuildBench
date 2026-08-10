@@ -13,10 +13,6 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
     "对于每个 Case，Agent 将进入准备好的软件包工作区，分析目标架构上的构建失败，修改允许范围内的软件包文件，并产生能够由竞赛平台独立验证的修复结果。",
   "You submit a runnable Agent — not precomputed Case-by-Case patches.":
     "参赛者提交的是可运行的 Agent，而不是针对每个 Case 预先生成的补丁。",
-  "Challenge summary": "竞赛任务摘要",
-  "268 reproducible failures": "268 个可复现失败",
-  "x86_64 ↔ aarch64": "x86_64 ↔ aarch64",
-  "Executable verification": "可执行验证",
   "On this page": "本页内容",
   "Why this challenge?": "为什么设置这个 Challenge？",
   "Your mission": "你的任务",
@@ -24,7 +20,6 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
   "What your Agent can do": "Agent 可以做什么？",
   "The repair lifecycle": "修复过程",
   "What counts as solved?": "怎样才算解决一个 Case？",
-  "Benchmark scope": "Benchmark 范围",
   "Start building": "开始构建你的 Agent",
   "Modern software increasingly needs to run across heterogeneous architectures, toolchains, dependencies, and packaging environments. A package that works on one architecture may fail on another because of architecture-specific code, build configuration, dependencies, compiler behavior, or packaging rules.":
     "现代软件需要运行在越来越多样的硬件架构、工具链、依赖和软件包环境中。同一个软件包可能因为架构相关代码、构建配置、依赖、编译器行为或打包规则，在一种架构上正常构建，却在另一种架构上失败。",
@@ -63,14 +58,6 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
   "Repairs are judged by verified build results, not by similarity to a reference patch.":
     "修复结果由真实构建结果判定，而不是通过与参考补丁进行文本相似度比较。",
   "Read the Evaluation Protocol": "查看 Evaluation Protocol",
-  "The published Build-Bench benchmark contains 268 reproducible cross-architecture package build failures across two migration directions:":
-    "已公开的 Build-Bench benchmark 包含 268 个可复现的跨架构软件包构建失败，覆盖两个迁移方向：",
-  "Benchmark migration directions": "Benchmark 架构迁移方向",
-  "x86_64 → aarch64": "x86_64 → aarch64",
-  "aarch64 → x86_64": "aarch64 → x86_64",
-  "The published benchmark provides the research foundation and public development resources for the competition. Competition resources and evaluation Case sets follow the official versioned releases and evaluation protocol.":
-    "已公开 benchmark 为竞赛的研究基础和公开开发资源。竞赛使用的资源和评测 Case 以官方版本化发布及 Evaluation Protocol 为准。",
-  "View the Build-Bench Benchmark": "查看 Build-Bench Benchmark",
   "Ready to build your Agent?": "准备开始了吗？",
   "Use the Starter Kit and example Cases to understand the workspace, test your Agent locally, and prepare a qualified submission.":
     "使用 Starter Kit 和 Example Cases 熟悉工作区、本地测试 Agent，并准备通过资格检查的正式提交。",

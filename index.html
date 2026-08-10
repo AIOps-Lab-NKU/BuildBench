@@ -13,12 +13,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260809-2" />
-    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
-    <script src="i18n/overview.js?v=20260809-1" defer></script>
-    <script src="i18n.js?v=20260809-2" defer></script>
-    <script src="auth-client.js?v=20260809-2" defer></script>
-    <script src="app.js?v=20260809-2" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260810-7" />
+    <script src="assets/vendor/lucide.min.js?v=20260810-7" defer></script>
+    <script src="i18n/overview.js?v=20260810-2" defer></script>
+    <script src="i18n.js?v=20260810-7" defer></script>
+    <script src="auth-client.js?v=20260810-7" defer></script>
+    <script src="app.js?v=20260810-7" defer></script>
   </head>
   <body class="overview-page" data-page="overview">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -35,12 +35,19 @@
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
           <a class="active" href="index.html" aria-current="page">Overview</a>
           <a href="task.html">Challenge</a>
-          <a href="submission.html">Submission</a>
+          <a href="submission.html">Participate</a>
           <a href="evaluation.html">Evaluation</a>
-          <a href="rules.html">Rules</a>
-          <a href="timeline.html">Timeline</a>
-          <a href="faq.html">FAQ</a>
           <a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="rules.html">Rules</a>
+          <div class="nav-more" data-nav-more>
+            <button class="nav-more-toggle" type="button" aria-expanded="false" aria-controls="nav-more-menu" data-nav-more-toggle>
+              <span>More</span><span class="nav-more-caret" aria-hidden="true">▾</span>
+            </button>
+            <div class="nav-more-menu" id="nav-more-menu" data-nav-more-menu>
+              <a href="timeline.html"><span>Timeline</span><small>Competition dates and milestones</small></a>
+              <a href="faq.html"><span>FAQ</span><small>Common questions and participant support</small></a>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
@@ -111,47 +118,21 @@
         </div>
       </section>
 
-      <section class="overview-section overview-organizers-section" aria-labelledby="organizers-title">
-        <div class="overview-shell overview-organizers-shell">
-          <h2 id="organizers-title" class="overview-section-heading overview-organizers-heading">
-            <img src="assets/overview-icons/organizers.png" width="512" height="512" alt="" aria-hidden="true">
-            <span>Organizers</span>
-          </h2>
-          <ul class="overview-organizer-list" aria-label="Organizers and homepage links">
+      <section class="overview-affiliations-section" aria-labelledby="affiliations-title">
+        <div class="overview-shell overview-affiliations-shell">
+          <h2 id="affiliations-title">Affiliations</h2>
+          <ul class="overview-affiliation-list" aria-label="Affiliated institutions and industry partners">
             <li>
-              <strong>Chenyu Zhao</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <a class="overview-organizer-homepage" href="https://zcyyc.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+              <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
             </li>
             <li>
-              <strong>Shenglin Zhang</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <a class="overview-organizer-homepage" href="https://nkcs.iops.ai/zhangshenglin/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+              <img class="overview-affiliation-logo overview-affiliation-logo--microsoft" src="assets/affiliations/microsoft.svg" width="21" height="21" alt="Microsoft logo" decoding="async">
             </li>
             <li>
-              <strong>Minghua Ma</strong>
-              <span class="overview-organizer-affiliation">Microsoft</span>
-              <a class="overview-organizer-homepage" href="https://marvin233.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+              <img class="overview-affiliation-logo overview-affiliation-logo--meituan" src="assets/affiliations/meituan.png" width="1896" height="687" alt="Meituan logo" decoding="async">
             </li>
             <li>
-              <strong>Yihang Lin</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>Zihao Huang</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>An Xu</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>Chengtai Li</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+              <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/chinese-academy-of-sciences.jpg" width="257" height="261" alt="Chinese Academy of Sciences logo" decoding="async">
             </li>
           </ul>
         </div>
@@ -225,24 +206,24 @@
           <ul class="overview-prize-list" aria-label="Cash prize awards">
             <li>
               <h3><span class="overview-prize-medal" aria-hidden="true">🥇</span><span>1st Prize</span></h3>
-              <p class="overview-prize-amount">$1,000 USD (approx. ¥6,800 RMB)</p>
+              <p class="overview-prize-amount"><strong>$1,500 USD</strong> <em>(approx. ¥10,100 RMB)</em></p>
               <p class="overview-prize-count">1 team</p>
             </li>
             <li>
               <h3><span class="overview-prize-medal" aria-hidden="true">🥈</span><span>2nd Prize</span></h3>
-              <p class="overview-prize-amount">$500 USD (approx. ¥3,400 RMB)</p>
+              <p class="overview-prize-amount"><strong>$1,000 USD</strong> <em>(approx. ¥6,800 RMB)</em></p>
               <p class="overview-prize-count">2 teams</p>
             </li>
             <li>
               <h3><span class="overview-prize-medal" aria-hidden="true">🥉</span><span>3rd Prize</span></h3>
-              <p class="overview-prize-amount">$250 USD (approx. ¥1,700 RMB)</p>
+              <p class="overview-prize-amount"><strong>$500 USD</strong> <em>(approx. ¥3,400 RMB)</em></p>
               <p class="overview-prize-count">3 teams</p>
             </li>
           </ul>
-          <p class="overview-prize-total"><strong>Total Cash Prize Pool:</strong> <span>$2,750 USD (approx. ¥18,600 RMB)</span></p>
+          <p class="overview-prize-total"><strong>Total Cash Prize Pool:</strong> <span>$5,000 USD (approx. ¥33,900 RMB)</span></p>
           <div class="overview-attendance-support">
             <h3>ICSE 2027 Attendance Support</h3>
-            <p>Winning teams will receive conference registration support, with additional partial travel assistance available subject to funding. Travel assistance is intended to offset attendance costs and does not guarantee full reimbursement.</p>
+            <p>Each winning team will receive <strong>one full ICSE 2027 conference registration</strong>, valued at approximately <strong>$1,000 USD.</strong></p>
           </div>
           <p class="overview-section-link"><a href="rules.html">Prize &amp; Attendance Details <span aria-hidden="true">→</span></a></p>
         </div>
@@ -273,7 +254,7 @@
         </div>
       </section>
 
-      <section class="overview-section overview-last-section overview-references-section" aria-labelledby="references-title">
+      <section class="overview-section overview-references-section" aria-labelledby="references-title">
         <div class="overview-shell overview-reading-column">
           <h2 id="references-title" class="overview-section-heading">
             <img src="assets/overview-icons/reference.png" width="512" height="512" alt="" aria-hidden="true">
@@ -289,6 +270,52 @@
               <a href="https://conf.researchr.org/details/issta-2026/issta-2026-research-papers/203/EvidenT-An-Evidence-Preserving-Framework-for-Iterative-System-Level-Package-Repair" target="_blank" rel="noreferrer">[paper]</a>
             </li>
           </ol>
+        </div>
+      </section>
+
+      <section class="overview-section overview-last-section overview-organizers-section" aria-labelledby="organizers-title">
+        <div class="overview-shell overview-reading-column overview-organizers-shell">
+          <h2 id="organizers-title" class="overview-section-heading overview-organizers-heading">
+            <img src="assets/overview-icons/organizers.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>Organizers</span>
+          </h2>
+          <ul class="overview-organizer-list" aria-label="Organizers and homepage links">
+            <li>
+              <strong>Chenyu Zhao</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <a class="overview-organizer-homepage" href="https://zcyyc.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Shenglin Zhang</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <a class="overview-organizer-homepage" href="https://nkcs.iops.ai/zhangshenglin/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Minghua Ma</strong>
+              <span class="overview-organizer-affiliation">Microsoft</span>
+              <a class="overview-organizer-homepage" href="https://marvin233.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
+            </li>
+            <li>
+              <strong>Yihang Lin</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>Zihao Huang</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>An Xu</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+            <li>
+              <strong>Chengtai Li</strong>
+              <span class="overview-organizer-affiliation">Nankai University</span>
+              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
+            </li>
+          </ul>
         </div>
       </section>
 

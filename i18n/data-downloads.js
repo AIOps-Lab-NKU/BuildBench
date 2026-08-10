@@ -10,7 +10,7 @@ window.BuildBenchI18nData.pages["data-downloads"] = Object.freeze({
   "Competition navigation": "竞赛导航",
   "Competition": "竞赛",
   "Competition pages": "竞赛页面",
-  "Agent Submission Guide": "Agent 提交指南",
+  "Get Started": "开始参赛",
   "My Submissions": "我的提交",
   "Release index": "发布索引",
   "Each row is an independently versioned competition asset. Unpublished resources show their real preparation status and never link to placeholder files.":

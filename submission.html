@@ -3,17 +3,17 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Agent submission guide for the Build-Bench Challenge, including package contents, runtime directories, build feedback, testing, and submission requirements." />
-    <title>Agent Submission Guide | Build-Bench Challenge</title>
+    <meta name="description" content="Build, test, package, and submit a runnable Agent for the Build-Bench Challenge." />
+    <title>Participate | Build-Bench Challenge</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260809-2" />
-    <script src="assets/vendor/lucide.min.js?v=20260809-2" defer></script>
-    <script src="i18n/submission.js?v=20260802-5" defer></script>
-    <script src="i18n.js?v=20260809-2" defer></script>
-    <script src="auth-client.js?v=20260809-2" defer></script>
-    <script src="app.js?v=20260809-2" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260810-7" />
+    <script src="assets/vendor/lucide.min.js?v=20260810-7" defer></script>
+    <script src="i18n/submission.js?v=20260810-1" defer></script>
+    <script src="i18n.js?v=20260810-7" defer></script>
+    <script src="auth-client.js?v=20260810-7" defer></script>
+    <script src="app.js?v=20260810-7" defer></script>
   </head>
   <body data-page="submission">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -22,7 +22,21 @@
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><span>Build-Bench</span></a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button><i data-lucide="menu" aria-hidden="true"></i></button>
         <nav class="site-nav" id="site-nav" aria-label="Primary navigation" data-nav>
-          <a href="index.html">Overview</a><a href="task.html">Challenge</a><a class="active" href="submission.html" aria-current="page">Submission</a><a href="evaluation.html">Evaluation</a><a href="rules.html">Rules</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a><a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="index.html">Overview</a>
+          <a href="task.html">Challenge</a>
+          <a class="active" href="submission.html" aria-current="page">Participate</a>
+          <a href="evaluation.html">Evaluation</a>
+          <a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
+          <a href="rules.html">Rules</a>
+          <div class="nav-more" data-nav-more>
+            <button class="nav-more-toggle" type="button" aria-expanded="false" aria-controls="nav-more-menu" data-nav-more-toggle>
+              <span>More</span><span class="nav-more-caret" aria-hidden="true">▾</span>
+            </button>
+            <div class="nav-more-menu" id="nav-more-menu" data-nav-more-menu>
+              <a href="timeline.html"><span>Timeline</span><small>Competition dates and milestones</small></a>
+              <a href="faq.html"><span>FAQ</span><small>Common questions and participant support</small></a>
+            </div>
+          </div>
         </nav>
       </div>
     </header>
@@ -31,19 +45,20 @@
       <section class="page-masthead submission-guide-masthead">
         <div class="content-wrap submission-hero-grid">
           <div class="submission-hero-copy">
-            <span class="page-kicker"><i data-lucide="package-open" aria-hidden="true"></i>Agent submission</span>
-            <h1>Agent Submission Guide</h1>
-            <p>Submit a runnable Agent source bundle, not Case-specific answers or pre-generated patches. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical <code>repair.diff</code>, and the Docker Validator verifies it on a clean Case.</p>
+            <span class="page-kicker"><i data-lucide="package-open" aria-hidden="true"></i>Participation</span>
+            <h1>Build, test, and submit your Agent</h1>
+            <p>Build-Bench participants submit a runnable repair Agent, not Case-specific answers or pre-generated patches.</p>
+            <p>Use the Starter Kit with a coding assistant or follow the manual workflow to develop, test, package, and upload an immutable Agent version. After upload, the platform performs submission checks and runs the Hosted Smoke Test. A qualified version can then be selected for Full Evaluation.</p>
           </div>
         </div>
       </section>
 
       <div class="content-wrap page-layout right-doc-layout submission-guide-layout">
-        <aside class="page-rail submission-guide-rail competition-page-rail" aria-label="Submission guide navigation">
+        <aside class="page-rail submission-guide-rail competition-page-rail" aria-label="Participation navigation">
           <div class="rail-navigation-group">
             <strong>Competition</strong>
             <nav class="competition-navigation" aria-label="Competition pages">
-              <a class="active" href="submission.html" aria-current="page"><i data-lucide="book-open" aria-hidden="true"></i>Agent Submission Guide</a>
+              <a class="active" href="submission.html" aria-current="page"><i data-lucide="book-open" aria-hidden="true"></i>Get Started</a>
               <a href="data-downloads.html"><i data-lucide="database" aria-hidden="true"></i>Data &amp; Downloads</a>
               <a href="my-submissions.html"><i data-lucide="inbox" aria-hidden="true"></i>My Submissions</a>
             </nav>
@@ -52,10 +67,10 @@
             <strong>On this page</strong>
             <nav aria-label="On this page">
             <a href="#quick-start">Quick start</a>
-            <a href="#submission-contents">Submission contents</a>
+            <a href="#agent-package">Agent package</a>
             <a href="#runtime-interface">Runtime interface</a>
-            <a href="#test-submission">Test your submission</a>
-            <a href="#submission-requirements">Submission requirements</a>
+            <a href="#test-and-qualify">Test and qualify</a>
+            <a href="#final-checklist">Final checklist</a>
             </nav>
           </div>
         </aside>
@@ -68,7 +83,7 @@
 
             <nav class="quick-start-path-links" aria-label="Quick start paths">
               <a href="#coding-agent-quick-start">Coding Agent Quick Start</a>
-              <a href="#human-quick-start">Human Quick Start</a>
+              <a href="#manual-quick-start">Manual Quick Start</a>
             </nav>
 
             <section class="coding-agent-start" id="coding-agent-quick-start" aria-labelledby="coding-agent-quick-start-title">
@@ -86,10 +101,11 @@
                 <li>Completion requires a JSON result with <code>"status": "succeeded"</code>, an existing ZIP, and a matching SHA-256.</li>
               </ol>
               <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: <code>dist/agent-submission.zip</code> is ready to upload. The coding assistant should report changed files, checks run, test results, ZIP path, and SHA-256.</span></p>
+              <p>bootstrap and ready provide the high-level coding-assistant workflow; the equivalent granular commands are documented in Manual Quick Start below.</p>
             </section>
 
-            <section class="human-quick-start" id="human-quick-start" aria-labelledby="human-quick-start-title">
-              <h3 id="human-quick-start-title">Human Quick Start</h3>
+            <section class="human-quick-start" id="manual-quick-start" aria-labelledby="manual-quick-start-title">
+              <h3 id="manual-quick-start-title">Manual Quick Start</h3>
               <p>You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. The following granular commands expose every preparation step for manual use and debugging.</p>
 
             <ol class="quick-start-steps" aria-label="Manual submission preparation steps">
@@ -138,7 +154,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
               <li>
                 <span class="quick-start-number">04</span>
                 <div class="quick-start-step">
-                  <strong>Edit <code>src/</code> and test locally</strong>
+                  <strong>Develop and test your Agent</strong>
                   <p>Implement the repair logic in <code>agents/my-agent/src/</code>, then run every bundled Example Case.</p>
                   <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
 ./bb test --agent ./agents/my-agent</code></pre></div>
@@ -166,7 +182,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
               <li>
                 <span class="quick-start-number">06</span>
                 <div class="quick-start-step">
-                  <strong>Upload the Agent bundle</strong>
+                  <strong>Upload your Agent</strong>
                   <p>Open <a href="my-submissions.html">My Submissions</a>, choose <strong>Make new submission</strong>, and upload the generated ZIP.</p>
                   <div class="code-block quick-start-command"><pre><code>ls -lh dist/agent-submission.zip</code></pre></div>
                   <dl class="quick-start-details">
@@ -182,9 +198,9 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
             <p class="submission-case-scope">Different versioned Case sets are used for local examples, development, hosted Smoke Tests, and Full Evaluation. See <a href="data-downloads.html">Data &amp; Downloads</a> for their scope and release status.</p>
           </section>
 
-          <section class="doc-section" id="submission-contents">
+          <section class="doc-section" id="agent-package">
             <span class="section-label">02 / Package</span>
-            <h2>Submission contents</h2>
+            <h2>Agent package</h2>
             <p>Upload one ZIP archive with a shallow, inspectable root. The platform reads the manifest before building the Agent runtime.</p>
 
             <div class="submission-package-grid">
@@ -281,9 +297,9 @@ protocol:
             <p>The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in the <a href="evaluation.html#case-evaluation">Evaluation Protocol</a>.</p>
           </section>
 
-          <section class="doc-section" id="test-submission">
-            <span class="section-label">04 / Test</span>
-            <h2>Test your submission</h2>
+          <section class="doc-section" id="test-and-qualify">
+            <span class="section-label">04 / Qualify</span>
+            <h2>Test and qualify</h2>
             <p class="submission-section-intro">Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the hosted Smoke Test checks that the same bundle can run under the competition protocol.</p>
 
             <div class="submission-guide-subsection">
@@ -307,15 +323,15 @@ protocol:
 
             <div class="submission-guide-subsection">
               <h3>Smoke tests</h3>
-              <p>A hosted Smoke Test uses the same Agent Runner, workspace layout, build-feedback protocol, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.</p>
+              <p>A hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.</p>
               <p>Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing a Smoke Test does not guarantee success on the full Case set.</p>
             </div>
 
           </section>
 
-          <section class="doc-section" id="submission-requirements">
-            <span class="section-label">05 / Requirements</span>
-            <h2>Submission requirements</h2>
+          <section class="doc-section" id="final-checklist">
+            <span class="section-label">05 / Final</span>
+            <h2>Final checklist</h2>
             <p class="submission-section-intro">Use this checklist on the exact immutable Agent version that you intend to upload and evaluate.</p>
 
             <div class="submission-guide-subsection">
@@ -344,6 +360,6 @@ protocol:
       </div>
     </main>
 
-    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="submission.html">Submission</a><a href="evaluation.html">Evaluation</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></nav><a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><nav class="footer-links" aria-label="Footer navigation"><a href="submission.html">Participate</a><a href="evaluation.html">Evaluation</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></nav><a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
   </body>
 </html>

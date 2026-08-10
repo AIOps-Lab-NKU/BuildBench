@@ -10,7 +10,7 @@ window.BuildBenchI18nData.pages["my-submissions"] = Object.freeze({
   "Competition navigation": "竞赛导航",
   "Competition": "竞赛",
   "Competition pages": "竞赛页面",
-  "Agent Submission Guide": "Agent 提交指南",
+  "Get Started": "开始参赛",
   "Data & Downloads": "数据与下载",
   "Submission summary": "提交概况",
   "Best score": "最佳成绩",

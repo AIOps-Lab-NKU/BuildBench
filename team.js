@@ -46,6 +46,7 @@
             <td><strong>${escapeHtml(member.name)}</strong>${member.is_captain ? '<span class="team-captain-label">Captain</span>' : ""}</td>
             <td><a href="mailto:${escapeHtml(member.email)}">${escapeHtml(member.email)}</a></td>
             <td>${escapeHtml(member.institution)}</td>
+            <td><a href="mailto:${escapeHtml(member.institutional_email)}">${escapeHtml(member.institutional_email)}</a></td>
             <td>
               ${
                 member.is_captain || team.members_locked
@@ -79,6 +80,7 @@
       memberForm.elements.name.value = member.name;
       memberForm.elements.email.value = member.email;
       memberForm.elements.institution.value = member.institution;
+      memberForm.elements.institutional_email.value = member.institutional_email;
     }
     message(errorBox, "");
     dialog.showModal();
@@ -118,6 +120,7 @@
           name: data.get("name"),
           email: data.get("email"),
           institution: data.get("institution"),
+          institutional_email: data.get("institutional_email"),
         },
       });
       window.BuildBenchAuth.clearSession();

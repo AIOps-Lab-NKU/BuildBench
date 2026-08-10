@@ -19,6 +19,7 @@ from backend.security import AuthenticationError, RequestIdentity, TokenAuthenti
 CAPTAIN = {
     "name": "Captain Example",
     "email": "captain@example.org",
+    "institutional_email": "captain@example.edu",
     "institution": "Example University",
     "password": "correct horse battery staple",
 }
@@ -53,6 +54,7 @@ class AuthServiceTests(unittest.TestCase):
                     {
                         "name": "Member Two",
                         "email": "member2@example.org",
+                        "institutional_email": "member2@example.edu",
                         "institution": "Example University",
                     }
                 ],

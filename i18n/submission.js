@@ -1,10 +1,16 @@
 window.BuildBenchI18nData = window.BuildBenchI18nData || { pages: {} };
 window.BuildBenchI18nData.pages.submission = Object.freeze({
-  "Agent Submission Guide | Build-Bench Challenge": "Agent 提交指南 | Build-Bench Challenge",
-  "Agent submission guide for the Build-Bench Challenge, including package contents, runtime directories, build feedback, testing, and submission requirements.":
-    "Build-Bench Challenge 的 Agent 提交指南，包括提交内容、运行目录、构建反馈、测试和提交要求。",
-  "Agent submission": "Agent 提交",
-  "Agent Submission Guide": "Agent 提交指南",
+  "Participate | Build-Bench Challenge": "参赛 | Build-Bench Challenge",
+  "Build, test, package, and submit a runnable Agent for the Build-Bench Challenge.":
+    "为 Build-Bench Challenge 构建、测试、打包并提交可运行的 Agent。",
+  "Participation": "参赛",
+  "Build, test, and submit your Agent": "构建、测试并提交你的 Agent",
+  "Build-Bench participants submit a runnable repair Agent, not Case-specific answers or pre-generated patches.":
+    "Build-Bench 参赛者提交的是可运行的修复 Agent，而不是针对特定 Case 的答案或预先生成的补丁。",
+  "Use the Starter Kit with a coding assistant or follow the manual workflow to develop, test, package, and upload an immutable Agent version. After upload, the platform performs submission checks and runs the Hosted Smoke Test. A qualified version can then be selected for Full Evaluation.":
+    "使用 Starter Kit 配合编程助手，或按照手动流程开发、测试、打包并上传不可变的 Agent 版本。上传后，平台会执行提交检查和 Hosted Smoke Test；通过资格测试的版本随后可被选中参加 Full Evaluation。",
+  "Participation navigation": "参赛导航",
+  "Get Started": "开始参赛",
   "Submit a runnable Agent source bundle, not Case-specific answers or pre-generated patches. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
     "提交一个可运行的 Agent 源码包，而不是针对特定 Case 的答案或预先生成的补丁。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
   ", and the Docker Validator verifies it on a clean Case.": "，再由 Docker Validator 在干净的 Case 上完成验证。",
@@ -20,7 +26,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "使用 Codex、Claude Code、Cursor 或 Copilot 等工具时，可选择编程 Agent 路径；也可手动执行同一流程。两条路径生成相同的提交 ZIP，并按相同规则评测。",
   "Quick start paths": "快速开始路径",
   "Coding Agent Quick Start": "编程 Agent 快速开始",
-  "Human Quick Start": "人工操作快速开始",
+  "Manual Quick Start": "手动操作快速开始",
+  "bootstrap and ready provide the high-level coding-assistant workflow; the equivalent granular commands are documented in Manual Quick Start below.":
+    "bootstrap 和 ready 提供面向编程助手的高层工作流；等价的细粒度命令见下方“手动操作快速开始”。",
   "Recommended for coding assistants": "推荐编程助手使用",
   "Download and extract Starter Kit": "下载并解压 Starter Kit",
   ", open its root directory in your coding assistant, and give it this instruction:":
@@ -38,10 +46,10 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "已可上传。编程助手应报告修改的文件、已执行的检查、测试结果、ZIP 路径和 SHA-256。",
   "You need a Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers. The following granular commands expose every preparation step for manual use and debugging.":
     "你需要 Linux 或 WSL2 Shell、Git，以及 Docker Engine 24+ 或使用 Linux 容器的 Docker Desktop。以下细粒度命令保留了所有准备步骤，便于手动使用和调试。",
-  "Submission contents": "提交内容",
+  "Agent package": "Agent 包",
   "Runtime interface": "运行接口",
-  "Test your submission": "测试你的提交",
-  "Submission requirements": "提交要求",
+  "Test and qualify": "测试并取得资格",
+  "Final checklist": "最终检查清单",
   "01 / Start": "01 / 开始",
   "Prepare and qualify one Agent version before requesting a full evaluation.":
     "在申请完整评测前，先准备并验证一个 Agent 版本。",
@@ -76,7 +84,10 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "创建确定性的上传包之前，检查清单、入口命令、依赖和文件。",
   "Expected: both checks pass and the command prints the ZIP path, size, and SHA-256.":
     "预期结果：两项检查均通过，命令输出 ZIP 路径、大小和 SHA-256。",
-  "Upload the Agent bundle": "上传 Agent 包",
+  "Upload your Agent": "上传你的 Agent",
+  "Develop and test your Agent": "开发并测试你的 Agent",
+  "04 / Qualify": "04 / 资格测试",
+  "05 / Final": "05 / 最终检查",
   "Open": "打开",
   ", choose": "，选择",
   ", and upload the generated ZIP.": "，然后上传生成的 ZIP。",
@@ -197,8 +208,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "The Starter Kit will provide the local Runner, conformance CLI, schemas, example Cases, and exact commands. These downloads are not yet published.":
     "Starter Kit 将提供本地 Runner、合规检查 CLI、Schema、示例 Case 和准确命令。这些下载资源尚未发布。",
   "Smoke tests": "Smoke Test",
-  "A hosted Smoke Test uses the same Agent Runner, workspace layout, build-feedback protocol, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.":
-    "平台 Smoke Test 使用与正式评测相同的 Agent Runner、工作区布局、构建反馈协议和状态 Schema，但只运行少量轻量级公开 Case，用于在完整评测前发现依赖缺失、入口命令无效、权限错误和输出格式错误。",
+  "A hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.":
+    "平台 Smoke Test 使用与正式评测相同的 Agent Runner、工作区布局和状态 Schema，但只运行少量轻量级公开 Case，用于在完整评测前发现依赖缺失、入口命令无效、权限错误和输出格式错误。",
   "Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing a Smoke Test does not guarantee success on the full Case set.":
     "Smoke Test 会提供比排行榜更详细的日志和诊断信息，其结果不计入正式成绩；通过 Smoke Test 也不代表能够在完整 Case 集上成功。",
   "Full evaluation": "完整评测",

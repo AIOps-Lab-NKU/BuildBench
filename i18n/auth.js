@@ -14,6 +14,10 @@ const buildBenchAuthTranslations = Object.freeze({
   "Full name": "姓名",
   "Email": "邮箱",
   "Institution": "学校或机构",
+  "Institutional email": "机构邮箱",
+  "Used for sign-in and competition communication.": "用于登录和接收竞赛通知。",
+  "Used to verify your participant identity and prevent duplicate participation.":
+    "用于验证参赛者身份并防止重复参赛。",
   "Password": "密码",
   "At least 12 characters.": "至少 12 个字符。",
   "Confirm password": "确认密码",
@@ -101,11 +105,14 @@ const buildBenchAuthTranslations = Object.freeze({
     "此账号负责管理提交、评测和团队名单。",
   "Enter the captain's full name": "请输入队长姓名",
   "University, company, or organization": "大学、公司或其他机构",
+  "Enter your university or organization email": "请输入大学或机构邮箱",
   "Create a password": "创建密码",
   "Use at least 12 characters.": "请至少使用 12 个字符。",
   "Re-enter the password": "请再次输入密码",
   "Team names and all member email addresses must be unique in this competition.":
     "团队名称及所有成员邮箱在本次竞赛中必须唯一。",
+  "Team names and institutional email addresses must be unique in this competition.":
+    "团队名称及机构邮箱在本次竞赛中必须唯一。",
   "Choose a public team name": "请输入公开展示的团队名称",
   "Additional team members": "其他团队成员",
   "The captain is member 1. You may add up to four more members.":
@@ -114,8 +121,16 @@ const buildBenchAuthTranslations = Object.freeze({
     "创建账号前请核对团队信息。",
   "Teams may contain 1–5 people. Email verification is not required during the current registration phase.":
     "每队可包含 1–5 人；当前注册阶段暂不要求邮箱验证。",
+  "Teams may contain 1–5 people. Each institutional email may be used by only one participant.":
+    "每队可包含 1–5 人；每个机构邮箱只能由一名参赛者使用。",
   "Enter the member's full name": "请输入组员姓名",
   "Enter the member email": "请输入组员邮箱",
+  "Enter the member's university or organization email": "请输入组员的大学或机构邮箱",
+  "Must be unique in this competition.": "在本次竞赛中必须唯一。",
+  "Each institutional email can be used by only one participant in this competition.":
+    "每个机构邮箱在本次竞赛中只能由一名参赛者使用。",
+  "Every institutional email is required and may appear in only one team.":
+    "所有机构邮箱均为必填项，且只能出现在一个团队中。",
   "Signing in…": "正在登录……",
   "Creating team…": "正在创建团队……",
 });

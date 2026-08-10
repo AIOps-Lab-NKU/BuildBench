@@ -13,6 +13,8 @@ CREATE TABLE IF NOT EXISTS users (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     email_normalized TEXT NOT NULL UNIQUE,
+    institutional_email TEXT NOT NULL,
+    institutional_email_normalized TEXT NOT NULL,
     institution TEXT NOT NULL,
     password_hash TEXT NOT NULL,
     role TEXT NOT NULL DEFAULT 'participant'
@@ -48,6 +50,8 @@ CREATE TABLE IF NOT EXISTS team_members (
     name TEXT NOT NULL,
     email TEXT NOT NULL,
     email_normalized TEXT NOT NULL,
+    institutional_email TEXT NOT NULL,
+    institutional_email_normalized TEXT NOT NULL,
     institution TEXT NOT NULL,
     is_captain INTEGER NOT NULL DEFAULT 0
         CHECK (is_captain IN (0, 1)),

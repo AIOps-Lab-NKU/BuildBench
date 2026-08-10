@@ -1,6 +1,8 @@
 const menuButton = document.querySelector("[data-menu-button]");
 const nav = document.querySelector("[data-nav]");
 const siteHeader = document.querySelector(".site-header");
+const navMore = document.querySelector("[data-nav-more]");
+const navMoreButton = document.querySelector("[data-nav-more-toggle]");
 const localNavLinks = Array.from(document.querySelectorAll('.page-rail nav a[href^="#"]'));
 
 function translate(value) {
@@ -76,6 +78,12 @@ async function renderAccountNavigation() {
   delete account.dataset.accountHydrating;
 }
 
+function setMoreMenu(open) {
+  if (!navMore || !navMoreButton) return;
+  navMore.classList.toggle("open", open);
+  navMoreButton.setAttribute("aria-expanded", String(open));
+}
+
 function setMenu(open) {
   if (!menuButton || !nav) return;
 
@@ -88,6 +96,7 @@ function setMenu(open) {
   menuButton.setAttribute("title", translate(open ? "Close navigation" : "Open navigation"));
   nav.classList.toggle("open", open);
   document.body.classList.toggle("menu-open", open);
+  if (!open) setMoreMenu(false);
   menuButton.innerHTML = `<i data-lucide="${open ? "x" : "menu"}" aria-hidden="true"></i>`;
   renderIcons();
 }
@@ -105,12 +114,29 @@ menuButton?.addEventListener("click", () => {
   setMenu(menuButton.getAttribute("aria-expanded") !== "true");
 });
 
+navMoreButton?.addEventListener("click", (event) => {
+  event.stopPropagation();
+  setMoreMenu(navMoreButton.getAttribute("aria-expanded") !== "true");
+});
+
+navMore?.addEventListener("focusout", (event) => {
+  if (!navMore.contains(event.relatedTarget)) setMoreMenu(false);
+});
+
 document.querySelectorAll(".site-nav a").forEach((link) => {
   link.addEventListener("click", () => setMenu(false));
 });
 
+document.addEventListener("click", (event) => {
+  if (!navMore?.contains(event.target)) setMoreMenu(false);
+});
+
 document.addEventListener("keydown", (event) => {
-  if (event.key === "Escape") setMenu(false);
+  if (event.key !== "Escape") return;
+  const moreWasOpen = navMoreButton?.getAttribute("aria-expanded") === "true";
+  setMoreMenu(false);
+  setMenu(false);
+  if (moreWasOpen && window.innerWidth > 1080) navMoreButton?.focus();
 });
 
 window.addEventListener("resize", () => {
