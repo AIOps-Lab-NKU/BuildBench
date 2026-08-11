@@ -13,12 +13,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810-7" />
-    <script src="assets/vendor/lucide.min.js?v=20260810-7" defer></script>
-    <script src="i18n/overview.js?v=20260810-2" defer></script>
-    <script src="i18n.js?v=20260810-7" defer></script>
-    <script src="auth-client.js?v=20260810-7" defer></script>
-    <script src="app.js?v=20260810-7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260811-7" />
+    <script src="assets/vendor/lucide.min.js?v=20260811-7" defer></script>
+    <script src="i18n/overview.js?v=20260811-6" defer></script>
+    <script src="i18n.js?v=20260811-7" defer></script>
+    <script src="auth-client.js?v=20260811-7" defer></script>
+    <script src="app.js?v=20260811-7" defer></script>
   </head>
   <body class="overview-page" data-page="overview">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -36,7 +36,6 @@
           <a class="active" href="index.html" aria-current="page">Overview</a>
           <a href="task.html">Challenge</a>
           <a href="submission.html">Participate</a>
-          <a href="evaluation.html">Evaluation</a>
           <a class="nav-emphasis" href="leaderboard.html"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
           <a href="rules.html">Rules</a>
           <div class="nav-more" data-nav-more>
@@ -46,6 +45,7 @@
             <div class="nav-more-menu" id="nav-more-menu" data-nav-more-menu>
               <a href="timeline.html"><span>Timeline</span><small>Competition dates and milestones</small></a>
               <a href="faq.html"><span>FAQ</span><small>Common questions and participant support</small></a>
+              <a href="contact.html"><span>Contact</span><small>Competition contact and organizing team</small></a>
             </div>
           </div>
         </nav>
@@ -92,6 +92,24 @@
             >
           </div>
 
+          <section class="overview-hero-affiliations" aria-labelledby="affiliations-title">
+            <h2 id="affiliations-title">Affiliations</h2>
+            <ul class="overview-hero-affiliation-list" aria-label="Affiliated institutions and industry partners">
+              <li>
+                <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
+              </li>
+              <li>
+                <img class="overview-affiliation-logo overview-affiliation-logo--microsoft" src="assets/affiliations/microsoft.svg" width="21" height="21" alt="Microsoft logo" decoding="async">
+              </li>
+              <li>
+                <img class="overview-affiliation-logo overview-affiliation-logo--meituan" src="assets/affiliations/meituan.png" width="1896" height="687" alt="Meituan logo" decoding="async">
+              </li>
+              <li>
+                <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/chinese-academy-of-sciences.jpg" width="257" height="261" alt="Chinese Academy of Sciences logo" decoding="async">
+              </li>
+            </ul>
+          </section>
+
           <section class="overview-hero-credits" aria-labelledby="competition-partners-title">
             <h2 id="competition-partners-title">Competition partners</h2>
             <div class="overview-credit-list">
@@ -110,31 +128,11 @@
                 </span>
                 <div>
                   <span class="overview-credit-label">Organized by</span>
-                  <strong>Build-Bench Team · Microsoft</strong>
+                  <strong>Nankai University · Microsoft</strong>
                 </div>
               </div>
             </div>
           </section>
-        </div>
-      </section>
-
-      <section class="overview-affiliations-section" aria-labelledby="affiliations-title">
-        <div class="overview-shell overview-affiliations-shell">
-          <h2 id="affiliations-title">Affiliations</h2>
-          <ul class="overview-affiliation-list" aria-label="Affiliated institutions and industry partners">
-            <li>
-              <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
-            </li>
-            <li>
-              <img class="overview-affiliation-logo overview-affiliation-logo--microsoft" src="assets/affiliations/microsoft.svg" width="21" height="21" alt="Microsoft logo" decoding="async">
-            </li>
-            <li>
-              <img class="overview-affiliation-logo overview-affiliation-logo--meituan" src="assets/affiliations/meituan.png" width="1896" height="687" alt="Meituan logo" decoding="async">
-            </li>
-            <li>
-              <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/chinese-academy-of-sciences.jpg" width="257" height="261" alt="Chinese Academy of Sciences logo" decoding="async">
-            </li>
-          </ul>
         </div>
       </section>
 
@@ -154,7 +152,7 @@
               loading="lazy"
               decoding="async"
             >
-            <figcaption>The published Build-Bench workflow connects package evidence, iterative Agent repair, and executable build verification.</figcaption>
+            <figcaption>The published Build-Bench workflow connects package evidence, iterative Agent repair, and executable build verification. <a class="overview-framework-citation" href="#reference-1" aria-label="See reference 1">[1]</a></figcaption>
           </figure>
         </div>
       </section>
@@ -193,39 +191,8 @@
           </h2>
           <p>A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
           <p>Solutions are judged by verified build results, not by similarity to a reference patch.</p>
-          <p class="overview-section-link"><a href="evaluation.html">Read the Evaluation Protocol <span aria-hidden="true">→</span></a></p>
-        </div>
-      </section>
-
-      <section class="overview-section overview-prizes-section" aria-labelledby="prizes-title">
-        <div class="overview-shell overview-reading-column">
-          <h2 id="prizes-title" class="overview-section-heading">
-            <img src="assets/overview-icons/trophy.png" width="512" height="512" alt="" aria-hidden="true">
-            <span>Prizes</span>
-          </h2>
-          <ul class="overview-prize-list" aria-label="Cash prize awards">
-            <li>
-              <h3><span class="overview-prize-medal" aria-hidden="true">🥇</span><span>1st Prize</span></h3>
-              <p class="overview-prize-amount"><strong>$1,500 USD</strong> <em>(approx. ¥10,100 RMB)</em></p>
-              <p class="overview-prize-count">1 team</p>
-            </li>
-            <li>
-              <h3><span class="overview-prize-medal" aria-hidden="true">🥈</span><span>2nd Prize</span></h3>
-              <p class="overview-prize-amount"><strong>$1,000 USD</strong> <em>(approx. ¥6,800 RMB)</em></p>
-              <p class="overview-prize-count">2 teams</p>
-            </li>
-            <li>
-              <h3><span class="overview-prize-medal" aria-hidden="true">🥉</span><span>3rd Prize</span></h3>
-              <p class="overview-prize-amount"><strong>$500 USD</strong> <em>(approx. ¥3,400 RMB)</em></p>
-              <p class="overview-prize-count">3 teams</p>
-            </li>
-          </ul>
-          <p class="overview-prize-total"><strong>Total Cash Prize Pool:</strong> <span>$5,000 USD (approx. ¥33,900 RMB)</span></p>
-          <div class="overview-attendance-support">
-            <h3>ICSE 2027 Attendance Support</h3>
-            <p>Each winning team will receive <strong>one full ICSE 2027 conference registration</strong>, valued at approximately <strong>$1,000 USD.</strong></p>
-          </div>
-          <p class="overview-section-link"><a href="rules.html">Prize &amp; Attendance Details <span aria-hidden="true">→</span></a></p>
+          <p>Repairs are ranked primarily by <strong>Verified Build Success Rate</strong>, with <strong>Execution Time</strong> and <strong>Token Usage</strong> reported as secondary efficiency metrics.</p>
+          <p class="overview-section-link"><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
 
@@ -246,7 +213,7 @@
             <span>More information:</span>
             <a href="task.html">Challenge</a>
             <a href="submission.html">Submission Guide</a>
-            <a href="evaluation.html">Evaluation Protocol</a>
+            <a href="rules.html#evaluation-scoring">Evaluation and scoring</a>
             <a href="rules.html">Rules</a>
             <a href="timeline.html">Timeline</a>
             <a href="faq.html">FAQ</a>
@@ -254,14 +221,14 @@
         </div>
       </section>
 
-      <section class="overview-section overview-references-section" aria-labelledby="references-title">
+      <section class="overview-section overview-last-section overview-references-section" aria-labelledby="references-title">
         <div class="overview-shell overview-reading-column">
           <h2 id="references-title" class="overview-section-heading">
             <img src="assets/overview-icons/reference.png" width="512" height="512" alt="" aria-hidden="true">
             <span>References</span>
           </h2>
           <ol class="overview-reference-list" aria-label="Build-Bench publications">
-            <li>
+            <li id="reference-1">
               <span>Chenyu Zhao, Shenglin Zhang*, Zeshun Huang, Weilin Jin, Yongqian Sun, Dan Pei, Chaoyun Zhang, Qingwei Lin, Chetan Bansal, Saravan Rajmohan, Minghua Ma. Can Language Models Go Beyond Coding? Assessing the Capability of Language Models to Build Real-World Systems. ACM Transactions on Software Engineering and Methodology (TOSEM), 2026. (CCF A)</span>
               <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">[paper]</a>
             </li>
@@ -270,52 +237,6 @@
               <a href="https://conf.researchr.org/details/issta-2026/issta-2026-research-papers/203/EvidenT-An-Evidence-Preserving-Framework-for-Iterative-System-Level-Package-Repair" target="_blank" rel="noreferrer">[paper]</a>
             </li>
           </ol>
-        </div>
-      </section>
-
-      <section class="overview-section overview-last-section overview-organizers-section" aria-labelledby="organizers-title">
-        <div class="overview-shell overview-reading-column overview-organizers-shell">
-          <h2 id="organizers-title" class="overview-section-heading overview-organizers-heading">
-            <img src="assets/overview-icons/organizers.png" width="512" height="512" alt="" aria-hidden="true">
-            <span>Organizers</span>
-          </h2>
-          <ul class="overview-organizer-list" aria-label="Organizers and homepage links">
-            <li>
-              <strong>Chenyu Zhao</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <a class="overview-organizer-homepage" href="https://zcyyc.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
-            </li>
-            <li>
-              <strong>Shenglin Zhang</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <a class="overview-organizer-homepage" href="https://nkcs.iops.ai/zhangshenglin/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
-            </li>
-            <li>
-              <strong>Minghua Ma</strong>
-              <span class="overview-organizer-affiliation">Microsoft</span>
-              <a class="overview-organizer-homepage" href="https://marvin233.github.io/" target="_blank" rel="noreferrer">Homepage <span aria-hidden="true">↗</span></a>
-            </li>
-            <li>
-              <strong>Yihang Lin</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>Zihao Huang</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>An Xu</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-            <li>
-              <strong>Chengtai Li</strong>
-              <span class="overview-organizer-affiliation">Nankai University</span>
-              <span class="overview-organizer-homepage is-placeholder" aria-label="Homepage link to be announced">Homepage <span aria-hidden="true">↗</span></span>
-            </li>
-          </ul>
         </div>
       </section>
 
@@ -328,7 +249,7 @@
           <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">Paper</a>
           <a href="https://arxiv.org/bibtex/2511.00780" target="_blank" rel="noreferrer">Citation</a>
           <a href="https://github.com/AIOps-Lab-NKU/BuildBench" target="_blank" rel="noreferrer">GitHub</a>
-          <a href="https://github.com/AIOps-Lab-NKU/BuildBench/issues" target="_blank" rel="noreferrer">Contact</a>
+          <a href="contact.html">Contact</a>
         </nav>
         <a href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a>
       </div>

@@ -170,41 +170,6 @@ if ("IntersectionObserver" in window && localNavLinks.length) {
   sections.forEach((section) => observer.observe(section));
 }
 
-const boardRows = Array.from(document.querySelectorAll(".research-baseline-table tbody tr"));
-const boardFilters = Array.from(document.querySelectorAll("[data-board-filter]"));
-
-function applyBoardFilter(direction) {
-  if (!boardRows.length) return;
-
-  const tbody = boardRows[0].parentElement;
-  const sortedRows = [...boardRows].sort(
-    (a, b) => Number(b.dataset.rate) - Number(a.dataset.rate),
-  );
-
-  let rank = 0;
-  sortedRows.forEach((row) => {
-    const visible = direction === "all" || row.dataset.direction === direction;
-    row.hidden = !visible;
-    if (visible) {
-      rank += 1;
-      row.querySelector("[data-rank]").textContent = String(rank);
-    }
-    tbody.appendChild(row);
-  });
-
-  boardFilters.forEach((button) => {
-    const active = button.dataset.boardFilter === direction;
-    button.classList.toggle("active", active);
-    button.setAttribute("aria-pressed", String(active));
-  });
-}
-
-boardFilters.forEach((button) => {
-  button.addEventListener("click", () => applyBoardFilter(button.dataset.boardFilter));
-});
-
-if (boardRows.length) applyBoardFilter("all");
-
 renderAccountNavigation();
 
 window.addEventListener("DOMContentLoaded", () => {

@@ -471,9 +471,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit":
     "受限的平台构建反馈将在后续协议版本中引入。其 CLI、限制和响应 Schema 不属于 Starter Kit",
   "Canonical patch": "Canonical 补丁",
-  "The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in the":
-    "平台根据修改后的工作树生成 canonical 补丁。该补丁的检查和重新构建方式由",
-  "Evaluation Protocol": "评测协议",
+  "The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in":
+    "平台根据修改后的工作树生成 canonical 补丁。该补丁的检查和重新构建方式见",
+  "Evaluation and scoring": "评测与计分规则",
   "Before spending a Full Evaluation attempt, run": "在使用一次完整评测机会前，请运行",
   ", test the Agent on all released Example Cases, package that exact version, upload it, and pass the Hosted Smoke Test. Full Evaluation begins only after you explicitly select the qualified immutable version.":
     "，在所有已发布的 Example Case 上测试 Agent，打包并上传这个确切版本，再通过平台 Smoke Test。只有显式选择已通过的不可变版本后，完整评测才会开始。",

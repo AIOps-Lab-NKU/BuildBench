@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class FrontendContractTests(unittest.TestCase):
     def test_all_pages_share_versioned_local_frontend_assets(self) -> None:
-        release = "20260810-7"
+        release = "20260811-7"
         html_paths = sorted(ROOT.glob("*.html"))
         self.assertEqual(len(html_paths), 14)
 
@@ -44,11 +44,11 @@ class FrontendContractTests(unittest.TestCase):
             "index.html",
             "task.html",
             "submission.html",
-            "evaluation.html",
             "leaderboard.html",
             "rules.html",
             "timeline.html",
             "faq.html",
+            "contact.html",
         ]
         active_routes = {
             "index.html": "index.html",
@@ -57,11 +57,11 @@ class FrontendContractTests(unittest.TestCase):
             "data-downloads.html": "submission.html",
             "my-submissions.html": "submission.html",
             "evaluation-detail.html": "submission.html",
-            "evaluation.html": "evaluation.html",
             "leaderboard.html": "leaderboard.html",
             "rules.html": "rules.html",
             "timeline.html": "timeline.html",
             "faq.html": "faq.html",
+            "contact.html": "contact.html",
         }
 
         for page_path in sorted(ROOT.glob("*.html")):
@@ -78,6 +78,8 @@ class FrontendContractTests(unittest.TestCase):
                 self.assertLess(nav.index("data-nav-more>"), nav.index('href="timeline.html"'))
                 self.assertIn("Competition dates and milestones", nav)
                 self.assertIn("Common questions and participant support", nav)
+                self.assertIn("Competition contact and organizing team", nav)
+                self.assertLess(nav.index('href="faq.html"'), nav.index('href="contact.html"'))
 
                 active_route = active_routes.get(page_path.name)
                 if active_route is None:
@@ -86,7 +88,7 @@ class FrontendContractTests(unittest.TestCase):
                     self.assertEqual(nav.count('aria-current="page"'), 1)
                     self.assertIn(f'href="{active_route}"', nav)
 
-                if page_path.name in {"timeline.html", "faq.html"}:
+                if page_path.name in {"timeline.html", "faq.html", "contact.html"}:
                     self.assertIn('class="nav-more active"', nav)
                 else:
                     self.assertNotIn('class="nav-more active"', nav)
@@ -113,8 +115,56 @@ class FrontendContractTests(unittest.TestCase):
             'More: "更多"',
             '"Competition dates and milestones": "比赛日期与里程碑"',
             '"Common questions and participant support": "常见问题与参赛支持"',
+            'Contact: "联系我们"',
+            '"Competition contact and organizing team": "竞赛联系信息与组织团队"',
         ):
             self.assertIn(contract, translations)
+
+    def test_leaderboard_navigation_uses_text_emphasis(self) -> None:
+        for page_path in sorted(ROOT.glob("*.html")):
+            page = page_path.read_text(encoding="utf-8")
+            nav_start = page.index('<nav class="site-nav"')
+            nav_end = page.index("</nav>", nav_start) + len("</nav>")
+            nav = page[nav_start:nav_end]
+            with self.subTest(page=page_path.name):
+                self.assertEqual(nav.count('class="nav-emphasis'), 1)
+                self.assertIn('href="leaderboard.html"', nav)
+                self.assertIn('data-lucide="trophy"', nav)
+
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        emphasis_rules = re.findall(
+            r"\.site-nav \.nav-emphasis \{(?P<body>.*?)\}", css, re.DOTALL
+        )
+        self.assertEqual(len(emphasis_rules), 2)
+
+        desktop_rule, mobile_rule = emphasis_rules
+        for contract in (
+            "color: var(--blue-dark);",
+            "font-weight: 800;",
+            "background: transparent;",
+            "border-radius: 0;",
+        ):
+            self.assertIn(contract, desktop_rule)
+        for obsolete in (
+            "color: #fff;",
+            "background: var(--dark);",
+            "border-radius: 5px;",
+        ):
+            self.assertNotIn(obsolete, desktop_rule)
+
+        emphasis_section = css[css.index(".site-nav .nav-emphasis"):css.index(".site-nav svg")]
+        self.assertIn(".site-nav .nav-emphasis svg", emphasis_section)
+        self.assertIn("color: var(--amber);", emphasis_section)
+        self.assertIn(".site-nav .nav-emphasis:hover", emphasis_section)
+        self.assertIn(".site-nav .nav-emphasis.active", emphasis_section)
+        self.assertNotIn("background: var(--blue-dark);", emphasis_section)
+
+        for contract in (
+            "justify-content: flex-start;",
+            "margin: 0;",
+            "padding: 0 4px;",
+        ):
+            self.assertIn(contract, mobile_rule)
 
     def test_overview_uses_a_poster_style_competition_hero(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -131,12 +181,11 @@ class FrontendContractTests(unittest.TestCase):
             'src="assets/overview-icons/challenge.png"',
             'src="assets/overview-icons/process.png"',
             'src="assets/overview-icons/evaluated.png"',
-            'src="assets/overview-icons/trophy.png"',
             'src="assets/overview-icons/calendar.png"',
             'src="assets/overview-icons/reference.png"',
             "Competition partners",
             "ICSE 2027 Competition Track",
-            "Build-Bench Team · Microsoft",
+            "Nankai University · Microsoft",
             "Get the Starter Kit",
             "Explore the Challenge",
         ):
@@ -148,7 +197,6 @@ class FrontendContractTests(unittest.TestCase):
             "challenge.png",
             "process.png",
             "evaluated.png",
-            "trophy.png",
             "calendar.png",
             "reference.png",
         ):
@@ -158,16 +206,35 @@ class FrontendContractTests(unittest.TestCase):
         self.assertNotIn('<dl class="overview-hero-credits"', html)
         self.assertNotIn("Sponsored by", html)
         self.assertNotIn("Industry collaboration", html)
+        self.assertNotIn("Build-Bench Team · Microsoft", html)
         self.assertNotIn('src="assets/overview-icons/handshake.png"', html)
         self.assertNotIn('overview-credit-icon::before', (ROOT / "styles.css").read_text(encoding="utf-8"))
 
-    def test_overview_places_requested_organizers_after_references(self) -> None:
+    def test_contact_replaces_overview_organizers(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        references = html.index('class="overview-section overview-references-section"')
-        organizers = html.index('class="overview-section overview-last-section overview-organizers-section"')
-        self.assertLess(references, organizers)
-        self.assertIn('class="overview-shell overview-reading-column overview-organizers-shell"', html)
+        self.assertIn('class="overview-section overview-last-section overview-references-section"', html)
+        self.assertIn('<a href="contact.html">Contact</a>', html)
+        self.assertNotIn("overview-organizers-section", html)
+        self.assertNotIn("overview-organizer-list", html)
+        self.assertNotIn('src="assets/overview-icons/organizers.png"', html)
+        self.assertNotIn(".overview-page .overview-organizer", css)
+
+    def test_contact_page_uses_plain_two_column_team_roster(self) -> None:
+        html = (ROOT / "contact.html").read_text(encoding="utf-8")
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        translations = (ROOT / "i18n" / "contact.js").read_text(encoding="utf-8")
+        left_start = html.index('class="contact-roster-column" aria-label="Primary organizers"')
+        right_start = html.index('class="contact-roster-column" aria-label="Organizing team members"')
+        roster_end = html.index("</section>", right_start)
+        left_column = html[left_start:right_start]
+        right_column = html[right_start:roster_end]
+
+        self.assertIn("Contact Information", html)
+        self.assertIn("For any inquiries, please email us at", html)
+        self.assertIn('class="contact-email-placeholder">[email address]</span>', html)
+        self.assertEqual(left_column.count('class="contact-member"'), 3)
+        self.assertEqual(right_column.count('class="contact-member"'), 4)
         for name in (
             "Chenyu Zhao",
             "Shenglin Zhang",
@@ -184,20 +251,40 @@ class FrontendContractTests(unittest.TestCase):
             "https://marvin233.github.io/",
         ):
             self.assertIn(homepage, html)
-        self.assertEqual(html.count('aria-label="Homepage link to be announced"'), 4)
-        self.assertIn('src="assets/overview-icons/organizers.png"', html)
-        self.assertTrue((ROOT / "assets" / "overview-icons" / "organizers.png").is_file())
-        self.assertNotIn(".overview-page .overview-organizers-shell {", css)
-        self.assertNotIn(".overview-page .overview-organizer-list li + li", css)
+        self.assertEqual(html.count('class="contact-member-homepage"'), 3)
+        self.assertEqual(html.count('src="assets/contact/avatar-placeholder.svg"'), 7)
+        self.assertTrue((ROOT / "assets" / "contact" / "avatar-placeholder.svg").is_file())
+        for contract in (
+            ".contact-roster",
+            "grid-template-columns: repeat(2, minmax(0, 1fr));",
+            ".contact-member",
+            "grid-template-columns: 96px minmax(0, 1fr);",
+            "@media (max-width: 720px)",
+            ".contact-member-avatar",
+        ):
+            self.assertIn(contract, css)
+        contact_css = css[css.index("/* Contact */"):css.index("@media (max-width: 680px)", css.index("/* Contact */"))]
+        self.assertNotIn("box-shadow", contact_css)
+        self.assertNotIn("contact-card", html + css)
+        for contract in (
+            '"Contact Information": "联系方式"',
+            '"Competition Organizer": "竞赛组织者"',
+            '"Organizing Team Member": "组织团队成员"',
+            '"[email address]": "[邮箱地址]"',
+        ):
+            self.assertIn(contract, translations)
 
-    def test_overview_places_ordered_affiliations_below_hero(self) -> None:
+    def test_overview_places_ordered_affiliations_in_hero_art(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
-        affiliations = html.index('class="overview-affiliations-section"')
-        framework = html.index('class="overview-framework-band"')
-        self.assertLess(html.index('class="overview-hero"'), affiliations)
-        self.assertLess(affiliations, framework)
+        hero_art = html.index('class="overview-hero-art"')
+        affiliations = html.index('class="overview-hero-affiliations"')
+        credits = html.index('class="overview-hero-credits"')
+        self.assertLess(hero_art, affiliations)
+        self.assertLess(html.index("</div>", hero_art), affiliations)
+        self.assertLess(affiliations, credits)
+        self.assertNotIn('class="overview-affiliations-section"', html)
 
         ordered_assets = (
             "assets/affiliations/nankai-university.jpg",
@@ -205,21 +292,26 @@ class FrontendContractTests(unittest.TestCase):
             "assets/affiliations/meituan.png",
             "assets/affiliations/chinese-academy-of-sciences.jpg",
         )
-        positions = [html.index(asset, affiliations, framework) for asset in ordered_assets]
+        positions = [html.index(asset, affiliations, credits) for asset in ordered_assets]
         self.assertEqual(positions, sorted(positions))
         for asset in ordered_assets:
             self.assertTrue((ROOT / asset).is_file())
 
         for contract in (
-            ".overview-page .overview-affiliations-section",
-            ".overview-page .overview-affiliation-list",
+            ".overview-page .overview-hero-affiliations",
+            ".overview-page .overview-hero-affiliation-list",
             ".overview-page .overview-affiliation-logo--seal",
             ".overview-page .overview-affiliation-logo--microsoft",
             ".overview-page .overview-affiliation-logo--meituan",
             "mix-blend-mode: multiply",
             "color: var(--blue-dark);",
-            "font-size: 22px;",
+            "font-size: 14px;",
             "text-align: center;",
+            'content: ":";',
+            "grid-template-columns: repeat(2, minmax(0, 1fr));",
+            "grid-area: credits;",
+            "justify-self: end;",
+            '"affiliations affiliations"',
         ):
             self.assertIn(contract, css)
         for contract in (
@@ -240,42 +332,61 @@ class FrontendContractTests(unittest.TestCase):
             self.assertIn(expected, html)
         self.assertNotIn("Repairs may involve dependency declarations", html)
 
-    def test_overview_includes_prizes_and_references_in_order(self) -> None:
+    def test_overview_cites_workflow_and_omits_unconfirmed_prizes(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
+        css = (ROOT / "styles.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
-        self.assertLess(html.index('id="evaluation-title"'), html.index('id="prizes-title"'))
-        self.assertLess(html.index('id="prizes-title"'), html.index('id="dates-title"'))
+        self.assertLess(html.index('id="evaluation-title"'), html.index('id="dates-title"'))
         self.assertLess(html.index('id="dates-title"'), html.index('id="references-title"'))
+
         for expected in (
-            '<strong>$1,500 USD</strong> <em>(approx. ¥10,100 RMB)</em>',
-            '<strong>$1,000 USD</strong> <em>(approx. ¥6,800 RMB)</em>',
-            '<strong>$500 USD</strong> <em>(approx. ¥3,400 RMB)</em>',
-            "$5,000 USD (approx. ¥33,900 RMB)",
-            "ICSE 2027 Attendance Support",
-            "Each winning team will receive",
-            "one full ICSE 2027 conference registration",
-            "Prize &amp; Attendance Details",
+            'class="overview-framework-citation"',
+            'href="#reference-1"',
+            'aria-label="See reference 1"',
+            '>[1]</a>',
+            '<li id="reference-1">',
             "Can Language Models Go Beyond Coding?",
             "EvidenT: An Evidence-Preserving Framework",
             "https://arxiv.org/abs/2511.00780",
             "https://conf.researchr.org/details/issta-2026/",
         ):
             self.assertIn(expected, html)
-        for outdated in (
-            "$2,750 USD",
+
+        self.assertLess(html.index('href="#reference-1"'), html.index('<li id="reference-1">'))
+        for removed in (
+            'id="prizes-title"',
+            "overview-prizes-section",
+            "overview-prize-list",
+            "overview-prize-total",
+            "overview-attendance-support",
+            'src="assets/overview-icons/trophy.png"',
+            "Prizes",
+            "1st Prize",
+            "$1,500 USD",
+            "$1,000 USD",
+            "$500 USD",
+            "Total Cash Prize Pool",
+            "ICSE 2027 Attendance Support",
+            "Prize &amp; Attendance Details",
             "$250 USD",
             "additional partial travel assistance",
             "does not guarantee full reimbursement",
         ):
-            self.assertNotIn(outdated, html)
-        for expected in (
-            '"(approx. ¥10,100 RMB)": "（约合人民币 ¥10,100）"',
-            '"$5,000 USD (approx. ¥33,900 RMB)": "$5,000 USD（约合人民币 ¥33,900）"',
-            '"Each winning team will receive": "每支获奖团队将获得"',
-            '"one full ICSE 2027 conference registration": "一个完整的 ICSE 2027 会议注册名额"',
-            '"$1,000 USD.": "$1,000 USD。"',
+            self.assertNotIn(removed, html)
+
+        self.assertIn(".overview-page .overview-framework-citation", css)
+        self.assertIn("scroll-margin-top: calc(var(--header-height) + 20px);", css)
+        self.assertNotIn("overview-prize", css)
+        self.assertNotIn("overview-attendance-support", css)
+        self.assertIn('"See reference 1": "查看参考文献 1"', translations)
+        for removed_translation in (
+            '"Prizes":',
+            '"1st Prize":',
+            '"Total Cash Prize Pool:":',
+            '"ICSE 2027 Attendance Support":',
+            '"Prize & Attendance Details":',
         ):
-            self.assertIn(expected, translations)
+            self.assertNotIn(removed_translation, translations)
         self.assertEqual(html.count(">[paper]</a>"), 2)
 
     def test_challenge_page_uses_agent_competition_narrative(self) -> None:
@@ -481,7 +592,7 @@ class FrontendContractTests(unittest.TestCase):
 
     def test_submission_guide_keeps_participant_contract_in_scope(self) -> None:
         html = (ROOT / "submission.html").read_text(encoding="utf-8")
-        evaluation = (ROOT / "evaluation.html").read_text(encoding="utf-8")
+        rules = (ROOT / "rules.html").read_text(encoding="utf-8")
 
         for expected in (
             "You need a Linux or WSL2 shell",
@@ -502,37 +613,53 @@ class FrontendContractTests(unittest.TestCase):
         ):
             self.assertNotIn(removed, html)
 
-        self.assertIn("How each Case is evaluated", evaluation)
-        self.assertIn("official Docker Validator", evaluation)
-        self.assertIn("evaluation.html#case-evaluation", html)
+        self.assertIn("official Docker Validator", rules)
+        self.assertIn("rules.html#evaluation-scoring", html)
 
-    def test_evaluation_protocol_is_participant_facing(self) -> None:
-        html = (ROOT / "evaluation.html").read_text(encoding="utf-8")
+    def test_evaluation_protocol_is_consolidated_into_rules(self) -> None:
+        html = (ROOT / "rules.html").read_text(encoding="utf-8")
+        translations = (ROOT / "i18n" / "rules.js").read_text(encoding="utf-8")
 
         for expected in (
-            "What counts as a successful repair?",
-            "How each Case is evaluated",
-            "How outcomes are handled",
-            "How scoring works",
-            "Evaluation stages and feedback",
-            "Rules to be published before evaluation opens",
+            "5.1 Successful repair and Per-Case validation",
+            "5.2 Terminal outcomes",
+            "5.3 Ranking and diagnostics",
+            "5.4 Evaluation stages and feedback",
+            "5.5 Versioned parameters",
+            "official Docker Validator",
+            "Verified Build Success Rate",
+            "Execution Time",
+            "Token Usage",
+            "Hosted Smoke Test",
+            "Full Evaluation during the public phase",
+            "Hidden final evaluation",
             "infrastructure_error",
-            "No partial score is published",
+            "No partial official score is published",
+            "Current pilot settings do not define these competition limits",
         ):
             self.assertIn(expected, html)
 
-        for organizer_only in (
-            "Working evaluation",
-            "Working decision",
-            "Open decisions",
-            "Team review",
-            "Seven observable stages",
-            'class="metric-panel',
+        for expected in (
+            "5.1 Successful repair and Per-Case validation",
+            "5.2 Terminal outcomes",
+            "5.3 Ranking and diagnostics",
+            "5.4 Evaluation stages and feedback",
+            "5.5 Versioned parameters",
+            "Verified Build Success Rate",
+            "Execution Time",
+            "Token Usage",
+            "Hosted Smoke Test.",
+            "Full Evaluation during the public phase.",
+            "Hidden final evaluation.",
+            "No partial official score is published",
+            "Current pilot settings do not define these competition limits",
         ):
-            self.assertNotIn(organizer_only, html)
+            self.assertIn(f'"{expected}', translations)
 
-        self.assertNotIn('class="status-strip', html)
-        self.assertEqual(html.count('class="protocol-table'), 2)
+        self.assertFalse((ROOT / "evaluation.html").exists())
+        self.assertFalse((ROOT / "i18n" / "evaluation.js").exists())
+        for page_path in ROOT.glob("*.html"):
+            self.assertNotIn("evaluation.html", page_path.read_text(encoding="utf-8"))
 
     def test_rules_page_is_a_plain_numbered_participant_rulebook(self) -> None:
         html = (ROOT / "rules.html").read_text(encoding="utf-8")
@@ -553,7 +680,7 @@ class FrontendContractTests(unittest.TestCase):
             "9. Review, correction, and enforcement",
             "10. Versioned rules and pending parameters",
             "A Team may contain no more than five members",
-            "Build Success Rate is the primary ranking metric",
+            "Verified Build Success Rate",
         ):
             self.assertIn(expected, html)
             self.assertIn(f'"{expected}', translations)
@@ -661,12 +788,19 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("leaderboard-live.js", html)
         self.assertIn("Successful Cases", html)
         self.assertNotIn("Agent version", html)
-        self.assertIn("Paper-reported model success rates", html)
-        self.assertEqual(html.count('data-direction="forward"'), 7)
-        self.assertEqual(html.count('data-direction="reverse"'), 7)
-        self.assertIn("data-board-filter", html)
-        self.assertIn("63.19%", html)
-        self.assertIn("29.52%", html)
+        for removed in (
+            "Research reference",
+            "Paper-reported model success rates",
+            "research-baselines",
+            "research-baseline-table",
+            "data-board-filter",
+            "63.19%",
+            "29.52%",
+        ):
+            self.assertNotIn(removed, html)
+        self.assertNotIn("boardRows", (ROOT / "app.js").read_text(encoding="utf-8"))
+        self.assertNotIn("research-baseline", (ROOT / "styles.css").read_text(encoding="utf-8"))
+        self.assertNotIn("Research reference", (ROOT / "i18n" / "leaderboard.js").read_text(encoding="utf-8"))
         self.assertIn('fetch("/api/leaderboard"', script)
         self.assertIn("case_set_version", script)
         self.assertIn("protocol_version", script)
@@ -817,16 +951,12 @@ class FrontendContractTests(unittest.TestCase):
         self.assertEqual(html.count("<details"), 19)
         self.assertNotIn("<table", html)
 
-    def test_submission_and_evaluation_use_right_hand_document_navigation(self) -> None:
+    def test_submission_uses_right_hand_document_navigation(self) -> None:
         styles = (ROOT / "styles.css").read_text(encoding="utf-8")
-
-        for filename in ("submission.html", "evaluation.html"):
-            html = (ROOT / filename).read_text(encoding="utf-8")
-            self.assertIn("page-layout right-doc-layout", html)
-            self.assertIn('class="page-rail', html)
-            self.assertIn('class="page-document', html)
-
         submission = (ROOT / "submission.html").read_text(encoding="utf-8")
+        self.assertIn("page-layout right-doc-layout", submission)
+        self.assertIn('class="page-rail', submission)
+        self.assertIn('class="page-document', submission)
         self.assertIn("Competition", submission)
         self.assertIn("On this page", submission)
         self.assertIn(".right-doc-layout > .page-rail", styles)

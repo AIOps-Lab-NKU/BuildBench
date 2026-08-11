@@ -7,8 +7,8 @@ window.BuildBenchI18nData.pages.leaderboard = Object.freeze({
   "Leaderboard": "排行榜",
   "Each Team may run one Full Evaluation. Rankings use Build Success Rate from organizer-published completed evaluations; Hosted Smoke Tests do not affect the leaderboard.":
     "每支团队只能进行一次完整评测。排行榜依据组织方发布的已完成评测计算构建成功率；托管冒烟测试不影响排名。",
-  "Only results evaluated with the same versioned Case set and Evaluation Protocol are compared.":
-    "仅比较使用相同版本 Case 集和评测协议得到的结果。",
+  "Only results evaluated with the same versioned Case set and evaluation rules are compared.":
+    "仅比较使用相同版本 Case 集和评测规则得到的结果。",
   "Official competition results": "官方竞赛结果",
   "Loading leaderboard": "正在加载排行榜",
   "Retrieving the latest organizer-published results.": "正在获取组织方最新发布的结果。",
@@ -30,19 +30,4 @@ window.BuildBenchI18nData.pages.leaderboard = Object.freeze({
   "Build Success Rate": "构建成功率",
   "is the percentage of eligible Cases whose canonical repair passes the clean target build.":
     "是 canonical repair 在干净目标环境中通过构建的有效 Case 比例。",
-  "Looking for research baselines? See the": "如需查看研究基线，请阅读",
-  "Build-Bench paper": "Build-Bench 论文",
-  "Research reference": "研究参考",
-  "Paper-reported model success rates": "论文报告的模型成功率",
-  "These Build-Bench paper results are retained as research baselines and are not competition entries. Each model used the paper's fixed configuration with up to three repair iterations and executable OBS validation.":
-    "以下 Build-Bench 论文结果作为研究基线保留，并非竞赛队伍成绩。每个模型均采用论文中的固定配置，最多进行三轮修复迭代，并通过 OBS 执行构建验证。",
-  "Read paper": "阅读论文",
-  "Migration direction filter": "迁移方向筛选",
-  "All directions": "全部方向",
-  "Model": "模型",
-  "Direction": "迁移方向",
-  "Success": "成功数",
-  "Success rate": "成功率",
-  "Success means that the package built successfully on the target architecture. These paper-reported values are provided for context and do not share the official competition Case set or Evaluation Protocol.":
-    "成功表示软件包在目标架构上完成构建。这些论文报告值仅供参考，并不使用正式竞赛的 Case 集或评测协议。",
 });

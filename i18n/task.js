@@ -57,7 +57,7 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
     "只有当 Agent 的最终修改能够重新应用到干净 Case，并使软件包在官方目标架构环境中成功完成构建时，该 Case 才被视为修复成功。",
   "Repairs are judged by verified build results, not by similarity to a reference patch.":
     "修复结果由真实构建结果判定，而不是通过与参考补丁进行文本相似度比较。",
-  "Read the Evaluation Protocol": "查看 Evaluation Protocol",
+  "Read Evaluation and scoring": "查看评测与计分规则",
   "Ready to build your Agent?": "准备开始了吗？",
   "Use the Starter Kit and example Cases to understand the workspace, test your Agent locally, and prepare a qualified submission.":
     "使用 Starter Kit 和 Example Cases 熟悉工作区、本地测试 Agent，并准备通过资格检查的正式提交。",

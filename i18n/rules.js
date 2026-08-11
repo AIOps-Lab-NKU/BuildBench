@@ -11,8 +11,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "注册团队或提交 Agent 即表示接受本竞赛规则。",
   "Build-Bench is a skills-based software engineering competition. Teams develop repair Agents; organizers run qualified Agent versions on competition Cases and validate each proposed repair through an executable target-architecture build.":
     "Build-Bench 是一项以能力为基础的软件工程竞赛。团队开发修复 Agent；主办方在竞赛 Case 上运行通过检查的 Agent 版本，并通过目标架构上的真实可执行构建验证每项修复。",
-  "The Rules apply together with the versioned Submission Guide, Evaluation Protocol, Timeline, and published data notices. Participants should read those documents before registering or starting an official evaluation.":
-    "本规则与版本化的《提交指南》《评测协议》《时间安排》及已发布的数据说明共同适用。参赛者应在注册或启动正式评测前阅读这些文件。",
+  "The Rules incorporate the versioned evaluation and scoring protocol and apply together with the Submission Guide, Timeline, and published data notices. Participants should read these materials before registering or starting an official evaluation.":
+    "本规则纳入版本化的评测与计分协议，并与《参赛指南》《时间安排》及已发布的数据说明共同适用。参赛者应在注册或启动正式评测前阅读这些材料。",
 
   "1. Competition scope": "1. 竞赛范围",
   "1.1 Competition title": "1.1 竞赛名称",
@@ -22,10 +22,10 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
   "A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.":
     "团队提交一个可运行的软件修复 Agent。对于每个 Case，Agent 接收已发布的软件包材料和构建失败证据，诊断故障并修改允许变更的软件包工作区。主办方在正式目标环境中评测由此产生的修改。",
   "1.3 Participant documentation": "1.3 参赛文档",
-  "The Challenge page defines the competition task and released Case sets. The Submission Guide defines the Agent package and runtime interface. The Evaluation Protocol defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
-    "“竞赛任务”页面定义竞赛任务和已发布的 Case 集；“提交指南”定义 Agent 包和运行接口；“评测协议”定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
+  "The Challenge page defines the competition task and released Case sets. The Participate page defines the Agent package and runtime interface. Section 5 of these Rules defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
+    "“竞赛任务”页面定义竞赛任务和已发布的 Case 集；“参与比赛”页面定义 Agent 包和运行接口；本规则第 5 节定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
   "Submission Guide": "提交指南",
-  "Evaluation Protocol": "评测协议",
+  "Evaluation and scoring": "评测与计分",
 
   "2. Team registration and eligibility": "2. 团队注册与参赛资格",
   "2.1 Team registration": "2.1 团队注册",
@@ -97,26 +97,79 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "参赛者不得在 Agent 包中嵌入 API Key 或个人凭据。如果允许外部调用，主办方管理的凭据机制将另行说明。",
 
   "5. Evaluation and scoring": "5. 评测与计分",
-  "5.1 Per-Case validation": "5.1 逐 Case 验证",
-  "The organizer runs the frozen Agent version on a Case and derives a canonical patch from the modified worktree.":
-    "主办方在 Case 上运行冻结的 Agent 版本，并从修改后的工作区生成 canonical patch。",
-  "The platform checks that patch for allowed paths, required structure, and prohibited build-bypass behavior.":
-    "平台检查补丁的允许路径、必要结构以及被禁止的构建绕过行为。",
-  "The canonical patch is applied to a clean copy of the Case and rebuilt in the official target-architecture environment.":
-    "canonical patch 会被应用到 Case 的干净副本，并在正式目标架构环境中重新构建。",
+  "5.1 Successful repair and Per-Case validation": "5.1 成功修复与逐 Case 验证",
+  "Each Case is an independent run. One slow or unsuccessful Case does not stop other scheduled Cases, and the selected Agent archive remains immutable throughout the evaluation.":
+    "每个 Case 都是一次独立运行。某个 Case 运行缓慢或未成功不会阻止其他已调度的 Case，且选定的 Agent 归档在整个评测期间保持不可变。",
+  "The platform freezes the run inputs by recording the Agent archive and its checksum together with the Case-set, runtime, Validator, and rules versions.":
+    "平台通过记录 Agent 归档及其校验和，并同时记录 Case 集、运行环境、Validator 和规则版本来冻结运行输入。",
+  "The platform verifies the Case checksum and creates an isolated writable worktree from the original package materials.":
+    "平台验证 Case 校验和，并从原始软件包材料创建隔离的可写工作区。",
+  "The declared entrypoint receives the standard workspace and runs under the published runtime, time, resource, and network policy.":
+    "声明的入口命令接收标准工作区，并依据已发布的运行环境、时间、资源和网络政策执行。",
+  "After the Agent exits, the platform validates": "Agent 退出后，平台验证",
+  "and derives the canonical": "并根据原始与修改后的工作区生成规范的",
+  "from the original and modified worktrees.": "。",
+  "The canonical patch is audited for forbidden paths, policy violations, required output structure, and prohibited build-bypass behavior.":
+    "平台审核 canonical patch 是否包含禁止路径、违反政策、缺少必要输出结构或存在被禁止的构建绕过行为。",
+  "The platform applies the audited patch to a clean copy of the Case and invokes the official Docker Validator in the target-architecture environment.":
+    "平台将通过审核的补丁应用到 Case 的干净副本，并在目标架构环境中调用官方 Docker Validator。",
+  "Agent status, Validator status, duration, patch statistics, and permitted logs are stored as structured evidence.":
+    "Agent 状态、Validator 状态、运行时长、补丁统计信息和允许保留的日志将作为结构化证据存储。",
   "A repair is not compared textually with a reference patch. It succeeds only when the clean target build and expected artifact validation succeed.":
     "修复不会与参考补丁进行文本比较；只有干净目标构建和预期产物验证均成功时，才算修复成功。",
-  "5.2 Outcomes": "5.2 结果处理",
-  "Agent errors, no-fix outcomes, build failures, dependency-resolution failures, timeouts, and invalid patches are unsuccessful Case outcomes under the final Evaluation Protocol.":
-    "根据最终《评测协议》，Agent 错误、未生成修复、构建失败、依赖无法解析、超时和无效补丁均属于未成功的 Case 结果。",
-  "A verified organizer infrastructure error is not treated as a participant repair failure. The affected Case or evaluation may be retried or recovered under the published correction procedure.":
-    "经确认的主办方基础设施错误不视为参赛者修复失败；受影响的 Case 或评测可依据已发布的修正流程重试或恢复。",
+  "5.2 Terminal outcomes": "5.2 终态结果",
+  "The platform records Agent execution and final build validation separately. An evaluation can complete normally even when Cases are unsuccessful; an evaluation-level System Error is reserved for organizer-controlled failures.":
+    "平台分别记录 Agent 执行和最终构建验证。即使存在未成功的 Case，整次评测仍可正常完成；评测级 System Error 仅用于主办方可控故障。",
+  "means the audited patch produces the expected package artifacts in the clean target build and is recorded as a successful Case.":
+    "表示通过审核的补丁在干净目标构建中生成预期软件包产物，并记为成功 Case。",
+  "mean that the build fails, dependencies cannot be resolved, or the Agent proposes no allowed change; each is an unsuccessful Case.":
+    "表示构建失败、依赖无法解析或 Agent 未提出允许的修改；这些结果均记为未成功 Case。",
+  "means the Agent crashes, exits abnormally, or omits a valid":
+    "表示 Agent 崩溃、异常退出或未提供有效的",
+  "; it is an unsuccessful Case.": "；该结果记为未成功 Case。",
+  "means the Agent or its permitted build work exceeds the applicable Case-level limit; it is an unsuccessful Case.":
+    "表示 Agent 或其允许执行的构建工作超过适用的逐 Case 限制；该结果记为未成功 Case。",
+  "means the canonical repair cannot be applied or violates path, output, or repair policy; it is an unsuccessful Case.":
+    "表示 canonical repair 无法应用，或违反路径、输出或修复政策；该结果记为未成功 Case。",
+  "means an organizer-controlled Worker, storage service, runtime, or Validator fails independently of the Agent repair. It is not treated as a participant repair failure; the affected evaluation is reviewed or rerun.":
+    "表示主办方控制的 Worker、存储服务、运行环境或 Validator 发生与 Agent 修复无关的故障。该结果不视为参赛者修复失败；受影响的评测将接受复核或重跑。",
   "No partial official score is published while unresolved infrastructure errors prevent the aggregate result from being finalized.":
     "当未解决的基础设施错误导致汇总结果无法最终确定时，不发布不完整的正式分数。",
-  "5.3 Primary metric": "5.3 主要指标",
-  "Build Success Rate is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The final denominator definition and any tie-breaker will be published with the frozen Evaluation Protocol.":
-    "Build Success Rate 是主要排名指标，即成功修复的 Case 数除以正式评测分母。最终分母定义及同分判定规则将随冻结版《评测协议》公布。",
-  "Read the Evaluation Protocol": "阅读评测协议",
+  "5.3 Ranking and diagnostics": "5.3 排名与诊断",
+  "Verified Build Success Rate": "经验证的构建成功率",
+  "is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The platform freezes an aggregate result only after all Cases have terminal outcomes and any organizer-controlled infrastructure errors have been resolved.":
+    "是主要排名指标，即成功修复的 Case 数除以正式评测分母。只有在所有 Case 均得到终态结果且主办方可控的基础设施错误均已解决后，平台才会冻结汇总结果。",
+  "Execution Time": "执行时间",
+  "and": "和",
+  "Token Usage": "Token 使用量",
+  "are reported as secondary efficiency metrics. Diagnostic information explains performance and failures but is not combined into a weighted score.":
+    "作为次要效率指标报告。诊断信息用于说明性能和失败原因，但不会合并为加权分数。",
+  "Published diagnostics may include:": "公布的诊断信息可包括：",
+  "Case outcomes grouped by result category;": "按结果类别汇总的 Case 结果；",
+  "Agent execution time and final build duration;": "Agent 执行时间和最终构建时长；",
+  "token, model, and tool usage when collected;": "平台采集到的 Token、模型和工具使用情况；",
+  "patch size, modified-file count, and policy-validation status;": "补丁大小、修改文件数量和政策验证状态；",
+  "build requests, retries, and repair iterations; and": "构建请求、重试和修复迭代；以及",
+  "the Case-set, runtime, Validator, and rules versions used for the run.": "本次运行使用的 Case 集、运行环境、Validator 和规则版本。",
+  "The final denominator definition and any tie-breaker will be published before public evaluation opens.":
+    "最终分母定义及同分判定规则将在公开评测开放前公布。",
+  "5.4 Evaluation stages and feedback": "5.4 评测阶段与反馈",
+  "The same Agent interface is used across stages, but the Case set, purpose, and visible feedback differ.":
+    "各阶段使用相同的 Agent 接口，但 Case 集、目的和可见反馈有所不同。",
+  "Hosted Smoke Test.": "Hosted Smoke Test。",
+  "Checks the uploaded bundle, entrypoint, dependencies, workspace behavior, and output contract on a small lightweight set. It runs the uploaded immutable version, returns detailed qualification diagnostics, and does not produce an official score.":
+    "在小型轻量 Case 集上检查上传包、入口命令、依赖、工作区行为和输出协议。该测试运行已上传的不可变版本，返回详细的资格诊断信息，但不产生正式分数。",
+  "Full Evaluation during the public phase.": "公开阶段的 Full Evaluation。",
+  "Measures repair performance on the versioned validation set. It starts only after the Team selects a qualified immutable version; progress and the completed aggregate result appear in My Submissions.":
+    "在版本化验证集上衡量修复性能。仅在团队选择通过资格检查的不可变版本后启动；进度和完成后的汇总结果显示在 My Submissions 中。",
+  "Hidden final evaluation.": "隐藏最终评测。",
+  "Runs the Team's frozen final Agent on organizer-controlled held-out Cases using frozen Agent, Case-set, runtime, Validator, and rules versions. Aggregate results and permitted diagnostics are released after the deadline.":
+    "在主办方控制的保留 Case 上运行团队冻结的最终 Agent，并使用冻结的 Agent、Case 集、运行环境、Validator 和规则版本。截止时间后公布汇总结果和允许公开的诊断信息。",
+  "5.5 Versioned parameters": "5.5 版本化参数",
+  "Before public evaluation opens, the organizers will publish the exact score-denominator and cancellation semantics; any tie-breaker; Agent and build timeouts; build-feedback, iteration, and tool-call budgets; CPU, memory, storage, concurrency, network, and credential policies; submission frequency and rerun rules; and the feedback visible during public and hidden evaluation.":
+    "在公开评测开放前，主办方将公布精确的计分分母和取消语义、同分判定规则、Agent 与构建超时、构建反馈/迭代/工具调用预算、CPU/内存/存储/并发/网络/凭据政策、提交频率与重跑规则，以及公开和隐藏评测期间可见的反馈。",
+  "Current pilot settings do not define these competition limits. Publication dates appear on the":
+    "当前试运行设置不代表正式竞赛限制。发布日期见",
 
   "6. Prohibited conduct": "6. 禁止行为",
   "Participants must not obtain an advantage by bypassing the repair task, evaluator, resource policy, or Team-registration rules.":
@@ -169,8 +222,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "任何公开方案说明或 solution paper 必须与产生所报告正式结果的 Agent 版本相对应。",
 
   "9. Review, correction, and enforcement": "9. 审查、修正与规则执行",
-  "A malformed or nonconforming Agent, output, or patch may be rejected or recorded as unsuccessful under the Evaluation Protocol.":
-    "格式错误或不符合要求的 Agent、输出或补丁，可依据《评测协议》被拒绝或记录为未成功。",
+  "A malformed or nonconforming Agent, output, or patch may be rejected or recorded as unsuccessful under these Rules.":
+    "格式错误或不符合要求的 Agent、输出或补丁，可依据本规则被拒绝或记录为未成功。",
   "When an organizer-controlled infrastructure defect affects an evaluation, organizers may correct the defect and rerun the affected work under a documented procedure.":
     "当主办方控制的基础设施缺陷影响评测时，主办方可修正缺陷，并依据有记录的流程重新运行受影响任务。",
   "Organizers may request clarification or verification when an entry is unreproducible, incomplete, anomalous, or potentially noncompliant.":
@@ -193,8 +246,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "正式评分分母、同分判定、反馈可见性、取消、重试和修正流程；以及",
   "any remaining eligibility, conflict-of-interest, or final-result verification procedures required by the ICSE Competition Track.":
     "ICSE Competition Track 要求的其他参赛资格、利益冲突或最终结果核验流程。",
-  "Material updates will carry a version and publication date. The Timeline page governs competition dates, and the frozen Evaluation Protocol governs official scoring.":
-    "重要更新将注明版本和发布日期。竞赛日期以“时间安排”页面为准，正式评分以冻结版《评测协议》为准。",
+  "Material updates will carry a version and publication date. The Timeline page governs competition dates, and the frozen version of these Rules governs official scoring.":
+    "重要更新将注明版本和发布日期。竞赛日期以“时间安排”页面为准，正式评分以冻结版本规则为准。",
 
   "Rules contents": "规则目录",
   "Acceptance": "接受规则",

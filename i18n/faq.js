@@ -78,9 +78,9 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
     "平台根据 Agent 修改后的工作树生成规范补丁，检查允许修改的路径和修复政策，将补丁重新应用到干净 Case，并调用正式的目标架构 Docker Validator。修复成功取决于真实软件包构建成功，而不是与参考补丁相似。",
   "See how each Case is evaluated": "查看单个 Case 的评测方式",
   "How is the competition score calculated?": "竞赛分数如何计算？",
-  "Build Success Rate is the primary metric: successful Cases divided by the official evaluation denominator. The exact denominator semantics, any tie-breaker, and remaining resource and rerun rules will be published with the frozen Evaluation Protocol on August 31, 2026.":
-    "Build Success Rate 是主要指标，即成功 Case 数除以正式评测分母。精确的分母语义、同分判定方式以及其余资源和重跑规则，将随冻结后的《评测协议》于 2026 年 8 月 31 日公布。",
-  "Read the scoring protocol": "阅读计分协议",
+  "Verified Build Success Rate is the primary metric: successful Cases divided by the official evaluation denominator. The exact denominator semantics, any tie-breaker, and remaining resource and rerun rules will be published in the frozen Rules on August 31, 2026.":
+    "经验证的构建成功率是主要指标，即成功 Case 数除以正式评测分母。精确的分母语义、同分判定方式以及其余资源和重跑规则，将于 2026 年 8 月 31 日在冻结版规则中公布。",
+  "Read the scoring rules": "阅读计分规则",
   "How are failures, timeouts, and infrastructure errors handled?": "构建失败、超时和基础设施错误如何处理？",
   "Build failure, Agent error, timeout, and an invalid patch are unsuccessful Case outcomes. An organizer-controlled infrastructure error is handled separately: no partial score is published, and the affected work is reviewed or rerun under the competition procedure.":
     "构建失败、Agent 错误、超时和无效补丁均属于未成功的 Case 结果。组织者控制范围内的基础设施错误会单独处理：平台不会发布部分分数，并会按照竞赛程序复核或重新运行受影响的任务。",

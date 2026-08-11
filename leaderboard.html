@@ -24,12 +24,12 @@
     />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260810-7" />
-    <script src="assets/vendor/lucide.min.js?v=20260810-7" defer></script>
-    <script src="i18n/leaderboard.js?v=20260805-2" defer></script>
-    <script src="i18n.js?v=20260810-7" defer></script>
-    <script src="auth-client.js?v=20260810-7" defer></script>
-    <script src="app.js?v=20260810-7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260811-7" />
+    <script src="assets/vendor/lucide.min.js?v=20260811-7" defer></script>
+    <script src="i18n/leaderboard.js?v=20260811-7" defer></script>
+    <script src="i18n.js?v=20260811-7" defer></script>
+    <script src="auth-client.js?v=20260811-7" defer></script>
+    <script src="app.js?v=20260811-7" defer></script>
     <script src="leaderboard-live.js?v=20260805-1" defer></script>
   </head>
   <body class="leaderboard-page" data-page="leaderboard">
@@ -58,7 +58,6 @@
           <a href="index.html">Overview</a>
           <a href="task.html">Challenge</a>
           <a href="submission.html">Participate</a>
-          <a href="evaluation.html">Evaluation</a>
           <a class="nav-emphasis active" href="leaderboard.html" aria-current="page"><i data-lucide="trophy" aria-hidden="true"></i>Leaderboard</a>
           <a href="rules.html">Rules</a>
           <div class="nav-more" data-nav-more>
@@ -68,6 +67,7 @@
             <div class="nav-more-menu" id="nav-more-menu" data-nav-more-menu>
               <a href="timeline.html"><span>Timeline</span><small>Competition dates and milestones</small></a>
               <a href="faq.html"><span>FAQ</span><small>Common questions and participant support</small></a>
+              <a href="contact.html"><span>Contact</span><small>Competition contact and organizing team</small></a>
             </div>
           </div>
         </nav>
@@ -87,7 +87,7 @@
         </header>
 
         <p class="leaderboard-comparison-note">
-          Only results evaluated with the same versioned Case set and Evaluation Protocol are compared.
+          Only results evaluated with the same versioned Case set and evaluation rules are compared.
         </p>
 
         <section aria-labelledby="leaderboard-results-title">
@@ -121,70 +121,6 @@
           </p>
         </aside>
 
-        <section class="research-baselines" aria-labelledby="research-baselines-title">
-          <header class="research-baselines-heading">
-            <div>
-              <p class="leaderboard-kicker">Research reference</p>
-              <h2 id="research-baselines-title">Paper-reported model success rates</h2>
-              <p>
-                These Build-Bench paper results are retained as research baselines and are not
-                competition entries. Each model used the paper's fixed configuration with up to
-                three repair iterations and executable OBS validation.
-              </p>
-            </div>
-            <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">
-              Read paper
-            </a>
-          </header>
-
-          <div class="research-baseline-controls" role="group" aria-label="Migration direction filter">
-            <button class="active" type="button" aria-pressed="true" data-board-filter="all">
-              All directions
-            </button>
-            <button type="button" aria-pressed="false" data-board-filter="forward">
-              x86_64 &rarr; aarch64
-            </button>
-            <button type="button" aria-pressed="false" data-board-filter="reverse">
-              aarch64 &rarr; x86_64
-            </button>
-          </div>
-
-          <div class="research-baseline-frame">
-            <table class="leaderboard-table research-baseline-table" aria-label="Paper-reported model success rates">
-              <thead>
-                <tr>
-                  <th scope="col">Rank</th>
-                  <th scope="col">Model</th>
-                  <th scope="col">Direction</th>
-                  <th scope="col">Success</th>
-                  <th scope="col">Success rate</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr data-direction="forward" data-rate="63.19"><td data-rank>1</td><th scope="row">GPT-5</th><td>x86_64 &rarr; aarch64</td><td>103 / 163</td><td><strong>63.19%</strong></td></tr>
-                <tr data-direction="forward" data-rate="28.83"><td data-rank>2</td><th scope="row">GPT-5-mini</th><td>x86_64 &rarr; aarch64</td><td>47 / 163</td><td><strong>28.83%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="29.52"><td data-rank>3</td><th scope="row">GPT-5</th><td>aarch64 &rarr; x86_64</td><td>31 / 105</td><td><strong>29.52%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="26.67"><td data-rank>4</td><th scope="row">GPT-5-mini</th><td>aarch64 &rarr; x86_64</td><td>28 / 105</td><td><strong>26.67%</strong></td></tr>
-                <tr data-direction="forward" data-rate="17.18"><td data-rank>5</td><th scope="row">Qwen3-max</th><td>x86_64 &rarr; aarch64</td><td>28 / 163</td><td><strong>17.18%</strong></td></tr>
-                <tr data-direction="forward" data-rate="13.50"><td data-rank>6</td><th scope="row">GPT-4o</th><td>x86_64 &rarr; aarch64</td><td>22 / 163</td><td><strong>13.50%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="12.38"><td data-rank>7</td><th scope="row">GPT-4o</th><td>aarch64 &rarr; x86_64</td><td>13 / 105</td><td><strong>12.38%</strong></td></tr>
-                <tr data-direction="forward" data-rate="9.82"><td data-rank>8</td><th scope="row">Claude Sonnet 4.5</th><td>x86_64 &rarr; aarch64</td><td>16 / 163</td><td><strong>9.82%</strong></td></tr>
-                <tr data-direction="forward" data-rate="7.98"><td data-rank>9</td><th scope="row">DeepSeek V3</th><td>x86_64 &rarr; aarch64</td><td>13 / 163</td><td><strong>7.98%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="5.71"><td data-rank>10</td><th scope="row">Qwen3-max</th><td>aarch64 &rarr; x86_64</td><td>6 / 105</td><td><strong>5.71%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="5.71"><td data-rank>11</td><th scope="row">Claude Sonnet 4.5</th><td>aarch64 &rarr; x86_64</td><td>6 / 105</td><td><strong>5.71%</strong></td></tr>
-                <tr data-direction="forward" data-rate="4.91"><td data-rank>12</td><th scope="row">Qwen2.5-3B-Instruct</th><td>x86_64 &rarr; aarch64</td><td>8 / 163</td><td><strong>4.91%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="3.81"><td data-rank>13</td><th scope="row">DeepSeek V3</th><td>aarch64 &rarr; x86_64</td><td>4 / 105</td><td><strong>3.81%</strong></td></tr>
-                <tr data-direction="reverse" data-rate="1.90"><td data-rank>14</td><th scope="row">Qwen2.5-3B-Instruct</th><td>aarch64 &rarr; x86_64</td><td>2 / 105</td><td><strong>1.90%</strong></td></tr>
-              </tbody>
-            </table>
-          </div>
-
-          <p class="research-baseline-footnote">
-            Success means that the package built successfully on the target architecture. These
-            paper-reported values are provided for context and do not share the official competition
-            Case set or Evaluation Protocol.
-          </p>
-        </section>
       </div>
     </main>
 
@@ -196,7 +132,7 @@
         </div>
         <nav class="footer-links" aria-label="Footer navigation">
           <a href="submission.html">Participate</a>
-          <a href="evaluation.html">Evaluation</a>
+          <a href="rules.html#evaluation-scoring">Evaluation &amp; scoring</a>
           <a href="timeline.html">Timeline</a>
           <a href="faq.html">FAQ</a>
         </nav>
