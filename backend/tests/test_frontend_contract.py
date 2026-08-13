@@ -11,7 +11,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class FrontendContractTests(unittest.TestCase):
     def test_all_pages_share_versioned_local_frontend_assets(self) -> None:
-        release = "20260811-7"
+        release = "20260813-3"
         html_paths = sorted(ROOT.glob("*.html"))
         self.assertEqual(len(html_paths), 14)
 
