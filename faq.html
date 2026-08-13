@@ -8,12 +8,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/faq.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260811-7" />
-    <script src="assets/vendor/lucide.min.js?v=20260811-7" defer></script>
-    <script src="i18n/faq.js?v=20260811-6" defer></script>
-    <script src="i18n.js?v=20260811-7" defer></script>
-    <script src="auth-client.js?v=20260811-7" defer></script>
-    <script src="app.js?v=20260811-7" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260812-1" />
+    <script src="assets/vendor/lucide.min.js?v=20260812-1" defer></script>
+    <script src="i18n/faq.js?v=20260812-2" defer></script>
+    <script src="i18n.js?v=20260812-1" defer></script>
+    <script src="auth-client.js?v=20260812-1" defer></script>
+    <script src="app.js?v=20260812-1" defer></script>
   </head>
   <body class="faq-page docs-page" data-page="faq">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -80,7 +80,7 @@
               </details>
               <details>
                 <summary>Must an Agent use a large language model?<i data-lucide="plus" aria-hidden="true"></i></summary>
-                <div class="faq-answer"><p>A competition entry must be a runnable repair Agent, but its internal method may combine language models, retrieval, static analysis, log processing, search, or other compliant tools. Case-specific answer tables and pre-generated repair patches are prohibited.</p><p class="faq-reference"><a href="rules.html#data-tools">Read the models and tools policy</a></p></div>
+                <div class="faq-answer"><p>Yes. We encourage participants to use an LLM as the Agent's foundation model and combine it with retrieval, static analysis, log processing, search, and other compliant tools to build a more capable repair Agent. The submission must be a runnable Agent; Case-specific answer tables and pre-generated repair patches are prohibited.</p><p class="faq-reference"><a href="rules.html#data-tools">Read the models and tools policy</a></p></div>
               </details>
             </div>
           </section>
@@ -90,7 +90,7 @@
             <div class="faq-list">
               <details>
                 <summary>What do I need to run the Starter Kit?<i data-lucide="plus" aria-hidden="true"></i></summary>
-                <div class="faq-answer"><p>You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. Starter Kit v0.1.0-rc.1 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.</p><p class="faq-reference"><a href="submission.html#quick-start">Check the local setup</a></p></div>
+                <div class="faq-answer"><p>You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. The Starter Kit does not require sudo privileges, but you must have permission to run Docker containers. Docker Desktop typically requires no additional sudo configuration.</p><p>Starter Kit v0.1.0-rc.2 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.</p><p class="faq-reference"><a href="submission.html#quick-start">Check the local setup</a></p></div>
               </details>
               <details>
                 <summary>What can the Agent read, modify, and return?<i data-lucide="plus" aria-hidden="true"></i></summary>
@@ -98,7 +98,7 @@
               </details>
               <details>
                 <summary>Can I submit a custom Docker runtime?<i data-lucide="plus" aria-hidden="true"></i></summary>
-                <div class="faq-answer"><p>Not in Starter Kit v0.1.0-rc.1. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.</p><p class="faq-reference"><a href="submission.html#submission-contents">Read the current package contract</a></p></div>
+                <div class="faq-answer"><p>Not in Starter Kit v0.1.0-rc.2. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.</p><p class="faq-reference"><a href="submission.html#submission-contents">Read the current package contract</a></p></div>
               </details>
               <details>
                 <summary>Can the Agent request build feedback while it runs?<i data-lucide="plus" aria-hidden="true"></i></summary>
@@ -157,10 +157,6 @@
               <details>
                 <summary>Which Case sets are used, and how large is the benchmark?<i data-lucide="plus" aria-hidden="true"></i></summary>
                 <div class="faq-answer"><p>Local examples, public development resources, Hosted Smoke Test, Full Evaluation, and final hidden evaluation use separate versioned Case sets. The published benchmark contains 268 x86_64 and aarch64 migration failures. The organizers aim to retain approximately 1,000 Cases for final hidden evaluation, subject to final integrity, licensing, deduplication, and reproducibility checks.</p><p class="faq-reference"><a href="task.html#dataset">Read the dataset status</a><span aria-hidden="true"> · </span><a href="data-downloads.html">See released resources</a></p></div>
-              </details>
-              <details>
-                <summary>What are the key participant dates?<i data-lucide="plus" aria-hidden="true"></i></summary>
-                <div class="faq-answer"><p>The website beta opens August 14; the invited pilot runs August 17–28; rules and limits freeze August 31; public development and validation open September 7; final Agent versions freeze November 13; and final results are published by November 20, 2026.</p><p class="faq-reference"><a href="timeline.html">Read the full Timeline</a></p></div>
               </details>
               <details>
                 <summary>Where can I see status, results, and authoritative updates?<i data-lucide="plus" aria-hidden="true"></i></summary>

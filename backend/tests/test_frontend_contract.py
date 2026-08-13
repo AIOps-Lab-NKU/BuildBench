@@ -717,12 +717,12 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("Protocol Schemas", html)
         self.assertIn("Runtime Images", html)
         self.assertIn(
-            "releases/download/v0.1.0-rc.1/"
-            "buildbench-starter-kit-0.1.0-rc.1.zip",
+            "releases/download/v0.1.0-rc.2/"
+            "buildbench-starter-kit-0.1.0-rc.2.zip",
             html,
         )
         self.assertIn(
-            "releases/download/v0.1.0-rc.1/SHA256SUMS",
+            "releases/download/v0.1.0-rc.2/SHA256SUMS",
             html,
         )
         self.assertIn("Published pre-release", html)
