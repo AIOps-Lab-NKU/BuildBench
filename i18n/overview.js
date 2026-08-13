@@ -34,11 +34,11 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Affiliated institutions and industry partners": "合作高校、科研机构与产业伙伴",
   "Nankai University": "南开大学",
   "Meituan": "美团",
-  "Chinese Academy of Sciences": "中国科学院",
+  "Computer Network Information Center, Chinese Academy of Sciences": "中科院计算机网络信息中心",
   "Nankai University logo": "南开大学校徽",
   "Microsoft logo": "微软标志",
   "Meituan logo": "美团标志",
-  "Chinese Academy of Sciences logo": "中国科学院院徽",
+  "Computer Network Information Center, Chinese Academy of Sciences logo": "中科院计算机网络信息中心标志",
   "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
   "What is the challenge?": "竞赛任务是什么？",
   "Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.":
