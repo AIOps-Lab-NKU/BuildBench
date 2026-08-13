@@ -7,8 +7,11 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
   Challenge: "竞赛任务",
   "Build an Agent that repairs real cross-architecture build failures":
     "构建能够修复真实跨架构构建失败的 Agent",
-  "Build-Bench challenges teams to develop a runnable software-repair Agent for real packages that build successfully on one instruction-set architecture but fail when rebuilt on another.":
-    "Build-Bench 要求参赛团队开发一个可运行的软件修复 Agent，用于处理真实软件包在一个指令集架构上能够成功构建、迁移到另一架构后却发生构建失败的问题。",
+  "Build-Bench challenges teams to develop a runnable software-repair Agent for real packages that build successfully on one processor architecture, such as":
+    "Build-Bench 要求参赛团队开发一个可运行的软件修复 Agent，用于处理能够在一种处理器架构（例如",
+  ", but fail when rebuilt on another, such as": "）上成功构建，却在另一种架构（例如",
+  ". These cross-architecture failures can arise from architecture-specific dependencies, compiler behavior, build options, or packaging scripts.":
+    "）上重新构建时失败的真实软件包。这些跨架构构建失败可能由架构相关依赖、编译器行为、构建选项或打包脚本引起。",
   "For each Case, the Agent investigates a failed build inside a prepared package workspace, modifies the permitted package files, and produces a repair that can be independently verified by the competition platform.":
     "对于每个 Case，Agent 将进入准备好的软件包工作区，分析目标架构上的构建失败，修改允许范围内的软件包文件，并产生能够由竞赛平台独立验证的修复结果。",
   "You submit a runnable Agent — not precomputed Case-by-Case patches.":

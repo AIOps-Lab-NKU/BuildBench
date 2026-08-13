@@ -31,22 +31,24 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "Get the Starter Kit": "获取 Starter Kit",
   "Follow the Quick Start": "按照快速开始操作",
   "Must an Agent use a large language model?": "Agent 必须使用大语言模型吗？",
-  "A competition entry must be a runnable repair Agent, but its internal method may combine language models, retrieval, static analysis, log processing, search, or other compliant tools. Case-specific answer tables and pre-generated repair patches are prohibited.":
-    "竞赛提交必须是可运行的修复 Agent，但内部方法可以组合语言模型、检索、静态分析、日志处理、搜索或其他合规工具。禁止使用针对特定 Case 的答案表或预生成修复补丁。",
+  "Yes. We encourage participants to use an LLM as the Agent's foundation model and combine it with retrieval, static analysis, log processing, search, and other compliant tools to build a more capable repair Agent. The submission must be a runnable Agent; Case-specific answer tables and pre-generated repair patches are prohibited.":
+    "是。我们鼓励参赛者以 LLM 作为 Agent 的基础模型，并结合检索、静态分析、日志处理、搜索及其他合规工具构建更强大的修复 Agent。提交必须是可运行的 Agent，禁止使用针对特定 Case 的答案表或预生成修复补丁。",
   "Read the models and tools policy": "阅读模型与工具政策",
 
   "2. Develop locally": "2. 本地开发",
   "What do I need to run the Starter Kit?": "运行 Starter Kit 需要什么？",
-  "You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. Starter Kit v0.1.0-rc.1 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.":
-    "你需要 Linux 或 WSL2 Shell、Git、Docker Engine 24 及以上版本，或使用 Linux 容器的 Docker Desktop。Starter Kit v0.1.0-rc.1 包含 bb 命令、托管 Python Agent 模板、示例 Agent、hello 示例 Case、本地检查和确定性打包功能。",
+  "You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. The Starter Kit does not require sudo privileges, but you must have permission to run Docker containers. Docker Desktop typically requires no additional sudo configuration.":
+    "你需要 Linux 或 WSL2 Shell、Git、Docker Engine 24+，或使用 Linux 容器的 Docker Desktop。Starter Kit 不强制要求 sudo 权限，但需要具备运行 Docker 容器的权限。使用 Docker Desktop 通常无需额外的 sudo 配置。",
+  "Starter Kit v0.1.0-rc.2 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.":
+    "Starter Kit v0.1.0-rc.2 包含 bb 命令、托管 Python Agent 模板、示例 Agent、hello 示例 Case、本地检查和确定性打包功能。",
   "Check the local setup": "检查本地环境",
   "What can the Agent read, modify, and return?": "Agent 可以读取、修改和返回什么？",
   "The Agent reads task evidence from the read-only input directory, modifies only the writable package worktree, and may write machine-readable status to the output directory. It must follow the workspace paths and agent-result.json schema defined by protocol v0.1.":
     "Agent 从只读输入目录读取任务证据，只修改可写的软件包工作树，并可向输出目录写入机器可读状态。它必须遵守协议 v0.1 定义的工作区路径和 agent-result.json Schema。",
   "Read the runtime interface": "阅读运行接口",
   "Can I submit a custom Docker runtime?": "可以提交自定义 Docker 运行环境吗？",
-  "Not in Starter Kit v0.1.0-rc.1. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.":
-    "Starter Kit v0.1.0-rc.1 暂不支持。当前提交合约仅支持托管 Python 3.11 配置。如果以后增加其他运行配置，将通过版本化协议更新正式发布，而不会静默启用。",
+  "Not in Starter Kit v0.1.0-rc.2. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.":
+    "Starter Kit v0.1.0-rc.2 暂不支持。当前提交合约仅支持托管 Python 3.11 配置。如果以后增加其他运行配置，将通过版本化协议更新正式发布，而不会静默启用。",
   "Read the current package contract": "阅读当前提交包合约",
   "Can the Agent request build feedback while it runs?": "Agent 运行时可以请求构建反馈吗？",
   "Not in the current Starter Kit release. Bounded hosted build feedback is a planned feature; its command, limits, and response schema will be introduced only in a later protocol release. Do not assume that bb-build is currently available.":
@@ -96,10 +98,6 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
     "本地示例、公开开发资源、Hosted Smoke Test、Full Evaluation 和最终隐藏评测使用相互独立的版本化 Case 集。已发布 Benchmark 包含 268 个 x86_64 与 aarch64 迁移失败 Case。组织者计划为最终隐藏评测保留约 1,000 个 Case，具体数量仍取决于最终完整性、许可、去重和可复现性检查。",
   "Read the dataset status": "查看数据集状态",
   "See released resources": "查看已发布资源",
-  "What are the key participant dates?": "参赛者需要关注哪些关键日期？",
-  "The website beta opens August 14; the invited pilot runs August 17\u201328; rules and limits freeze August 31; public development and validation open September 7; final Agent versions freeze November 13; and final results are published by November 20, 2026.":
-    "网站 Beta 于 8 月 14 日开放；邀请制 Pilot 在 8 月 17\u201328 日进行；规则与限制于 8 月 31 日冻结；公开开发与验证于 9 月 7 日开放；最终 Agent 版本于 11 月 13 日冻结；最终结果在 2026 年 11 月 20 日前公布。",
-  "Read the full Timeline": "查看完整时间安排",
   "Where can I see status, results, and authoritative updates?": "在哪里查看状态、结果和权威更新？",
   "My Submissions shows uploaded Agent versions, qualification logs, Full Evaluation progress, and completed results. The Leaderboard shows published rankings. Versioned changes to dates, resources, rules, and evaluation policy appear on their corresponding competition pages; any official support channel will be identified on this website when available.":
     "“我的提交”展示已上传的 Agent 版本、资格检查日志、Full Evaluation 进度和已完成结果；排行榜展示已发布排名。日期、资源、规则和评测政策的版本化变更会发布在对应竞赛页面；正式支持渠道确定后也将在本网站说明。",

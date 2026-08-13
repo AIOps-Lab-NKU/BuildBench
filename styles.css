@@ -419,80 +419,21 @@
   object-fit: contain;
 }
 
-.overview-page .overview-framework-band {
-  padding: 58px 0 64px;
-  background: #fff;
-  border-bottom: 1px solid var(--line);
+.overview-page .overview-challenge-figure {
+  margin: 28px 0 0;
 }
 
-.overview-page .overview-framework-heading {
-  display: grid;
-  grid-template-columns: minmax(170px, 0.26fr) minmax(0, 0.74fr);
-  gap: 26px 44px;
-  align-items: start;
-}
-
-.overview-page .overview-framework-kicker {
-  color: var(--coral);
-  font-size: 12px;
-  font-weight: 900;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-}
-
-.overview-page .overview-framework-heading h2 {
-  margin: 0;
-  color: var(--ink);
-  font-size: 33px;
-  line-height: 1.16;
-  letter-spacing: -0.022em;
-}
-
-.overview-page .overview-framework-heading p {
-  max-width: 720px;
-  margin: 16px 0 0;
-  color: var(--ink-soft);
-  font-size: 16px;
-  line-height: 1.65;
-}
-
-.overview-page .overview-framework-figure {
-  margin: 34px 0 0;
-  overflow: hidden;
-  background: #fff;
-  border: 1px solid var(--line-strong);
-  border-radius: 8px;
-  box-shadow: 0 18px 38px rgb(32 38 45 / 10%);
-}
-
-.overview-page .overview-framework-figure img {
+.overview-page .overview-challenge-figure img {
   width: 100%;
   display: block;
+  height: auto;
 }
 
-.overview-page .overview-framework-figure figcaption {
-  margin: 0;
-  padding: 13px 16px;
+.overview-page .overview-challenge-figure figcaption {
+  margin: 9px 0 0;
   color: var(--muted);
-  background: #f8fafc;
-  border-top: 1px solid var(--line);
-  font-size: 13px;
+  font-size: 12.5px;
   line-height: 1.5;
-}
-
-.overview-page .overview-framework-citation {
-  display: inline-block;
-  margin-left: 3px;
-  color: var(--blue-dark);
-  font-weight: 800;
-  text-decoration: none;
-  text-underline-offset: 3px;
-}
-
-.overview-page .overview-framework-citation:hover,
-.overview-page .overview-framework-citation:focus-visible {
-  color: var(--blue);
-  text-decoration: underline;
 }
 
 .overview-page .overview-section p {
@@ -902,25 +843,8 @@
     padding-top: 36px;
   }
 
-  .overview-page .overview-framework-band {
-    padding: 44px 0;
-  }
-
-  .overview-page .overview-framework-heading {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .overview-page .overview-framework-heading h2 {
-    font-size: 27px;
-  }
-
-  .overview-page .overview-framework-heading p {
-    font-size: 15px;
-  }
-
-  .overview-page .overview-framework-figure {
-    margin-top: 24px;
+  .overview-page .overview-challenge-figure {
+    margin-top: 23px;
   }
 
   .overview-page .overview-last-section {

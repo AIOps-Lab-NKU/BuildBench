@@ -11,8 +11,8 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
     "请根据以下日期规划 Agent 开发、测试和最终版本选择。8 月 31 日公布的运行限制将在公开开发与验证开放后生效。",
 
   "Build-Bench competition milestones": "Build-Bench 竞赛里程碑",
-  "August 14, 2026": "2026 年 8 月 14 日",
-  "August 17\u201328, 2026": "2026 年 8 月 17\u201328 日",
+  "August 19, 2026": "2026 年 8 月 19 日",
+  "August 20\u201328, 2026": "2026 年 8 月 20\u201328 日",
   "August 31, 2026": "2026 年 8 月 31 日",
   "September 7, 2026": "2026 年 9 月 7 日",
   "November 13, 2026": "2026 年 11 月 13 日",

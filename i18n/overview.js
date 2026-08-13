@@ -39,19 +39,20 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Microsoft logo": "微软标志",
   "Meituan logo": "美团标志",
   "Chinese Academy of Sciences logo": "中国科学院院徽",
-  "Benchmark workflow": "基准工作流",
-  "From failed package to verified repair": "从构建失败的软件包到通过验证的修复",
-  "Build-Bench connects failed build evidence, Agent repair work, and independent target-architecture validation into one reproducible loop.":
-    "Build-Bench 将失败构建证据、Agent 修复过程与独立的目标架构验证连接为一个可复现闭环。",
   "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
-  "The published Build-Bench workflow connects package evidence, iterative Agent repair, and executable build verification.":
-    "Build-Bench 工作流将软件包证据、Agent 迭代修复与可执行的构建验证连接起来。",
-  "See reference 1": "查看参考文献 1",
   "What is the challenge?": "竞赛任务是什么？",
   "Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.":
     "Build-Bench 要求参赛团队开发一个 Agent，用于修复在一种架构上构建成功、迁移到另一种架构后构建失败的真实软件包。已发布的 Benchmark 包含 268 个可复现的 x86_64 ↔ aarch64 构建失败。",
   "For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.":
     "对于每个 Case，Agent 会获得软件包工作区和构建失败上下文，并通过修改允许的文件来恢复目标架构上的成功构建。",
+  "Build-Bench builds on our previously published": "Build-Bench 基于我们此前发布的",
+  "CCF-A benchmark": "CCF-A Benchmark",
+  "for cross-architecture package build repair.": "开展跨架构软件包构建修复研究。",
+  "See reference 1": "查看参考文献 1",
+  "Existing results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.":
+    "现有结果表明，该问题仍有很大的提升空间，因此需要开发能力更强的自主修复 Agent。",
+  "The published Build-Bench workflow for cross-architecture package build repair and verification.":
+    "已发布的 Build-Bench 跨架构软件包构建修复与验证工作流。",
   "How the competition works": "如何参加竞赛",
   "Develop": "开发",
   "— Build and test your Agent with the Starter Kit and public Cases.":
