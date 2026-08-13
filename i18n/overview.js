@@ -9,8 +9,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Website beta": "网站 Beta",
   "Repair real cross-architecture package build failures with autonomous Agents.":
     "让自主 Agent 修复真实的跨架构软件包构建失败。",
-  "Modern software must run across heterogeneous hardware, yet a package that builds on one architecture can fail on another. Build-Bench turns these real portability failures into an executable benchmark for repair Agents.":
-    "现代软件需要运行在异构硬件平台上，但能够在一种架构上构建的软件包，迁移到另一种架构时可能失败。Build-Bench 将这些真实的可移植性故障转化为面向修复 Agent 的可执行基准。",
+  "Keeping large-scale software ecosystems portable and buildable across heterogeneous architectures has become an increasingly important challenge for sustainable software evolution. A package that builds on one architecture can still fail on another. Build-Bench turns these real portability failures into an executable benchmark for repair Agents.":
+    "让大规模软件生态在异构架构之间持续保持可移植、可构建，正成为软件可持续演进中日益重要的挑战。一个软件包即使能在某种架构上成功构建，在另一种架构上仍可能失败。Build-Bench 将这些真实的可移植性故障转化为可执行验证的 Agent 修复基准。",
   "Teams submit a runnable repair Agent. Organizers run qualified versions, derive a canonical patch, and accept a repair only when the clean target-architecture build succeeds.":
     "参赛团队提交可运行的修复 Agent。组织方运行通过检查的版本，生成规范化补丁，并且只有在干净的目标架构构建成功时才认定修复有效。",
   "Repair real cross-architecture software package build failures.": "修复真实的跨架构软件包构建失败。",
@@ -32,6 +32,9 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Microsoft": "微软",
   "Affiliations": "合作单位",
   "Affiliated institutions and industry partners": "合作高校、科研机构与产业伙伴",
+  "Nankai University": "南开大学",
+  "Meituan": "美团",
+  "Chinese Academy of Sciences": "中国科学院",
   "Nankai University logo": "南开大学校徽",
   "Microsoft logo": "微软标志",
   "Meituan logo": "美团标志",
