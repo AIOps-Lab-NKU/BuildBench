@@ -15,7 +15,7 @@
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260813-3" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/overview.js?v=20260813-5" defer></script>
+    <script src="i18n/overview.js?v=20260814-1" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
     <script src="app.js?v=20260813-3" defer></script>
@@ -120,9 +120,9 @@
             </div>
           </section>
 
-          <section class="overview-hero-affiliations" aria-labelledby="affiliations-title">
-            <h2 id="affiliations-title">Affiliations</h2>
-            <ul class="overview-hero-affiliation-list" aria-label="Affiliated institutions and industry partners">
+          <section class="overview-hero-affiliations" aria-labelledby="supporters-title">
+            <h2 id="supporters-title">Supporters</h2>
+            <ul class="overview-hero-affiliation-list" aria-label="Supporting institutions and industry partners">
               <li>
                 <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
                 <span class="overview-affiliation-name">Nankai University</span>
@@ -150,9 +150,9 @@
             <img src="assets/overview-icons/challenge.png" width="512" height="512" alt="" aria-hidden="true">
             <span>What is the challenge?</span>
           </h2>
-          <p>Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.</p>
+          <p>Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.</p>
           <p>For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.</p>
-          <p>Build-Bench builds on our previously published <strong>CCF-A benchmark</strong> for cross-architecture package build repair. <a href="#reference-1" aria-label="See reference 1">[1]</a> Existing results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.</p>
+          <p>Build-Bench extends our prior research published in ACM TOSEM <a href="#reference-1" aria-label="See reference 1">[1]</a> with newly curated multi-architecture Cases and organizer-run executable evaluation. Prior results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.</p>
           <figure class="overview-challenge-figure">
             <img
               src="assets/framework.png"

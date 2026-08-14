@@ -30,8 +30,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Nankai University · Microsoft": "南开大学 · 微软",
   "Industry collaboration": "产业合作",
   "Microsoft": "微软",
-  "Affiliations": "合作单位",
-  "Affiliated institutions and industry partners": "合作高校、科研机构与产业伙伴",
+  "Supporters": "支持单位",
+  "Supporting institutions and industry partners": "支持本竞赛的高校、科研机构与产业伙伴",
   "Nankai University": "南开大学",
   "Meituan": "美团",
   "Computer Network Information Center, Chinese Academy of Sciences": "中科院计算机网络信息中心",
@@ -41,13 +41,13 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Computer Network Information Center, Chinese Academy of Sciences logo": "中科院计算机网络信息中心标志",
   "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
   "What is the challenge?": "竞赛任务是什么？",
-  "Build-Bench challenges teams to build an Agent that repairs real software packages that succeed on one architecture but fail on another. The published benchmark contains 268 reproducible x86_64 ↔ aarch64 build failures.":
-    "Build-Bench 要求参赛团队开发一个 Agent，用于修复在一种架构上构建成功、迁移到另一种架构后构建失败的真实软件包。已发布的 Benchmark 包含 268 个可复现的 x86_64 ↔ aarch64 构建失败。",
+  "Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.":
+    "Build-Bench 要求参赛团队开发一个修复 Agent，用于修复在一种指令集架构上能够成功构建、但迁移到另一种架构后构建失败的真实软件包，涉及 x86_64、aarch64（Arm64）和 riscv64 等架构环境。",
   "For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.":
-    "对于每个 Case，Agent 会获得软件包工作区和构建失败上下文，并通过修改允许的文件来恢复目标架构上的成功构建。",
-  "Build-Bench builds on our previously published": "Build-Bench 基于我们此前发布的",
-  "CCF-A benchmark": "CCF-A Benchmark",
-  "for cross-architecture package build repair.": "开展跨架构软件包构建修复研究。",
+    "对于每个 Case，Agent 将获得软件包工作区和构建失败上下文，并通过修改允许范围内的文件，使软件包在目标架构上恢复成功构建。",
+  "Build-Bench extends our prior research published in ACM TOSEM": "Build-Bench 在我们发表于 ACM TOSEM 的前期研究基础上",
+  "with newly curated multi-architecture Cases and organizer-run executable evaluation. Prior results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.":
+    "，引入新整理的多架构 Case，并采用由组织方运行的可执行构建评测。已有结果表明该任务仍有较大的提升空间，因此需要进一步开发能力更强的自主修复 Agent。",
   "See reference 1": "查看参考文献 1",
   "Existing results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.":
     "现有结果表明，该问题仍有很大的提升空间，因此需要开发能力更强的自主修复 Agent。",
