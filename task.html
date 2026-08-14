@@ -3,12 +3,201 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Build a runnable Agent that diagnoses and repairs real cross-architecture package build failures under executable verification." />
+    <meta name="description" content="Task definition and evaluation protocol for the Build-Bench Challenge." />
     <title>Challenge | Build-Bench</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/task.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260813-3" />
+    <style>
+      /* === Template hero section styling === */
+      .task-page .task-masthead {
+        background: #f4f7f9;
+        border-bottom: 1px solid #d9e0e7;
+        padding: 72px 0 64px;
+        transition: none;
+      }
+      .task-page .task-masthead h1 {
+        max-width: 980px;
+        margin-top: 0;
+        font-size: 48px;
+        line-height: 1.12;
+        font-weight: 780;
+        letter-spacing: 0;
+      }
+      .task-page .task-masthead p {
+        max-width: 820px;
+        margin-top: 24px;
+        font-size: 20px;
+        line-height: 1.6;
+        color: #3f4a58;
+      }
+      .task-page .page-kicker {
+        display: block;
+        margin: 0 0 14px;
+        color: #d75645;
+        font-size: 13px;
+        font-weight: 800;
+        text-transform: uppercase;
+      }
+
+      /* === Definition list === */
+      .task-page .task-document .definition-list {
+        margin: 32px 0 0;
+        border-top: 2px solid #1d2530;
+      }
+      .task-page .task-document .definition-row {
+        display: grid;
+        grid-template-columns: 150px minmax(0, 1fr);
+        gap: 24px;
+        padding: 16px 0;
+        border-bottom: 1px solid #d9e0e7;
+      }
+      .task-page .task-document .definition-row dt {
+        color: #1d2530;
+        font-weight: 750;
+      }
+      .task-page .task-document .definition-row dd {
+        margin: 0;
+      }
+
+      /* === ISA line === */
+      .task-page .task-document .isa-line {
+        margin: 28px 0;
+        padding: 17px 0;
+        border-top: 1px solid #d9e0e7;
+        border-bottom: 1px solid #d9e0e7;
+        color: #0b365b;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 16px;
+        font-weight: 750;
+        text-align: center;
+      }
+
+      /* === Lists === */
+      .task-page .task-document ul,
+      .task-page .task-document ol {
+        margin: 14px 0 20px;
+        padding-left: 25px;
+      }
+      .task-page .task-document li {
+        margin: 7px 0;
+        padding-left: 4px;
+      }
+
+      /* === Code block === */
+      .task-page .task-document pre {
+        margin: 18px 0 22px;
+        padding: 19px 21px;
+        overflow-x: auto;
+        border-left: 4px solid #075fa6;
+        color: #223040;
+        background: #f4f7f9;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 14px;
+        line-height: 1.55;
+        border-radius: 0;
+      }
+      .task-page .task-document pre code {
+        color: inherit;
+        background: transparent;
+        font-size: inherit;
+        padding: 0;
+      }
+      .task-page .task-document code {
+        color: #0b365b;
+        background: #eaf0f5;
+        font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+        font-size: 0.88em;
+        overflow-wrap: anywhere;
+        padding: 1px 4px;
+        border-radius: 3px;
+      }
+
+      /* === Note === */
+      .task-page .task-note {
+        margin-top: 24px;
+        padding: 16px 0 16px 20px;
+        border-left: 3px solid #e0a72f;
+        color: #3f4a58;
+        background: transparent;
+        font-size: inherit;
+        line-height: inherit;
+      }
+
+      /* === Metric === */
+      .task-page .task-document .metric {
+        margin: 27px 0 16px;
+        padding: 18px 0;
+        border-top: 2px solid #1d2530;
+        border-bottom: 1px solid #d9e0e7;
+      }
+      .task-page .task-document .metric strong {
+        display: block;
+        margin-bottom: 5px;
+        color: #1d2530;
+        font-size: 18px;
+      }
+
+      /* === Link list === */
+      .task-page .task-document .link-list {
+        margin: 26px 0 0;
+        padding: 0;
+        list-style: none;
+        border-top: 1px solid #d9e0e7;
+      }
+      .task-page .task-document .link-list li {
+        margin: 0;
+        padding: 14px 0;
+        border-bottom: 1px solid #d9e0e7;
+      }
+      .task-page .task-document .link-list a {
+        font-weight: 750;
+        text-decoration: none;
+      }
+
+      /* === Links === */
+      .task-page .task-document a {
+        color: #075fa6;
+        text-decoration-thickness: 1px;
+        text-underline-offset: 3px;
+      }
+      .task-page .task-document a:hover {
+        color: #0b365b;
+      }
+
+      /* === Text link (inline) === */
+      .task-page .task-document .text-link {
+        display: inline-block;
+        margin-top: 4px;
+        font-weight: 750;
+      }
+
+      /* === Responsive adjustments === */
+      @media (max-width: 760px) {
+        .task-page .task-masthead {
+          padding: 48px 0 44px;
+        }
+        .task-page .task-masthead h1 {
+          font-size: 38px;
+        }
+        .task-page .task-masthead p {
+          font-size: 18px;
+        }
+        .task-page .task-document .definition-row {
+          grid-template-columns: 1fr;
+          gap: 4px;
+        }
+        .task-page .task-document .isa-line {
+          text-align: left;
+        }
+      }
+      @media (max-width: 420px) {
+        .task-page .task-masthead h1 {
+          font-size: 32px;
+        }
+      }
+    </style>
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
     <script src="i18n/task.js?v=20260813-3" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
@@ -45,12 +234,9 @@
       <section class="page-masthead task-masthead" aria-labelledby="challenge-page-title">
         <div class="content-wrap">
           <div class="task-masthead-copy">
-            <span class="page-kicker">Agent competition</span>
-            <h1 id="challenge-page-title">Challenge</h1>
-            <p class="challenge-headline">Build an Agent that repairs real cross-architecture build failures</p>
-            <p>Build-Bench challenges teams to develop a runnable software-repair Agent for real packages that build successfully on one processor architecture, such as <strong>x86_64</strong>, but fail when rebuilt on another, such as <strong>aarch64 (Arm64)</strong>. These cross-architecture failures can arise from architecture-specific dependencies, compiler behavior, build options, or packaging scripts.</p>
-            <p>For each Case, the Agent investigates a failed build inside a prepared package workspace, modifies the permitted package files, and produces a repair that can be independently verified by the competition platform.</p>
-            <p class="challenge-submission-principle">You submit a runnable Agent — not precomputed Case-by-Case patches.</p>
+            <span class="page-kicker">Build-Bench Challenge</span>
+            <h1 id="challenge-page-title">Build autonomous LLM Agents that repair real package build failures across x86_64, Arm64, and RISC-V.</h1>
+            <p>Build-Bench Challenge evaluates whether runnable repair Agents can diagnose and fix real cross-architecture package build failures under controlled, executable evaluation.</p>
           </div>
         </div>
       </section>
@@ -59,73 +245,109 @@
         <aside class="page-rail task-toc" aria-label="On this page">
           <strong>On this page</strong>
           <nav>
-            <a href="#why-this-challenge">Why this challenge?</a>
-            <a href="#your-mission">Your mission</a>
-            <a href="#agent-inputs">What your Agent works with</a>
-            <a href="#agent-actions">What your Agent can do</a>
-            <a href="#repair-lifecycle">The repair lifecycle</a>
-            <a href="#solved">What counts as solved?</a>
-            <a href="#start-building">Start building</a>
+            <a href="#motivation">Motivation and task</a>
+            <a href="#scope">Evaluation scope</a>
+            <a href="#inputs">Case inputs</a>
+            <a href="#behavior">Agent behavior and constraints</a>
+            <a href="#evaluation-scoring">Evaluation and scoring</a>
+            <a href="#getting-started">Getting started</a>
           </nav>
         </aside>
 
         <article class="page-document task-document">
-          <section class="docs-section" id="why-this-challenge">
-            <h2>Why this challenge?</h2>
-            <p>Modern software increasingly needs to run across heterogeneous architectures, toolchains, dependencies, and packaging environments. A package that works on one architecture may fail on another because of architecture-specific code, build configuration, dependencies, compiler behavior, or packaging rules.</p>
-            <p class="challenge-question">Can an autonomous Agent diagnose a real build failure and repair the package end to end?</p>
-            <p>The challenge focuses on repairs that work in a real build environment, rather than changes that merely look similar to a reference solution.</p>
+          <section class="docs-section" id="motivation">
+            <h2>Motivation and task</h2>
+            <p>Cloud, edge, and emerging computing platforms increasingly rely on heterogeneous instruction set architectures. However, architecture-specific code, dependencies, compiler behavior, build options, and packaging logic can cause software packages to fail when migrated to a new architecture. Diagnosing these failures often requires expertise across source code, toolchains, packaging systems, and hardware architectures, making large-scale migration costly and time-consuming.</p>
+            <p>Build-Bench Challenge asks whether LLM-based repair Agents can automate this process reliably and generalize across packages, failure types, architectures, and migration directions. Each Case begins with a real software package that builds successfully on a source architecture but fails when rebuilt for a target architecture. The Agent must investigate the failure and modify the permitted package files so that the package can be rebuilt successfully for the target architecture.</p>
+            <p>Participants may design their Agent prompts, tools, and repair procedures freely. During each Case, the Agent must apply all intended changes directly to the permitted package worktree. It may edit individual files, rewrite complete files, create or delete files, or generate and apply patches internally.</p>
+            <p>After the Agent exits, the organizers compare the final worktree with the original Case and automatically derive a canonical diff that captures all worktree changes. This diff is then replayed on a clean copy of the Case for verification in the official target-architecture environment.</p>
+
+            <dl class="definition-list">
+              <div class="definition-row">
+                <dt>Goal</dt>
+                <dd>Repair a package that builds on the source ISA but fails on the target ISA.</dd>
+              </div>
+              <div class="definition-row">
+                <dt>Input</dt>
+                <dd>A prepared package workspace, source and target ISA metadata, failed-build evidence, and package build context.</dd>
+              </div>
+              <div class="definition-row">
+                <dt>Agent output</dt>
+                <dd>The final state of files within the permitted worktree, together with the required structured completion result.</dd>
+              </div>
+              <div class="definition-row">
+                <dt>Verification</dt>
+                <dd>A canonical patch replayed on a clean Case and evaluated by the official target-architecture build.</dd>
+              </div>
+            </dl>
           </section>
 
-          <section class="docs-section" id="your-mission">
-            <h2>Your mission</h2>
-            <p>Each Case starts from a real software package that builds successfully on a source architecture but fails on a target architecture.</p>
-            <p>Your Agent receives a prepared package workspace and the initial failure context. It must investigate the cause of the failure and modify the permitted package files so that the package can be rebuilt successfully for the target architecture.</p>
-            <p>During official evaluation, the Agent must complete this task autonomously under the competition runtime and rules.</p>
+          <section class="docs-section" id="scope">
+            <h2>Evaluation scope</h2>
+            <p>The challenge is designed to measure whether an Agent generalizes across software packages, failure types, instruction set architectures, and migration directions. It therefore evaluates all bidirectional migration pairs among the three supported ISAs:</p>
+            <p class="isa-line">x86_64 &harr; aarch64 &nbsp;&middot;&nbsp; x86_64 &harr; riscv64 &nbsp;&middot;&nbsp; aarch64 &harr; riscv64</p>
+            <p>Participants receive more than 200 public development packages for understanding the task and testing their systems. Final evaluation uses over 1,000 hidden packages drawn from broader software ecosystems and sources. Hidden evaluation is intended to discourage Case-specific rules and measure performance beyond packages seen during development.</p>
           </section>
 
-          <section class="docs-section" id="agent-inputs">
-            <h2>What your Agent works with</h2>
-            <p>At the beginning of a Case, the Agent is given the package workspace, source and target architecture information, the initial failed-build evidence, and the packaging and build context included with that Case.</p>
-            <p>The workspace may contain source code, packaging files, build scripts, existing package-side patches, metadata, and other files relevant to diagnosing the failure.</p>
-            <p class="challenge-section-link"><a href="submission.html#runtime-interface">See the detailed, versioned runtime specification <span aria-hidden="true">→</span></a></p>
+          <section class="docs-section" id="inputs">
+            <h2>Case inputs</h2>
+            <p>At the beginning of each Case, the Agent receives the information needed to diagnose the initial target-architecture failure. Depending on the package, the workspace may contain source code, packaging specifications, metadata, build scripts, existing package-side patches, and other build-related files.</p>
+            <p>The standard Case input includes:</p>
+            <ul>
+              <li>a prepared package workspace;</li>
+              <li>source and target architecture metadata;</li>
+              <li>the initial failed target-build log; and</li>
+              <li>the packaging and build context included with that Case.</li>
+            </ul>
+            <p>The exact directory layout and runtime interface are defined in the versioned <a href="submission.html#runtime-interface">Submission Guide</a>.</p>
           </section>
 
-          <section class="docs-section" id="agent-actions">
-            <h2>What your Agent can do</h2>
-            <p>The Agent may inspect the available package and build context, reason about the failure, and modify files within the permitted package paths using the tools available in the official runtime.</p>
-            <p>Runtime limits, network policy, resource limits, allowed modification scope, and other execution constraints are defined separately in the competition documentation.</p>
-            <p class="challenge-inline-links"><a href="submission.html">Read the Submission Guide <span aria-hidden="true">→</span></a><a href="rules.html">Read the Rules <span aria-hidden="true">→</span></a></p>
+          <section class="docs-section" id="behavior">
+            <h2>Agent behavior and constraints</h2>
+            <p>The Agent may inspect the available package and build context, use relevant tools, analyze the failure, and modify files within the permitted package paths. It must complete the task autonomously during organizer-run evaluation.</p>
+            <p>All participating systems are evaluated under the same versioned execution contract. The <a href="submission.html#runtime-interface">Submission Guide</a> defines the Agent package, workspace, entrypoint, permitted paths, and required outputs.</p>
+
+            <h3>Repair output contract</h3>
+            <p>The Agent must apply every intended repair directly to <code>/workspace/work/repo</code>. Within the permitted paths, it may edit existing files, create new files, or delete files. An Agent that generates a patch internally must apply that patch to the worktree before it exits. A candidate patch written only to the output directory is not treated as the official repair.</p>
+            <p>After completing its repair attempt, the Agent must write <code>/workspace/output/agent-result.json</code>. The result reports completion status and diagnostics, but it does not define the repair itself. Any declared <code>modified_paths</code> field is advisory; the evaluator independently determines the actual changes from the worktree.</p>
+
+            <h3>Canonical patch</h3>
+            <p>After the Agent exits, the evaluator compares the original and final worktrees and derives <code>repair.diff</code> in Git extended unified-diff format. This format records text changes, new and deleted files, and supported file-mode changes using paths relative to the package root. Rename detection is disabled during canonicalization so that renames are represented deterministically as a deletion and an addition.</p>
+            <pre aria-label="Canonical patch example"><code>diff --git a/package.spec b/package.spec
+--- a/package.spec
++++ b/package.spec
+@@ -42,1 +42,1 @@
+-BuildRequires: old-dependency
++BuildRequires: portable-dependency</code></pre>
+            <p class="task-note">The public development environment is intended to match the official interface, but only results produced by the organizer-run evaluator count toward the leaderboard.</p>
           </section>
 
-          <section class="docs-section" id="repair-lifecycle">
-            <h2>The repair lifecycle</h2>
-            <ol class="challenge-lifecycle" aria-label="Repair lifecycle">
-              <li>Case workspace</li>
-              <li>Agent diagnosis &amp; repair</li>
-              <li>Final workspace</li>
-              <li>Clean target rebuild</li>
+          <section class="docs-section" id="evaluation-scoring">
+            <h2>Evaluation and scoring</h2>
+            <p>During official evaluation, organizers execute each qualified Agent on hidden Cases under fixed runtime and resource constraints. After each run, the evaluator captures the Agent's final changes and derives a canonical patch. The patch is then applied to a fresh copy of the Case.</p>
+            <p>The patched package is rebuilt in the official target-architecture environment. A Case is counted as successfully repaired only when all of the following conditions hold:</p>
+            <ol>
+              <li>the canonical patch is generated successfully and applies cleanly to the fresh Case;</li>
+              <li>the official target-architecture build completes successfully; and</li>
+              <li>the expected package artifacts are produced and verified.</li>
             </ol>
-            <p>The organizer runs each qualified Agent in a controlled Case workspace. After the run, the platform captures the Agent's final changes and derives the repair used for verification.</p>
-            <p>The repair is then applied to a clean copy of the Case and evaluated in the official target-architecture build environment.</p>
+            <p>Repairs are judged by these verified executable outcomes, not by similarity to a reference patch. If the evaluator cannot derive or cleanly apply the canonical patch, the Case is recorded as <code>invalid_patch</code> and does not count as a successful repair.</p>
+
+            <div class="metric">
+              <strong>Primary metric: Verified Build Success Rate</strong>
+              <span>The percentage of evaluated Cases whose canonical patches apply cleanly, complete the target-architecture build, and produce the expected package artifacts. Execution time and officially recorded token usage are reported separately as secondary efficiency metrics.</span>
+            </div>
+            <a class="text-link" href="rules.html#evaluation-scoring">Read the complete Evaluation and Scoring rules &rarr;</a>
           </section>
 
-          <section class="docs-section" id="solved">
-            <h2>What counts as solved?</h2>
-            <p>A Case is solved only when the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
-            <p>Repairs are judged by verified build results, not by similarity to a reference patch.</p>
-            <p class="challenge-section-link"><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
-          </section>
-
-          <section class="docs-section challenge-start" id="start-building">
-            <h2>Start building</h2>
-            <p class="challenge-ready">Ready to build your Agent?</p>
-            <p>Use the Starter Kit and example Cases to understand the workspace, test your Agent locally, and prepare a qualified submission.</p>
-            <nav class="challenge-start-links" aria-label="Start building links">
-              <a href="data-downloads.html">Get the Starter Kit <span aria-hidden="true">→</span></a>
-              <a href="submission.html">Read the Submission Guide <span aria-hidden="true">→</span></a>
-              <a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a>
-            </nav>
+          <section class="docs-section" id="getting-started">
+            <h2>Getting started</h2>
+            <p>Use the Starter Kit and public development Cases to understand the workspace, test your Agent locally, and prepare a qualified submission. Before submitting, review the runtime interface, challenge rules, and evaluation protocol.</p>
+            <ul class="link-list">
+              <li><a href="data-downloads.html">Get the Starter Kit &rarr;</a></li>
+              <li><a href="submission.html">Read the Submission Guide &rarr;</a></li>
+              <li><a href="rules.html#evaluation-scoring">Read Evaluation and Scoring &rarr;</a></li>
+            </ul>
           </section>
         </article>
       </div>
