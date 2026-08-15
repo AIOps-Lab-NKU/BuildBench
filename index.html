@@ -11,14 +11,14 @@
     <meta name="theme-color" content="#ffffff" />
     <title>Build-Bench Challenge | ICSE 2027</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
-    <link rel="icon" type="image/svg+xml" href="assets/logo.svg?v=20260815-2" />
+    <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260815-6" />
+    <link rel="stylesheet" href="styles.css?v=20260813-3" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/overview.js?v=20260815-2" defer></script>
+    <script src="i18n/overview.js?v=20260814-1" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
-    <script src="app.js?v=20260815-2" defer></script>
+    <script src="app.js?v=20260813-3" defer></script>
   </head>
   <body class="overview-page" data-page="overview">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -26,7 +26,7 @@
     <header class="site-header">
       <div class="header-inner">
         <a class="brand" href="index.html" aria-label="Build-Bench Challenge home">
-          <span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg?v=20260815-2" alt="" /></span>
+          <span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span>
           <span>Build-Bench</span>
         </a>
         <button class="icon-button menu-button" type="button" aria-label="Open navigation" aria-expanded="false" aria-controls="site-nav" title="Open navigation" data-menu-button>
@@ -55,14 +55,14 @@
     <main id="main-content">
       <section class="overview-hero" aria-labelledby="hero-title">
         <div class="overview-shell overview-hero-shell">
-          <div class="overview-hero-heading" data-overview-reveal>
+          <div class="overview-hero-heading">
             <div class="overview-hero-meta">
               <span class="overview-beta-label">Website beta</span>
             </div>
             <h1 id="hero-title">Build-Bench Challenge</h1>
           </div>
 
-          <div class="overview-hero-copy" data-overview-reveal>
+          <div class="overview-hero-copy">
             <p class="overview-deck">Repair real cross-architecture package build failures with autonomous Agents.</p>
             <p class="overview-description">
               Keeping large-scale software ecosystems portable and buildable across heterogeneous
@@ -75,12 +75,12 @@
               patch, and accept a repair only when the clean target-architecture build succeeds.
             </p>
             <div class="overview-actions" aria-label="Primary actions">
-              <a class="overview-primary-action" href="data-downloads.html"><i data-lucide="package-open" aria-hidden="true"></i>Get the Starter Kit</a>
-              <a class="overview-secondary-action" href="task.html"><i data-lucide="arrow-right" aria-hidden="true"></i>Explore the Challenge</a>
+              <a class="overview-primary-action" href="data-downloads.html">Get the Starter Kit</a>
+              <a class="overview-secondary-action" href="task.html">Explore the Challenge</a>
             </div>
           </div>
 
-          <div class="overview-hero-art" data-overview-reveal data-reveal-delay="1">
+          <div class="overview-hero-art">
             <img
               class="overview-hero-illustration"
               src="assets/buildbench-repair-agent.png"
@@ -91,163 +91,121 @@
               fetchpriority="high"
             >
           </div>
-        </div>
-        <div class="overview-shell overview-partners-shell overview-hero-partners" role="group" aria-labelledby="competition-partners-title">
-          <div class="overview-partner-summary">
+
+          <section class="overview-hero-credits" aria-labelledby="competition-partners-title">
             <h2 id="competition-partners-title">Competition partners</h2>
             <div class="overview-credit-list">
               <div class="overview-credit-item overview-credit-track">
-                <span class="overview-credit-icon" aria-hidden="true"><img src="assets/overview-icons-v2/medal.svg" width="144" height="144" alt=""></span>
+                <span class="overview-credit-icon" aria-hidden="true">
+                  <img src="assets/overview-icons/medal.png" width="512" height="512" alt="">
+                </span>
                 <div>
                   <span class="overview-credit-label">Official track</span>
+                  <strong>ICSE 2027 Competition Track</strong>
                   <a class="overview-track-link" href="https://conf.researchr.org/track/icse-2027/icse-2027-competition-track" target="_blank" rel="noreferrer">
-                    ICSE 2027 Competition Track<i data-lucide="arrow-up-right" aria-hidden="true"></i>
+                    ICSE 2027 Competition Track
+                    <i data-lucide="arrow-up-right" aria-hidden="true"></i>
                   </a>
                 </div>
               </div>
               <div class="overview-credit-item overview-credit-organizer">
-                <span class="overview-credit-icon" aria-hidden="true"><img src="assets/overview-icons-v2/organizer.svg" width="144" height="144" alt=""></span>
-                <div><span class="overview-credit-label">Organized by</span><strong>Nankai University and Microsoft</strong></div>
+                <span class="overview-credit-icon" aria-hidden="true">
+                  <img src="assets/overview-icons/graduation-hat.png" width="512" height="512" alt="">
+                </span>
+                <div>
+                  <span class="overview-credit-label">Organized by</span>
+                  <strong>Nankai University · Microsoft</strong>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="overview-affiliations" aria-labelledby="organizations-title">
-            <h3 id="organizations-title">Supporters</h3>
-            <ul class="overview-affiliation-list" aria-label="Organizers and supporting institutions">
+          </section>
+
+          <section class="overview-hero-affiliations" aria-labelledby="supporters-title">
+            <h2 id="supporters-title">Supporters</h2>
+            <ul class="overview-hero-affiliation-list" aria-label="Supporting institutions and industry partners">
               <li>
                 <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
-                <span><strong class="overview-affiliation-name">Nankai University</strong><small class="overview-affiliation-role">Organizer</small></span>
+                <span class="overview-affiliation-name">Nankai University</span>
               </li>
               <li>
                 <img class="overview-affiliation-logo overview-affiliation-logo--microsoft" src="assets/affiliations/microsoft.svg" width="21" height="21" alt="Microsoft logo" decoding="async">
-                <span><strong class="overview-affiliation-name">Microsoft</strong><small class="overview-affiliation-role">Organizer</small></span>
+                <span class="overview-affiliation-name">Microsoft</span>
               </li>
               <li>
                 <img class="overview-affiliation-logo overview-affiliation-logo--meituan" src="assets/affiliations/meituan-new.png?v=20260813-1" width="703" height="701" alt="Meituan logo" decoding="async">
-                <span><strong class="overview-affiliation-name">Meituan</strong><small class="overview-affiliation-role">Supporter</small></span>
+                <span class="overview-affiliation-name">Meituan</span>
               </li>
               <li>
                 <img class="overview-affiliation-logo overview-affiliation-logo--cnic" src="assets/affiliations/cnic.png?v=20260813-1" width="187" height="139" alt="Computer Network Information Center, Chinese Academy of Sciences logo" decoding="async">
-                <span><strong class="overview-affiliation-name">Computer Network Information Center, Chinese Academy of Sciences</strong><small class="overview-affiliation-role">Supporter</small></span>
+                <span class="overview-affiliation-name">Computer Network Information Center, Chinese Academy of Sciences</span>
               </li>
             </ul>
-          </div>
+          </section>
         </div>
       </section>
 
-      <section class="overview-section overview-challenge-section" aria-labelledby="challenge-title">
-        <div class="overview-shell">
-          <header class="overview-section-header" data-overview-reveal>
-            <h2 id="challenge-title" class="overview-section-heading">
-              <img src="assets/overview-icons-v2/challenge.svg" width="144" height="144" alt="" aria-hidden="true">
-              <span>What is the challenge?</span>
-            </h2>
-            <p class="overview-challenge-narrative"><span>Keeping large-scale software ecosystems portable and buildable across heterogeneous architectures has become an increasingly important challenge for sustainable software evolution. A package that builds on one architecture can still fail on another. Build-Bench turns these real portability failures into an executable benchmark for repair Agents.</span> <span>Teams submit a runnable repair Agent. Organizers run qualified versions, derive a canonical patch, and accept a repair only when the clean target-architecture build succeeds.</span> <span>Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.</span> <span>For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.</span></p>
-          </header>
-          <ol class="overview-task-pipeline" aria-label="Competition task pipeline" data-overview-reveal data-reveal-delay="1">
-            <li><span class="overview-flow-index">01</span><h3>Receive a real failed Case</h3><p>The Agent gets the package workspace, target architecture, build logs, and failure context.</p></li>
-            <li><span class="overview-flow-index">02</span><h3>Diagnose and repair</h3><p>The Agent investigates the failure and modifies only the files permitted by the Case.</p></li>
-            <li><span class="overview-flow-index">03</span><h3>Produce a canonical patch</h3><p>Organizers extract and normalize the Agent's final workspace changes into a reproducible patch.</p></li>
-            <li><span class="overview-flow-index">04</span><h3>Pass a clean target rebuild</h3><p>The repair counts only when that patch rebuilds the untouched package in the official target environment.</p></li>
-          </ol>
-          <p class="overview-framework-citation" data-overview-reveal>Build-Bench extends our prior research published in ACM TOSEM <a href="#reference-1" aria-label="See reference 1">[1]</a> with newly curated multi-architecture Cases and organizer-run executable evaluation. Prior results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.</p>
-          <figure class="overview-challenge-figure" data-overview-reveal>
-            <img src="assets/framework.png" width="1934" height="912" alt="Build-Bench repair workflow diagram" loading="lazy" decoding="async">
+      <section class="overview-section" aria-labelledby="challenge-title">
+        <div class="overview-shell overview-reading-column">
+          <h2 id="challenge-title" class="overview-section-heading">
+            <img src="assets/overview-icons/challenge.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>What is the challenge?</span>
+          </h2>
+          <p>Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.</p>
+          <p>For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.</p>
+          <p>Build-Bench extends our prior research published in ACM TOSEM <a href="#reference-1" aria-label="See reference 1">[1]</a> with newly curated multi-architecture Cases and organizer-run executable evaluation. Prior results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.</p>
+          <figure class="overview-challenge-figure">
+            <img
+              src="assets/framework.png"
+              alt="Build-Bench repair workflow diagram"
+              loading="lazy"
+              decoding="async"
+            >
             <figcaption>The published Build-Bench workflow for cross-architecture package build repair and verification.</figcaption>
           </figure>
-          <p class="overview-section-link" data-overview-reveal><a href="task.html">Explore the Challenge <span aria-hidden="true">→</span></a></p>
+          <p class="overview-section-link"><a href="task.html">Explore the Challenge <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
 
-      <section class="overview-section overview-participation-section" aria-labelledby="how-title">
-        <div class="overview-shell">
-          <header class="overview-section-header" data-overview-reveal>
-            <h2 id="how-title" class="overview-section-heading">
-              <img src="assets/overview-icons-v2/process.svg" width="144" height="144" alt="" aria-hidden="true">
-              <span>How to participate</span>
-            </h2>
-            <p>Move through the competition from team registration to the final version freeze. Each step below opens the page you need next.</p>
-          </header>
-          <ol class="overview-action-flow">
-            <li data-overview-reveal><span class="overview-action-number">01</span><div><span class="overview-action-phase">Create your team</span><h3>Register a team account</h3><p>Create the team identity used for submissions, evaluation, and leaderboard results.</p></div><a class="overview-step-action" href="register.html">Register team<i data-lucide="arrow-right" aria-hidden="true"></i></a></li>
-            <li data-overview-reveal><span class="overview-action-number">02</span><div><span class="overview-action-phase">Enter the workspace</span><h3>Sign in</h3><p>Access the participant workspace and the submission tools for your registered team.</p></div><a class="overview-step-action" href="login.html">Sign in<i data-lucide="log-in" aria-hidden="true"></i></a></li>
-            <li data-overview-reveal><span class="overview-action-number">03</span><div><span class="overview-action-phase">Develop</span><h3>Get the Starter Kit</h3><p>Build and test your Agent with the Starter Kit, public Cases, and local validation workflow.</p></div><a class="overview-step-action" href="data-downloads.html">Get the Starter Kit<i data-lucide="download" aria-hidden="true"></i></a></li>
-            <li data-overview-reveal><span class="overview-action-number">04</span><div><span class="overview-action-phase">Qualify</span><h3>Upload and monitor your Agent</h3><p>Upload an Agent version, pass the Hosted Smoke Test, and review its qualification status.</p></div><a class="overview-step-action" href="my-submissions.html">My submissions<i data-lucide="upload" aria-hidden="true"></i></a></li>
-            <li data-overview-reveal><span class="overview-action-number">05</span><div><span class="overview-action-phase">Compete</span><h3>Freeze the final qualified version</h3><p>Follow the milestones and freeze one qualified version for organizer-run evaluation and ranking.</p></div><a class="overview-step-action" href="timeline.html">View timeline<i data-lucide="calendar-days" aria-hidden="true"></i></a></li>
+      <section class="overview-section" aria-labelledby="how-title">
+        <div class="overview-shell overview-reading-column">
+          <h2 id="how-title" class="overview-section-heading">
+            <img src="assets/overview-icons/process.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>How the competition works</span>
+          </h2>
+          <ol class="overview-prose-list overview-competition-steps">
+            <li><strong>Develop</strong> — Build and test your Agent with the Starter Kit and public Cases.</li>
+            <li><strong>Qualify</strong> — Upload an Agent version and pass the Hosted Smoke Test.</li>
+            <li><strong>Compete</strong> — Freeze a qualified version for organizer-run evaluation and leaderboard ranking.</li>
           </ol>
         </div>
       </section>
 
-      <section class="overview-section overview-evaluation-section" aria-labelledby="evaluation-title">
-        <div class="overview-shell">
-          <header class="overview-section-header" data-overview-reveal>
-            <h2 id="evaluation-title" class="overview-section-heading">
-              <img src="assets/overview-icons-v2/evaluated.svg" width="144" height="144" alt="" aria-hidden="true">
-              <span>How are repairs evaluated?</span>
-            </h2>
-            <p>A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
-            <p>Solutions are judged by verified build results, not by similarity to a reference patch.</p>
-          </header>
-
-          <span class="overview-section-kicker overview-evaluation-kicker" data-overview-reveal>Repair evaluation pipeline</span>
-          <ol class="overview-evaluation-flow" aria-label="Repair evaluation pipeline" data-overview-reveal data-reveal-delay="1">
-            <li><span>01</span><div><h3>Canonical patch</h3><p>Extract the Agent's final permitted changes.</p></div></li>
-            <li><span>02</span><div><h3>Clean apply</h3><p>Apply the patch to an untouched copy of the Case.</p></div></li>
-            <li><span>03</span><div><h3>Official target build</h3><p>Rebuild in the organizer-controlled target-architecture environment.</p></div></li>
-            <li><span>04</span><div><h3>Verified result</h3><p>Count success only when the clean target build passes.</p></div></li>
-          </ol>
-
-          <div class="overview-scoreboard" data-overview-reveal data-reveal-delay="2">
-            <div class="overview-primary-metric">
-              <span>Primary metric</span>
-              <strong>Verified Build Success Rate</strong>
-              <p>The share of competition Cases that pass the full clean-build verification pipeline.</p>
-            </div>
-            <div class="overview-secondary-metrics">
-              <span>Secondary efficiency metrics</span>
-              <dl>
-                <div><dt>Execution Time</dt><dd>Wall-clock repair runtime</dd></div>
-                <div><dt>Token Usage</dt><dd>Agent model-token consumption</dd></div>
-              </dl>
-            </div>
-          </div>
-
-          <p class="overview-evaluation-note" data-overview-reveal><i data-lucide="shield-check" aria-hidden="true"></i><span>Reference-patch similarity is not used.</span></p>
-          <p data-overview-reveal>Repairs are ranked primarily by <strong>Verified Build Success Rate</strong>, with <strong>Execution Time</strong> and <strong>Token Usage</strong> reported as secondary efficiency metrics.</p>
-          <p class="overview-section-link" data-overview-reveal><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
-        </div>
-      </section>
-
-      <section class="overview-section overview-highlights-section" aria-labelledby="highlights-title">
-        <div class="overview-shell overview-highlights-shell">
-          <header class="overview-highlights-intro" data-overview-reveal>
-            <span class="overview-section-kicker">Prizes and recognition</span>
-            <h2 id="highlights-title">Recognition and opportunities</h2>
-            <p>The confirmed award structure recognizes top-performing teams and an outstanding open-source or repair contribution.</p>
-          </header>
-          <ul class="overview-prize-list" data-overview-reveal data-reveal-delay="1">
-            <li class="overview-prize overview-prize--gold"><span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span><div><h3>1st Prize</h3><p>1 team</p></div><strong>$1,000</strong></li>
-            <li class="overview-prize overview-prize--silver"><span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span><div><h3>2nd Prize</h3><p>2 teams</p></div><strong>$500 each</strong></li>
-            <li class="overview-prize overview-prize--bronze"><span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span><div><h3>3rd Prize</h3><p>3 teams</p></div><strong>$300 each</strong></li>
-            <li class="overview-prize overview-prize--special"><span class="overview-prize-icon" aria-hidden="true"><i data-lucide="award"></i></span><div><h3>Best Open Source / Best Repair Award</h3><p>1 team</p></div><strong>$300</strong></li>
-            <li class="overview-prize overview-prize--certificate"><span class="overview-prize-icon" aria-hidden="true"><i data-lucide="badge-check"></i></span><div><h3>Certificate and official ICSE recognition</h3><p>Awarded teams receive an official certificate</p></div><strong>ICSE 2027</strong></li>
-          </ul>
-          <a class="overview-highlights-link" href="timeline.html" data-overview-reveal>View the competition timeline <span aria-hidden="true">→</span></a>
+      <section class="overview-section" aria-labelledby="evaluation-title">
+        <div class="overview-shell overview-reading-column">
+          <h2 id="evaluation-title" class="overview-section-heading">
+            <img src="assets/overview-icons/evaluated.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>How are repairs evaluated?</span>
+          </h2>
+          <p>A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
+          <p>Solutions are judged by verified build results, not by similarity to a reference patch.</p>
+          <p>Repairs are ranked primarily by <strong>Verified Build Success Rate</strong>, with <strong>Execution Time</strong> and <strong>Token Usage</strong> reported as secondary efficiency metrics.</p>
+          <p class="overview-section-link"><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
 
       <section class="overview-section" aria-labelledby="dates-title">
-        <div class="overview-shell overview-reading-column" data-overview-reveal>
+        <div class="overview-shell overview-reading-column">
           <h2 id="dates-title" class="overview-section-heading">
-            <img src="assets/overview-icons-v2/calendar.svg" width="144" height="144" alt="" aria-hidden="true">
+            <img src="assets/overview-icons/calendar.png" width="512" height="512" alt="" aria-hidden="true">
             <span>Important dates</span>
           </h2>
-          <ul class="overview-date-list overview-date-list--original">
+          <ul class="overview-date-list">
             <li><strong><time datetime="2026-09-07">7 September 2026</time></strong> — Public development and validation open</li>
             <li><strong><time datetime="2026-11-13">13 November 2026</time></strong> — Final Agent versions freeze</li>
             <li><strong><time datetime="2026-11-20">By 20 November 2026</time></strong> — Final results published</li>
             <li><strong><time datetime="2027">ICSE 2027</time></strong> — Competition session and presentations</li>
           </ul>
+
           <nav class="overview-page-links" aria-label="Competition detail pages">
             <span>More information:</span>
             <a href="task.html">Challenge</a>
@@ -262,11 +220,11 @@
 
       <section class="overview-section overview-last-section overview-references-section" aria-labelledby="references-title">
         <div class="overview-shell overview-reading-column">
-          <h2 id="references-title" class="overview-section-heading" data-overview-reveal>
-            <img src="assets/overview-icons-v2/reference.svg" width="144" height="144" alt="" aria-hidden="true">
+          <h2 id="references-title" class="overview-section-heading">
+            <img src="assets/overview-icons/reference.png" width="512" height="512" alt="" aria-hidden="true">
             <span>References</span>
           </h2>
-          <ol class="overview-reference-list" aria-label="Build-Bench publications" data-overview-reveal>
+          <ol class="overview-reference-list" aria-label="Build-Bench publications">
             <li id="reference-1">
               <span>Chenyu Zhao, Shenglin Zhang*, Zeshun Huang, Weilin Jin, Yongqian Sun, Dan Pei, Chaoyun Zhang, Qingwei Lin, Chetan Bansal, Saravan Rajmohan, Minghua Ma. Can Language Models Go Beyond Coding? Assessing the Capability of Language Models to Build Real-World Systems. ACM Transactions on Software Engineering and Methodology (TOSEM), 2026. (CCF A)</span>
               <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">[paper]</a>
@@ -283,7 +241,7 @@
 
     <footer class="site-footer overview-footer">
       <div class="footer-inner">
-        <div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg?v=20260815-2" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>Organized by Nankai University and Microsoft.</small></div></div>
+        <div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>Organized by Nankai University with industry collaboration from Microsoft.</small></div></div>
         <nav class="footer-links" aria-label="Project links">
           <a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">Paper</a>
           <a href="https://arxiv.org/bibtex/2511.00780" target="_blank" rel="noreferrer">Citation</a>

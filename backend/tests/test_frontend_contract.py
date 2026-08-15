@@ -12,23 +12,19 @@ ROOT = Path(__file__).resolve().parents[2]
 class FrontendContractTests(unittest.TestCase):
     def test_all_pages_share_versioned_local_frontend_assets(self) -> None:
         release = "20260813-3"
-        visual_release = "20260815-2"
-        app_release = "20260815-2"
         html_paths = sorted(ROOT.glob("*.html"))
         self.assertEqual(len(html_paths), 14)
 
         shared_assets = (
+            "styles.css",
             "assets/vendor/lucide.min.js",
             "i18n.js",
             "auth-client.js",
+            "app.js",
         )
         for page_path in html_paths:
             page = page_path.read_text(encoding="utf-8")
             with self.subTest(page=page_path.name):
-                styles_release = "20260815-6"
-                self.assertEqual(page.count(f"styles.css?v={styles_release}"), 1)
-                self.assertIn(f"assets/logo.svg?v={visual_release}", page)
-                self.assertEqual(page.count(f"app.js?v={app_release}"), 1)
                 for asset in shared_assets:
                     reference = f"{asset}?v={release}"
                     self.assertIn(reference, page)
@@ -40,7 +36,7 @@ class FrontendContractTests(unittest.TestCase):
         self.assertGreater(lucide.stat().st_size, 300_000)
         self.assertEqual(
             hashlib.sha256(lucide.read_bytes()).hexdigest(),
-            "4a1df82cb2d94f5ef6e974846e7dede7440f1620cae161c9655cad48356002c2",
+            "3411692820cb8d47543f69496aa25fd603a358f4498046f41c508a5a3342210e",
         )
 
     def test_primary_navigation_uses_ordered_more_dropdown_sitewide(self) -> None:
@@ -174,48 +170,40 @@ class FrontendContractTests(unittest.TestCase):
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for contract in (
             'class="overview-shell overview-hero-shell"',
-            'class="overview-hero-heading"',
             'class="overview-hero-copy"',
             'class="overview-hero-art"',
             'class="overview-hero-illustration"',
             'src="assets/buildbench-repair-agent.png"',
-            'class="overview-shell overview-partners-shell overview-hero-partners"',
+            'class="overview-hero-credits"',
             'class="overview-credit-list"',
-            'class="overview-affiliation-list"',
-            'class="overview-task-pipeline"',
-            'class="overview-action-flow"',
-            'class="overview-date-list overview-date-list--original"',
-            'src="assets/overview-icons-v2/medal.svg"',
-            'src="assets/overview-icons-v2/organizer.svg"',
-            'src="assets/overview-icons-v2/challenge.svg"',
-            'src="assets/overview-icons-v2/process.svg"',
-            'src="assets/overview-icons-v2/evaluated.svg"',
-            'src="assets/overview-icons-v2/calendar.svg"',
-            'src="assets/overview-icons-v2/reference.svg"',
+            'src="assets/overview-icons/medal.png"',
+            'src="assets/overview-icons/graduation-hat.png"',
+            'src="assets/overview-icons/challenge.png"',
+            'src="assets/overview-icons/process.png"',
+            'src="assets/overview-icons/evaluated.png"',
+            'src="assets/overview-icons/calendar.png"',
+            'src="assets/overview-icons/reference.png"',
             "Competition partners",
             "ICSE 2027 Competition Track",
-            "Nankai University and Microsoft",
-            "Website beta",
+            "Nankai University · Microsoft",
             "Get the Starter Kit",
             "Explore the Challenge",
         ):
             self.assertIn(contract, html)
         self.assertTrue((ROOT / "assets" / "buildbench-repair-agent.png").is_file())
         for icon in (
-            "medal.svg",
-            "organizer.svg",
-            "challenge.svg",
-            "process.svg",
-            "evaluated.svg",
-            "calendar.svg",
-            "reference.svg",
+            "medal.png",
+            "graduation-hat.png",
+            "challenge.png",
+            "process.png",
+            "evaluated.png",
+            "calendar.png",
+            "reference.png",
         ):
-            self.assertTrue((ROOT / "assets" / "overview-icons-v2" / icon).is_file())
+            self.assertTrue((ROOT / "assets" / "overview-icons" / icon).is_file())
         self.assertNotIn('class="status-strip"', html)
         self.assertNotIn('class="overview-art-placeholder"', html)
-        self.assertNotIn('class="overview-hero-credits"', html)
-        self.assertNotIn('class="overview-hero-affiliations"', html)
-        self.assertNotIn('class="overview-hero-snapshot"', html)
+        self.assertNotIn('<dl class="overview-hero-credits"', html)
         self.assertNotIn("Sponsored by", html)
         self.assertNotIn("Industry collaboration", html)
         self.assertNotIn("Build-Bench Team · Microsoft", html)
@@ -261,10 +249,9 @@ class FrontendContractTests(unittest.TestCase):
             "https://zcyyc.github.io/",
             "https://nkcs.iops.ai/zhangshenglin/",
             "https://marvin233.github.io/",
-            "https://worstwoof.github.io/",
         ):
             self.assertIn(homepage, html)
-        self.assertEqual(html.count('class="contact-member-homepage"'), 4)
+        self.assertEqual(html.count('class="contact-member-homepage"'), 3)
         self.assertEqual(html.count('src="assets/contact/avatar-placeholder.svg"'), 7)
         self.assertTrue((ROOT / "assets" / "contact" / "avatar-placeholder.svg").is_file())
         for contract in (
@@ -287,162 +274,65 @@ class FrontendContractTests(unittest.TestCase):
         ):
             self.assertIn(contract, translations)
 
-    def test_overview_places_ordered_affiliations_inside_the_hero(self) -> None:
+    def test_overview_places_ordered_affiliations_in_hero_art(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
-        hero = html.index('class="overview-hero"')
         hero_art = html.index('class="overview-hero-art"')
-        partners = html.index('overview-hero-partners')
-        summary = html.index('class="overview-partner-summary"', partners)
-        affiliations = html.index('class="overview-affiliations"', partners)
-        partner_end = html.index("</section>", affiliations)
-        self.assertLess(hero, hero_art)
-        self.assertLess(hero_art, partners)
-        self.assertLess(summary, affiliations)
-        self.assertLess(affiliations, partner_end)
+        affiliations = html.index('class="overview-hero-affiliations"')
+        credits = html.index('class="overview-hero-credits"')
+        self.assertLess(hero_art, affiliations)
+        self.assertLess(html.index("</div>", hero_art), affiliations)
+        self.assertLess(affiliations, credits)
+        self.assertNotIn('class="overview-affiliations-section"', html)
 
         ordered_assets = (
             "assets/affiliations/nankai-university.jpg",
             "assets/affiliations/microsoft.svg",
-            "assets/affiliations/meituan-new.png",
-            "assets/affiliations/cnic.png",
+            "assets/affiliations/meituan.png",
+            "assets/affiliations/chinese-academy-of-sciences.jpg",
         )
-        positions = [html.index(asset, affiliations, partner_end) for asset in ordered_assets]
+        positions = [html.index(asset, affiliations, credits) for asset in ordered_assets]
         self.assertEqual(positions, sorted(positions))
         for asset in ordered_assets:
             self.assertTrue((ROOT / asset).is_file())
 
         for contract in (
-            ".overview-page .overview-hero-partners",
-            ".overview-page .overview-partner-summary",
-            ".overview-page .overview-affiliations",
-            ".overview-page .overview-affiliation-list",
+            ".overview-page .overview-hero-affiliations",
+            ".overview-page .overview-hero-affiliation-list",
             ".overview-page .overview-affiliation-logo--seal",
             ".overview-page .overview-affiliation-logo--microsoft",
             ".overview-page .overview-affiliation-logo--meituan",
             "mix-blend-mode: multiply",
             "color: var(--blue-dark);",
-            "grid-template-columns: repeat(4, minmax(0, 1fr));",
+            "font-size: 14px;",
+            "text-align: center;",
+            'content: ":";',
+            "grid-template-columns: repeat(2, minmax(0, 1fr));",
+            "grid-area: credits;",
+            "justify-self: end;",
+            '"affiliations affiliations"',
         ):
             self.assertIn(contract, css)
         for contract in (
-            '"Competition partners": "赛事组织与合作"',
-            '"Organizers and supporters": "组织方与支持单位"',
+            '"Affiliations": "合作单位"',
+            '"Affiliated institutions and industry partners": "合作高校、科研机构与产业伙伴"',
         ):
             self.assertIn(contract, translations)
 
-    def test_overview_keeps_full_context_and_visualizes_the_task(self) -> None:
+    def test_overview_uses_concise_challenge_copy(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        self.assertIn('class="overview-challenge-narrative"', html)
-        self.assertEqual(html.count('class="overview-challenge-narrative"'), 1)
         for expected in (
-            "Keeping large-scale software ecosystems portable and buildable",
-            "Build-Bench challenges teams to develop an Agent",
+            "Build-Bench challenges teams to build an Agent",
             "For each Case, the Agent receives a package workspace",
-            "Receive a real failed Case",
-            "Produce a canonical patch",
-            "How to participate",
-            "Upload an Agent version, pass the Hosted Smoke Test",
+            "Build and test your Agent with the Starter Kit and public Cases.",
+            "Upload an Agent version and pass the Hosted Smoke Test.",
             "Solutions are judged by verified build results",
-            "reported as secondary efficiency metrics.",
         ):
             self.assertIn(expected, html)
         self.assertNotIn("Repairs may involve dependency declarations", html)
 
-    def test_overview_explains_evaluation_as_a_verification_pipeline(self) -> None:
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
-
-        for expected in (
-            'class="overview-evaluation-flow"',
-            'class="overview-scoreboard"',
-            'class="overview-evaluation-note"',
-            "Repair evaluation pipeline",
-            "Canonical patch",
-            "Clean apply",
-            "Official target build",
-            "Verified result",
-            "Verified Build Success Rate",
-            "Secondary efficiency metrics",
-            "Reference-patch similarity is not used.",
-        ):
-            self.assertIn(expected, html)
-
-        for contract in (
-            ".overview-page .overview-evaluation-flow",
-            ".overview-page .overview-scoreboard",
-            ".overview-page .overview-evaluation-note",
-        ):
-            self.assertIn(contract, css)
-
-        for contract in (
-            '"Repair evaluation pipeline": "修复评测流程"',
-            '"Canonical patch": "规范化补丁"',
-            '"Clean apply": "应用到干净 Case"',
-            '"Official target build": "官方目标架构构建"',
-            '"Verified result": "验证结果"',
-            '"Reference-patch similarity is not used.": "不使用参考补丁相似度。"',
-        ):
-            self.assertIn(contract, translations)
-
-    def test_overview_lists_confirmed_prizes_without_travel_or_total(self) -> None:
-        html = (ROOT / "index.html").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
-
-        for expected in (
-            'class="overview-shell overview-partners-shell overview-hero-partners"',
-            "Get the Starter Kit",
-            'class="overview-section overview-highlights-section"',
-            'class="overview-prize-list"',
-            "1st Prize",
-            "2nd Prize",
-            "3rd Prize",
-            "Best Open Source / Best Repair Award",
-            "Certificate and official ICSE recognition",
-            "Awarded teams receive an official certificate",
-            "$1,000",
-            "$500 each",
-            "$300 each",
-            "Nankai University and Microsoft",
-            "Organized by Nankai University and Microsoft.",
-        ):
-            self.assertIn(expected, html)
-
-        self.assertLess(html.index('overview-hero-partners'), html.index('id="challenge-title"'))
-        self.assertLess(html.index('id="challenge-title"'), html.index('id="how-title"'))
-        self.assertLess(html.index('id="how-title"'), html.index('id="evaluation-title"'))
-        self.assertLess(html.index('id="evaluation-title"'), html.index('id="highlights-title"'))
-        self.assertLess(html.index('id="highlights-title"'), html.index('id="dates-title"'))
-        self.assertNotIn("with industry collaboration from Microsoft", html)
-        for contract in (
-            ".overview-page .overview-hero-partners",
-            ".overview-page .overview-highlights-section",
-            ".overview-page .overview-prize-list",
-            ".overview-page .overview-prize-icon",
-            ".overview-page .overview-affiliation-role",
-        ):
-            self.assertIn(contract, css)
-        for contract in (
-            '"Recognition and opportunities": "参赛荣誉与机会"',
-            '"1st Prize": "一等奖"',
-            '"Best Open Source / Best Repair Award": "最佳开源 / 最佳修复奖"',
-            '"Certificate and official ICSE recognition": "证书与 ICSE 官方认证"',
-            '"Awarded teams receive an official certificate": "获奖团队将获得官方证书"',
-            '"Organized by Nankai University and Microsoft.": "由南开大学与微软联合组织。"',
-        ):
-            self.assertIn(contract, translations)
-
-        for removed in (
-            "Travel / registration support",
-            "Total prize and support pool",
-            "$6,000",
-        ):
-            self.assertNotIn(removed, html)
-
-    def test_overview_cites_workflow_and_uses_confirmed_prizes(self) -> None:
+    def test_overview_cites_workflow_and_omits_unconfirmed_prizes(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
@@ -464,8 +354,14 @@ class FrontendContractTests(unittest.TestCase):
 
         self.assertLess(html.index('href="#reference-1"'), html.index('<li id="reference-1">'))
         for removed in (
+            'id="prizes-title"',
+            "overview-prizes-section",
+            "overview-prize-list",
             "overview-prize-total",
             "overview-attendance-support",
+            'src="assets/overview-icons/trophy.png"',
+            "Prizes",
+            "1st Prize",
             "$1,500 USD",
             "$1,000 USD",
             "$500 USD",
@@ -480,11 +376,12 @@ class FrontendContractTests(unittest.TestCase):
 
         self.assertIn(".overview-page .overview-framework-citation", css)
         self.assertIn("scroll-margin-top: calc(var(--header-height) + 20px);", css)
-        self.assertIn(".overview-page .overview-prize-list", css)
+        self.assertNotIn("overview-prize", css)
         self.assertNotIn("overview-attendance-support", css)
         self.assertIn('"See reference 1": "查看参考文献 1"', translations)
         for removed_translation in (
             '"Prizes":',
+            '"1st Prize":',
             '"Total Cash Prize Pool:":',
             '"ICSE 2027 Attendance Support":',
             '"Prize & Attendance Details":',

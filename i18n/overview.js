@@ -7,7 +7,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "面向 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64 与 aarch64 架构。",
   "ICSE 2027 Competition Track": "ICSE 2027 Competition Track",
   "Website beta": "网站 Beta",
-  "Development opens 7 September 2026": "公开开发将于 2026 年 9 月 7 日开放",
   "Repair real cross-architecture package build failures with autonomous Agents.":
     "让自主 Agent 修复真实的跨架构软件包构建失败。",
   "Keeping large-scale software ecosystems portable and buildable across heterogeneous architectures has become an increasingly important challenge for sustainable software evolution. A package that builds on one architecture can still fail on another. Build-Bench turns these real portability failures into an executable benchmark for repair Agents.":
@@ -22,13 +21,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Get the Starter Kit": "获取 Starter Kit",
   "Explore the Challenge": "了解竞赛任务",
   "Primary actions": "主要操作",
-  "Competition at a glance": "竞赛摘要",
-  "Supported ISAs": "支持的指令集架构",
-  "Verified outcome": "验证结果",
-  "Clean target build": "干净目标构建",
-  "Starter Kit": "Starter Kit",
-  "v0.1.0-rc.2 ready": "v0.1.0-rc.2 已发布",
-  "Competition track": "竞赛赛道",
   "A repair Agent transforms a broken software package into a validated build artifact":
     "修复 Agent 将构建失败的软件包转化为通过验证的构建产物",
   "Competition hosts and collaborators": "竞赛主办与合作信息",
@@ -36,14 +28,9 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Official track": "官方赛道",
   "Organized by": "组织方",
   "Nankai University · Microsoft": "南开大学 · 微软",
-  "Nankai University and Microsoft": "南开大学与微软",
   "Industry collaboration": "产业合作",
   "Microsoft": "微软",
   "Supporters": "支持单位",
-  "Organizers and supporters": "组织方与支持单位",
-  "Organizers and supporting institutions": "组织方与支持机构",
-  Organizer: "组织方",
-  Supporter: "支持单位",
   "Supporting institutions and industry partners": "支持本竞赛的高校、科研机构与产业伙伴",
   "Nankai University": "南开大学",
   "Meituan": "美团",
@@ -52,34 +39,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Microsoft logo": "微软标志",
   "Meituan logo": "美团标志",
   "Computer Network Information Center, Chinese Academy of Sciences logo": "中科院计算机网络信息中心标志",
-  "Why participate": "为什么参加",
-  "Prizes and recognition": "奖项与荣誉",
-  "Recognition and opportunities": "参赛荣誉与机会",
-  "The confirmed award structure recognizes top-performing teams and an outstanding open-source or repair contribution.":
-    "已确认的奖项设置将表彰竞赛成绩领先的团队，以及在开源或修复方案方面表现突出的团队。",
-  "1st Prize": "一等奖",
-  "1 team": "1 队",
-  "2nd Prize": "二等奖",
-  "2 teams": "2 队",
-  "$500 each": "每队 $500",
-  "3rd Prize": "三等奖",
-  "3 teams": "3 队",
-  "$300 each": "每队 $300",
-  "Best Open Source / Best Repair Award": "最佳开源 / 最佳修复奖",
-  "Certificate and official ICSE recognition": "证书与 ICSE 官方认证",
-  "Awarded teams receive an official certificate": "获奖团队将获得官方证书",
-  "Build-Bench combines an official competition setting with independently verified results and a visible record of technical achievement.":
-    "Build-Bench 将正式竞赛环境、独立验证的结果和可公开展示的技术成果结合起来。",
-  "Certificates and recognition": "证书与荣誉",
-  "Official certificate and recognition details will be published with the final competition notice.":
-    "官方证书和荣誉说明将随最终竞赛通知公布。",
-  "Official leaderboard": "官方排行榜",
-  "Organizer-verified build results provide a public, comparable record of team performance.":
-    "经组织方验证的构建结果将形成公开且可比较的团队成绩记录。",
-  "ICSE 2027 session": "ICSE 2027 现场环节",
-  "The competition timeline includes an ICSE 2027 session and solution presentations.":
-    "竞赛时间安排包含 ICSE 2027 现场环节与方案展示。",
-  "View the competition timeline": "查看竞赛时间安排",
   "Build-Bench repair workflow diagram": "Build-Bench 修复工作流图",
   "What is the challenge?": "竞赛任务是什么？",
   "Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.":
@@ -94,50 +53,14 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "现有结果表明，该问题仍有很大的提升空间，因此需要开发能力更强的自主修复 Agent。",
   "The published Build-Bench workflow for cross-architecture package build repair and verification.":
     "已发布的 Build-Bench 跨架构软件包构建修复与验证工作流。",
-  "Repair path": "修复路径",
-  "Failed package → Agent repair → verified build": "构建失败的软件包 → Agent 修复 → 构建验证通过",
-  "Competition task pipeline": "竞赛任务流程",
-  "Receive a real failed Case": "接收真实构建失败 Case",
-  "The Agent gets the package workspace, target architecture, build logs, and failure context.":
-    "Agent 将获得软件包工作区、目标架构、构建日志和失败上下文。",
-  "Diagnose and repair": "诊断并修复",
-  "The Agent investigates the failure and modifies only the files permitted by the Case.":
-    "Agent 分析失败原因，并且只修改 Case 允许范围内的文件。",
-  "Produce a canonical patch": "生成规范化补丁",
-  "Organizers extract and normalize the Agent's final workspace changes into a reproducible patch.":
-    "组织方提取并规范化 Agent 的最终工作区修改，形成可复现的补丁。",
-  "Pass a clean target rebuild": "通过干净目标环境重构建",
-  "The repair counts only when that patch rebuilds the untouched package in the official target environment.":
-    "只有该补丁能让未经修改的软件包在官方目标环境中成功重新构建，修复才计为有效。",
-  "How to participate": "如何参赛",
-  "Move through the competition from team registration to the final version freeze. Each step below opens the page you need next.":
-    "从团队注册到最终版本冻结，按下列步骤即可完成参赛流程；每一步都可以直接进入下一项所需页面。",
-  "Create your team": "创建团队",
-  "Register a team account": "注册团队账号",
-  "Create the team identity used for submissions, evaluation, and leaderboard results.":
-    "创建用于提交、评测和排行榜成绩记录的团队身份。",
-  "Register team": "注册团队",
-  "Enter the workspace": "进入参赛工作区",
-  "Sign in": "登录",
-  "Access the participant workspace and the submission tools for your registered team.":
-    "进入已注册团队的参赛工作区并使用提交工具。",
+  "How the competition works": "如何参加竞赛",
   "Develop": "开发",
-  "Build and test your Agent with the Starter Kit, public Cases, and local validation workflow.":
-    "使用 Starter Kit、公开 Case 和本地验证流程开发并测试 Agent。",
   "— Build and test your Agent with the Starter Kit and public Cases.":
     "— 使用 Starter Kit 和公开 Case 开发并测试你的 Agent。",
   "Qualify": "资格验证",
-  "Upload and monitor your Agent": "上传并查看 Agent 状态",
-  "Upload an Agent version, pass the Hosted Smoke Test, and review its qualification status.":
-    "上传 Agent 版本，通过 Hosted Smoke Test，并查看资格验证状态。",
-  "My submissions": "我的提交",
   "— Upload an Agent version and pass the Hosted Smoke Test.":
     "— 上传一个 Agent 版本并通过 Hosted Smoke Test。",
   "Compete": "正式竞赛",
-  "Freeze the final qualified version": "冻结最终合格版本",
-  "Follow the milestones and freeze one qualified version for organizer-run evaluation and ranking.":
-    "按照时间节点冻结一个通过资格验证的版本，由组织方运行正式评测并生成排名。",
-  "View timeline": "查看时间安排",
   "— Freeze a qualified version for organizer-run evaluation and leaderboard ranking.":
     "— 冻结一个已通过资格验证的版本，由组织者运行评测并生成排行榜名次。",
   "How are repairs evaluated?": "修复如何评测？",
@@ -145,23 +68,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "只有当 Agent 的最终修改能够应用到干净的 Case，且软件包能够在官方目标架构环境中成功构建时，修复才算成功。",
   "Solutions are judged by verified build results, not by similarity to a reference patch.":
     "解决方案依据经过验证的构建结果进行判定，而不是依据其与参考补丁的相似度。",
-  "Repair evaluation pipeline": "修复评测流程",
-  "Canonical patch": "规范化补丁",
-  "Extract the Agent's final permitted changes.": "提取 Agent 最终且符合规则的修改。",
-  "Clean apply": "应用到干净 Case",
-  "Apply the patch to an untouched copy of the Case.": "将补丁应用到未经修改的 Case 副本。",
-  "Official target build": "官方目标架构构建",
-  "Rebuild in the organizer-controlled target-architecture environment.":
-    "在组织方控制的目标架构环境中重新构建。",
-  "Verified result": "验证结果",
-  "Count success only when the clean target build passes.": "只有干净目标构建通过时才计为成功。",
-  "Primary metric": "主要指标",
-  "The share of competition Cases that pass the full clean-build verification pipeline.":
-    "通过完整干净构建验证流程的竞赛 Case 比例。",
-  "Secondary efficiency metrics": "次要效率指标",
-  "Wall-clock repair runtime": "修复任务的实际运行时间",
-  "Agent model-token consumption": "Agent 的模型 Token 消耗量",
-  "Reference-patch similarity is not used.": "不使用参考补丁相似度。",
   "Repairs are ranked primarily by": "修复结果主要依据",
   "Verified Build Success Rate": "经验证的构建成功率",
   ", with": "排名，同时将",
@@ -171,21 +77,13 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "reported as secondary efficiency metrics.": "作为次要效率指标报告。",
   "Read Evaluation and scoring": "阅读评测与计分规则",
   "Important dates": "重要日期",
-  "Development opens": "开发阶段开放",
   "7 September 2026": "2026 年 9 月 7 日",
-  "Public development and validation open": "公开开发与验证阶段开放",
   "— Public development and validation open": "— 公开开发与验证阶段开放",
-  "Version freeze": "版本冻结",
   "13 November 2026": "2026 年 11 月 13 日",
-  "Final Agent versions freeze": "最终 Agent 版本冻结",
   "— Final Agent versions freeze": "— 最终 Agent 版本冻结",
-  "Results published": "结果公布",
   "By 20 November 2026": "不晚于 2026 年 11 月 20 日",
-  "Final results published": "公布最终结果",
   "— Final results published": "— 公布最终结果",
-  "Conference session": "会议现场环节",
   "ICSE 2027": "ICSE 2027",
-  "Competition session and presentations": "竞赛现场环节与方案展示",
   "— Competition session and presentations": "— 竞赛现场环节与方案展示",
   "Competition detail pages": "竞赛详情页面",
   "More information:": "更多信息：",
@@ -204,7 +102,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "[paper]": "[论文]",
   "Organized by Nankai University with industry collaboration from Microsoft.":
     "由南开大学组织，微软提供产业合作支持。",
-  "Organized by Nankai University and Microsoft.": "由南开大学与微软联合组织。",
   "Project links": "项目链接",
   "Paper": "论文",
   "Citation": "引用",
