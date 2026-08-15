@@ -10266,8 +10266,8 @@ pre {
 
 .contact-roster {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: clamp(52px, 6vw, 82px);
+  grid-template-columns: 1fr;
+  gap: 48px;
   margin-top: 32px;
 }
 
@@ -10276,6 +10276,15 @@ pre {
   display: grid;
   align-content: start;
   gap: 32px;
+}
+
+/* Row 1: primary organizers; row 2: organizing team members */
+.contact-roster-column:first-child {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.contact-roster-column:last-child {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .contact-member {
@@ -10349,6 +10358,10 @@ pre {
     gap: 42px;
   }
 
+  .contact-roster-column {
+    gap: 24px;
+  }
+
   .contact-member {
     grid-template-columns: 80px minmax(0, 1fr);
     gap: 18px;
@@ -10357,6 +10370,13 @@ pre {
   .contact-member-avatar {
     width: 80px;
     height: 80px;
+  }
+}
+
+/* 721px-1080px: organizers stay 3-up; team members form a 2x2 */
+@media (min-width: 721px) and (max-width: 1080px) {
+  .contact-roster-column:last-child {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 }
 
@@ -10386,6 +10406,11 @@ pre {
 
   .contact-roster-column {
     gap: 28px;
+  }
+
+  .contact-roster-column:first-child,
+  .contact-roster-column:last-child {
+    grid-template-columns: 1fr;
   }
 
   .contact-member {
