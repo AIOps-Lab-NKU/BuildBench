@@ -19,8 +19,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
   "The competition is the Build-Bench Challenge, organized for the ICSE 2027 Competition Track.":
     "本竞赛名称为 Build-Bench Challenge，面向 ICSE 2027 Competition Track 举办。",
   "1.2 Competition task": "1.2 竞赛任务",
-  "A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.":
-    "团队提交一个可运行的软件修复 Agent。对于每个 Case，Agent 接收已发布的软件包材料和构建失败证据，诊断故障并修改允许变更的软件包工作区。主办方在正式目标环境中评测由此产生的修改。",
+  "A Team submits a runnable LLM-based repair Agent rather than Case-specific patches. The competition covers bidirectional package migrations among the three supported ISAs: x86_64, aarch64 (Arm64), and riscv64. For each Case, the Agent receives a prepared package workspace, source and target architecture metadata, the failed target-build log, and the packaging and build context included with that Case. The Agent diagnoses the failure and modifies the permitted package worktree; the organizer evaluates the resulting change in the official target-architecture environment.":
+    "团队提交一个可运行的基于 LLM 的修复 Agent，而非针对具体 Case 的补丁。竞赛覆盖三种受支持指令集架构（x86_64、aarch64（Arm64）和 riscv64）之间的双向软件包迁移。对于每个 Case，Agent 接收准备好的软件包工作区、源架构与目标架构元数据、目标架构构建失败日志，以及该 Case 附带的打包与构建上下文。Agent 诊断故障并修改允许变更的软件包工作区；主办方在正式的目标架构环境中评测由此产生的修改。",
   "1.3 Participant documentation": "1.3 参赛文档",
   "The Challenge page defines the competition task and released Case sets. The Participate page defines the Agent package and runtime interface. Section 5 of these Rules defines Case execution, validation, outcomes, and scoring. The Timeline gives the official competition dates.":
     "“竞赛任务”页面定义竞赛任务和已发布的 Case 集；“参与比赛”页面定义 Agent 包和运行接口；本规则第 5 节定义 Case 执行、验证、结果与计分；“时间安排”给出正式竞赛日期。",
@@ -73,6 +73,13 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "主办方依据已发布的接口和资源政策，为每个 Case 启动独立的 Agent 实例。",
   "The Agent may read the provided inputs and modify only the permitted worktree and output locations.":
     "Agent 可以读取提供的输入，但只能修改允许的工作区和输出位置。",
+  "The Agent must apply all intended changes directly to the permitted package worktree. An Agent that generates a patch internally must apply that patch to the worktree before it exits; a candidate patch written only to an output location is not treated as the official repair.":
+    "Agent 必须将所有预期修改直接应用到允许变更的软件包工作区。内部生成补丁的 Agent 必须在退出前将该补丁应用到工作区；仅写入输出位置的候选补丁不被视为正式修复。",
+  "The completion record (": "完成记录（",
+  ") reports status and diagnostics only and does not define the repair. Any declared":
+    "）仅报告状态和诊断信息，不定义修复本身。任何声明的",
+  "field is advisory; the organizer determines the actual changes from the final worktree.":
+    "字段仅供参考；主办方根据最终工作区确定实际修改。",
   "The Agent may not directly access the Docker socket, the final Validator, hidden evaluator files, or organizer infrastructure.":
     "Agent 不得直接访问 Docker Socket、最终 Validator、隐藏评测文件或主办方基础设施。",
   "Stdout, stderr, declared result files, and platform events may be retained for diagnosis, auditing, and reproducibility.":
@@ -115,8 +122,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
     "平台将通过审核的补丁应用到 Case 的干净副本，并在目标架构环境中调用官方 Docker Validator。",
   "Agent status, Validator status, duration, patch statistics, and permitted logs are stored as structured evidence.":
     "Agent 状态、Validator 状态、运行时长、补丁统计信息和允许保留的日志将作为结构化证据存储。",
-  "A repair is not compared textually with a reference patch. It succeeds only when the clean target build and expected artifact validation succeed.":
-    "修复不会与参考补丁进行文本比较；只有干净目标构建和预期产物验证均成功时，才算修复成功。",
+  "A repair is not compared textually with a reference patch. A Case is counted as successfully repaired only when the required policy checks pass, the canonical patch is derived and applies cleanly to a clean copy of the Case, the official target-architecture build completes successfully, and the expected package artifacts are produced and verified.":
+    "修复不会与参考补丁进行文本比对。仅当必需的政策检查通过、canonical patch 成功生成并干净地应用到 Case 的干净副本、正式的目标架构构建成功完成、且生成并验证了预期的软件包产物时，该 Case 才计为修复成功。",
   "5.2 Terminal outcomes": "5.2 终态结果",
   "The platform records Agent execution and final build validation separately. An evaluation can complete normally even when Cases are unsuccessful; an evaluation-level System Error is reserved for organizer-controlled failures.":
     "平台分别记录 Agent 执行和最终构建验证。即使存在未成功的 Case，整次评测仍可正常完成；评测级 System Error 仅用于主办方可控故障。",
@@ -129,25 +136,25 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
   "; it is an unsuccessful Case.": "；该结果记为未成功 Case。",
   "means the Agent or its permitted build work exceeds the applicable Case-level limit; it is an unsuccessful Case.":
     "表示 Agent 或其允许执行的构建工作超过适用的逐 Case 限制；该结果记为未成功 Case。",
-  "means the canonical repair cannot be applied or violates path, output, or repair policy; it is an unsuccessful Case.":
-    "表示 canonical repair 无法应用，或违反路径、输出或修复政策；该结果记为未成功 Case。",
+  "means the canonical patch cannot be derived or applied cleanly, or it violates path, output, or repair policy; it is an unsuccessful Case.":
+    "表示 canonical patch 无法生成或无法干净地应用，或违反路径、输出或修复政策；该结果记为未成功 Case。",
   "means an organizer-controlled Worker, storage service, runtime, or Validator fails independently of the Agent repair. It is not treated as a participant repair failure; the affected evaluation is reviewed or rerun.":
     "表示主办方控制的 Worker、存储服务、运行环境或 Validator 发生与 Agent 修复无关的故障。该结果不视为参赛者修复失败；受影响的评测将接受复核或重跑。",
   "No partial official score is published while unresolved infrastructure errors prevent the aggregate result from being finalized.":
     "当未解决的基础设施错误导致汇总结果无法最终确定时，不发布不完整的正式分数。",
   "5.3 Ranking and diagnostics": "5.3 排名与诊断",
   "Verified Build Success Rate": "经验证的构建成功率",
-  "is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The platform freezes an aggregate result only after all Cases have terminal outcomes and any organizer-controlled infrastructure errors have been resolved.":
-    "是主要排名指标，即成功修复的 Case 数除以正式评测分母。只有在所有 Case 均得到终态结果且主办方可控的基础设施错误均已解决后，平台才会冻结汇总结果。",
+  "is the primary ranking metric: the percentage of evaluated Cases that satisfy the verified repair conditions above and are counted as successfully repaired. The platform freezes an aggregate result only after all Cases have terminal outcomes and any organizer-controlled infrastructure errors have been resolved.":
+    "是主要排名指标，即满足上述验证修复条件并被计为成功修复的已评测 Case 所占的百分比。只有在所有 Case 均得到终态结果且主办方可控的基础设施错误均已解决后，平台才会冻结汇总结果。",
   "Execution Time": "执行时间",
   "and": "和",
-  "Token Usage": "Token 使用量",
+  "officially recorded token usage": "官方记录的 Token 使用量",
   "are reported as secondary efficiency metrics. Diagnostic information explains performance and failures but is not combined into a weighted score.":
     "作为次要效率指标报告。诊断信息用于说明性能和失败原因，但不会合并为加权分数。",
   "Published diagnostics may include:": "公布的诊断信息可包括：",
   "Case outcomes grouped by result category;": "按结果类别汇总的 Case 结果；",
   "Agent execution time and final build duration;": "Agent 执行时间和最终构建时长；",
-  "token, model, and tool usage when collected;": "平台采集到的 Token、模型和工具使用情况；",
+  "officially recorded token, model, and tool usage when collected;": "官方记录的 Token、模型和工具使用情况；",
   "patch size, modified-file count, and policy-validation status;": "补丁大小、修改文件数量和政策验证状态；",
   "build requests, retries, and repair iterations; and": "构建请求、重试和修复迭代；以及",
   "the Case-set, runtime, Validator, and rules versions used for the run.": "本次运行使用的 Case 集、运行环境、Validator 和规则版本。",

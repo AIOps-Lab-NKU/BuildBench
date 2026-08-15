@@ -10,7 +10,7 @@
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260813-3" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/rules.js?v=20260811-6" defer></script>
+    <script src="i18n/rules.js?v=20260815-1" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
     <script src="app.js?v=20260813-3" defer></script>
@@ -68,7 +68,7 @@
             </div>
             <div class="rule-clause">
               <h3>1.2 Competition task</h3>
-              <p>A Team submits a runnable software repair Agent. For each Case, the Agent receives the released package materials and build-failure evidence, diagnoses the failure, and modifies the permitted package worktree. The organizer evaluates the resulting change in the official target environment.</p>
+              <p>A Team submits a runnable LLM-based repair Agent rather than Case-specific patches. The competition covers bidirectional package migrations among the three supported ISAs: x86_64, aarch64 (Arm64), and riscv64. For each Case, the Agent receives a prepared package workspace, source and target architecture metadata, the failed target-build log, and the packaging and build context included with that Case. The Agent diagnoses the failure and modifies the permitted package worktree; the organizer evaluates the resulting change in the official target-architecture environment.</p>
             </div>
             <div class="rule-clause">
               <h3>1.3 Participant documentation</h3>
@@ -125,6 +125,8 @@
               <ol class="rules-clauses" type="a">
                 <li>The organizer starts an independent Agent instance for each Case under the published interface and resource policy.</li>
                 <li>The Agent may read the provided inputs and modify only the permitted worktree and output locations.</li>
+                <li>The Agent must apply all intended changes directly to the permitted package worktree. An Agent that generates a patch internally must apply that patch to the worktree before it exits; a candidate patch written only to an output location is not treated as the official repair.</li>
+                <li>The completion record (<code>agent-result.json</code>) reports status and diagnostics only and does not define the repair. Any declared <code>modified_paths</code> field is advisory; the organizer determines the actual changes from the final worktree.</li>
                 <li>The Agent may not directly access the Docker socket, the final Validator, hidden evaluator files, or organizer infrastructure.</li>
                 <li>Stdout, stderr, declared result files, and platform events may be retained for diagnosis, auditing, and reproducibility.</li>
               </ol>
@@ -165,7 +167,7 @@
                 <li>The canonical patch is audited for forbidden paths, policy violations, required output structure, and prohibited build-bypass behavior.</li>
                 <li>The platform applies the audited patch to a clean copy of the Case and invokes the official Docker Validator in the target-architecture environment.</li>
                 <li>Agent status, Validator status, duration, patch statistics, and permitted logs are stored as structured evidence.</li>
-                <li>A repair is not compared textually with a reference patch. It succeeds only when the clean target build and expected artifact validation succeed.</li>
+                <li>A repair is not compared textually with a reference patch. A Case is counted as successfully repaired only when the required policy checks pass, the canonical patch is derived and applies cleanly to a clean copy of the Case, the official target-architecture build completes successfully, and the expected package artifacts are produced and verified.</li>
               </ol>
             </div>
             <div class="rule-clause">
@@ -176,20 +178,20 @@
                 <li><code>failed</code>, <code>unresolvable</code>, and <code>no_fix</code> mean that the build fails, dependencies cannot be resolved, or the Agent proposes no allowed change; each is an unsuccessful Case.</li>
                 <li><code>agent_error</code> means the Agent crashes, exits abnormally, or omits a valid <code>agent-result.json</code>; it is an unsuccessful Case.</li>
                 <li><code>timeout</code> means the Agent or its permitted build work exceeds the applicable Case-level limit; it is an unsuccessful Case.</li>
-                <li><code>invalid_patch</code> means the canonical repair cannot be applied or violates path, output, or repair policy; it is an unsuccessful Case.</li>
+                <li><code>invalid_patch</code> means the canonical patch cannot be derived or applied cleanly, or it violates path, output, or repair policy; it is an unsuccessful Case.</li>
                 <li><code>infrastructure_error</code> means an organizer-controlled Worker, storage service, runtime, or Validator fails independently of the Agent repair. It is not treated as a participant repair failure; the affected evaluation is reviewed or rerun.</li>
                 <li>No partial official score is published while unresolved infrastructure errors prevent the aggregate result from being finalized.</li>
               </ol>
             </div>
             <div class="rule-clause">
               <h3>5.3 Ranking and diagnostics</h3>
-              <p><strong>Verified Build Success Rate</strong> is the primary ranking metric: the number of successfully repaired Cases divided by the official evaluation denominator. The platform freezes an aggregate result only after all Cases have terminal outcomes and any organizer-controlled infrastructure errors have been resolved.</p>
-              <p><strong>Execution Time</strong> and <strong>Token Usage</strong> are reported as secondary efficiency metrics. Diagnostic information explains performance and failures but is not combined into a weighted score.</p>
+              <p><strong>Verified Build Success Rate</strong> is the primary ranking metric: the percentage of evaluated Cases that satisfy the verified repair conditions above and are counted as successfully repaired. The platform freezes an aggregate result only after all Cases have terminal outcomes and any organizer-controlled infrastructure errors have been resolved.</p>
+              <p><strong>Execution Time</strong> and <strong>officially recorded token usage</strong> are reported as secondary efficiency metrics. Diagnostic information explains performance and failures but is not combined into a weighted score.</p>
               <p>Published diagnostics may include:</p>
               <ol class="rules-clauses" type="a">
                 <li>Case outcomes grouped by result category;</li>
                 <li>Agent execution time and final build duration;</li>
-                <li>token, model, and tool usage when collected;</li>
+                <li>officially recorded token, model, and tool usage when collected;</li>
                 <li>patch size, modified-file count, and policy-validation status;</li>
                 <li>build requests, retries, and repair iterations; and</li>
                 <li>the Case-set, runtime, Validator, and rules versions used for the run.</li>
