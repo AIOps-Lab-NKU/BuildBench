@@ -170,9 +170,35 @@ if ("IntersectionObserver" in window && localNavLinks.length) {
   sections.forEach((section) => observer.observe(section));
 }
 
+function initOverviewMotion() {
+  const revealItems = Array.from(document.querySelectorAll("[data-overview-reveal]"));
+  if (!revealItems.length) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealItems.forEach((item) => item.classList.add("is-visible"));
+    return;
+  }
+
+  document.body.classList.add("overview-motion-ready");
+  const revealObserver = new IntersectionObserver(
+    (entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    },
+    { rootMargin: "0px 0px -10%", threshold: 0.12 },
+  );
+
+  revealItems.forEach((item) => revealObserver.observe(item));
+}
+
 renderAccountNavigation();
 
 window.addEventListener("DOMContentLoaded", () => {
   updateMobileNavGeometry();
   renderIcons();
+  initOverviewMotion();
 });
