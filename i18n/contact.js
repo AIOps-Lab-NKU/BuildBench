@@ -18,8 +18,8 @@ window.BuildBenchI18nData.pages.contact = Object.freeze({
   "Yihang Lin": "林亦航",
   "Zihao Huang": "黄子豪",
   "Chengtai Li": "李铖泰",
-  "Chenyu Zhao is a Ph.D. student in Software Engineering at Nankai University and was previously an R&D engineer at Alibaba Cloud. His research focuses on reliable software engineering agents, failure diagnosis and recovery, and intelligent operations.":
-    "赵晨宇是南开大学软件工程专业博士研究生，曾任阿里云研发工程师。他的研究聚焦于可靠软件工程 Agent、故障诊断与恢复以及智能运维。",
+  "Chenyu Zhao is a Ph.D. student in Software Engineering at Nankai University and was previously an R&D engineer at Alibaba Cloud. Her research focuses on reliable software engineering agents, failure diagnosis and recovery, and intelligent operations.":
+    "赵晨宇是南开大学软件工程专业博士研究生，曾任阿里云研发工程师。她的研究聚焦于可靠软件工程 Agent、故障诊断与恢复以及智能运维。",
   "Shenglin Zhang is an Associate Professor at the College of Software, Nankai University, and received his Ph.D. from Tsinghua University. His research interests include AIOps, service reliability, failure diagnosis, and intelligent operations.":
     "张圣林是南开大学软件学院副教授，获清华大学博士学位。他的研究兴趣包括 AIOps、服务可靠性、故障诊断和智能运维。",
   "Minghua Ma is a Senior Researcher at Microsoft M365 Research and received his Ph.D. from Tsinghua University. His research focuses on AIOps, cloud reliability, incident management, AI agents, and AI for software engineering.":

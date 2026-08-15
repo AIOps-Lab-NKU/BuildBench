@@ -257,6 +257,8 @@ class FrontendContractTests(unittest.TestCase):
         self.assertNotIn("contact-member-homepage--placeholder", html)
         self.assertNotIn("Competition Organizer", html + translations)
         self.assertNotIn("Organizing Team Member", html + translations)
+        self.assertIn("Her research focuses on reliable software engineering agents", html + translations)
+        self.assertNotIn("His research focuses on reliable software engineering agents", html + translations)
 
         image_names = (
             "chenyu-zhao.jpg",
