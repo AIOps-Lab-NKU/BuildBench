@@ -248,12 +248,38 @@ class FrontendContractTests(unittest.TestCase):
         for homepage in (
             "https://zcyyc.github.io/",
             "https://nkcs.iops.ai/zhangshenglin/",
-            "https://marvin233.github.io/",
+            "https://minghuama233.github.io/",
+            "https://terriyyy.github.io/",
+            "https://worstwoof.github.io/",
         ):
             self.assertIn(homepage, html)
-        self.assertEqual(html.count('class="contact-member-homepage"'), 3)
-        self.assertEqual(html.count('src="assets/contact/avatar-placeholder.svg"'), 7)
-        self.assertTrue((ROOT / "assets" / "contact" / "avatar-placeholder.svg").is_file())
+        self.assertEqual(html.count('class="contact-member-homepage"'), 5)
+        self.assertNotIn("contact-member-homepage--placeholder", html)
+        self.assertNotIn("Competition Organizer", html + translations)
+        self.assertNotIn("Organizing Team Member", html + translations)
+
+        image_names = (
+            "chenyu-zhao.jpg",
+            "shenglin-zhang.png",
+            "minghua-ma.png",
+            "yihang-lin.png",
+            "zihao-huang.jpg",
+            "an-xu.jpg",
+            "chengtai-li.jpg",
+        )
+        for image_name in image_names:
+            self.assertIn(f'src="assets/contact/{image_name}"', html)
+            self.assertTrue((ROOT / "assets" / "contact" / image_name).is_file())
+
+        for article in re.findall(r'<article class="contact-member">(.*?)</article>', html, re.S):
+            self.assertLess(article.index("contact-member-avatar"), article.index("<h3>"))
+            self.assertLess(article.index("<h3>"), article.index("contact-member-affiliation"))
+            if "contact-member-homepage" in article:
+                self.assertLess(article.index("contact-member-affiliation"), article.index("contact-member-homepage"))
+                self.assertLess(article.index("contact-member-homepage"), article.index("contact-member-bio"))
+            else:
+                self.assertTrue("An Xu" in article or "Chengtai Li" in article)
+                self.assertLess(article.index("contact-member-affiliation"), article.index("contact-member-bio"))
         for contract in (
             ".contact-roster",
             "grid-template-columns: repeat(3, minmax(0, 1fr));",
