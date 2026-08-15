@@ -1325,13 +1325,6 @@
   width: min(1560px, calc(100% - 96px));
 }
 
-@media (min-width: 961px) {
-  .overview-page .overview-hero-shell,
-  .overview-page .overview-partners-shell {
-    width: min(1440px, calc(100% - 160px));
-  }
-}
-
 .overview-page .overview-hero-partners {
   margin-top: clamp(26px, 3.4vh, 42px);
   padding-top: 0;

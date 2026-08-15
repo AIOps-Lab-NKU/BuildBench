@@ -25,7 +25,7 @@ class FrontendContractTests(unittest.TestCase):
         for page_path in html_paths:
             page = page_path.read_text(encoding="utf-8")
             with self.subTest(page=page_path.name):
-                styles_release = "20260815-6"
+                styles_release = "20260815-5"
                 self.assertEqual(page.count(f"styles.css?v={styles_release}"), 1)
                 self.assertIn(f"assets/logo.svg?v={visual_release}", page)
                 self.assertEqual(page.count(f"app.js?v={app_release}"), 1)
