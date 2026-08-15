@@ -220,7 +220,7 @@ class FrontendContractTests(unittest.TestCase):
         self.assertNotIn('src="assets/overview-icons/organizers.png"', html)
         self.assertNotIn(".overview-page .overview-organizer", css)
 
-    def test_contact_page_uses_plain_two_column_team_roster(self) -> None:
+    def test_contact_page_uses_plain_responsive_team_roster(self) -> None:
         html = (ROOT / "contact.html").read_text(encoding="utf-8")
         css = (ROOT / "styles.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "contact.js").read_text(encoding="utf-8")
@@ -256,21 +256,51 @@ class FrontendContractTests(unittest.TestCase):
         self.assertTrue((ROOT / "assets" / "contact" / "avatar-placeholder.svg").is_file())
         for contract in (
             ".contact-roster",
+            "grid-template-columns: repeat(3, minmax(0, 1fr));",
+            "grid-template-columns: repeat(4, minmax(0, 1fr));",
             "grid-template-columns: repeat(2, minmax(0, 1fr));",
             ".contact-member",
-            "grid-template-columns: 96px minmax(0, 1fr);",
+            "flex-direction: column;",
+            "width: min(1220px, calc(100% - 64px));",
+            ".organizer-photo-wrap",
+            "width: 104px;",
+            "height: 116px;",
+            "overflow: visible;",
+            ".organizer-photo",
+            "max-width: 104px;",
+            "max-height: 116px;",
+            "width: auto;",
+            "height: auto;",
+            "object-fit: contain;",
+            "object-position: center center;",
+            ".organizer-photo--chengtai",
+            "width: 90px;",
+            "@media (max-width: 1180px)",
             "@media (max-width: 720px)",
-            ".contact-member-avatar",
+            "grid-template-columns: 1fr;",
         ):
             self.assertIn(contract, css)
         contact_css = css[css.index("/* Contact */"):css.index("@media (max-width: 680px)", css.index("/* Contact */"))]
         self.assertNotIn("box-shadow", contact_css)
+        self.assertNotIn("height: 100vh", contact_css)
+        self.assertNotIn("overflow: hidden", contact_css)
+        self.assertEqual(contact_css.count("object-fit: cover"), 1)
+        self.assertNotIn("object-position: bottom", contact_css)
+        self.assertNotIn("scale(", contact_css)
+        self.assertNotIn("translate(", contact_css)
         self.assertNotIn("contact-card", html + css)
+        self.assertEqual(html.count('class="organizer-photo-wrap"'), 7)
+        self.assertEqual(html.count('contact-member-avatar organizer-photo'), 7)
+        self.assertEqual(html.count("organizer-photo--chengtai"), 1)
         for contract in (
             '"Contact Information": "联系方式"',
-            '"Competition Organizer": "竞赛组织者"',
-            '"Organizing Team Member": "组织团队成员"',
             '"[email address]": "[邮箱地址]"',
+            '"Nankai University": "南开大学"',
+            '"An Xu is a student at Nankai University.',
+            '"徐安是南开大学学生。',
+            '"Yihang Lin": "林亦航"',
+            '"Zihao Huang": "黄子豪"',
+            '"Chengtai Li": "李铖泰"',
         ):
             self.assertIn(contract, translations)
 
