@@ -7500,6 +7500,21 @@ pre {
   line-height: 1.68;
 }
 
+.coding-agent-repository-link a {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--blue-dark);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.coding-agent-repository-link a:hover,
+.coding-agent-repository-link a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
 .coding-agent-prompt pre {
   white-space: pre-wrap;
 }

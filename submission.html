@@ -8,9 +8,9 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260813-3" />
+    <link rel="stylesheet" href="styles.css?v=20260815-4" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/submission.js?v=20260811-6" defer></script>
+    <script src="i18n/submission.js?v=20260815-3" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
     <script src="app.js?v=20260813-3" defer></script>
@@ -47,7 +47,7 @@
           <div class="submission-hero-copy">
             <span class="page-kicker"><i data-lucide="package-open" aria-hidden="true"></i>Participation</span>
             <h1>Build, test, and submit your Agent</h1>
-            <p>Build-Bench participants submit a runnable repair Agent, not Case-specific answers or pre-generated patches.</p>
+            <p>Build-Bench participants submit a runnable repair Agent, not Case-specific answers or precomputed Case-specific repair patches.</p>
             <p>Use the Starter Kit with a coding assistant or follow the manual workflow to develop, test, package, and upload an immutable Agent version. After upload, the platform performs submission checks and runs the Hosted Smoke Test. A qualified version can then be selected for Full Evaluation.</p>
           </div>
         </div>
@@ -89,10 +89,13 @@
             <section class="coding-agent-start" id="coding-agent-quick-start" aria-labelledby="coding-agent-quick-start-title">
               <span class="quick-start-path-label">Recommended for coding assistants</span>
               <h3 id="coding-agent-quick-start-title">Coding Agent Quick Start</h3>
-              <p>Download and extract Starter Kit <code>v0.1.0-rc.2</code>, open its root directory in your coding assistant, and give it this instruction:</p>
-              <div class="code-block quick-start-command coding-agent-prompt"><pre><code>Read AGENTS.md before changing files. Bootstrap my-agent, implement the Repair Agent only in the generated Agent directory, then run the readiness workflow. Explain any failed check before changing configuration.</code></pre></div>
-              <p>The coding assistant should use the versioned contract in <code>AGENTS.md</code> and run:</p>
-              <div class="code-block quick-start-command"><pre><code>./bb bootstrap my-agent --json
+              <p>Open an empty development directory in your coding assistant and give it the instruction below. This path clones the official repository directly and does not require downloading the Starter Kit ZIP.</p>
+              <p class="coding-agent-repository-link"><a href="https://github.com/AIOps-Lab-NKU/BuildBench-Agent-Baseline" target="_blank" rel="noreferrer">View the Agent SDK and baseline repository <span aria-hidden="true">&nearr;</span></a></p>
+              <div class="code-block quick-start-command coding-agent-prompt"><pre><code>Clone https://github.com/AIOps-Lab-NKU/BuildBench-Agent-Baseline.git into BuildBench-Agent-Baseline. Enter BuildBench-Agent-Baseline/starter-kit. Read AGENTS.md before changing files. Bootstrap my-agent, implement the Repair Agent only in the generated Agent directory, then run the readiness workflow. Explain any failed check before changing configuration.</code></pre></div>
+              <p>The coding assistant should follow the current contract in <code>AGENTS.md</code> and run:</p>
+              <div class="code-block quick-start-command"><pre><code>git clone --depth 1 https://github.com/AIOps-Lab-NKU/BuildBench-Agent-Baseline.git
+cd BuildBench-Agent-Baseline/starter-kit
+./bb bootstrap my-agent --json
 # After implementing agents/my-agent/src/
 ./bb ready --agent ./agents/my-agent --json</code></pre></div>
               <ol class="coding-agent-checks">
@@ -162,7 +165,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                     <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.2</code> contains one local Example Case, <code>hello</code>.</dd></div>
                     <div><dt>Agent behavior</dt><dd>The entrypoint declared in <code>agent.yaml</code> runs once per Case. It reads <code>/workspace/input</code>, edits <code>/workspace/work/repo</code>, and writes <code>/workspace/output/agent-result.json</code>.</dd></div>
                   </dl>
-                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case patches, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
+                  <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case evaluation artifacts, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
                 </div>
               </li>
               <li>
@@ -187,7 +190,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <div class="code-block quick-start-command"><pre><code>ls -lh dist/agent-submission.zip</code></pre></div>
                   <dl class="quick-start-details">
                     <div><dt>Upload</dt><dd>Select the ZIP produced by <code>./bb package</code>, not the whole Starter Kit directory and not a ZIP you assembled manually.</dd></div>
-                    <div><dt>After upload</dt><dd>The platform stores an immutable Agent version, performs static checks, and then runs the hosted Smoke Test. Full evaluation starts only after you explicitly select a qualified version.</dd></div>
+                    <div><dt>After upload</dt><dd>The platform stores an immutable Agent version, performs static checks, and then runs the Hosted Smoke Test. Full Evaluation starts only after you explicitly select a qualified version.</dd></div>
                   </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: a new immutable Agent version appears in the submission table and enters the Checking state.</span></p>
                 </div>
@@ -195,7 +198,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
             </ol>
             </section>
 
-            <p class="submission-case-scope">Different versioned Case sets are used for local examples, development, hosted Smoke Tests, and Full Evaluation. See <a href="data-downloads.html">Data &amp; Downloads</a> for their scope and release status.</p>
+            <p class="submission-case-scope">Different versioned Case sets are used for local examples, development, the Hosted Smoke Test, and Full Evaluation. See <a href="data-downloads.html">Data &amp; Downloads</a> for their scope and release status.</p>
           </section>
 
           <section class="doc-section" id="agent-package">
@@ -222,7 +225,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
 
             <aside class="submission-warning" role="note">
               <i data-lucide="circle-slash-2" aria-hidden="true"></i>
-              <div><strong>Do not include secrets or evaluation answers.</strong><p>Exclude <code>.env</code> files, API keys, pre-generated patches, hidden Case information, caches, and runtime artifacts.</p></div>
+              <div><strong>Do not include secrets or evaluation answers.</strong><p>Exclude <code>.env</code> files, API keys, precomputed Case-specific repair patches, hidden Case information, caches, and runtime artifacts.</p></div>
             </aside>
 
             <h3>Minimum <code>agent.yaml</code></h3>
@@ -258,7 +261,7 @@ protocol:
             <dl class="submission-prose-definitions" aria-label="Agent execution contract">
               <div><dt>Invocation</dt><dd>The platform starts the <code>entrypoint</code> list from <code>agent.yaml</code> once for each Case, with the Agent bundle as the process working directory.</dd></div>
               <div><dt>Workspace variable</dt><dd><code>BB_WORKSPACE=/workspace</code>. Resolve all Case input, worktree, and structured output paths from this root.</dd></div>
-              <div><dt>Completion</dt><dd>For the current v0.1 local protocol, exit with code <code>0</code> and write <code>/workspace/output/agent-result.json</code> with <code>status: "completed"</code>. A non-zero exit is an Agent error.</dd></div>
+              <div><dt>Completion</dt><dd>For the current v0.1 protocol, exit with code <code>0</code> and write <code>/workspace/output/agent-result.json</code> with <code>status: "completed"</code>. A non-zero exit is an Agent error.</dd></div>
               <div><dt>Diagnostics</dt><dd>Write human-readable progress to stdout or stderr. Do not place secrets in logs; both streams are retained by the platform.</dd></div>
             </dl>
 
@@ -274,36 +277,39 @@ protocol:
               </div>
               <ul class="runtime-rules">
                 <li><strong>Read <code>input/</code>.</strong><span>It contains the task metadata, initial failure evidence, and original package tree.</span></li>
-                <li><strong>Modify only <code>work/repo/</code>.</strong><span>This is the candidate package tree used for build requests.</span></li>
+                <li><strong>Modify <code>work/repo/</code>.</strong><span>Its final file state when the Agent exits is the official repair.</span></li>
                 <li><strong>Use stdout and stderr for logs.</strong><span>The platform captures both streams for diagnostics.</span></li>
-                <li><strong>Write <code>agent-result.json</code>.</strong><span>Place machine-readable completion status and diagnostics in <code>output/</code>.</span></li>
+                <li><strong>Write <code>agent-result.json</code>.</strong><span>Place machine-readable completion status and diagnostics in <code>output/</code>; this file does not define the repair.</span></li>
               </ul>
             </div>
+
+            <h3>Repair output contract</h3>
+            <p>The official repair is the final file state of <code>/workspace/work/repo</code> when the Agent exits. Within permitted paths, the Agent may edit or rewrite existing files, create new files, delete files, or generate and apply patches internally. Any internally generated patch must be applied to the worktree before exit. A patch written only to <code>/workspace/output</code> is not treated as the official repair.</p>
 
             <div class="code-block submission-code agent-result-example">
               <div class="code-toolbar"><span>output/agent-result.json</span><small>minimal successful result</small></div>
               <pre><code>{
   "schema_version": "0.1",
   "status": "completed",
-  "message": "Repair attempt completed.",
-  "modified_paths": ["input/package.spec"]
+  "message": "Repair attempt completed."
 }</code></pre>
             </div>
+            <p><code>agent-result.json</code> reports completion status and diagnostics, but it does not define the repair itself. <code>modified_paths</code>, if included, is advisory only. The evaluator independently determines the actual modifications by comparing the original and final worktrees.</p>
 
             <h3>Build feedback</h3>
             <p class="submission-inline-note info-note"><strong>Planned feature.</strong> Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit <code>v0.1.0-rc.2</code>.</p>
 
             <h3>Canonical patch</h3>
-            <p>The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in <a href="rules.html#evaluation-scoring">Evaluation and scoring</a>.</p>
+            <p>After the Agent exits, the evaluator compares the original and final worktrees and automatically derives a canonical <code>repair.diff</code> from all actual worktree changes. The canonical <code>repair.diff</code> uses Git extended unified-diff format, captures supported text changes, file creation and deletion, and file-mode changes, and disables rename detection for deterministic canonicalization. Participants do not need to generate or submit <code>repair.diff</code>. The evaluator replays this diff on a fresh Case and performs the official target-architecture build verification. See <a href="rules.html#evaluation-scoring">Evaluation and scoring</a> for the complete verification rules.</p>
           </section>
 
           <section class="doc-section" id="test-and-qualify">
             <span class="section-label">04 / Qualify</span>
             <h2>Test and qualify</h2>
-            <p class="submission-section-intro">Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the hosted Smoke Test checks that the same bundle can run under the competition protocol.</p>
+            <p class="submission-section-intro">Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the Hosted Smoke Test checks that the same bundle can run under the competition protocol.</p>
 
             <div class="submission-guide-subsection">
-              <h3>Before full evaluation</h3>
+              <h3>Before Full Evaluation</h3>
               <p>Before spending a Full Evaluation attempt, run <code>./bb check</code>, test the Agent on all released Example Cases, package that exact version, upload it, and pass the Hosted Smoke Test. Full Evaluation begins only after you explicitly select the qualified immutable version.</p>
             </div>
 
@@ -318,13 +324,13 @@ protocol:
                 <li><code>/workspace/output/agent-result.json</code> contains <code>schema_version: "0.1"</code> and a supported status.</li>
                 <li>The Agent completes at least one released local Example Case.</li>
               </ul>
-              <p class="submission-inline-note info-note"><span>Release candidate</span>Starter Kit <code>v0.1.0-rc.2</code> adds the coding-agent guide and high-level readiness workflow while retaining the local Runner, managed-Python template, one <code>hello</code> Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.</p>
+              <p class="submission-inline-note info-note"><span>Release candidate</span>Starter Kit <code>v0.1.0-rc.2</code> provides the local Runner, managed-Python template, bundled Example Cases, conformance checks, and deterministic packaging. Public Development Cases support broader Agent development and local testing. See <a href="data-downloads.html">Data &amp; Downloads</a> for current downloads, versions, and release status.</p>
             </div>
 
             <div class="submission-guide-subsection">
-              <h3>Smoke tests</h3>
-              <p>A hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.</p>
-              <p>Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing a Smoke Test does not guarantee success on the full Case set.</p>
+              <h3>Hosted Smoke Test</h3>
+              <p>The Hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as Full Evaluation, but runs only a small set of lightweight qualification Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before Full Evaluation.</p>
+              <p>Hosted Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing the Hosted Smoke Test does not guarantee success on the full Case set.</p>
             </div>
 
           </section>
@@ -339,10 +345,11 @@ protocol:
               <ul class="submission-checklist">
                 <li>Required files exist at the ZIP root.</li>
                 <li><code>./bb check</code> passes.</li>
-                <li>The entrypoint is deterministic and non-interactive.</li>
+                <li>The entrypoint starts non-interactively and follows the declared runtime contract.</li>
                 <li>All dependencies are exactly pinned.</li>
-                <li>No secrets, caches, generated patches, or run artifacts are included.</li>
-                <li>Only <code>/workspace/work/repo</code> is modified.</li>
+                <li>No secrets, caches, precomputed Case-specific repair patches, or run artifacts are included.</li>
+                <li>All intended repair changes are applied to <code>/workspace/work/repo</code>.</li>
+                <li>No intended repair is left only as an unapplied patch in <code>/workspace/output</code>.</li>
                 <li><code>agent-result.json</code> follows protocol <code>v0.1</code>.</li>
                 <li>The uploaded version passes the Hosted Smoke Test.</li>
                 <li>The intended immutable version is selected for Full Evaluation.</li>

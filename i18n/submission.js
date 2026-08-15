@@ -5,14 +5,14 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "为 Build-Bench Challenge 构建、测试、打包并提交可运行的 Agent。",
   "Participation": "参赛",
   "Build, test, and submit your Agent": "构建、测试并提交你的 Agent",
-  "Build-Bench participants submit a runnable repair Agent, not Case-specific answers or pre-generated patches.":
-    "Build-Bench 参赛者提交的是可运行的修复 Agent，而不是针对特定 Case 的答案或预先生成的补丁。",
+  "Build-Bench participants submit a runnable repair Agent, not Case-specific answers or precomputed Case-specific repair patches.":
+    "Build-Bench 参赛者提交的是可运行的修复 Agent，而不是针对特定 Case 的答案或预先准备的 Case 修复补丁。",
   "Use the Starter Kit with a coding assistant or follow the manual workflow to develop, test, package, and upload an immutable Agent version. After upload, the platform performs submission checks and runs the Hosted Smoke Test. A qualified version can then be selected for Full Evaluation.":
     "使用 Starter Kit 配合编程助手，或按照手动流程开发、测试、打包并上传不可变的 Agent 版本。上传后，平台会执行提交检查和 Hosted Smoke Test；通过资格测试的版本随后可被选中参加 Full Evaluation。",
   "Participation navigation": "参赛导航",
   "Get Started": "开始参赛",
-  "Submit a runnable Agent source bundle, not Case-specific answers or pre-generated patches. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
-    "提交一个可运行的 Agent 源码包，而不是针对特定 Case 的答案或预先生成的补丁。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
+  "Submit a runnable Agent source bundle, not Case-specific answers or precomputed Case-specific repair patches. The platform starts one isolated instance for each Case. The Agent modifies its worktree and may request a limited number of build-feedback runs. When the run ends, the platform creates the canonical":
+    "提交一个可运行的 Agent 源码包，而不是针对特定 Case 的答案或预先准备的 Case 修复补丁。平台为每个 Case 启动一个独立实例。Agent 修改工作区，并可请求有限次数的构建反馈。运行结束后，平台生成 canonical",
   ", and the Docker Validator verifies it on a clean Case.": "，再由 Docker Validator 在干净的 Case 上完成验证。",
   "Submission guide navigation": "提交指南导航",
   "Competition": "竞赛",
@@ -30,10 +30,10 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "bootstrap and ready provide the high-level coding-assistant workflow; the equivalent granular commands are documented in Manual Quick Start below.":
     "bootstrap 和 ready 提供面向编程助手的高层工作流；等价的细粒度命令见下方“手动操作快速开始”。",
   "Recommended for coding assistants": "推荐编程助手使用",
-  "Download and extract Starter Kit": "下载并解压 Starter Kit",
-  ", open its root directory in your coding assistant, and give it this instruction:":
-    "，在编程助手中打开其根目录，然后向它提供以下指令：",
-  "The coding assistant should use the versioned contract in": "编程助手应使用以下文件中的版本化合约：",
+  "Open an empty development directory in your coding assistant and give it the instruction below. This path clones the official repository directly and does not require downloading the Starter Kit ZIP.":
+    "在编程助手中打开一个空的开发目录，并向它提供下方指令。此路径会直接克隆官方仓库，无需下载 Starter Kit ZIP。",
+  "View the Agent SDK and baseline repository": "查看 Agent SDK 与 Baseline 仓库",
+  "The coding assistant should follow the current contract in": "编程助手应遵循以下文件中的当前接口约定：",
   "and run:": "并执行：",
   "checks the local environment and creates": "检查本地环境并创建",
   "without silently overwriting existing work.": "，不会静默覆盖现有工作。",
@@ -51,7 +51,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Test and qualify": "测试并取得资格",
   "Final checklist": "最终检查清单",
   "01 / Start": "01 / 开始",
-  "Prepare and qualify one Agent version before requesting a full evaluation.":
+  "Prepare and qualify one Agent version before requesting Full Evaluation.":
     "在申请完整评测前，先准备并验证一个 Agent 版本。",
   "Run the official example first, then create, test, package, and upload your own Agent.":
     "先运行官方示例，再创建、测试、打包并上传你自己的 Agent。",
@@ -77,8 +77,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "and test locally": "并在本地测试",
   "Implement the repair logic in": "在",
   ", then run every bundled Example Case.": "中实现修复逻辑，然后运行所有随附的 Example Case。",
-  "Expected: per-Case patches, logs, and validation results are written under":
-    "预期结果：每个 Case 的补丁、日志和验证结果写入",
+  "Expected: per-Case evaluation artifacts, logs, and validation results are written under":
+    "预期结果：每个 Case 的评测产物、日志和验证结果写入",
   "Check and package": "检查并打包",
   "Validate the manifest, entrypoint, dependencies, and files before creating a deterministic upload bundle.":
     "创建确定性的上传包之前，检查清单、入口命令、依赖和文件。",
@@ -104,9 +104,9 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "检查 ZIP 结构、清单、入口命令和目录权限。",
   "Test an example Case": "测试示例 Case",
   "Run the Agent against a released development Case.": "在已发布的开发 Case 上运行 Agent。",
-  "Run a Smoke Test": "进行 Smoke Test",
+  "Run the Hosted Smoke Test": "进行 Hosted Smoke Test",
   "Use the hosted lightweight check before formal evaluation.": "在正式评测前使用平台提供的轻量检查。",
-  "Start full evaluation": "开始完整评测",
+  "Start Full Evaluation": "开始完整评测",
   "Select a qualified version and place it in the evaluation queue.": "选择通过检查的版本并加入评测队列。",
   "02 / Package": "02 / 提交包",
   "Upload one ZIP archive with a shallow, inspectable root. The platform reads the manifest before building the Agent runtime.":
@@ -120,8 +120,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Optional local tests and method documentation.": "可选的本地测试和方法说明。",
   "Do not include secrets or evaluation answers.": "不得包含密钥或评测答案。",
   "Exclude": "请勿包含",
-  "files, API keys, pre-generated patches, hidden Case information, caches, and runtime artifacts.":
-    "文件、API Key、预生成补丁、隐藏 Case 信息、缓存和运行产物。",
+  "files, API keys, precomputed Case-specific repair patches, hidden Case information, caches, and runtime artifacts.":
+    "文件、API Key、预先准备的 Case 修复补丁、隐藏 Case 信息、缓存和运行产物。",
   "Minimum": "最小",
   "The manifest declares how the platform builds and starts the Agent. The complete schema will be provided in the Starter Kit.":
     "清单声明平台如何构建和启动 Agent。完整 Schema 将在 Starter Kit 中提供。",
@@ -134,8 +134,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Read": "读取",
   "It contains the task metadata, initial failure evidence, and original package tree.":
     "其中包含任务元数据、初始失败证据和原始软件包目录。",
-  "Modify only": "只修改",
-  "This is the candidate package tree used for build requests.": "构建请求使用这里的候选软件包目录。",
+  "Modify": "修改",
+  "Its final file state when the Agent exits is the official repair.": "Agent 退出时其中的最终文件状态即为正式修复。",
   "Use stdout and stderr for logs.": "使用 stdout 和 stderr 输出日志。",
   "The platform captures both streams for diagnostics.": "平台采集两种输出用于诊断。",
   "Optionally write": "可选写入",
@@ -166,12 +166,12 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "The patch is reapplied to a clean Case before the final target build.":
     "最终目标架构构建前，平台会将补丁重新应用到干净的 Case。",
   "04 / Test": "04 / 测试",
-  "Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the hosted Smoke Test checks that the same bundle can run under the competition protocol.":
+  "Test the exact Agent version you intend to evaluate. Local checks catch packaging errors; the Hosted Smoke Test checks that the same bundle can run under the competition protocol.":
     "请测试计划用于评测的同一个 Agent 版本。本地检查用于发现打包错误；平台 Smoke Test 用于确认同一提交包能够按照竞赛协议运行。",
-  "Before full evaluation": "完整评测前",
-  "Before using a full-evaluation attempt, run the Starter Kit checks locally, confirm the Agent can process an Example Case through the published workspace interface, package that exact version, and pass its hosted Smoke Test. Start full evaluation only after selecting the qualified version in My Submissions; uploading a new version alone does not place it in the evaluation queue.":
+  "Before Full Evaluation": "完整评测前",
+  "Before using a Full Evaluation attempt, run the Starter Kit checks locally, confirm the Agent can process an Example Case through the published workspace interface, package that exact version, and pass the Hosted Smoke Test. Start Full Evaluation only after selecting the qualified version in My Submissions; uploading a new version alone does not place it in the evaluation queue.":
     "在使用完整评测机会前，请先在本地运行 Starter Kit 检查，确认 Agent 能通过已发布的工作区接口处理一个 Example Case，打包该确切版本，并通过平台 Hosted Smoke Test。只有在“我的提交”中选择已通过的版本后才启动完整评测；仅上传新版本不会使其进入评测队列。",
-  "Complete these checks in order before using a full-evaluation attempt:":
+  "Complete these checks in order before using a Full Evaluation attempt:":
     "在使用一次完整评测机会前，请按顺序完成以下检查：",
   "Prepare the released tools.": "准备已发布的工具。",
   "Download the Starter Kit, schemas, and development Cases from":
@@ -184,11 +184,11 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Run at least one example Case, edit only": "至少运行一个示例 Case，仅修改",
   ", and verify any": "，并检查",
   "output.": "输出（如有）。",
-  "Pass a hosted Smoke Test.": "通过平台 Smoke Test。",
+  "Pass the Hosted Smoke Test.": "通过平台 Smoke Test。",
   "Upload the same Agent bundle from": "从",
   "and review the returned logs and diagnostics.": "上传同一 Agent 提交包，并检查返回的日志和诊断信息。",
   "Select the qualified version.": "选择合格版本。",
-  "Start full evaluation explicitly; uploading a new version alone does not place it in the evaluation queue.":
+  "Start Full Evaluation explicitly; uploading a new version alone does not place it in the evaluation queue.":
     "需要显式启动完整评测；仅上传新版本不会自动进入评测队列。",
   "Testing locally": "本地测试",
   "Local testing should confirm that the submission contract works before organizer resources are used. Check all of the following:":
@@ -207,13 +207,13 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "Agent 至少能够完成一个已发布的示例 Case 或本地 Smoke Case。",
   "The Starter Kit will provide the local Runner, conformance CLI, schemas, example Cases, and exact commands. These downloads are not yet published.":
     "Starter Kit 将提供本地 Runner、合规检查 CLI、Schema、示例 Case 和准确命令。这些下载资源尚未发布。",
-  "Smoke tests": "Smoke Test",
-  "A hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as formal evaluation, but runs only a small set of lightweight public Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before a full evaluation.":
-    "平台 Smoke Test 使用与正式评测相同的 Agent Runner、工作区布局和状态 Schema，但只运行少量轻量级公开 Case，用于在完整评测前发现依赖缺失、入口命令无效、权限错误和输出格式错误。",
-  "Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing a Smoke Test does not guarantee success on the full Case set.":
+  "Hosted Smoke Test": "Hosted Smoke Test",
+  "The Hosted Smoke Test uses the same Agent Runner, workspace layout, and status schema as Full Evaluation, but runs only a small set of lightweight qualification Cases. It is intended to expose missing dependencies, invalid entrypoints, permission errors, and malformed output before Full Evaluation.":
+    "平台 Smoke Test 使用与正式评测相同的 Agent Runner、工作区布局和状态 Schema，但只运行少量轻量级资格验证 Case，用于在完整评测前发现依赖缺失、入口命令无效、权限错误和输出格式错误。",
+  "Hosted Smoke Test results include more detailed logs and diagnostics than the leaderboard. They do not contribute to the official score, and passing the Hosted Smoke Test does not guarantee success on the full Case set.":
     "Smoke Test 会提供比排行榜更详细的日志和诊断信息，其结果不计入正式成绩；通过 Smoke Test 也不代表能够在完整 Case 集上成功。",
-  "Full evaluation": "完整评测",
-  "Uploading an Agent creates a versioned submission but does not automatically start full evaluation. After that version passes format checks and the required Smoke Test, select it in":
+  "Full Evaluation": "完整评测",
+  "Uploading an Agent creates a versioned submission but does not automatically start Full Evaluation. After that version passes format checks and the required Hosted Smoke Test, select it in":
     "上传 Agent 会创建一个带版本的提交，但不会自动启动完整评测。该版本通过格式检查和必要的 Smoke Test 后，请在",
   "and choose": "中选择该版本并点击",
   ". The platform then creates one isolated Agent job per Case and schedules jobs subject to the published resource policy.":
@@ -344,7 +344,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   ", not the whole Starter Kit directory and not a ZIP you assembled manually.":
     "生成的 ZIP，不要上传整个 Starter Kit 目录，也不要手工重新组装 ZIP。",
   "After upload": "上传后",
-  "The platform stores an immutable Agent version, performs static checks, and then runs the hosted Smoke Test. Full evaluation starts only after you explicitly select a qualified version.":
+  "The platform stores an immutable Agent version, performs static checks, and then runs the Hosted Smoke Test. Full Evaluation starts only after you explicitly select a qualified version.":
     "平台保存不可变的 Agent 版本，执行静态检查，然后运行平台 Smoke Test。只有显式选择已通过的版本后，才会开始完整评测。",
   "Cases used during development and evaluation": "开发与评测使用的 Case",
   "Case sets are versioned separately from the Agent submission format. Counts that have not yet been frozen remain placeholders and will be published with the corresponding dataset release.":
@@ -394,7 +394,7 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   ". Resolve all Case input, worktree, and structured output paths from this root.":
     "。所有 Case 输入、工作树和结构化输出路径都应从该根目录解析。",
   "Completion": "完成条件",
-  "For the current v0.1 local protocol, exit with code": "在当前 v0.1 本地协议中，应以退出码",
+  "For the current v0.1 protocol, exit with code": "在当前 v0.1 协议中，应以退出码",
   "and write": "结束，并写入",
   "with": "，其中",
   ". A non-zero exit is an Agent error.": "。非零退出码会被判定为 Agent 错误。",
@@ -408,8 +408,18 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "/workspace": "/workspace",
   "Write": "写入",
   "Place machine-readable completion status and diagnostics in": "将机器可读的完成状态和诊断信息写入",
+  "; this file does not define the repair.": "；该文件不定义正式修复内容。",
+  "Repair output contract": "修复输出契约",
+  "The official repair is the final file state of": "正式修复以",
+  "when the Agent exits. Within permitted paths, the Agent may edit or rewrite existing files, create new files, delete files, or generate and apply patches internally. Any internally generated patch must be applied to the worktree before exit. A patch written only to":
+    "在 Agent 退出时的最终文件状态为准。在允许路径范围内，Agent 可以编辑或重写现有文件、新建或删除文件，也可以在内部生成并应用 patch。任何内部生成的 patch 都必须在退出前应用到 worktree。仅写入",
+  "is not treated as the official repair.": "而未应用的 patch 不会被视为正式修复。",
   "output/agent-result.json": "output/agent-result.json",
   "minimal successful result": "最小成功结果",
+  "reports completion status and diagnostics, but it does not define the repair itself.":
+    "用于报告完成状态和诊断信息，但它本身不定义正式修复内容。",
+  ", if included, is advisory only. The evaluator independently determines the actual modifications by comparing the original and final worktrees.":
+    "（如提供）仅供参考。评测器会通过比较原始 worktree 和最终 worktree，独立确定实际修改内容。",
   "The hosted evaluation design lets an Agent request bounded build feedback through the platform-provided":
     "平台评测设计允许 Agent 通过平台提供的",
   "command. This command is not included in Starter Kit": "命令请求有限次数的构建反馈。Starter Kit",
@@ -433,12 +443,10 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "Agent 至少能够完成一个已发布的本地 Example Case。",
   "Released": "已发布",
   "Release candidate": "发布候选版",
-  "adds the coding-agent guide and high-level readiness workflow while retaining the local Runner, managed-Python template, one":
-    "增加了编程 Agent 指南和高层就绪检查流程，同时保留本地 Runner、托管 Python 模板和一个",
+  "provides the local Runner, managed-Python template, bundled Example Cases, conformance checks, and deterministic packaging. Public Development Cases support broader Agent development and local testing. See":
+    "提供本地 Runner、托管 Python 模板、随附的 Example Case、合规检查和确定性打包功能。公开 Development Case 用于更广泛的 Agent 开发和本地测试。当前下载内容、版本和发布状态请查看",
+  "for current downloads, versions, and release status.": "。",
   "Starter Kit": "Starter Kit",
-  "provides the local Runner, managed-Python template, one": "提供本地 Runner、托管 Python 模板、1 个",
-  "Example Case, conformance checks, and deterministic packaging. Development Cases and standalone protocol schemas remain on the release roadmap.":
-    "Example Case、合规检查和确定性打包。Development Case 和独立协议 Schema 仍在后续发布计划中。",
   "Version": "版本",
   "accepts the managed Python 3.11 runtime only. Custom Docker runtimes are not accepted in this release.":
     "仅接受托管 Python 3.11 运行环境。本版本不接受自定义 Docker 运行环境。",
@@ -464,15 +472,22 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
     "你需要 Linux 或 WSL2 Shell、Git，以及 Docker Engine 24+ 或使用 Linux 容器的 Docker Desktop。下载 Starter Kit 后运行",
   "after downloading the Starter Kit to verify the local setup.":
     "，以检查本地环境。",
-  "Different versioned Case sets are used for local examples, development, hosted Smoke Tests, and Full Evaluation. See":
+  "Different versioned Case sets are used for local examples, development, the Hosted Smoke Test, and Full Evaluation. See":
     "本地示例、开发、平台 Smoke Test 和完整评测使用不同的版本化 Case 集。请查看",
   "for their scope and release status.": "，了解各 Case 集的范围和发布状态。",
   "Planned feature.": "计划功能。",
   "Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit":
     "受限的平台构建反馈将在后续协议版本中引入。其 CLI、限制和响应 Schema 不属于 Starter Kit",
   "Canonical patch": "Canonical 补丁",
-  "The platform derives the canonical patch from the modified worktree. How that patch is checked and rebuilt is defined in":
-    "平台根据修改后的工作树生成 canonical 补丁。该补丁的检查和重新构建方式见",
+  "After the Agent exits, the evaluator compares the original and final worktrees and automatically derives a canonical":
+    "Agent 退出后，评测器会比较原始 worktree 和最终 worktree，并根据所有实际修改自动生成 canonical",
+  "from all actual worktree changes. The canonical":
+    "。该 canonical",
+  "uses Git extended unified-diff format, captures supported text changes, file creation and deletion, and file-mode changes, and disables rename detection for deterministic canonicalization. Participants do not need to generate or submit":
+    "采用 Git 扩展统一 diff 格式，记录受支持的文本修改、文件创建与删除以及文件模式变更，并禁用重命名检测以实现确定性的 canonicalization。参赛者无需自行生成或提交",
+  ". The evaluator replays this diff on a fresh Case and performs the official target-architecture build verification. See":
+    "。评测器会在一个全新的 Case 上重放该 diff，并执行官方目标架构构建验证。完整验证规则请参阅",
+  "for the complete verification rules.": "。",
   "Evaluation and scoring": "评测与计分规则",
   "Before spending a Full Evaluation attempt, run": "在使用一次完整评测机会前，请运行",
   ", test the Agent on all released Example Cases, package that exact version, upload it, and pass the Hosted Smoke Test. Full Evaluation begins only after you explicitly select the qualified immutable version.":
@@ -482,12 +497,13 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Final submission checklist": "最终提交清单",
   "Required files exist at the ZIP root.": "必需文件位于 ZIP 根目录。",
   "passes.": "检查通过。",
-  "The entrypoint is deterministic and non-interactive.": "入口命令是确定性的，且不需要交互输入。",
+  "The entrypoint starts non-interactively and follows the declared runtime contract.":
+    "入口命令能够以非交互方式启动，并遵循所声明的运行时契约。",
   "All dependencies are exactly pinned.": "所有依赖均已精确锁定版本。",
-  "No secrets, caches, generated patches, or run artifacts are included.":
-    "提交中不包含密钥、缓存、预生成补丁或运行产物。",
-  "Only": "仅修改",
-  "is modified.": "。",
+  "No secrets, caches, precomputed Case-specific repair patches, or run artifacts are included.":
+    "提交中不包含密钥、缓存、预先准备的 Case 修复补丁或运行产物。",
+  "All intended repair changes are applied to": "所有预期的修复修改均已应用到",
+  "No intended repair is left only as an unapplied patch in": "没有任何预期修复仅以未应用 patch 的形式留在",
   "follows protocol": "遵循协议",
   "The uploaded version passes the Hosted Smoke Test.": "上传的版本通过平台 Smoke Test。",
   "The intended immutable version is selected for Full Evaluation.": "已选择预期的不可变版本用于完整评测。",
