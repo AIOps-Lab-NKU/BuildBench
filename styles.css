@@ -1147,7 +1147,15 @@
 .task-page .docs-section a,
 .task-page .task-next-steps a {
   color: var(--blue-dark);
+  text-decoration: none;
   text-underline-offset: 3px;
+}
+
+.task-page .docs-section a:hover,
+.task-page .docs-section a:focus-visible {
+  color: var(--blue);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 .task-page .challenge-question {
@@ -1246,6 +1254,163 @@
 
 .task-page .challenge-start-links a {
   font-size: 15px;
+}
+
+/* Task page content styles (from ICSE content integration) */
+.task-page .docs-section h3 {
+  margin: 30px 0 10px;
+  font-size: 20px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.task-page .docs-section ul,
+.task-page .docs-section ol {
+  margin: 14px 0 20px;
+  padding-left: 25px;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.task-page .docs-section ul li,
+.task-page .docs-section ol li {
+  margin: 7px 0;
+  padding-left: 4px;
+}
+
+.task-page .docs-section ul li::marker,
+.task-page .docs-section ol li::marker {
+  color: var(--blue);
+}
+
+.task-page .docs-section pre {
+  margin: 18px 0 22px;
+  padding: 19px 21px;
+  overflow-x: auto;
+  border-left: 4px solid var(--blue);
+  color: #223040;
+  background: var(--paper);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 14px;
+  line-height: 1.55;
+}
+
+.task-page .docs-section pre code {
+  color: inherit;
+  background: transparent;
+  font-size: inherit;
+}
+
+.task-page .docs-section code {
+  color: var(--blue-dark);
+  background: #eaf0f5;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.88em;
+  overflow-wrap: anywhere;
+}
+
+.task-page .definition-list {
+  margin: 28px 0 0;
+  border-top: 2px solid var(--ink);
+}
+
+.task-page .definition-row {
+  display: grid;
+  grid-template-columns: 150px minmax(0, 1fr);
+  gap: 24px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.task-page .definition-row dt {
+  color: var(--ink);
+  font-weight: 750;
+}
+
+.task-page .definition-row dd {
+  margin: 0;
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.task-page .isa-line {
+  margin: 22px 0 24px;
+  padding: 17px 0;
+  border-top: 1px solid var(--line-strong);
+  border-bottom: 1px solid var(--line-strong);
+  color: var(--blue-dark);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 15px;
+  font-weight: 750;
+  text-align: center;
+}
+
+.task-page .note {
+  margin-top: 22px;
+  padding: 14px 0 14px 18px;
+  border-left: 3px solid var(--amber);
+  color: var(--ink-soft);
+  font-size: 15px;
+  line-height: 1.6;
+}
+
+.task-page .metric {
+  margin: 24px 0 14px;
+  padding: 18px 0;
+  border-top: 2px solid var(--ink);
+  border-bottom: 1px solid var(--line);
+  color: var(--ink-soft);
+  font-size: 16px;
+  line-height: 1.68;
+}
+
+.task-page .metric strong {
+  display: block;
+  margin-bottom: 6px;
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.task-page .text-link {
+  display: inline-block;
+  margin-top: 6px;
+  font-weight: 750;
+}
+
+.task-page .docs-section .link-list {
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+  border-top: 1px solid var(--line);
+}
+
+.task-page .docs-section .link-list li {
+  margin: 0;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.task-page .docs-section .link-list a {
+  font-weight: 750;
+  text-decoration: none;
+}
+
+.task-page .docs-section .link-list a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 760px) {
+  .task-page .definition-row {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+
+  .task-page .isa-line {
+    text-align: left;
+  }
 }
 
 .task-page .task-reference-list {
