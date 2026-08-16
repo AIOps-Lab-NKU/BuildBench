@@ -28,8 +28,8 @@ window.BuildBenchI18nData.pages.contact = Object.freeze({
     "林亦航是南开大学学生。他的研究兴趣包括自主 Agent 和软件工程智能化，重点关注软件可靠性与智能软件维护。",
   "Zihao Huang is an undergraduate student in Software Engineering at Nankai University. His research interests include AI agents, computer vision, and interactive systems.":
     "黄子豪是南开大学软件工程专业本科生。他的研究兴趣包括 AI Agent、计算机视觉和交互系统。",
-  "An Xu is a student at Nankai University. He is primarily interested in leveraging artificial intelligence techniques to address core challenges in software engineering, focusing on intelligent software analysis, automated software repair and AI-driven software engineering practices.":
-    "徐安是南开大学学生。他主要关注如何利用人工智能技术解决软件工程中的核心挑战，研究重点包括智能软件分析、自动化软件修复以及人工智能驱动的软件工程实践。",
+  "An Xu is an undergraduate Software Engineering student at Nankai University. His interests include intelligent software analysis, automated software repair, and AI for software engineering.":
+    "徐安是南开大学软件工程专业本科生，研究兴趣包括智能软件分析、自动化软件修复和软件工程智能化。",
   "Chengtai Li is an undergraduate student at Nankai University. His research interests include LLM-based agents, AI for software engineering, and automated software repair.":
     "李铖泰是南开大学本科生。他的研究兴趣包括基于大语言模型的 Agent、软件工程智能化和自动化软件修复。",
 });

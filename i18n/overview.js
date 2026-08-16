@@ -3,8 +3,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Build-Bench Challenge | ICSE 2027": "Build-Bench Challenge | ICSE 2027",
   "Repair real cross-architecture package build failures with autonomous LLM Agents.":
     "让自主 LLM Agent 修复真实的跨架构软件包构建失败。",
-  "A competition for LLM-based repair Agents that address real package build failures across x86_64, Arm64, and RISC-V.":
-    "面向 LLM 修复 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64、Arm64 与 RISC-V 架构。",
+  "A competition for LLM-based repair Agents that address real package build failures across x86_64, aarch64, and riscv64.":
+    "面向 LLM 修复 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64、aarch64 与 riscv64 架构。",
   "ICSE 2027 Competition Track": "ICSE 2027 Competition Track",
   "Website beta": "网站 Beta",
   "Cloud, edge, and emerging platforms increasingly span heterogeneous instruction set architectures, making software portability a growing engineering challenge.":
@@ -13,6 +13,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "特定架构的代码、依赖、编译器、构建选项和打包逻辑，都可能导致一个在某种架构上能够构建的软件包在另一种架构上构建失败。",
   "Build-Bench Challenge turns these failures into an executable, benchmark-driven competition for LLM-based repair Agents that generalize across packages, failure types, architectures, and migration directions.":
     "Build-Bench Challenge 将这些故障转化为一项可执行、由基准驱动的竞赛，用于评测 LLM 修复 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
+  "Cloud, edge, and emerging platforms increasingly span heterogeneous instruction set architectures, making software portability a growing engineering challenge. Architecture-specific code, dependencies, compilers, build options, and packaging logic can cause a package that builds on one architecture to fail on another. Build-Bench Challenge turns these failures into an executable, benchmark-driven competition for LLM-based repair Agents that generalize across packages, failure types, architectures, and migration directions.":
+    "云计算、边缘计算和新兴平台正越来越多地采用异构指令集架构，软件要在这些平台之间保持可移植，正成为日益突出的工程挑战。特定架构的代码、依赖、编译器、构建选项和打包逻辑，都可能导致一个在某种架构上能够构建的软件包在另一种架构上构建失败。Build-Bench Challenge 将这些故障转化为一项可执行、由基准驱动的竞赛，用于评测 LLM 修复 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
   "Teams submit a runnable repair Agent rather than Case-specific patches. Organizers execute each qualified Agent on controlled source-to-target migration Cases, derive a canonical patch from its modifications, and reapply the patch to a clean copy of the package. A Case is counted as successfully repaired only when the patch complies with competition policy and the official target-architecture build completes with the expected package artifacts.":
     "团队提交的是可运行的修复 Agent，而不是针对特定 Case 的补丁。组织方在受控的源架构到目标架构迁移 Case 上运行每个通过资格检查的 Agent，根据其修改生成 canonical patch，并将补丁重新应用到软件包的干净副本。只有当补丁符合竞赛政策，且官方目标架构构建成功并产出预期的软件包制品时，该 Case 才算修复成功。",
   "Evaluation scope:": "评测范围：",
@@ -55,8 +57,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "Build-Bench Challenge 评测流程：从 Case 输入和 Agent 执行，到补丁规范化、干净环境重构建与计分",
   "Scrollable evaluation workflow diagram": "可横向滚动查看的评测流程图",
   "What is the challenge?": "竞赛任务是什么？",
-  "Build-Bench Challenge asks teams to develop an LLM-based repair Agent for real software packages that build on one instruction set architecture (ISA) but fail after migration to another. The competition covers migrations among x86_64, aarch64 (Arm64), and riscv64, and evaluates whether an Agent can generalize across packages, failure types, architectures, and migration directions.":
-    "Build-Bench Challenge 要求团队为真实软件包开发基于 LLM 的修复 Agent。这些软件包能够在一种指令集架构（ISA）上成功构建，却在迁移到另一种架构后构建失败。竞赛覆盖 x86_64、aarch64（Arm64）和 riscv64 之间的迁移，并评测 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
+  "Build-Bench Challenge asks teams to develop an LLM-based repair Agent for real software packages that build on one instruction set architecture (ISA) but fail after migration to another. The competition covers migrations among x86_64, aarch64, and riscv64, and evaluates whether an Agent can generalize across packages, failure types, architectures, and migration directions.":
+    "Build-Bench Challenge 要求团队为真实软件包开发基于 LLM 的修复 Agent。这些软件包能够在一种指令集架构（ISA）上成功构建，却在迁移到另一种架构后构建失败。竞赛覆盖 x86_64、aarch64 和 riscv64 之间的迁移，并评测 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
   "For each Case, the Agent receives a package workspace, source and target architecture metadata, and the failed target-build log. It may inspect and modify only permitted files. Organizers derive a canonical patch from these changes, apply it to a clean package copy, and rebuild the package in a controlled target-architecture environment. A repair succeeds only when the patch passes policy checks, the build completes, and the expected package artifacts are produced.":
     "对于每个 Case，Agent 会获得软件包工作区、源架构与目标架构元数据，以及目标架构构建失败日志。Agent 只能检查和修改允许范围内的文件。组织方根据这些修改生成 canonical patch，将其应用到软件包的干净副本，并在受控的目标架构环境中重新构建。只有当补丁通过政策检查、构建完成且产生预期的软件包制品时，修复才算成功。",
   "The workflow below summarizes how submitted Agents are executed, converted into canonical patches, and validated through clean target-architecture builds.":

@@ -4,8 +4,8 @@ window.BuildBenchI18nData.pages.task = Object.freeze({
   "Build a runnable Agent that diagnoses and repairs real cross-architecture package build failures under executable verification.":
     "构建可运行的 Agent，诊断并修复经过可执行验证的真实跨架构软件包构建失败。",
   "Build-Bench Challenge": "Build-Bench 竞赛",
-  "Build autonomous LLM Agents that repair real package build failures across x86_64, Arm64, and RISC-V.":
-    "构建自主 LLM Agent，修复 x86_64、Arm64 和 RISC-V 之间真实软件包的跨架构构建失败。",
+  "Build autonomous LLM Agents that repair real package build failures across x86_64, aarch64, and riscv64.":
+    "构建自主 LLM Agent，修复 x86_64、aarch64 和 riscv64 之间真实软件包的跨架构构建失败。",
   "Build-Bench Challenge evaluates whether runnable repair Agents can diagnose and fix real cross-architecture package build failures under controlled, executable evaluation.":
     "Build-Bench 竞赛评估可运行的修复 Agent 能否在受控的可执行评测环境中诊断并修复真实的跨架构软件包构建失败。",
   "On this page": "本页内容",
