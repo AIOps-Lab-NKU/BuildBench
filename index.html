@@ -14,9 +14,9 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260816-8" />
-    <link rel="stylesheet" href="overview.css?v=20260816-12" />
+    <link rel="stylesheet" href="overview.css?v=20260816-13" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/overview.js?v=20260816-5" defer></script>
+    <script src="i18n/overview.js?v=20260816-6" defer></script>
     <script src="i18n.js?v=20260816-4" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
     <script src="app.js?v=20260816-4" defer></script>
@@ -127,17 +127,20 @@
           </section>
 
           <section class="overview-hero-affiliations" aria-labelledby="supporters-title">
-            <h2 id="supporters-title">Sponsors &amp; Supporters</h2>
-            <ul class="overview-hero-affiliation-list" aria-label="Sponsors and supporters">
-              <li class="overview-supporter-logo-item">
-                <img class="overview-supporter-logo overview-supporter-logo--meituan" src="assets/affiliations/meituan-new.png" width="703" height="701" alt="Meituan">
-                <span class="overview-sponsor-copy"><strong>Model API Support</strong><small>LLM inference credits and concurrency</small></span>
+            <h2 id="supporters-title">Supporters</h2>
+            <ul class="overview-hero-affiliation-list" aria-label="Supporters">
+              <li>
+                <span class="overview-supporter-logo-wrap">
+                  <img class="overview-supporter-logo overview-supporter-logo--meituan" src="assets/affiliations/meituan-new.png?v=20260816-1" width="703" height="701" alt="Meituan logo" decoding="async">
+                </span>
+                <span class="overview-sponsor-copy"><strong>Meituan</strong><small>Model API support</small></span>
               </li>
-              <li class="overview-supporter-logo-item">
-                <img class="overview-supporter-logo overview-supporter-logo--cnic" src="assets/affiliations/cnic.png" width="187" height="139" alt="Computer Network Information Center, Chinese Academy of Sciences">
-                <span class="overview-sponsor-copy"><strong>Compute Infrastructure Support</strong><small>Multi-architecture build and evaluation resources</small></span>
+              <li>
+                <span class="overview-supporter-logo-wrap">
+                  <img class="overview-supporter-logo overview-supporter-logo--cas" src="assets/affiliations/chinese-academy-of-sciences.jpg" width="257" height="263" alt="Chinese Academy of Sciences logo" decoding="async">
+                </span>
+                <span class="overview-sponsor-copy"><strong>Chinese Academy of Sciences</strong><small>Compute infrastructure support</small></span>
               </li>
-              <li class="overview-supporter-logo-item overview-supporter-logo-placeholder" aria-hidden="true"></li>
             </ul>
           </section>
         </div>
@@ -191,45 +194,6 @@
           <p>Using the workflow above, official ranking is based on verified executable outcomes, not similarity to a reference patch.</p>
           <p>The primary metric is <strong>Verified Build Success Rate</strong>: the percentage of evaluated Cases that pass all policy, clean-build, and artifact checks. <strong>Execution Time</strong> and officially recorded <strong>Token Usage</strong> are reported separately as secondary efficiency metrics.</p>
           <p class="overview-section-link"><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
-        </div>
-      </section>
-
-      <section class="overview-section overview-highlights-section" aria-labelledby="highlights-title">
-        <div class="overview-shell overview-reading-column overview-highlights-shell">
-          <header class="overview-highlights-intro">
-            <h2 id="highlights-title" class="overview-section-heading">
-              <img src="assets/overview-icons/medal.png" width="512" height="512" alt="" aria-hidden="true">
-              <span>Recognition and opportunities</span>
-            </h2>
-            <p>The confirmed award structure recognizes top-performing teams and an outstanding open-source or repair contribution.</p>
-          </header>
-          <ul class="overview-prize-list" aria-label="Competition prizes and recognition">
-            <li class="overview-prize overview-prize--gold">
-              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
-              <div><h3>1st Prize</h3><p>1 team</p></div>
-              <strong>$1,000</strong>
-            </li>
-            <li class="overview-prize overview-prize--silver">
-              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
-              <div><h3>2nd Prize</h3><p>2 teams</p></div>
-              <strong>$500 each</strong>
-            </li>
-            <li class="overview-prize overview-prize--bronze">
-              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
-              <div><h3>3rd Prize</h3><p>3 teams</p></div>
-              <strong>$300 each</strong>
-            </li>
-            <li class="overview-prize overview-prize--special">
-              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="award"></i></span>
-              <div><h3>Best Open Source / Best Repair Award</h3><p>1 team</p></div>
-              <strong>$300</strong>
-            </li>
-            <li class="overview-prize overview-prize--certificate">
-              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="badge-check"></i></span>
-              <div><h3>Certificate and official ICSE recognition</h3><p>Awarded teams receive an official certificate</p></div>
-              <strong>ICSE 2027</strong>
-            </li>
-          </ul>
         </div>
       </section>
 
