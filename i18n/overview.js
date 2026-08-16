@@ -6,7 +6,6 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "A competition for LLM-based repair Agents that address real package build failures across x86_64, aarch64, and riscv64.":
     "面向 LLM 修复 Agent 的真实软件包构建失败修复竞赛，覆盖 x86_64、aarch64 与 riscv64 架构。",
   "ICSE 2027 Competition Track": "ICSE 2027 Competition Track",
-  "Website beta": "网站 Beta",
   "Cloud, edge, and emerging platforms increasingly span heterogeneous instruction set architectures, making software portability a growing engineering challenge.":
     "云计算、边缘计算和新兴平台正越来越多地采用异构指令集架构，软件要在这些平台之间保持可移植，正成为日益突出的工程挑战。",
   "Architecture-specific code, dependencies, compilers, build options, and packaging logic can cause a package that builds on one architecture to fail on another.":
