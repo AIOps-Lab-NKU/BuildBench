@@ -152,7 +152,24 @@ window.addEventListener("buildbench:languagechange", () => {
 });
 
 if ("IntersectionObserver" in window && localNavLinks.length) {
-  const sections = Array.from(document.querySelectorAll(".page-document section[id]"));
+  const sections = localNavLinks
+    .map((link) => document.getElementById(decodeURIComponent(link.getAttribute("href").slice(1))))
+    .filter((section, index, items) => section && items.indexOf(section) === index);
+
+  const setActiveLocalSection = (sectionId) => {
+    localNavLinks.forEach((link) => {
+      const isActive = link.getAttribute("href") === `#${sectionId}`;
+      link.classList.toggle("active", isActive);
+      if (isActive) link.setAttribute("aria-current", "location");
+      else link.removeAttribute("aria-current");
+    });
+  };
+
+  const initialSectionId = window.location.hash.slice(1);
+  setActiveLocalSection(
+    sections.some((section) => section.id === initialSectionId) ? initialSectionId : sections[0]?.id,
+  );
+
   const observer = new IntersectionObserver(
     (entries) => {
       const visible = entries
@@ -160,9 +177,7 @@ if ("IntersectionObserver" in window && localNavLinks.length) {
         .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
 
       if (!visible) return;
-      localNavLinks.forEach((link) => {
-        link.classList.toggle("active", link.getAttribute("href") === `#${visible.target.id}`);
-      });
+      setActiveLocalSection(visible.target.id);
     },
     { rootMargin: "-24% 0px -64%", threshold: [0, 0.1, 0.3] },
   );
