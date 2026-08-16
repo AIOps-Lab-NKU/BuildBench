@@ -177,15 +177,23 @@ class FrontendContractTests(unittest.TestCase):
             'class="overview-hero-credits"',
             'class="overview-credit-list"',
             'src="assets/overview-icons/medal.png"',
-            'src="assets/overview-icons/graduation-hat.png"',
+            'src="assets/affiliations/nankai-university.jpg"',
+            'src="assets/affiliations/microsoft.svg"',
             'src="assets/overview-icons/challenge.png"',
             'src="assets/overview-icons/process.png"',
             'src="assets/overview-icons/evaluated.png"',
             'src="assets/overview-icons/calendar.png"',
             'src="assets/overview-icons/reference.png"',
-            "Competition partners",
-            "ICSE 2027 Competition Track",
+            "Repair real cross-architecture package build failures with autonomous LLM Agents.",
+            "Build-Bench Challenge turns these failures into an executable, benchmark-driven competition",
+            "A Case is counted",
+            "patch complies with competition policy",
+            "Accepted to the ICSE 2027 Competition Track",
             "Nankai University · Microsoft",
+            "Sponsors &amp; Supporters",
+            "Model API Support",
+            "Compute Infrastructure Support",
+            "Prize &amp; Winner Support",
             "Get the Starter Kit",
             "Explore the Challenge",
         ):
@@ -274,73 +282,71 @@ class FrontendContractTests(unittest.TestCase):
         ):
             self.assertIn(contract, translations)
 
-    def test_overview_places_ordered_affiliations_in_hero_art(self) -> None:
+    def test_overview_places_competition_and_support_roles_in_hero(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        css = (ROOT / "overview.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
         hero_art = html.index('class="overview-hero-art"')
-        affiliations = html.index('class="overview-hero-affiliations"')
         credits = html.index('class="overview-hero-credits"')
-        self.assertLess(hero_art, affiliations)
-        self.assertLess(html.index("</div>", hero_art), affiliations)
-        self.assertLess(affiliations, credits)
+        affiliations = html.index('class="overview-hero-affiliations"')
+        self.assertLess(hero_art, credits)
+        self.assertLess(credits, affiliations)
         self.assertNotIn('class="overview-affiliations-section"', html)
 
-        ordered_assets = (
+        organizer_assets = (
             "assets/affiliations/nankai-university.jpg",
             "assets/affiliations/microsoft.svg",
-            "assets/affiliations/meituan.png",
-            "assets/affiliations/chinese-academy-of-sciences.jpg",
         )
-        positions = [html.index(asset, affiliations, credits) for asset in ordered_assets]
+        positions = [html.index(asset, credits, affiliations) for asset in organizer_assets]
         self.assertEqual(positions, sorted(positions))
-        for asset in ordered_assets:
+        for asset in organizer_assets:
             self.assertTrue((ROOT / asset).is_file())
 
         for contract in (
-            ".overview-page .overview-hero-affiliations",
+            ".overview-page .overview-organizer-logos",
             ".overview-page .overview-hero-affiliation-list",
-            ".overview-page .overview-affiliation-logo--seal",
-            ".overview-page .overview-affiliation-logo--microsoft",
-            ".overview-page .overview-affiliation-logo--meituan",
-            "mix-blend-mode: multiply",
-            "color: var(--blue-dark);",
-            "font-size: 14px;",
-            "text-align: center;",
-            'content: ":";',
-            "grid-template-columns: repeat(2, minmax(0, 1fr));",
-            "grid-area: credits;",
-            "justify-self: end;",
-            '"affiliations affiliations"',
+            "grid-template-columns: repeat(3, minmax(0, 1fr));",
+            ".overview-page .overview-sponsor-icon",
+            ".overview-page .overview-sponsor-copy",
+            ".overview-page .overview-credit-item + .overview-credit-item",
+            "border-top: 0",
         ):
             self.assertIn(contract, css)
         for contract in (
-            '"Affiliations": "合作单位"',
-            '"Affiliated institutions and industry partners": "合作高校、科研机构与产业伙伴"',
+            '"Official competition": "官方竞赛"',
+            '"Sponsors & Supporters": "赞助单位"',
+            '"Model API Support": "模型 API 支持"',
+            '"Compute Infrastructure Support": "算力基础设施支持"',
+            '"Prize & Winner Support": "奖项与获奖者支持"',
         ):
             self.assertIn(contract, translations)
 
-    def test_overview_uses_concise_challenge_copy(self) -> None:
+    def test_overview_uses_revised_challenge_copy(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
         for expected in (
-            "Build-Bench challenges teams to build an Agent",
-            "For each Case, the Agent receives a package workspace",
-            "Build and test your Agent with the Starter Kit and public Cases.",
-            "Upload an Agent version and pass the Hosted Smoke Test.",
-            "Solutions are judged by verified build results",
+            "Build-Bench Challenge asks teams to develop an LLM-based repair Agent",
+            "source and target architecture metadata",
+            "Build and test your Agent with the Starter Kit and public development Cases.",
+            "Submit an Agent version and pass the Hosted Smoke Test.",
+            "official ranking is based on verified executable outcomes",
+            "more than 200 public development packages and over 1,000 hidden evaluation packages",
         ):
             self.assertIn(expected, html)
         self.assertNotIn("Repairs may involve dependency declarations", html)
 
-    def test_overview_cites_workflow_and_omits_unconfirmed_prizes(self) -> None:
+    def test_overview_uses_revised_workflow_and_omits_unconfirmed_prize_amounts(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
+        css = (ROOT / "overview.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
         self.assertLess(html.index('id="evaluation-title"'), html.index('id="dates-title"'))
+        self.assertLess(html.index('id="evaluation-title"'), html.index('id="highlights-title"'))
+        self.assertLess(html.index('id="highlights-title"'), html.index('id="dates-title"'))
         self.assertLess(html.index('id="dates-title"'), html.index('id="references-title"'))
 
         for expected in (
-            'class="overview-framework-citation"',
+            'class="overview-workflow-scroll"',
+            'src="assets/overview-evaluation-workflow.png"',
+            "Build-Bench Challenge evaluation workflow",
             'href="#reference-1"',
             'aria-label="See reference 1"',
             '>[1]</a>',
@@ -353,40 +359,35 @@ class FrontendContractTests(unittest.TestCase):
             self.assertIn(expected, html)
 
         self.assertLess(html.index('href="#reference-1"'), html.index('<li id="reference-1">'))
-        for removed in (
-            'id="prizes-title"',
-            "overview-prizes-section",
-            "overview-prize-list",
-            "overview-prize-total",
-            "overview-attendance-support",
-            'src="assets/overview-icons/trophy.png"',
-            "Prizes",
+        self.assertLess(html.index('class="overview-challenge-figure"'), html.index('class="overview-section-link"'))
+        for expected in (
+            "overview-highlights-section",
+            'id="highlights-title"',
+            'class="overview-prize-list"',
+            "Prizes and recognition",
+            "Recognition and opportunities",
             "1st Prize",
-            "$1,500 USD",
-            "$1,000 USD",
-            "$500 USD",
-            "Total Cash Prize Pool",
-            "ICSE 2027 Attendance Support",
-            "Prize &amp; Attendance Details",
-            "$250 USD",
-            "additional partial travel assistance",
-            "does not guarantee full reimbursement",
+            "$1,000",
+            "2nd Prize",
+            "$500 each",
+            "3rd Prize",
+            "$300 each",
+            "Best Open Source / Best Repair Award",
+            "Certificate and official ICSE recognition",
         ):
-            self.assertNotIn(removed, html)
+            self.assertIn(expected, html)
 
-        self.assertIn(".overview-page .overview-framework-citation", css)
-        self.assertIn("scroll-margin-top: calc(var(--header-height) + 20px);", css)
-        self.assertNotIn("overview-prize", css)
-        self.assertNotIn("overview-attendance-support", css)
+        self.assertIn(".overview-page .overview-workflow-scroll", css)
+        self.assertIn("width: min(94%, 840px)", css)
+        self.assertTrue((ROOT / "assets" / "overview-evaluation-workflow.png").is_file())
+        self.assertIn("overview-prize", css)
         self.assertIn('"See reference 1": "查看参考文献 1"', translations)
-        for removed_translation in (
-            '"Prizes":',
-            '"1st Prize":',
-            '"Total Cash Prize Pool:":',
-            '"ICSE 2027 Attendance Support":',
-            '"Prize & Attendance Details":',
+        for expected_translation in (
+            '"Prizes and recognition": "奖项与荣誉"',
+            '"1st Prize": "一等奖"',
+            '"Best Open Source / Best Repair Award": "最佳开源 / 最佳修复奖"',
         ):
-            self.assertNotIn(removed_translation, translations)
+            self.assertIn(expected_translation, translations)
         self.assertEqual(html.count(">[paper]</a>"), 2)
 
     def test_challenge_page_uses_agent_competition_narrative(self) -> None:

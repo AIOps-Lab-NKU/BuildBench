@@ -3,19 +3,20 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="The Build-Bench Challenge at ICSE 2027 evaluates agents for executable cross-architecture package build repair." />
+    <meta name="description" content="Build autonomous LLM Agents that repair real package build failures across x86_64, Arm64, and RISC-V." />
     <meta property="og:title" content="Build-Bench Challenge | ICSE 2027" />
-    <meta property="og:description" content="A competition for agent-driven repair of real package build failures across x86_64 and aarch64." />
+    <meta property="og:description" content="A competition for LLM-based repair Agents that address real package build failures across x86_64, Arm64, and RISC-V." />
     <meta property="og:url" content="https://aiops-lab-nku.github.io/BuildBench/" />
-    <meta property="og:image" content="https://aiops-lab-nku.github.io/BuildBench/assets/framework.png" />
+    <meta property="og:image" content="https://aiops-lab-nku.github.io/BuildBench/assets/overview-evaluation-workflow.png" />
     <meta name="theme-color" content="#ffffff" />
     <title>Build-Bench Challenge | ICSE 2027</title>
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260813-3" />
+    <link rel="stylesheet" href="overview.css?v=20260816-2" />
     <script src="assets/vendor/lucide.min.js?v=20260813-3" defer></script>
-    <script src="i18n/overview.js?v=20260814-1" defer></script>
+    <script src="i18n/overview.js?v=20260816-2" defer></script>
     <script src="i18n.js?v=20260813-3" defer></script>
     <script src="auth-client.js?v=20260813-3" defer></script>
     <script src="app.js?v=20260813-3" defer></script>
@@ -63,21 +64,28 @@
           </div>
 
           <div class="overview-hero-copy">
-            <p class="overview-deck">Repair real cross-architecture package build failures with autonomous Agents.</p>
+            <p class="overview-deck">Repair real cross-architecture package build failures with autonomous LLM Agents.</p>
             <p class="overview-description">
-              Keeping large-scale software ecosystems portable and buildable across heterogeneous
-              architectures has become an increasingly important challenge for sustainable software
-              evolution. A package that builds on one architecture can still fail on another. Build-Bench
-              turns these real portability failures into an executable benchmark for repair Agents.
+              Cloud, edge, and emerging platforms increasingly span heterogeneous instruction set
+              architectures, making software portability a growing engineering challenge.
+            </p>
+            <p class="overview-description">
+              Architecture-specific code, dependencies, compilers, build options, and packaging logic
+              can cause a package that builds on one architecture to fail on another.
             </p>
             <p class="overview-intro">
-              Teams submit a runnable repair Agent. Organizers run qualified versions, derive a canonical
-              patch, and accept a repair only when the clean target-architecture build succeeds.
+              Build-Bench Challenge turns these failures into an executable, benchmark-driven competition
+              for LLM-based repair Agents that generalize across packages, failure types, architectures,
+              and migration directions.
             </p>
-            <div class="overview-actions" aria-label="Primary actions">
-              <a class="overview-primary-action" href="data-downloads.html">Get the Starter Kit</a>
-              <a class="overview-secondary-action" href="task.html">Explore the Challenge</a>
-            </div>
+            <p class="overview-intro">
+              Teams submit a runnable repair Agent rather than Case-specific patches. Organizers execute
+              each qualified Agent on controlled source-to-target migration Cases, derive a canonical patch
+              from its modifications, and reapply the patch to a clean copy of the package. A Case is counted
+              as successfully repaired only when the patch complies with competition policy and the official
+              target-architecture build completes with the expected package artifacts.
+            </p>
+            <p class="overview-scope"><strong>Evaluation scope:</strong> x86_64 ↔ aarch64 · x86_64 ↔ riscv64 · aarch64 ↔ riscv64</p>
           </div>
 
           <div class="overview-hero-art">
@@ -92,25 +100,30 @@
             >
           </div>
 
-          <section class="overview-hero-credits" aria-labelledby="competition-partners-title">
-            <h2 id="competition-partners-title">Competition partners</h2>
+          <div class="overview-actions" aria-label="Primary actions">
+            <a class="overview-primary-action" href="data-downloads.html">Get the Starter Kit</a>
+            <a class="overview-secondary-action" href="task.html">Explore the Challenge</a>
+          </div>
+
+          <section class="overview-hero-credits" aria-label="Official competition and organizing partners">
             <div class="overview-credit-list">
               <div class="overview-credit-item overview-credit-track">
                 <span class="overview-credit-icon" aria-hidden="true">
                   <img src="assets/overview-icons/medal.png" width="512" height="512" alt="">
                 </span>
                 <div>
-                  <span class="overview-credit-label">Official track</span>
-                  <strong>ICSE 2027 Competition Track</strong>
+                  <span class="overview-credit-label">Official competition</span>
+                  <strong>Accepted to the ICSE 2027 Competition Track</strong>
                   <a class="overview-track-link" href="https://conf.researchr.org/track/icse-2027/icse-2027-competition-track" target="_blank" rel="noreferrer">
-                    ICSE 2027 Competition Track
+                    View official track page
                     <i data-lucide="arrow-up-right" aria-hidden="true"></i>
                   </a>
                 </div>
               </div>
               <div class="overview-credit-item overview-credit-organizer">
-                <span class="overview-credit-icon" aria-hidden="true">
-                  <img src="assets/overview-icons/graduation-hat.png" width="512" height="512" alt="">
+                <span class="overview-organizer-logos" aria-hidden="true">
+                  <img src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="">
+                  <img src="assets/affiliations/microsoft.svg" width="21" height="21" alt="">
                 </span>
                 <div>
                   <span class="overview-credit-label">Organized by</span>
@@ -121,23 +134,19 @@
           </section>
 
           <section class="overview-hero-affiliations" aria-labelledby="supporters-title">
-            <h2 id="supporters-title">Supporters</h2>
-            <ul class="overview-hero-affiliation-list" aria-label="Supporting institutions and industry partners">
+            <h2 id="supporters-title">Sponsors &amp; Supporters</h2>
+            <ul class="overview-hero-affiliation-list" aria-label="Sponsors and supporters">
               <li>
-                <img class="overview-affiliation-logo overview-affiliation-logo--seal" src="assets/affiliations/nankai-university.jpg" width="799" height="794" alt="Nankai University logo" decoding="async">
-                <span class="overview-affiliation-name">Nankai University</span>
+                <span class="overview-sponsor-icon" aria-hidden="true"><i data-lucide="cpu"></i></span>
+                <span class="overview-sponsor-copy"><strong>Model API Support</strong><small>LLM inference credits and concurrency</small></span>
               </li>
               <li>
-                <img class="overview-affiliation-logo overview-affiliation-logo--microsoft" src="assets/affiliations/microsoft.svg" width="21" height="21" alt="Microsoft logo" decoding="async">
-                <span class="overview-affiliation-name">Microsoft</span>
+                <span class="overview-sponsor-icon" aria-hidden="true"><i data-lucide="server"></i></span>
+                <span class="overview-sponsor-copy"><strong>Compute Infrastructure Support</strong><small>Multi-architecture build and evaluation resources</small></span>
               </li>
               <li>
-                <img class="overview-affiliation-logo overview-affiliation-logo--meituan" src="assets/affiliations/meituan-new.png?v=20260813-1" width="703" height="701" alt="Meituan logo" decoding="async">
-                <span class="overview-affiliation-name">Meituan</span>
-              </li>
-              <li>
-                <img class="overview-affiliation-logo overview-affiliation-logo--cnic" src="assets/affiliations/cnic.png?v=20260813-1" width="187" height="139" alt="Computer Network Information Center, Chinese Academy of Sciences logo" decoding="async">
-                <span class="overview-affiliation-name">Computer Network Information Center, Chinese Academy of Sciences</span>
+                <span class="overview-sponsor-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
+                <span class="overview-sponsor-copy"><strong>Prize &amp; Winner Support</strong><small>Prizes, registration, and travel</small></span>
               </li>
             </ul>
           </section>
@@ -150,17 +159,20 @@
             <img src="assets/overview-icons/challenge.png" width="512" height="512" alt="" aria-hidden="true">
             <span>What is the challenge?</span>
           </h2>
-          <p>Build-Bench challenges teams to develop an Agent that repairs real software packages that build successfully on one instruction-set architecture but fail on another, including x86_64, aarch64 (Arm64), and riscv64 environments.</p>
-          <p>For each Case, the Agent receives a package workspace and failed-build context, then modifies the permitted files to restore a successful target build.</p>
-          <p>Build-Bench extends our prior research published in ACM TOSEM <a href="#reference-1" aria-label="See reference 1">[1]</a> with newly curated multi-architecture Cases and organizer-run executable evaluation. Prior results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.</p>
+          <p>Build-Bench Challenge asks teams to develop an LLM-based repair Agent for real software packages that build on one instruction set architecture (ISA) but fail after migration to another. The competition covers migrations among x86_64, aarch64 (Arm64), and riscv64, and evaluates whether an Agent can generalize across packages, failure types, architectures, and migration directions.</p>
+          <p>For each Case, the Agent receives a package workspace, source and target architecture metadata, and the failed target-build log. It may inspect and modify only permitted files. Organizers derive a canonical patch from these changes, apply it to a clean package copy, and rebuild the package in a controlled target-architecture environment. A repair succeeds only when the patch passes policy checks, the build completes, and the expected package artifacts are produced.</p>
+          <p>The workflow below summarizes how submitted Agents are executed, converted into canonical patches, and validated through clean target-architecture builds.</p>
+          <p>This challenge builds on Build-Bench, our study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM) <a href="#reference-1" aria-label="See reference 1">[1]</a>, which established the original cross-architecture repair task and executable evaluation workflow. The competition substantially expands this foundation by covering bidirectional migrations among x86_64, aarch64, and riscv64, incorporating packages from more diverse software ecosystems and sources, and providing more than 200 public development packages and over 1,000 hidden evaluation packages. It also introduces a standardized Agent interface and organizer-run executable validation to evaluate generalization at competition scale.</p>
           <figure class="overview-challenge-figure">
-            <img
-              src="assets/framework.png"
-              alt="Build-Bench repair workflow diagram"
-              loading="lazy"
-              decoding="async"
-            >
-            <figcaption>The published Build-Bench workflow for cross-architecture package build repair and verification.</figcaption>
+            <div class="overview-workflow-scroll" tabindex="0" aria-label="Scrollable evaluation workflow diagram">
+              <img
+                src="assets/overview-evaluation-workflow.png"
+                alt="Build-Bench Challenge evaluation workflow, from Case input and Agent execution to patch canonicalization, clean rebuilding, and scoring"
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+            <figcaption>Build-Bench Challenge evaluation workflow, from Case input and Agent execution to patch canonicalization, clean rebuilding, and scoring.</figcaption>
           </figure>
           <p class="overview-section-link"><a href="task.html">Explore the Challenge <span aria-hidden="true">→</span></a></p>
         </div>
@@ -173,9 +185,9 @@
             <span>How the competition works</span>
           </h2>
           <ol class="overview-prose-list overview-competition-steps">
-            <li><strong>Develop</strong> — Build and test your Agent with the Starter Kit and public Cases.</li>
-            <li><strong>Qualify</strong> — Upload an Agent version and pass the Hosted Smoke Test.</li>
-            <li><strong>Compete</strong> — Freeze a qualified version for organizer-run evaluation and leaderboard ranking.</li>
+            <li><strong>Develop</strong> — Build and test your Agent with the Starter Kit and public development Cases.</li>
+            <li><strong>Qualify</strong> — Submit an Agent version and pass the Hosted Smoke Test.</li>
+            <li><strong>Compete</strong> — Freeze a qualified version for organizer-run evaluation on hidden Cases and leaderboard ranking.</li>
           </ol>
         </div>
       </section>
@@ -184,12 +196,48 @@
         <div class="overview-shell overview-reading-column">
           <h2 id="evaluation-title" class="overview-section-heading">
             <img src="assets/overview-icons/evaluated.png" width="512" height="512" alt="" aria-hidden="true">
-            <span>How are repairs evaluated?</span>
+            <span>How is performance scored?</span>
           </h2>
-          <p>A repair succeeds only if the Agent's final changes can be applied to a clean Case and the package builds successfully in the official target-architecture environment.</p>
-          <p>Solutions are judged by verified build results, not by similarity to a reference patch.</p>
-          <p>Repairs are ranked primarily by <strong>Verified Build Success Rate</strong>, with <strong>Execution Time</strong> and <strong>Token Usage</strong> reported as secondary efficiency metrics.</p>
+          <p>Using the workflow above, official ranking is based on verified executable outcomes, not similarity to a reference patch.</p>
+          <p>The primary metric is <strong>Verified Build Success Rate</strong>: the percentage of evaluated Cases that pass all policy, clean-build, and artifact checks. <strong>Execution Time</strong> and officially recorded <strong>Token Usage</strong> are reported separately as secondary efficiency metrics.</p>
           <p class="overview-section-link"><a href="rules.html#evaluation-scoring">Read Evaluation and scoring <span aria-hidden="true">→</span></a></p>
+        </div>
+      </section>
+
+      <section class="overview-section overview-highlights-section" aria-labelledby="highlights-title">
+        <div class="overview-shell overview-highlights-shell">
+          <header class="overview-highlights-intro">
+            <span class="overview-section-kicker">Prizes and recognition</span>
+            <h2 id="highlights-title">Recognition and opportunities</h2>
+            <p>The confirmed award structure recognizes top-performing teams and an outstanding open-source or repair contribution.</p>
+          </header>
+          <ul class="overview-prize-list" aria-label="Competition prizes and recognition">
+            <li class="overview-prize overview-prize--gold">
+              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
+              <div><h3>1st Prize</h3><p>1 team</p></div>
+              <strong>$1,000</strong>
+            </li>
+            <li class="overview-prize overview-prize--silver">
+              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
+              <div><h3>2nd Prize</h3><p>2 teams</p></div>
+              <strong>$500 each</strong>
+            </li>
+            <li class="overview-prize overview-prize--bronze">
+              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="trophy"></i></span>
+              <div><h3>3rd Prize</h3><p>3 teams</p></div>
+              <strong>$300 each</strong>
+            </li>
+            <li class="overview-prize overview-prize--special">
+              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="award"></i></span>
+              <div><h3>Best Open Source / Best Repair Award</h3><p>1 team</p></div>
+              <strong>$300</strong>
+            </li>
+            <li class="overview-prize overview-prize--certificate">
+              <span class="overview-prize-icon" aria-hidden="true"><i data-lucide="badge-check"></i></span>
+              <div><h3>Certificate and official ICSE recognition</h3><p>Awarded teams receive an official certificate</p></div>
+              <strong>ICSE 2027</strong>
+            </li>
+          </ul>
         </div>
       </section>
 
