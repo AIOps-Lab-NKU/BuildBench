@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import hashlib
+import html as html_lib
 import re
 import unittest
 from pathlib import Path
@@ -240,7 +241,7 @@ class FrontendContractTests(unittest.TestCase):
 
         self.assertIn("Contact Information", html)
         self.assertIn("For any inquiries, please email us at", html)
-        self.assertIn('class="contact-email-placeholder">[email address]</span>', html)
+        self.assertIn("buildbench-challenge@googlegroups.com", html)
         self.assertEqual(left_column.count('class="contact-member"'), 3)
         self.assertEqual(right_column.count('class="contact-member"'), 4)
         for name in (
@@ -265,8 +266,8 @@ class FrontendContractTests(unittest.TestCase):
         self.assertNotIn("contact-member-homepage--placeholder", html)
         self.assertNotIn("Competition Organizer", html + translations)
         self.assertNotIn("Organizing Team Member", html + translations)
-        self.assertIn("Her research focuses on reliable software engineering agents", html + translations)
-        self.assertNotIn("His research focuses on reliable software engineering agents", html + translations)
+        self.assertIn("Her research focuses on AI Agents", html + translations)
+        self.assertNotIn("His research focuses on AI Agents", html + translations)
 
         image_names = (
             "chenyu-zhao.jpg",
@@ -330,15 +331,24 @@ class FrontendContractTests(unittest.TestCase):
         self.assertEqual(html.count("organizer-photo--chengtai"), 1)
         for contract in (
             '"Contact Information": "联系方式"',
-            '"[email address]": "[邮箱地址]"',
             '"Nankai University": "南开大学"',
-            '"An Xu is an undergraduate Software Engineering student at Nankai University.',
-            '"徐安是南开大学软件工程专业本科生，',
+            '"Microsoft M365 Research": "微软 M365 研究院"',
+            '"Chenyu Zhao": "赵晨宇"',
+            '"Shenglin Zhang": "张圣林"',
+            '"Minghua Ma": "马明华"',
             '"Yihang Lin": "林亦航"',
             '"Zihao Huang": "黄子豪"',
+            '"An Xu": "徐安"',
             '"Chengtai Li": "李铖泰"',
+            '"An Xu is an undergraduate student in Software Engineering at Nankai University.',
+            '"徐安是南开大学软件工程专业本科生。',
         ):
             self.assertIn(contract, translations)
+
+        bios = re.findall(r'<p class="contact-member-bio">(.*?)</p>', html, re.S)
+        self.assertEqual(len(bios), 7)
+        for bio in bios:
+            self.assertIn(html_lib.unescape(re.sub(r"\s+", " ", bio).strip()), translations)
 
     def test_overview_places_competition_and_support_roles_in_hero(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
@@ -381,6 +391,7 @@ class FrontendContractTests(unittest.TestCase):
         for contract in (
             ".overview-page .overview-hero-partners",
             "grid-area: partners;",
+            "align-items: start;",
             "grid-template-columns: minmax(240px, 0.9fr) minmax(270px, 0.95fr) minmax(460px, 1.45fr);",
             '"partners partners"',
             "min-height: calc(100svh - var(--header-height));",

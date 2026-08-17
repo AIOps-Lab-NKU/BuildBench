@@ -779,7 +779,7 @@ body[data-language="zh"].overview-page .overview-hero {
   min-width: 0;
   display: grid;
   grid-template-columns: minmax(240px, 0.9fr) minmax(270px, 0.95fr) minmax(460px, 1.45fr);
-  align-items: center;
+  align-items: start;
   gap: clamp(18px, 2.4vw, 34px);
   align-self: end;
   margin: 0;
@@ -800,6 +800,7 @@ body[data-language="zh"].overview-page .overview-hero {
 
 .overview-page .overview-hero-partners .overview-credit-item {
   grid-template-columns: 48px minmax(0, 1fr);
+  align-items: start;
   gap: 11px;
 }
 
@@ -854,9 +855,9 @@ body[data-language="zh"].overview-page .overview-hero {
   min-width: 0;
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: 14px;
-  align-self: center;
+  align-self: start;
   margin: 0;
   padding: 0;
   border: 0;
