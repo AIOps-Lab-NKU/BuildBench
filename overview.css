@@ -69,8 +69,8 @@
   }
 
   .overview-page .overview-hero-illustration {
-    width: min(100%, 680px);
-    max-width: 100%;
+    width: min(124%, 830px);
+    max-width: none;
     transform: none;
     filter: drop-shadow(0 16px 24px rgba(12, 47, 80, 0.13));
   }
@@ -609,6 +609,13 @@
   }
 }
 
+@media (min-width: 1280px) {
+  .overview-page .overview-hero-illustration {
+    width: min(132%, 880px);
+    transform: translateX(-3.5%);
+  }
+}
+
 @media (min-width: 1600px) {
   .overview-page .overview-hero-shell {
     width: min(1720px, calc(100% - clamp(96px, 8vw, 160px)));
@@ -636,7 +643,7 @@
   }
 
   .overview-page .overview-hero-illustration {
-    width: min(100%, 800px);
+    width: min(132%, 1020px);
   }
 }
 
@@ -648,7 +655,7 @@
   }
 
   .overview-page .overview-hero-illustration {
-    width: min(100%, 1000px);
+    width: min(132%, 1240px);
   }
 }
 
@@ -808,38 +815,43 @@ body[data-language="zh"].overview-page .overview-hero {
 .overview-page .overview-hero-partners .overview-credit-body {
   min-width: 0;
   display: grid;
-  grid-template-columns: 48px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr);
   align-items: center;
   gap: 11px;
 }
 
 .overview-page .overview-hero-partners .overview-credit-icon,
-.overview-page .overview-hero-partners .overview-credit-icon img {
-  width: 44px;
+.overview-page .overview-hero-partners .overview-supporter-logo-wrap {
+  width: 56px;
   height: 44px;
+  display: grid;
+  place-items: center;
+}
+
+.overview-page .overview-hero-partners .overview-credit-icon img {
+  width: auto;
+  height: 40px;
+  max-width: 52px;
+  object-fit: contain;
 }
 
 .overview-page .overview-hero-partners .overview-credit-organizer .overview-credit-body {
-  grid-template-columns: 88px minmax(0, 1fr);
+  grid-template-columns: 92px minmax(0, 1fr);
 }
 
 .overview-page .overview-hero-partners .overview-organizer-logos {
-  width: 84px;
-  min-width: 84px;
-  flex-basis: 84px;
+  width: 88px;
+  min-width: 88px;
+  height: 44px;
+  flex-basis: 88px;
   gap: 8px;
 }
 
 .overview-page .overview-hero-partners .overview-organizer-logos img:first-child,
 .overview-page .overview-hero-partners .overview-organizer-logos img:last-child {
-  width: 38px;
-  height: 38px;
+  width: auto;
+  height: 40px;
   object-fit: contain;
-}
-
-.overview-page .overview-hero-partners .overview-organizer-logos img:last-child {
-  width: 36px;
-  height: 36px;
 }
 
 .overview-page .overview-hero-partners .overview-credit-label {
@@ -890,28 +902,30 @@ body[data-language="zh"].overview-page .overview-hero {
 
 .overview-page .overview-hero-partners .overview-hero-affiliation-list li {
   min-width: 0;
-  grid-template-columns: 44px minmax(0, 1fr);
+  grid-template-columns: 56px minmax(0, 1fr);
   gap: 9px;
 }
 
 .overview-page .overview-hero-partners .overview-supporter-logo-wrap {
-  width: 44px;
   height: 44px;
 }
 
 .overview-page .overview-hero-partners .overview-supporter-logo {
-  max-width: 42px;
-  max-height: 42px;
+  width: auto;
+  height: 40px;
+  max-width: 56px;
+  max-height: 40px;
+  object-fit: contain;
 }
 
 .overview-page .overview-hero-partners .overview-supporter-logo--meituan {
-  width: 40px;
+  width: auto;
   height: 40px;
 }
 
 .overview-page .overview-hero-partners .overview-supporter-logo--cnic {
-  width: 42px;
-  height: auto;
+  width: auto;
+  height: 40px;
 }
 
 .overview-page .overview-hero-partners .overview-sponsor-copy strong {
