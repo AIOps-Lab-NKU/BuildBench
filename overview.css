@@ -799,8 +799,17 @@ body[data-language="zh"].overview-page .overview-hero {
 }
 
 .overview-page .overview-hero-partners .overview-credit-item {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+
+.overview-page .overview-hero-partners .overview-credit-body {
+  min-width: 0;
+  display: grid;
   grid-template-columns: 48px minmax(0, 1fr);
-  align-items: start;
+  align-items: center;
   gap: 11px;
 }
 
@@ -810,7 +819,7 @@ body[data-language="zh"].overview-page .overview-hero {
   height: 44px;
 }
 
-.overview-page .overview-hero-partners .overview-credit-organizer {
+.overview-page .overview-hero-partners .overview-credit-organizer .overview-credit-body {
   grid-template-columns: 88px minmax(0, 1fr);
 }
 
@@ -853,10 +862,10 @@ body[data-language="zh"].overview-page .overview-hero {
 .overview-page .overview-hero-partners .overview-hero-affiliations {
   grid-area: auto;
   min-width: 0;
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: start;
-  gap: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
   align-self: start;
   margin: 0;
   padding: 0;

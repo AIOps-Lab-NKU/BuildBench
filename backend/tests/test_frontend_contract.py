@@ -369,6 +369,9 @@ class FrontendContractTests(unittest.TestCase):
             affiliations,
         ]
         self.assertEqual(partner_positions, sorted(partner_positions))
+        self.assertLess(html.index("Official competition", partners, challenge), html.index("assets/overview-icons/medal.png", partners, challenge))
+        self.assertLess(html.index("Organized by", partners, challenge), html.index("assets/affiliations/nankai-university.jpg", partners, challenge))
+        self.assertLess(html.index("Supporters", affiliations, challenge), html.index("assets/affiliations/meituan-new.png", affiliations, challenge))
 
         organizer_assets = (
             "assets/affiliations/nankai-university.jpg",
@@ -390,8 +393,10 @@ class FrontendContractTests(unittest.TestCase):
 
         for contract in (
             ".overview-page .overview-hero-partners",
+            ".overview-page .overview-hero-partners .overview-credit-body",
             "grid-area: partners;",
             "align-items: start;",
+            "flex-direction: column;",
             "grid-template-columns: minmax(240px, 0.9fr) minmax(270px, 0.95fr) minmax(460px, 1.45fr);",
             '"partners partners"',
             "min-height: calc(100svh - var(--header-height));",
