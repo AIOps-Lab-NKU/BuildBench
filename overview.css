@@ -937,12 +937,14 @@ body[data-language="zh"].overview-page .overview-hero {
 
   .overview-page .overview-hero-shell {
     grid-template-areas:
+      ". ."
       "heading heading"
       "copy art"
       "actions art"
-      ". ."
-      "partners partners";
-    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+      ". art"
+      "partners partners"
+      ". .";
+    grid-template-rows: minmax(0, 1fr) auto auto auto minmax(0, 1fr) auto minmax(0, 1fr);
     align-items: start;
     row-gap: 10px;
   }
@@ -951,16 +953,17 @@ body[data-language="zh"].overview-page .overview-hero {
     align-self: start;
   }
 
-  .overview-page .overview-hero-copy,
-  .overview-page .overview-hero-art {
+  .overview-page .overview-hero-copy {
     align-self: start;
   }
 
   .overview-page .overview-hero-art {
+    align-self: center;
     min-height: clamp(190px, 25vh, 280px);
   }
 
   .overview-page .overview-actions {
+    grid-area: actions;
     align-self: start;
     margin: 0;
   }
