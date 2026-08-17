@@ -940,10 +940,11 @@ body[data-language="zh"].overview-page .overview-hero {
       "heading heading"
       "copy art"
       "actions art"
+      ". ."
       "partners partners";
-    grid-template-rows: auto minmax(0, 1fr) auto auto;
-    align-items: center;
-    row-gap: clamp(9px, 1.5vh, 17px);
+    grid-template-rows: auto auto auto minmax(0, 1fr) auto;
+    align-items: start;
+    row-gap: 10px;
   }
 
   .overview-page .overview-hero-heading {
@@ -952,7 +953,7 @@ body[data-language="zh"].overview-page .overview-hero {
 
   .overview-page .overview-hero-copy,
   .overview-page .overview-hero-art {
-    align-self: center;
+    align-self: start;
   }
 
   .overview-page .overview-hero-art {
@@ -973,7 +974,7 @@ body[data-language="zh"].overview-page .overview-hero {
   }
 
   .overview-page .overview-hero-shell {
-    row-gap: 8px;
+    row-gap: 10px;
   }
 
   .overview-page .overview-hero h1 {
