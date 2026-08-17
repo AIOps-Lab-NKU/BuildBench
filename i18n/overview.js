@@ -41,12 +41,10 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Compute infrastructure support": "算力设备支持",
   "Nankai University": "南开大学",
   "Meituan": "美团",
-  "Chinese Academy of Sciences": "中国科学院",
   "Computer Network Information Center, Chinese Academy of Sciences": "中科院计算机网络信息中心",
   "Nankai University logo": "南开大学校徽",
   "Microsoft logo": "微软标志",
   "Meituan logo": "美团标志",
-  "Chinese Academy of Sciences logo": "中国科学院院徽",
   "Computer Network Information Center, Chinese Academy of Sciences logo": "中科院计算机网络信息中心标志",
   "Official competition and organizing partners": "官方竞赛与组织方",
   "Build-Bench Challenge evaluation workflow, from Case input and Agent execution to patch canonicalization, clean rebuilding, and scoring":

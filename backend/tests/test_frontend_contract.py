@@ -174,8 +174,7 @@ class FrontendContractTests(unittest.TestCase):
             'class="overview-hero-art"',
             'class="overview-hero-illustration"',
             'src="assets/buildbench-repair-agent.png"',
-            'class="overview-hero-credits"',
-            'class="overview-credit-list"',
+            'class="overview-hero-partners"',
             'src="assets/overview-icons/medal.png"',
             'src="assets/affiliations/nankai-university.jpg"',
             'src="assets/affiliations/microsoft.svg"',
@@ -192,7 +191,7 @@ class FrontendContractTests(unittest.TestCase):
             "Nankai University · Microsoft",
             "Supporters",
             'src="assets/affiliations/meituan-new.png?v=20260816-1"',
-            'src="assets/affiliations/chinese-academy-of-sciences.jpg"',
+            'src="assets/affiliations/cnic.png?v=20260817-1"',
             "Model API support",
             "Compute infrastructure support",
             "Get the Starter Kit",
@@ -346,48 +345,60 @@ class FrontendContractTests(unittest.TestCase):
         css = (ROOT / "overview.css").read_text(encoding="utf-8")
         translations = (ROOT / "i18n" / "overview.js").read_text(encoding="utf-8")
         hero_art = html.index('class="overview-hero-art"')
-        credits = html.index('class="overview-hero-credits"')
-        affiliations = html.index('class="overview-hero-affiliations"')
-        self.assertLess(hero_art, credits)
-        self.assertLess(credits, affiliations)
+        partners = html.index('class="overview-hero-partners"')
+        affiliations = html.index('class="overview-hero-affiliations"', partners)
+        challenge = html.index('class="overview-section"', partners)
+        self.assertLess(hero_art, partners)
+        self.assertLess(partners, affiliations)
+        self.assertLess(affiliations, challenge)
         self.assertNotIn('class="overview-affiliations-section"', html)
+
+        partner_positions = [
+            html.index('class="overview-credit-item overview-credit-track"', partners, challenge),
+            html.index('class="overview-credit-item overview-credit-organizer"', partners, challenge),
+            affiliations,
+        ]
+        self.assertEqual(partner_positions, sorted(partner_positions))
 
         organizer_assets = (
             "assets/affiliations/nankai-university.jpg",
             "assets/affiliations/microsoft.svg",
         )
-        positions = [html.index(asset, credits, affiliations) for asset in organizer_assets]
+        positions = [html.index(asset, partners, affiliations) for asset in organizer_assets]
         self.assertEqual(positions, sorted(positions))
         for asset in organizer_assets:
             self.assertTrue((ROOT / asset).is_file())
 
         supporter_assets = (
             "assets/affiliations/meituan-new.png",
-            "assets/affiliations/chinese-academy-of-sciences.jpg",
+            "assets/affiliations/cnic.png",
         )
         for asset in supporter_assets:
-            self.assertIn(asset, html[affiliations:])
+            self.assertIn(asset, html[affiliations:challenge])
             self.assertTrue((ROOT / asset).is_file())
+        self.assertNotIn("assets/affiliations/chinese-academy-of-sciences.jpg", html)
 
         for contract in (
-            ".overview-page .overview-organizer-logos",
-            ".overview-page .overview-hero-affiliation-list",
-            "grid-template-columns: repeat(2, minmax(0, 1fr));",
-            ".overview-page .overview-supporter-logo",
-            ".overview-page .overview-sponsor-copy",
-            ".overview-page .overview-credit-item + .overview-credit-item",
-            "border-top: 0",
+            ".overview-page .overview-hero-partners",
+            "grid-area: partners;",
+            "grid-template-columns: minmax(240px, 0.9fr) minmax(270px, 0.95fr) minmax(460px, 1.45fr);",
+            '"partners partners"',
+            "min-height: calc(100svh - var(--header-height));",
+            ".overview-page .overview-hero-partners .overview-organizer-logos",
+            ".overview-page .overview-hero-partners .overview-hero-affiliation-list",
+            ".overview-page .overview-hero-partners .overview-supporter-logo--cnic",
         ):
             self.assertIn(contract, css)
         for contract in (
             '"Official competition": "官方竞赛"',
             'Supporters: "支持单位"',
             '"Meituan": "美团"',
-            '"Chinese Academy of Sciences": "中国科学院"',
+            '"Computer Network Information Center, Chinese Academy of Sciences": "中科院计算机网络信息中心"',
             '"Model API support": "模型 API 支持"',
             '"Compute infrastructure support": "算力设备支持"',
         ):
             self.assertIn(contract, translations)
+        self.assertNotIn('"Chinese Academy of Sciences":', translations)
 
     def test_overview_uses_revised_challenge_copy(self) -> None:
         html = (ROOT / "index.html").read_text(encoding="utf-8")
