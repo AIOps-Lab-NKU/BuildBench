@@ -49,6 +49,8 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "Agent package": "Agent 包",
   "Runtime interface": "运行接口",
   "Test and qualify": "测试并取得资格",
+  "Rules & Policies": "规则与政策",
+  "Common Questions": "常见问题",
   "Final checklist": "最终检查清单",
   "01 / Start": "01 / 开始",
   "Prepare and qualify one Agent version before requesting Full Evaluation.":
@@ -507,6 +509,46 @@ window.BuildBenchI18nData.pages.submission = Object.freeze({
   "follows protocol": "遵循协议",
   "The uploaded version passes the Hosted Smoke Test.": "上传的版本通过平台 Smoke Test。",
   "The intended immutable version is selected for Full Evaluation.": "已选择预期的不可变版本用于完整评测。",
+  "05 / Rules": "05 / 规则",
+  "Before uploading an Agent, make sure your Team understands these essential participation rules.":
+    "上传 Agent 前，请确保团队了解以下核心参赛规则。",
+  "Participating Agents must use an LLM as the foundation model.":
+    "参赛 Agent 必须使用大语言模型作为基础模型。",
+  "Case-specific answers or precomputed Case-specific repair patches are prohibited.":
+    "禁止使用针对特定 Case 的答案或预先计算的 Case 特定修复补丁。",
+  "All intended repair changes must be applied to": "所有预期的修复修改都必须应用到",
+  "External models, APIs, tools, and network access must comply with the competition policy.":
+    "外部模型、API、工具和网络访问必须遵守竞赛政策。",
+  "Submissions must not contain secrets, hidden Case information, or evaluation answers.":
+    "提交中不得包含密钥、隐藏 Case 信息或评测答案。",
+  "Only qualified immutable Agent versions may be selected for Full Evaluation.":
+    "只有通过资格测试的不可变 Agent 版本才能被选择用于 Full Evaluation。",
+  "Official results are determined by organizer-run evaluation under the published runtime and resource constraints.":
+    "正式结果由组织方在已发布的运行环境和资源限制下执行评测后确定。",
+  "Read the Full Competition Rules": "阅读完整竞赛规则",
+  "06 / FAQ": "06 / 常见问题",
+  "Short answers to the questions participants most often ask while preparing an Agent.":
+    "以下简要回答参赛者在准备 Agent 时最常遇到的问题。",
+  "Does my Agent need to use an LLM?": "我的 Agent 必须使用大语言模型吗？",
+  "Yes. Participating Agents must use an LLM as their foundation model and may combine it with retrieval, static analysis, log processing, search, or other permitted tools.":
+    "是。参赛 Agent 必须使用大语言模型作为基础模型，并可结合检索、静态分析、日志处理、搜索或其他允许使用的工具。",
+  "What do I need to run the Starter Kit?": "运行 Starter Kit 需要什么？",
+  "A Linux or WSL2 shell, Git, and Docker Engine 24+ or Docker Desktop with Linux containers are required.":
+    "你需要 Linux 或 WSL2 Shell、Git，以及 Docker Engine 24+ 或使用 Linux 容器的 Docker Desktop。",
+  "Do I need sudo privileges?": "我需要 sudo 权限吗？",
+  "No. The Starter Kit does not require sudo itself, but your user account must have permission to run Docker containers.":
+    "不需要。Starter Kit 本身不要求 sudo，但你的用户账户必须具备运行 Docker 容器的权限。",
+  "Can I use external models or APIs?": "我可以使用外部模型或 API 吗？",
+  "Only when their use complies with the published runtime, network, disclosure, and competition policies. Never include API keys or other secrets in the submission bundle.":
+    "只有在符合已发布的运行环境、网络、披露和竞赛政策时才可使用。切勿在提交包中包含 API Key 或其他密钥。",
+  "What is the Hosted Smoke Test?": "什么是 Hosted Smoke Test？",
+  "It verifies that the uploaded Agent can run under the competition protocol before Full Evaluation. It does not contribute to the official score.":
+    "它在 Full Evaluation 前验证上传的 Agent 能否按照竞赛协议运行，其结果不计入正式成绩。",
+  "How is my Agent evaluated?": "我的 Agent 如何评测？",
+  "Repairs are verified through a clean target-architecture build. Verified Build Success Rate is the primary ranking metric.":
+    "修复结果通过干净的目标架构构建进行验证，Verified Build Success Rate 是主要排名指标。",
+  "View all FAQs": "查看全部常见问题",
+  "07 / Final": "07 / 最终检查",
   "Runtime and policy": "运行环境与政策",
   "The Agent runs as a non-root user in an isolated runtime,": "Agent 以非 root 用户身份在隔离环境中运行，",
   "is read-only, and the Docker Socket is not provided. Remaining network, resource, quota, and submission policies will be published before submissions open.":

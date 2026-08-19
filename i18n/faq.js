@@ -31,8 +31,8 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "Get the Starter Kit": "获取 Starter Kit",
   "Follow the Quick Start": "按照快速开始操作",
   "Must an Agent use a large language model?": "Agent 必须使用大语言模型吗？",
-  "Yes. We encourage participants to use an LLM as the Agent's foundation model and combine it with retrieval, static analysis, log processing, search, and other compliant tools to build a more capable repair Agent. The submission must be a runnable Agent; Case-specific answer tables and pre-generated repair patches are prohibited.":
-    "是。我们鼓励参赛者以 LLM 作为 Agent 的基础模型，并结合检索、静态分析、日志处理、搜索及其他合规工具构建更强大的修复 Agent。提交必须是可运行的 Agent，禁止使用针对特定 Case 的答案表或预生成修复补丁。",
+  "Yes. An LLM must serve as the Agent's foundation model. Teams may combine it with retrieval, static analysis, log processing, search, and other compliant tools, but the submission must remain a runnable Agent; Case-specific answer tables and precomputed Case-specific repair patches are prohibited.":
+    "是。Agent 必须使用 LLM 作为基础模型。团队可以结合检索、静态分析、日志处理、搜索及其他合规工具，但提交必须保持为可运行的 Agent；禁止使用针对特定 Case 的答案表或预先计算的 Case 特定修复补丁。",
   "Read the models and tools policy": "阅读模型与工具政策",
 
   "2. Develop locally": "2. 本地开发",

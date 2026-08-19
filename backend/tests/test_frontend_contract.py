@@ -12,7 +12,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 class FrontendContractTests(unittest.TestCase):
     def test_all_pages_share_versioned_local_frontend_assets(self) -> None:
-        release = "20260813-3"
+        release = "20260819-1"
         html_paths = sorted(ROOT.glob("*.html"))
         self.assertEqual(len(html_paths), 14)
 
@@ -681,9 +681,13 @@ class FrontendContractTests(unittest.TestCase):
             'id="agent-package"',
             'id="runtime-interface"',
             'id="test-and-qualify"',
+            'id="rules-policies"',
+            'id="common-questions"',
             'id="final-checklist"',
             "04 / Qualify",
-            "05 / Final",
+            "05 / Rules",
+            "06 / FAQ",
+            "07 / Final",
         ):
             self.assertIn(expected, html)
         self.assertNotIn("build-feedback protocol, and status schema", html)
@@ -713,6 +717,14 @@ class FrontendContractTests(unittest.TestCase):
             "No intended repair is left only as an unapplied patch",
             "Final submission checklist",
             "Runtime and policy",
+            "Participating Agents must use an LLM as the foundation model.",
+            "Read the Full Competition Rules",
+            'href="rules.html"',
+            "Does my Agent need to use an LLM?",
+            "What is the Hosted Smoke Test?",
+            "Verified Build Success Rate is the primary ranking metric.",
+            "View all FAQs",
+            'href="faq.html"',
         ):
             self.assertIn(expected, html)
 

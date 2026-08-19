@@ -94,8 +94,8 @@ window.BuildBenchI18nData.pages.rules = Object.freeze({
   "Unreleased Cases, hidden evaluator assets, and confidential organizer materials may not be obtained, used, shared, or redistributed.":
     "不得获取、使用、共享或再分发未发布的 Case、隐藏评测资产和主办方保密材料。",
   "4.2 Models, external data, and tools": "4.2 模型、外部数据与工具",
-  "Teams may develop Agents using language models, prompting, retrieval, code search, static analysis, log processing, and other repair tools that comply with the published runtime and network policy.":
-    "团队可以使用符合已发布运行和网络政策的语言模型、提示、检索、代码搜索、静态分析、日志处理及其他修复工具开发 Agent。",
+  "Participating Agents must use a large language model as their foundation model. Teams may combine it with prompting, retrieval, code search, static analysis, log processing, and other repair tools that comply with the published runtime and network policy.":
+    "参赛 Agent 必须使用大语言模型作为基础模型。团队可以结合符合已发布运行和网络政策的提示、检索、代码搜索、静态分析、日志处理及其他修复工具。",
   "External models, datasets, knowledge bases, APIs, and tools must be lawfully accessible to the Team and disclosed as required by Section 8.":
     "团队必须能够合法访问外部模型、数据集、知识库、API 和工具，并按照第 8 节要求进行披露。",
   "Use of a third-party service does not transfer responsibility for compliance, reproducibility, cost, availability, or licensing to the organizers.":
