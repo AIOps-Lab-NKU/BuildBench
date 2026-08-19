@@ -40,15 +40,12 @@ class FrontendContractTests(unittest.TestCase):
             "3411692820cb8d47543f69496aa25fd603a358f4498046f41c508a5a3342210e",
         )
 
-    def test_primary_navigation_uses_ordered_more_dropdown_sitewide(self) -> None:
+    def test_primary_navigation_uses_compact_participant_routes_sitewide(self) -> None:
         expected_routes = [
             "index.html",
             "task.html",
             "submission.html",
             "leaderboard.html",
-            "rules.html",
-            "timeline.html",
-            "faq.html",
             "contact.html",
         ]
         active_routes = {
@@ -59,9 +56,6 @@ class FrontendContractTests(unittest.TestCase):
             "my-submissions.html": "submission.html",
             "evaluation-detail.html": "submission.html",
             "leaderboard.html": "leaderboard.html",
-            "rules.html": "rules.html",
-            "timeline.html": "timeline.html",
-            "faq.html": "faq.html",
             "contact.html": "contact.html",
         }
 
@@ -73,14 +67,11 @@ class FrontendContractTests(unittest.TestCase):
 
             with self.subTest(page=page_path.name):
                 self.assertEqual(re.findall(r'href="([^"]+)"', nav), expected_routes)
-                self.assertEqual(nav.count("data-nav-more>"), 1)
-                self.assertEqual(nav.count("data-nav-more-toggle"), 1)
-                self.assertEqual(nav.count("data-nav-more-menu"), 1)
-                self.assertLess(nav.index("data-nav-more>"), nav.index('href="timeline.html"'))
-                self.assertIn("Competition dates and milestones", nav)
-                self.assertIn("Common questions and participant support", nav)
-                self.assertIn("Competition contact and organizing team", nav)
-                self.assertLess(nav.index('href="faq.html"'), nav.index('href="contact.html"'))
+                self.assertNotIn("data-nav-more", nav)
+                self.assertNotIn('href="rules.html"', nav)
+                self.assertNotIn('href="timeline.html"', nav)
+                self.assertNotIn('href="faq.html"', nav)
+                self.assertLess(nav.index('href="leaderboard.html"'), nav.index('href="contact.html"'))
 
                 active_route = active_routes.get(page_path.name)
                 if active_route is None:
@@ -89,37 +80,8 @@ class FrontendContractTests(unittest.TestCase):
                     self.assertEqual(nav.count('aria-current="page"'), 1)
                     self.assertIn(f'href="{active_route}"', nav)
 
-                if page_path.name in {"timeline.html", "faq.html", "contact.html"}:
-                    self.assertIn('class="nav-more active"', nav)
-                else:
-                    self.assertNotIn('class="nav-more active"', nav)
-
-        css = (ROOT / "styles.css").read_text(encoding="utf-8")
-        app = (ROOT / "app.js").read_text(encoding="utf-8")
         translations = (ROOT / "i18n.js").read_text(encoding="utf-8")
-        for contract in (
-            ".nav-more-toggle",
-            ".nav-more-menu",
-            ".nav-more:hover .nav-more-menu",
-            ".nav-more.open .nav-more-menu",
-            ".nav-more.active .nav-more-toggle",
-        ):
-            self.assertIn(contract, css)
-        for contract in (
-            'document.querySelector("[data-nav-more]")',
-            'document.querySelector("[data-nav-more-toggle]")',
-            'navMoreButton.setAttribute("aria-expanded", String(open))',
-            'navMore?.addEventListener("focusout"',
-        ):
-            self.assertIn(contract, app)
-        for contract in (
-            'More: "更多"',
-            '"Competition dates and milestones": "比赛日期与里程碑"',
-            '"Common questions and participant support": "常见问题与参赛支持"',
-            'Contact: "联系我们"',
-            '"Competition contact and organizing team": "竞赛联系信息与组织团队"',
-        ):
-            self.assertIn(contract, translations)
+        self.assertIn('Contact: "联系我们"', translations)
 
     def test_leaderboard_navigation_uses_text_emphasis(self) -> None:
         for page_path in sorted(ROOT.glob("*.html")):
