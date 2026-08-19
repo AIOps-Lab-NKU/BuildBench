@@ -814,6 +814,7 @@ body[data-language="zh"].overview-page .overview-hero {
 
 .overview-page .overview-hero-partners .overview-credit-body {
   min-width: 0;
+  min-height: 68px;
   display: grid;
   grid-template-columns: 56px minmax(0, 1fr);
   align-items: center;
@@ -836,22 +837,40 @@ body[data-language="zh"].overview-page .overview-hero {
 }
 
 .overview-page .overview-hero-partners .overview-credit-organizer .overview-credit-body {
-  grid-template-columns: 92px minmax(0, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: center;
+  gap: clamp(12px, 1.5vw, 22px);
 }
 
-.overview-page .overview-hero-partners .overview-organizer-logos {
-  width: 88px;
-  min-width: 88px;
-  height: 44px;
-  flex-basis: 88px;
-  gap: 8px;
+.overview-page .overview-organizer-entry {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  align-items: center;
+  gap: 6px;
+  text-align: left;
 }
 
-.overview-page .overview-hero-partners .overview-organizer-logos img:first-child,
-.overview-page .overview-hero-partners .overview-organizer-logos img:last-child {
+.overview-page .overview-organizer-logo-wrap {
+  width: 42px;
+  height: 42px;
+  display: grid;
+  place-items: center;
+}
+
+.overview-page .overview-organizer-logo-wrap img {
   width: auto;
   height: 40px;
+  max-width: 40px;
   object-fit: contain;
+}
+
+.overview-page .overview-organizer-entry strong {
+  min-width: 0;
+  margin: 0;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  text-align: left;
 }
 
 .overview-page .overview-hero-partners .overview-credit-label {
@@ -895,6 +914,7 @@ body[data-language="zh"].overview-page .overview-hero {
 
 .overview-page .overview-hero-partners .overview-hero-affiliation-list {
   min-width: 0;
+  min-height: 68px;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
   gap: 12px;
@@ -903,6 +923,7 @@ body[data-language="zh"].overview-page .overview-hero {
 .overview-page .overview-hero-partners .overview-hero-affiliation-list li {
   min-width: 0;
   grid-template-columns: 56px minmax(0, 1fr);
+  align-self: center;
   gap: 9px;
 }
 
@@ -925,7 +946,8 @@ body[data-language="zh"].overview-page .overview-hero {
 
 .overview-page .overview-hero-partners .overview-supporter-logo--cnic {
   width: auto;
-  height: 40px;
+  height: 30px;
+  max-height: 30px;
 }
 
 .overview-page .overview-hero-partners .overview-sponsor-copy strong {
@@ -937,6 +959,177 @@ body[data-language="zh"].overview-page .overview-hero {
   margin-top: 2px;
   font-size: 9.5px;
   line-height: 1.25;
+}
+
+/* The six-date timeline is a connected snake on larger screens. The marker
+   pseudo-element stays above these segments so every joint reads as one path. */
+.overview-page .overview-date-list {
+  --timeline-row-gap: clamp(38px, 4vw, 52px);
+  row-gap: var(--timeline-row-gap);
+}
+
+@media (min-width: 961px) {
+  .overview-page .overview-date-list {
+    grid-template-rows: auto auto;
+  }
+
+  .overview-page .overview-date-list::before {
+    display: none;
+  }
+
+  .overview-page .overview-date-list li::before {
+    z-index: 2;
+  }
+
+  /* Return across the second row so the chronological order reads as a snake. */
+  .overview-page .overview-date-list li:nth-child(4) {
+    grid-column: 3;
+    grid-row: 2;
+  }
+
+  .overview-page .overview-date-list li:nth-child(5) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .overview-page .overview-date-list li:nth-child(6) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .overview-page .overview-date-list li::after {
+    position: absolute;
+    z-index: 1;
+    top: -25px;
+    height: 2px;
+    content: "";
+    background: var(--line-strong);
+  }
+
+  /* First row: 1 -> 2 -> 3. */
+  .overview-page .overview-date-list li:nth-child(1)::after,
+  .overview-page .overview-date-list li:nth-child(2)::after {
+    right: -12px;
+    left: 12px;
+  }
+
+  /* Node 3 turns down at the right edge and returns to node 4. */
+  .overview-page .overview-date-list li:nth-child(3)::after {
+    top: -25px;
+    right: 0;
+    left: 12px;
+    height: calc(100% + var(--timeline-row-gap));
+    border-top: 2px solid var(--line-strong);
+    border-right: 2px solid var(--line-strong);
+    border-bottom: 2px solid var(--line-strong);
+    border-radius: 0 18px 18px 0;
+    background: none;
+  }
+
+  /* Second row runs back from node 4 to node 6. */
+  .overview-page .overview-date-list li:nth-child(4)::after,
+  .overview-page .overview-date-list li:nth-child(5)::after {
+    right: calc(100% - 12px);
+    left: auto;
+    width: 100%;
+  }
+
+  .overview-page .overview-date-list li:nth-child(6)::after {
+    display: none;
+  }
+}
+
+@media (min-width: 721px) and (max-width: 960px) {
+  .overview-page .overview-date-list {
+    grid-template-rows: auto auto auto;
+  }
+
+  .overview-page .overview-date-list::before {
+    display: none;
+  }
+
+  .overview-page .overview-date-list li::before {
+    z-index: 2;
+  }
+
+  .overview-page .overview-date-list li:nth-child(3) {
+    grid-column: 2;
+    grid-row: 2;
+  }
+
+  .overview-page .overview-date-list li:nth-child(4) {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .overview-page .overview-date-list li:nth-child(5) {
+    grid-column: 1;
+    grid-row: 3;
+  }
+
+  .overview-page .overview-date-list li:nth-child(6) {
+    grid-column: 2;
+    grid-row: 3;
+  }
+
+  .overview-page .overview-date-list li::after {
+    position: absolute;
+    z-index: 1;
+    top: -25px;
+    height: 2px;
+    content: "";
+    background: var(--line-strong);
+  }
+
+  /* Top row: 1 -> 2. */
+  .overview-page .overview-date-list li:nth-child(1)::after {
+    right: -12px;
+    left: 12px;
+  }
+
+  /* Node 2 turns down at the right edge and returns to node 3. */
+  .overview-page .overview-date-list li:nth-child(2)::after {
+    top: -25px;
+    right: 0;
+    left: 12px;
+    height: calc(100% + var(--timeline-row-gap));
+    border-top: 2px solid var(--line-strong);
+    border-right: 2px solid var(--line-strong);
+    border-bottom: 2px solid var(--line-strong);
+    border-radius: 0 18px 18px 0;
+    background: none;
+  }
+
+  /* Middle row: 3 -> 4. */
+  .overview-page .overview-date-list li:nth-child(3)::after {
+    right: calc(100% - 12px);
+    left: auto;
+    width: 100%;
+  }
+
+  /* Node 4 turns down at the left edge and returns to node 5. */
+  .overview-page .overview-date-list li:nth-child(4)::after {
+    top: -25px;
+    right: auto;
+    left: 0;
+    width: 12px;
+    height: calc(100% + var(--timeline-row-gap));
+    border-top: 2px solid var(--line-strong);
+    border-bottom: 2px solid var(--line-strong);
+    border-left: 2px solid var(--line-strong);
+    border-radius: 18px 0 0 18px;
+    background: none;
+  }
+
+  /* Bottom row: 5 -> 6. */
+  .overview-page .overview-date-list li:nth-child(5)::after {
+    right: -12px;
+    left: 12px;
+  }
+
+  .overview-page .overview-date-list li:nth-child(6)::after {
+    display: none;
+  }
 }
 
 @media (min-width: 961px) {
@@ -1087,5 +1280,18 @@ body[data-language="zh"].overview-page .overview-hero {
   .overview-page .overview-hero-partners .overview-hero-affiliation-list {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .overview-page .overview-hero-partners .overview-credit-organizer .overview-credit-body {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+
+  .overview-page .overview-date-list {
+    row-gap: 24px;
+  }
+
+  .overview-page .overview-date-list li::after {
+    display: none;
   }
 }

@@ -550,7 +550,7 @@
 .overview-page .overview-date-list {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   margin: 34px 0 0;
   padding: 44px 0 0;
@@ -599,6 +599,14 @@
 }
 
 .overview-page .overview-date-list li:nth-child(4)::before {
+  border-color: var(--green);
+}
+
+.overview-page .overview-date-list li:nth-child(5)::before {
+  border-color: var(--coral);
+}
+
+.overview-page .overview-date-list li:nth-child(6)::before {
   border-color: var(--green);
 }
 

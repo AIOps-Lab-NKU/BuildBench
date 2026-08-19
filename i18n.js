@@ -22,6 +22,8 @@
     Overview: "概览",
     Challenge: "竞赛任务",
     Participate: "参赛",
+    "Join the competition and submit an Agent": "加入竞赛并提交 Agent",
+    "Eligibility, policies, and scoring": "参赛资格、政策与计分",
     Submission: "提交",
     Evaluation: "评测",
     "Evaluation & scoring": "评测与计分",
