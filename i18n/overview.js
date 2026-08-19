@@ -51,21 +51,19 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "Build-Bench Challenge 评测流程：从 Case 输入和 Agent 执行，到补丁规范化、干净环境重构建与计分",
   "Scrollable evaluation workflow diagram": "可横向滚动查看的评测流程图",
   "What is the challenge?": "竞赛任务是什么？",
-  "Build-Bench Challenge asks teams to develop an LLM-based repair Agent for real software packages that build on one instruction set architecture (ISA) but fail after migration to another. The competition covers migrations among x86_64, aarch64, and riscv64, and evaluates whether an Agent can generalize across packages, failure types, architectures, and migration directions.":
-    "Build-Bench Challenge 要求团队为真实软件包开发基于 LLM 的修复 Agent。这些软件包能够在一种指令集架构（ISA）上成功构建，却在迁移到另一种架构后构建失败。竞赛覆盖 x86_64、aarch64 和 riscv64 之间的迁移，并评测 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
-  "For each Case, the Agent receives a package workspace, source and target architecture metadata, and the failed target-build log. It may inspect and modify only permitted files. Organizers derive a canonical patch from these changes, apply it to a clean package copy, and rebuild the package in a controlled target-architecture environment. A repair succeeds only when the patch passes policy checks, the build completes, and the expected package artifacts are produced.":
-    "对于每个 Case，Agent 会获得软件包工作区、源架构与目标架构元数据，以及目标架构构建失败日志。Agent 只能检查和修改允许范围内的文件。组织方根据这些修改生成 canonical patch，将其应用到软件包的干净副本，并在受控的目标架构环境中重新构建。只有当补丁通过政策检查、构建完成且产生预期的软件包制品时，修复才算成功。",
-  "The workflow below summarizes how submitted Agents are executed, converted into canonical patches, and validated through clean target-architecture builds.":
-    "下方流程概括了提交的 Agent 如何被执行、转换为 canonical patch，并通过干净的目标架构构建完成验证。",
-  "This challenge builds on Build-Bench, our study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM)":
-    "本竞赛建立在 Build-Bench 研究基础之上，该研究已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表",
-  ", which established the original cross-architecture repair task and executable evaluation workflow. The competition substantially expands this foundation by covering bidirectional migrations among x86_64, aarch64, and riscv64, incorporating packages from more diverse software ecosystems and sources, and providing more than 200 public development packages and over 1,000 hidden evaluation packages. It also introduces a standardized Agent interface and organizer-run executable validation to evaluate generalization at competition scale.":
-    "。该研究建立了最初的跨架构修复任务和可执行评测流程。本竞赛在此基础上大幅扩展，覆盖 x86_64、aarch64 与 riscv64 之间的双向迁移，纳入来自更多软件生态和来源的软件包，提供 200 多个公开开发软件包和 1,000 多个隐藏评测软件包，并引入标准化 Agent 接口以及由组织方运行的可执行验证，以竞赛规模评测泛化能力。",
-  "See reference 1": "查看参考文献 1",
-  "Existing results show substantial room for improvement, motivating the development of more capable autonomous repair Agents.":
-    "现有结果表明，该问题仍有很大的提升空间，因此需要开发能力更强的自主修复 Agent。",
-  "Build-Bench Challenge evaluation workflow, from Case input and Agent execution to patch canonicalization, clean rebuilding, and scoring.":
-    "Build-Bench Challenge 评测流程：从 Case 输入和 Agent 执行，到补丁规范化、干净环境重构建与计分。",
+  "Modern software increasingly needs to run across heterogeneous instruction set architectures (ISAs). A package that builds successfully on one architecture may fail after migration because of architecture-specific dependencies, compiler behavior, build configuration, or packaging logic.":
+    "现代软件越来越需要运行在异构指令集架构（ISA）上。一个在某种架构上成功构建的软件包，迁移后可能因特定架构依赖、编译器行为、构建配置或打包逻辑而失败。",
+  "Build-Bench Challenge asks teams to build and submit a runnable LLM-based repair Agent, rather than Case-specific repair patches. The competition covers bidirectional migrations among x86_64, aarch64, and riscv64 and evaluates whether Agents can generalize across packages, failure types, architectures, and migration directions.":
+    "Build-Bench Challenge 要求团队构建并提交可运行的、基于 LLM 的修复 Agent，而不是针对特定 Case 的修复补丁。竞赛覆盖 x86_64、aarch64 与 riscv64 之间的双向迁移，并评测 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
+  "For each Case, the Agent enters a prepared package workspace with source and target architecture metadata and initial target-build failure evidence. During the run, it may inspect the available package and build context, use tools permitted by the competition runtime, and iteratively modify only permitted package files.":
+    "对于每个 Case，Agent 会进入一个准备好的软件包工作区，其中包含源架构与目标架构元数据以及初始目标架构构建失败证据。运行期间，Agent 可以检查可用的软件包与构建上下文，使用竞赛运行时允许的工具，并以迭代方式仅修改允许范围内的软件包文件。",
+  "After the Agent finishes, organizers derive a canonical patch from the Agent's final worktree, apply it to a fresh copy of the Case, and rebuild the package in the official target-architecture environment. A Case is successfully repaired only when the canonical patch applies cleanly, the official build succeeds, and the expected package artifacts are produced and verified. Repairs are judged by verified executable outcomes, not by similarity to a reference patch.":
+    "Agent 运行结束后，组织方会根据其最终工作树生成 canonical patch，将其应用到 Case 的全新副本，并在官方目标架构环境中重新构建软件包。只有当 canonical patch 能够干净应用、官方构建成功，并且预期的软件包制品被生成并通过验证时，该 Case 才算修复成功。修复结果依据经过验证的可执行结果评判，而不是依据与参考补丁的相似度。",
+  "The workflow summarizes how each submitted Agent is executed, converted into a canonical repair, and independently verified through a clean target-architecture build.":
+    "该流程概括了每个提交的 Agent 如何被执行、转换为规范化修复，并通过干净的目标架构构建进行独立验证。",
+  "Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM), which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
+    "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上，该研究确立了最初的跨架构软件包修复任务与可执行评测流程。竞赛将这一基础扩展到 x86_64、aarch64 与 riscv64 之间的双向迁移，包含 200 多个公开 Development Case 和 1,000 多个隐藏评测 Case，并引入标准化 Agent 接口以及由组织方运行的评测，以竞赛规模考察 Agent 的泛化能力。",
+  "Build your Agent": "构建你的 Agent",
   "How the competition works": "如何参加竞赛",
   "Develop": "开发",
   "— Build and test your Agent with the Starter Kit and public development Cases.":
@@ -77,17 +75,17 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "— Freeze a qualified version for organizer-run evaluation on hidden Cases and leaderboard ranking.":
     "— 冻结一个通过资格检查的版本，由组织方在隐藏 Case 上运行评测并生成排行榜名次。",
   "How is performance scored?": "如何计算性能得分？",
-  "Using the workflow above, official ranking is based on verified executable outcomes, not similarity to a reference patch.":
-    "按照上述流程，官方排名依据经过验证的可执行结果，而不是与参考补丁的相似度。",
-  "The primary metric is": "主要指标是",
+  "Qualified Agents are evaluated on the official hidden Case set under the same runtime and resource constraints.":
+    "通过资格检查的 Agent 将在相同的运行时与资源限制下，使用官方隐藏 Case 集进行评测。",
+  "The primary ranking metric is": "主要排名指标是",
   "Verified Build Success Rate": "经验证的构建成功率",
-  ": the percentage of evaluated Cases that pass all policy, clean-build, and artifact checks.":
-    "：在所有受评测 Case 中，通过全部政策、干净构建和制品检查的 Case 比例。",
+  "— the percentage of evaluated Cases for which the canonical repair applies cleanly, the official target-architecture build succeeds, and the expected package artifacts are produced and verified.":
+    "——在所有受评测 Case 中，规范化修复能够干净应用、官方目标架构构建成功，并且预期软件包制品被生成且通过验证的 Case 比例。",
   "Execution Time": "执行时间",
   "and officially recorded": "以及官方记录的",
   "Token Usage": "Token 使用量",
   "are reported separately as secondary efficiency metrics.": "将分别作为次要效率指标报告。",
-  "Read Evaluation and scoring": "阅读评测与计分规则",
+  "Read the Full Competition Rules": "阅读完整竞赛规则",
   Timeline: "时间安排",
   "19 August 2026": "2026 年 8 月 19 日",
   "— Website beta and initial documentation": "— 网站 Beta 版与初始文档发布",
