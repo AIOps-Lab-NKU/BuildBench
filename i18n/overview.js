@@ -52,39 +52,39 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Scrollable evaluation workflow diagram": "可横向滚动查看的评测流程图",
   "What is the challenge?": "竞赛任务是什么？",
   "Modern software increasingly needs to run across heterogeneous instruction set architectures (ISAs). A package that builds successfully on one architecture may fail after migration because of architecture-specific dependencies, compiler behavior, build configuration, or packaging logic.":
-    "现代软件越来越需要运行在异构指令集架构（ISA）上。一个在某种架构上成功构建的软件包，迁移后可能因特定架构依赖、编译器行为、构建配置或打包逻辑而失败。",
+    "现代软件越来越需要在不同的指令集架构（ISA）上运行。一个软件包可能在某一种架构上能够正常构建，但迁移到另一种架构后，却会因为架构相关的依赖、编译器行为、构建配置或打包逻辑而构建失败。",
   "Build-Bench Challenge asks teams to build and submit a runnable LLM-based repair Agent, rather than Case-specific repair patches. The competition covers bidirectional migrations among x86_64, aarch64, and riscv64 and evaluates whether Agents can generalize across packages, failure types, architectures, and migration directions.":
-    "Build-Bench Challenge 要求团队构建并提交可运行的、基于 LLM 的修复 Agent，而不是针对特定 Case 的修复补丁。竞赛覆盖 x86_64、aarch64 与 riscv64 之间的双向迁移，并评测 Agent 能否跨软件包、故障类型、架构和迁移方向实现泛化。",
+    "Build-Bench Challenge 要求参赛团队构建并提交一个可运行、以大语言模型（LLM）为基础的修复 Agent，而不是针对每个 Case 单独提交修复补丁。竞赛覆盖 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，重点考察 Agent 能否适用于不同的软件包、故障类型、架构和迁移方向。",
   "For each Case, the Agent enters a prepared package workspace with source and target architecture metadata and initial target-build failure evidence. During the run, it may inspect the available package and build context, use tools permitted by the competition runtime, and iteratively modify only permitted package files.":
-    "对于每个 Case，Agent 会进入一个准备好的软件包工作区，其中包含源架构与目标架构元数据以及初始目标架构构建失败证据。运行期间，Agent 可以检查可用的软件包与构建上下文，使用竞赛运行时允许的工具，并以迭代方式仅修改允许范围内的软件包文件。",
+    "对于每个 Case，Agent 会进入一个预先准备好的软件包工作区，并获得源架构、目标架构等元数据，以及目标架构上的初始构建失败信息。运行过程中，Agent 可以查看所提供的软件包内容和构建上下文，使用比赛运行环境允许的工具，并通过多轮分析与修改，仅调整允许范围内的软件包文件。",
   "After the Agent finishes, organizers derive a canonical patch from the Agent's final worktree, apply it to a fresh copy of the Case, and rebuild the package in the official target-architecture environment. A Case is successfully repaired only when the canonical patch applies cleanly, the official build succeeds, and the expected package artifacts are produced and verified. Repairs are judged by verified executable outcomes, not by similarity to a reference patch.":
-    "Agent 运行结束后，组织方会根据其最终工作树生成 canonical patch，将其应用到 Case 的全新副本，并在官方目标架构环境中重新构建软件包。只有当 canonical patch 能够干净应用、官方构建成功，并且预期的软件包制品被生成并通过验证时，该 Case 才算修复成功。修复结果依据经过验证的可执行结果评判，而不是依据与参考补丁的相似度。",
+    "Agent 运行结束后，组织方会根据其最终工作区中的实际文件状态，统一生成规范化修复补丁（canonical patch）。该补丁会被应用到一份全新的 Case 副本，并在官方目标架构环境中重新构建软件包。只有当补丁能够顺利应用、官方构建成功，并且预期的软件包制品得到生成和验证时，该 Case 才算修复成功。修复结果依据实际可执行的验证结果判定，而不是比较参赛方案与参考补丁是否相似。",
   "The workflow summarizes how each submitted Agent is executed, converted into a canonical repair, and independently verified through a clean target-architecture build.":
-    "该流程概括了每个提交的 Agent 如何被执行、转换为规范化修复，并通过干净的目标架构构建进行独立验证。",
+    "该流程展示了每个提交的 Agent 如何被运行、如何根据其最终修改生成规范化修复，以及如何通过一次干净的目标架构构建进行独立验证。",
   "Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM), which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
-    "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上，该研究确立了最初的跨架构软件包修复任务与可执行评测流程。竞赛将这一基础扩展到 x86_64、aarch64 与 riscv64 之间的双向迁移，包含 200 多个公开 Development Case 和 1,000 多个隐藏评测 Case，并引入标准化 Agent 接口以及由组织方运行的评测，以竞赛规模考察 Agent 的泛化能力。",
+    "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上。该研究确立了最初的跨架构软件包修复任务和可执行评测流程。本次竞赛进一步扩展到 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，并提供 200 多个公开开发 Case 和 1,000 多个隐藏评测 Case。同时，竞赛引入统一的 Agent 接口和由组织方运行的正式评测流程，用于在竞赛规模下考察 Agent 的泛化能力。",
   "Build your Agent": "构建你的 Agent",
-  "How the competition works": "如何参加竞赛",
-  "Develop": "开发",
+  "How the competition works": "竞赛如何进行？",
+  "Develop": "开发（Develop）",
   "— Build and test your Agent with the Starter Kit and public development Cases.":
     "— 使用 Starter Kit 和公开开发 Case 构建并测试你的 Agent。",
-  "Qualify": "资格验证",
+  "Qualify": "资格验证（Qualify）",
   "— Submit an Agent version and pass the Hosted Smoke Test.":
-    "— 提交一个 Agent 版本并通过 Hosted Smoke Test。",
-  "Compete": "正式竞赛",
+    "— 提交一个 Agent 版本，并通过 Hosted Smoke Test（托管冒烟测试）。",
+  "Compete": "正式竞赛（Compete）",
   "— Freeze a qualified version for organizer-run evaluation on hidden Cases and leaderboard ranking.":
-    "— 冻结一个通过资格检查的版本，由组织方在隐藏 Case 上运行评测并生成排行榜名次。",
-  "How is performance scored?": "如何计算性能得分？",
+    "— 从通过资格验证的版本中选定并冻结一个版本，由组织方在隐藏 Case 上运行正式评测，并根据评测结果生成排行榜。",
+  "How is performance scored?": "如何计算比赛成绩？",
   "Qualified Agents are evaluated on the official hidden Case set under the same runtime and resource constraints.":
-    "通过资格检查的 Agent 将在相同的运行时与资源限制下，使用官方隐藏 Case 集进行评测。",
-  "The primary ranking metric is": "主要排名指标是",
-  "Verified Build Success Rate": "经验证的构建成功率",
+    "通过资格验证的 Agent 将在相同的运行环境和资源限制下，使用官方隐藏 Case 集进行评测。",
+  "The primary ranking metric is": "比赛的主要排名指标是",
+  "Verified Build Success Rate": "经验证的构建成功率（Verified Build Success Rate）",
   "— the percentage of evaluated Cases for which the canonical repair applies cleanly, the official target-architecture build succeeds, and the expected package artifacts are produced and verified.":
-    "——在所有受评测 Case 中，规范化修复能够干净应用、官方目标架构构建成功，并且预期软件包制品被生成且通过验证的 Case 比例。",
-  "Execution Time": "执行时间",
-  "and officially recorded": "以及官方记录的",
-  "Token Usage": "Token 使用量",
-  "are reported separately as secondary efficiency metrics.": "将分别作为次要效率指标报告。",
+    "——即在全部评测 Case 中，规范化修复能够顺利应用、官方目标架构构建成功，并且预期软件包制品得到生成和验证的 Case 比例。",
+  "Execution Time": "执行时间（Execution Time）",
+  "and officially recorded": "和由比赛平台正式记录的",
+  "Token Usage": "Token 使用量（Token Usage）",
+  "are reported separately as secondary efficiency metrics.": "将分别作为次要效率指标进行报告。",
   "Read the Full Competition Rules": "阅读完整竞赛规则",
   Timeline: "时间安排",
   "19 August 2026": "2026 年 8 月 19 日",

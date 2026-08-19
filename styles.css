@@ -3725,7 +3725,7 @@ pre {
 .site-nav {
   display: flex;
   align-items: center;
-  gap: 3px;
+  gap: clamp(36px, 2.4vw, 42px);
 }
 
 .site-nav > a,
@@ -3734,9 +3734,9 @@ pre {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  padding: 0 9px;
+  padding: 0 2px;
   color: var(--ink-soft);
-  font-size: 12px;
+  font-size: 13px;
   font-weight: 700;
   font-family: inherit;
   text-decoration: none;
@@ -3839,8 +3839,8 @@ pre {
 }
 
 .site-nav .nav-emphasis {
-  margin-left: 8px;
-  padding: 0 9px;
+  margin-left: 0;
+  padding: 0 2px;
   color: var(--blue-dark);
   font-weight: 800;
   background: transparent;
