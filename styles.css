@@ -10557,6 +10557,10 @@ pre {
   object-position: center center;
 }
 
+.organizer-photo--zihao {
+  object-position: center top;
+}
+
 .contact-member h3 {
   margin: 9px 0 0;
   color: var(--ink);
