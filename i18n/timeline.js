@@ -36,12 +36,12 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
   "Invited pilot": "邀请制 Pilot",
   "Invited teams test registration, Agent upload, Hosted Smoke Test, Full Evaluation, and the supporting infrastructure. Pilot feedback may be used to correct the interface before the public phase.":
     "受邀团队测试注册、Agent 上传、Hosted Smoke Test、Full Evaluation 及其配套基础设施。组织者可根据 Pilot 反馈在公开阶段前修正接口。",
-  "Rules and resource limits frozen": "冻结规则与资源限制",
-  "The organizers publish the frozen dataset split sizes, per-Case timeouts, submission limits, resource policy, build-bypass policy, and validation protocol.":
-    "组织者公布冻结后的数据集划分规模、单 Case 超时、提交限制、资源政策、构建绕过政策和验证协议。",
+  "Rules and resource limits frozen; registration opens": "冻结规则与资源限制；开放注册",
+  "The organizers publish the frozen dataset split sizes, per-Case timeouts, submission limits, resource policy, build-bypass policy, and validation protocol. Team registration opens to eligible participants on the same date.":
+    "组织者公布冻结后的数据集划分规模、单 Case 超时、提交限制、资源政策、构建绕过政策和验证协议，并于同日向符合资格的参赛者开放团队注册。",
   "Public development and validation open": "开放公开开发与验证",
-  "Registration, public development resources, Agent submission, Hosted Smoke Test, and public validation open to eligible teams.":
-    "向符合资格的团队开放注册、公开开发资源、Agent 提交、Hosted Smoke Test 和公开验证。",
+  "Public development resources, Agent submission, Hosted Smoke Test, and public validation open to eligible teams.":
+    "向符合资格的团队开放公开开发资源、Agent 提交、Hosted Smoke Test 和公开验证。",
   "Final Agent version freeze": "冻结最终 Agent 版本",
   "Each Team must select the qualified, immutable Agent version to be used for final hidden evaluation. Later uploads will not replace the selected final version.":
     "每支团队必须选择一个通过检查且不可变的 Agent 版本用于最终隐藏评测。之后上传的版本不会替换已选定的最终版本。",
