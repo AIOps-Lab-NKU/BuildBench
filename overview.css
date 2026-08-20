@@ -961,6 +961,22 @@ body[data-language="zh"].overview-page .overview-hero {
   line-height: 1.25;
 }
 
+.overview-page .overview-recognition {
+  margin-top: 30px;
+}
+
+.overview-page .overview-recognition h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+}
+
+.overview-page .overview-recognition p {
+  margin-top: 9px;
+}
+
 /* The six-date timeline is a connected snake on larger screens. The marker
    pseudo-element stays above these segments so every joint reads as one path. */
 .overview-page .overview-date-list {

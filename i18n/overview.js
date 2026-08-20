@@ -57,12 +57,15 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "Build-Bench Challenge 要求参赛团队构建并提交一个可运行、以大语言模型（LLM）为基础的修复 Agent，而不是针对每个 Case 单独提交修复补丁。竞赛覆盖 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，重点考察 Agent 能否适用于不同的软件包、故障类型、架构和迁移方向。",
   "For each Case, the Agent enters a prepared package workspace with source and target architecture metadata and initial target-build failure evidence. During the run, it may inspect the available package and build context, use tools permitted by the competition runtime, and iteratively modify only permitted package files.":
     "对于每个 Case，Agent 会进入一个预先准备好的软件包工作区，并获得源架构、目标架构等元数据，以及目标架构上的初始构建失败信息。运行过程中，Agent 可以查看所提供的软件包内容和构建上下文，使用比赛运行环境允许的工具，并通过多轮分析与修改，仅调整允许范围内的软件包文件。",
-  "After the Agent finishes, organizers derive a canonical patch from the Agent's final worktree, apply it to a fresh copy of the Case, and rebuild the package in the official target-architecture environment. A Case is successfully repaired only when the canonical patch applies cleanly, the official build succeeds, and the expected package artifacts are produced and verified. Repairs are judged by verified executable outcomes, not by similarity to a reference patch.":
-    "Agent 运行结束后，组织方会根据其最终工作区中的实际文件状态，统一生成规范化修复补丁（canonical patch）。该补丁会被应用到一份全新的 Case 副本，并在官方目标架构环境中重新构建软件包。只有当补丁能够顺利应用、官方构建成功，并且预期的软件包制品得到生成和验证时，该 Case 才算修复成功。修复结果依据实际可执行的验证结果判定，而不是比较参赛方案与参考补丁是否相似。",
+  "After the Agent finishes, organizers derive a canonical patch from the Agent's final worktree, apply it to a fresh copy of the Case, and rebuild the package in the official target-architecture environment. A Case is successfully repaired only when the canonical patch applies cleanly, the official build succeeds, and the expected package artifacts are produced and verified. Repairs are judged by verified executable outcomes, not by similarity to a reference patch. The overall workflow is illustrated below.":
+    "Agent 运行结束后，组织方会根据其最终工作区中的实际文件状态，统一生成规范化修复补丁（canonical patch）。该补丁会被应用到一份全新的 Case 副本，并在官方目标架构环境中重新构建软件包。只有当补丁能够顺利应用、官方构建成功，并且预期的软件包制品得到生成和验证时，该 Case 才算修复成功。修复结果依据实际可执行的验证结果判定，而不是比较参赛方案与参考补丁是否相似。整体流程如下图所示。",
   "The workflow summarizes how each submitted Agent is executed, converted into a canonical repair, and independently verified through a clean target-architecture build.":
     "该流程展示了每个提交的 Agent 如何被运行、如何根据其最终修改生成规范化修复，以及如何通过一次干净的目标架构构建进行独立验证。",
-  "Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM), which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
-    "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上。该研究确立了最初的跨架构软件包修复任务和可执行评测流程。本次竞赛进一步扩展到 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，并提供 200 多个公开开发 Case 和 1,000 多个隐藏评测 Case。同时，竞赛引入统一的 Agent 接口和由组织方运行的正式评测流程，用于在竞赛规模下考察 Agent 的泛化能力。",
+  "Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM)":
+    "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上",
+  ", which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
+    "。该研究确立了最初的跨架构软件包修复任务和可执行评测流程。本次竞赛进一步扩展到 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，并提供 200 多个公开开发 Case 和 1,000 多个隐藏评测 Case。同时，竞赛引入统一的 Agent 接口和由组织方运行的正式评测流程，用于在竞赛规模下考察 Agent 的泛化能力。",
+  "See reference 1": "查看参考文献 1",
   "Build your Agent": "构建你的 Agent",
   "How the competition works": "竞赛如何进行？",
   "Develop": "开发（Develop）",
@@ -86,6 +89,9 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Token Usage": "Token 使用量（Token Usage）",
   "are reported separately as secondary efficiency metrics.": "将分别作为次要效率指标进行报告。",
   "Read the Full Competition Rules": "阅读完整竞赛规则",
+  Recognition: "荣誉认可",
+  "Top-performing teams will receive competition certificates and recognition associated with the ICSE 2027 Competition Track. Additional award and recognition details will be announced as the competition progresses.":
+    "表现优异的团队将获得竞赛证书，以及与 ICSE 2027 Competition Track 相关的荣誉认可。更多奖项和荣誉信息将在竞赛推进过程中陆续公布。",
   Timeline: "时间安排",
   "19 August 2026": "2026 年 8 月 19 日",
   "— Website beta and initial documentation": "— 网站 Beta 版与初始文档发布",
@@ -99,6 +105,25 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "— Final Agent versions freeze": "— 最终 Agent 版本冻结",
   "By 20 November 2026": "不晚于 2026 年 11 月 20 日",
   "— Final results published": "— 公布最终结果",
+  "Build-Bench competition milestones": "Build-Bench 竞赛里程碑",
+  "Participant release": "参赛资源发布",
+  "Pre-launch test": "公开前测试",
+  "Protocol freeze": "协议冻结",
+  "Public phase": "公开阶段",
+  "Final selection": "最终版本选择",
+  "Official publication": "正式发布",
+  "Release": "发布",
+  "Pilot": "试点",
+  "Policy freeze": "政策冻结",
+  "Opening": "开放",
+  "Deadline": "截止日期",
+  "Results": "结果",
+  "Website beta and initial documentation": "网站 Beta 版与初始文档发布",
+  "Invited pilot": "邀请试点",
+  "Rules and resource limits frozen": "规则与资源限制冻结",
+  "Public development and validation open": "公开开发与验证阶段开放",
+  "Final Agent version freeze": "最终 Agent 版本冻结",
+  "Final results published": "公布最终结果",
   "ICSE 2027": "ICSE 2027",
   "— Competition session and presentations": "— 竞赛现场环节与方案展示",
   "Competition detail pages": "竞赛详情页面",
