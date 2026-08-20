@@ -63,8 +63,8 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
     "该流程展示了每个提交的 Agent 如何被运行、如何根据其最终修改生成规范化修复，以及如何通过一次干净的目标架构构建进行独立验证。",
   "Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM)":
     "Build-Bench Challenge 建立在我们已被 ACM Transactions on Software Engineering and Methodology（TOSEM）接收发表的前期研究基础上",
-  ", which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
-    "。该研究确立了最初的跨架构软件包修复任务和可执行评测流程。本次竞赛进一步扩展到 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，并提供 200 多个公开开发 Case 和 1,000 多个隐藏评测 Case。同时，竞赛引入统一的 Agent 接口和由组织方运行的正式评测流程，用于在竞赛规模下考察 Agent 的泛化能力。",
+  ", which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with 200 public Development Cases and 1,000+ hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.":
+    "。该研究确立了最初的跨架构软件包修复任务和可执行评测流程。本次竞赛进一步扩展到 x86_64、aarch64 和 riscv64 三种架构之间的双向迁移，并提供 200 个公开开发 Case 和 1,000+ 个隐藏评测 Case。同时，竞赛引入统一的 Agent 接口和由组织方运行的正式评测流程，用于在竞赛规模下考察 Agent 的泛化能力。",
   "See reference 1": "查看参考文献 1",
   "Build your Agent": "构建你的 Agent",
   "How the competition works": "竞赛如何进行？",
@@ -89,9 +89,9 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "Token Usage": "Token 使用量（Token Usage）",
   "are reported separately as secondary efficiency metrics.": "将分别作为次要效率指标进行报告。",
   "Read the Full Competition Rules": "阅读完整竞赛规则",
-  Recognition: "荣誉认可",
-  "Top-performing teams will receive competition certificates and recognition associated with the ICSE 2027 Competition Track. Additional award and recognition details will be announced as the competition progresses.":
-    "表现优异的团队将获得竞赛证书，以及与 ICSE 2027 Competition Track 相关的荣誉认可。更多奖项和荣誉信息将在竞赛推进过程中陆续公布。",
+  "Awards & Recognition": "奖项与荣誉",
+  "Winning teams will receive competition certificates and additional recognition associated with the ICSE 2027 Competition Track.":
+    "获奖团队将获得竞赛证书，以及与 ICSE 2027 Competition Track 相关的其他荣誉认可。",
   Timeline: "时间安排",
   "19 August 2026": "2026 年 8 月 19 日",
   "— Website beta and initial documentation": "— 网站 Beta 版与初始文档发布",

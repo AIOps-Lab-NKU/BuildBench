@@ -14,9 +14,9 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260819-2" />
-    <link rel="stylesheet" href="overview.css?v=20260820-1" />
+    <link rel="stylesheet" href="overview.css?v=20260820-2" />
     <script src="assets/vendor/lucide.min.js?v=20260819-1" defer></script>
-    <script src="i18n/overview.js?v=20260820-4" defer></script>
+    <script src="i18n/overview.js?v=20260820-5" defer></script>
     <script src="i18n.js?v=20260819-1" defer></script>
     <script src="auth-client.js?v=20260819-1" defer></script>
     <script src="app.js?v=20260819-1" defer></script>
@@ -164,7 +164,7 @@
             </div>
             <figcaption>The workflow summarizes how each submitted Agent is executed, converted into a canonical repair, and independently verified through a clean target-architecture build.</figcaption>
           </figure>
-          <p>Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM) <a href="#reference-1" aria-label="See reference 1">[1]</a>, which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with more than 200 public Development Cases and over 1,000 hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.</p>
+          <p>Build-Bench Challenge builds on our prior study accepted for publication in ACM Transactions on Software Engineering and Methodology (TOSEM) <a href="#reference-1" aria-label="See reference 1">[1]</a>, which established the original cross-architecture package repair task and executable evaluation workflow. The competition extends this foundation to bidirectional migrations among x86_64, aarch64, and riscv64, with 200 public Development Cases and 1,000+ hidden evaluation Cases. It also introduces a standardized Agent interface and organizer-run evaluation for competition-scale assessment of Agent generalization.</p>
           <p class="overview-section-link"><a href="submission.html">Build your Agent <span aria-hidden="true">→</span></a></p>
         </div>
       </section>
@@ -193,10 +193,16 @@
           <p>The primary ranking metric is <strong>Verified Build Success Rate</strong> — the percentage of evaluated Cases for which the canonical repair applies cleanly, the official target-architecture build succeeds, and the expected package artifacts are produced and verified.</p>
           <p><strong>Execution Time</strong> and officially recorded <strong>Token Usage</strong> are reported separately as secondary efficiency metrics.</p>
           <p class="overview-section-link"><a href="rules.html#evaluation-scoring">Read the Full Competition Rules <span aria-hidden="true">→</span></a></p>
-          <div class="overview-recognition">
-            <h3>Recognition</h3>
-            <p>Top-performing teams will receive competition certificates and recognition associated with the ICSE 2027 Competition Track. Additional award and recognition details will be announced as the competition progresses.</p>
-          </div>
+        </div>
+      </section>
+
+      <section class="overview-section" aria-labelledby="awards-title">
+        <div class="overview-shell overview-reading-column">
+          <h2 id="awards-title" class="overview-section-heading">
+            <img src="assets/overview-icons/trophy.png" width="512" height="512" alt="" aria-hidden="true">
+            <span>Awards &amp; Recognition</span>
+          </h2>
+          <p>Winning teams will receive competition certificates and additional recognition associated with the ICSE 2027 Competition Track.</p>
         </div>
       </section>
 
