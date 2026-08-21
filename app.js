@@ -1,3 +1,27 @@
+(() => {
+  const legacyHost = "aiops-lab-nku.github.io";
+  const legacyBasePath = "/BuildBench";
+  const currentPath = window.location.pathname;
+  const normalizedPath = currentPath.toLowerCase();
+  const normalizedBasePath = legacyBasePath.toLowerCase();
+
+  if (window.location.hostname.toLowerCase() !== legacyHost) return;
+  if (
+    normalizedPath !== normalizedBasePath &&
+    !normalizedPath.startsWith(`${normalizedBasePath}/`)
+  ) {
+    return;
+  }
+
+  const relativePath = currentPath.slice(legacyBasePath.length) || "/";
+  const destination = new URL(
+    `https://matrix.cstcloud.cn/build-bench${relativePath}`,
+  );
+  destination.search = window.location.search;
+  destination.hash = window.location.hash;
+  window.location.replace(destination.href);
+})();
+
 const menuButton = document.querySelector("[data-menu-button]");
 const nav = document.querySelector("[data-nav]");
 const siteHeader = document.querySelector(".site-header");

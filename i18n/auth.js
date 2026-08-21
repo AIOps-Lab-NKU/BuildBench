@@ -101,8 +101,6 @@ const buildBenchAuthTranslations = Object.freeze({
   "Create your team": "创建参赛团队",
   "The captain creates the team account and records the complete roster. Other members do not need separate accounts.":
     "由队长创建团队账号并录入完整名单，其他组员无需单独注册账号。",
-  "Team registration opens on August 31, 2026.":
-    "团队注册将于 2026 年 8 月 31 日开放。",
   "This account manages submissions, evaluations, and the team roster.":
     "此账号负责管理提交、评测和团队名单。",
   "Enter the captain's full name": "请输入队长姓名",
