@@ -39,16 +39,16 @@ window.BuildBenchI18nData.pages.faq = Object.freeze({
   "What do I need to run the Starter Kit?": "运行 Starter Kit 需要什么？",
   "You need a Linux or WSL2 shell, Git, and Docker Engine 24 or later, or Docker Desktop using Linux containers. The Starter Kit does not require sudo privileges, but you must have permission to run Docker containers. Docker Desktop typically requires no additional sudo configuration.":
     "你需要 Linux 或 WSL2 Shell、Git、Docker Engine 24+，或使用 Linux 容器的 Docker Desktop。Starter Kit 不强制要求 sudo 权限，但需要具备运行 Docker 容器的权限。使用 Docker Desktop 通常无需额外的 sudo 配置。",
-  "Starter Kit v0.1.0-rc.2 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.":
-    "Starter Kit v0.1.0-rc.2 包含 bb 命令、托管 Python Agent 模板、示例 Agent、hello 示例 Case、本地检查和确定性打包功能。",
+  "Starter Kit v0.1.0-rc.3 includes the bb command, a managed-Python Agent template, an Example Agent, the hello Example Case, local checks, and deterministic packaging.":
+    "Starter Kit v0.1.0-rc.3 包含 bb 命令、托管 Python Agent 模板、示例 Agent、hello 示例 Case、本地检查和确定性打包功能。",
   "Check the local setup": "检查本地环境",
   "What can the Agent read, modify, and return?": "Agent 可以读取、修改和返回什么？",
   "The Agent reads task evidence from the read-only input directory, modifies only the writable package worktree, and may write machine-readable status to the output directory. It must follow the workspace paths and agent-result.json schema defined by protocol v0.1.":
     "Agent 从只读输入目录读取任务证据，只修改可写的软件包工作树，并可向输出目录写入机器可读状态。它必须遵守协议 v0.1 定义的工作区路径和 agent-result.json Schema。",
   "Read the runtime interface": "阅读运行接口",
   "Can I submit a custom Docker runtime?": "可以提交自定义 Docker 运行环境吗？",
-  "Not in Starter Kit v0.1.0-rc.2. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.":
-    "Starter Kit v0.1.0-rc.2 暂不支持。当前提交合约仅支持托管 Python 3.11 配置。如果以后增加其他运行配置，将通过版本化协议更新正式发布，而不会静默启用。",
+  "Not in Starter Kit v0.1.0-rc.3. The current submission contract supports the managed Python 3.11 profile. If additional runtime profiles are introduced, they will be published as a versioned protocol update rather than silently enabled.":
+    "Starter Kit v0.1.0-rc.3 暂不支持。当前提交合约仅支持托管 Python 3.11 配置。如果以后增加其他运行配置，将通过版本化协议更新正式发布，而不会静默启用。",
   "Read the current package contract": "阅读当前提交包合约",
   "Can the Agent request build feedback while it runs?": "Agent 运行时可以请求构建反馈吗？",
   "Not in the current Starter Kit release. Bounded hosted build feedback is a planned feature; its command, limits, and response schema will be introduced only in a later protocol release. Do not assume that bb-build is currently available.":

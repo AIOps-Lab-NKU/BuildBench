@@ -31,19 +31,22 @@ window.BuildBenchI18nData.pages["data-downloads"] = Object.freeze({
     "用于 Agent 开发和更广泛本地评测的公开软件包构建 Case。",
   "Version TBA": "版本待公布",
   "Coming soon": "即将发布",
+  "Published development release": "已发布开发集",
+  "Published with Development Cases": "随开发 Case 发布",
   "Protocol Schemas": "协议 Schema",
   "Machine-readable Case and": "机器可读的 Case 与",
   "schemas used by local checks and platform validation.":
     "Schema，用于本地检查和平台验证。",
   "Runtime Images": "运行时镜像",
-  "Pinned Agent, Validator, and example-assets images used by Starter Kit commands.":
-    "Starter Kit 命令使用的固定版本 Agent、Validator 和示例资源镜像。",
-  "Registry TBA": "镜像仓库待公布",
-  "Registry pending": "镜像仓库准备中",
+  "Managed-Python, Validator, and example-assets images used by Starter Kit commands.":
+    "Starter Kit 命令使用的托管 Python、Validator 和示例资源镜像。",
+  "Published on GHCR": "已发布至 GHCR",
+  "View images": "查看镜像",
   "Release manifest & checksums": "发布清单与校验和",
   "Release metadata and SHA-256 checksums for verifying Starter Kit archives.":
     "用于验证 Starter Kit 压缩包的发布元数据和 SHA-256 校验和。",
   "Dataset card & licenses": "数据集卡片与许可证",
+  "Dataset card": "数据集卡片",
   "Case provenance, redistribution terms, dataset scope, and license notices.":
     "Case 来源、再分发条款、数据集范围和许可证说明。",
   "Starter Kit release candidate available.": "Starter Kit 发布候选版现已提供。",

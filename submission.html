@@ -8,12 +8,12 @@
     <link rel="canonical" href="https://aiops-lab-nku.github.io/BuildBench/submission.html" />
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
-    <link rel="stylesheet" href="styles.css?v=20260819-2" />
-    <script src="assets/vendor/lucide.min.js?v=20260819-1" defer></script>
-    <script src="i18n/submission.js?v=20260819-1" defer></script>
-    <script src="i18n.js?v=20260819-1" defer></script>
-    <script src="auth-client.js?v=20260819-1" defer></script>
-    <script src="app.js?v=20260821-1" defer></script>
+    <link rel="stylesheet" href="styles.css?v=20260901-1" />
+    <script src="assets/vendor/lucide.min.js?v=20260901-1" defer></script>
+    <script src="i18n/submission.js?v=20260908-1" defer></script>
+    <script src="i18n.js?v=20260901-1" defer></script>
+    <script src="auth-client.js?v=20260901-1" defer></script>
+    <script src="app.js?v=20260901-1" defer></script>
   </head>
   <body data-page="submission">
     <a class="skip-link" href="#main-content">Skip to main content</a>
@@ -108,7 +108,7 @@ cd BuildBench-Agent-Baseline/starter-kit
                 <div class="quick-start-step">
                   <strong>Get the Starter Kit</strong>
                   <p>Download the current ZIP from <a href="data-downloads.html">Data &amp; Downloads</a>, extract it in a Linux or WSL2 shell, and enter the versioned directory.</p>
-                  <div class="code-block quick-start-command"><pre><code>KIT_VERSION=0.1.0-rc.2
+                  <div class="code-block quick-start-command"><pre><code>KIT_VERSION=0.1.0-rc.3
 unzip "buildbench-starter-kit-${KIT_VERSION}.zip"
 cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <dl class="quick-start-details">
@@ -153,7 +153,7 @@ cd "buildbench-starter-kit-${KIT_VERSION}"</code></pre></div>
                   <div class="code-block quick-start-command"><pre><code># Edit agents/my-agent/src/main.py
 ./bb test --agent ./agents/my-agent</code></pre></div>
                   <dl class="quick-start-details">
-                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.2</code> contains one local Example Case, <code>hello</code>.</dd></div>
+                    <div><dt>Input</dt><dd><code>--agent</code> must point to the Agent directory that contains <code>agent.yaml</code>. The command runs each ID listed in <code>example-cases/cases.txt</code>; release <code>v0.1.0-rc.3</code> contains one local Example Case, <code>hello</code>.</dd></div>
                     <div><dt>Agent behavior</dt><dd>The entrypoint declared in <code>agent.yaml</code> runs once per Case. It reads <code>/workspace/input</code>, edits <code>/workspace/work/repo</code>, and writes <code>/workspace/output/agent-result.json</code>.</dd></div>
                   </dl>
                   <p class="quick-start-result"><i data-lucide="check-circle-2" aria-hidden="true"></i><span>Expected: per-Case evaluation artifacts, logs, and validation results are written under <code>runs/tests/my-agent/</code>.</span></p>
@@ -288,7 +288,7 @@ protocol:
             <p><code>agent-result.json</code> reports completion status and diagnostics, but it does not define the repair itself. <code>modified_paths</code>, if included, is advisory only. The evaluator independently determines the actual modifications by comparing the original and final worktrees.</p>
 
             <h3>Build feedback</h3>
-            <p class="submission-inline-note info-note"><strong>Planned feature.</strong> Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit <code>v0.1.0-rc.2</code>.</p>
+            <p class="submission-inline-note info-note"><strong>Planned feature.</strong> Bounded hosted build feedback will be introduced in a later protocol release. Its CLI, limits, and response schema are not part of Starter Kit <code>v0.1.0-rc.3</code>.</p>
 
             <h3>Canonical patch</h3>
             <p>After the Agent exits, the evaluator compares the original and final worktrees and automatically derives a canonical <code>repair.diff</code> from all actual worktree changes. The canonical <code>repair.diff</code> uses Git extended unified-diff format, captures supported text changes, file creation and deletion, and file-mode changes, and disables rename detection for deterministic canonicalization. Participants do not need to generate or submit <code>repair.diff</code>. The evaluator replays this diff on a fresh Case and performs the official target-architecture build verification. See <a href="rules.html#evaluation-scoring">Evaluation and scoring</a> for the complete verification rules.</p>
@@ -315,7 +315,7 @@ protocol:
                 <li><code>/workspace/output/agent-result.json</code> contains <code>schema_version: "0.1"</code> and a supported status.</li>
                 <li>The Agent completes at least one released local Example Case.</li>
               </ul>
-              <p class="submission-inline-note info-note"><span>Release candidate</span>Starter Kit <code>v0.1.0-rc.2</code> provides the local Runner, managed-Python template, bundled Example Cases, conformance checks, and deterministic packaging. Public Development Cases support broader Agent development and local testing. See <a href="data-downloads.html">Data &amp; Downloads</a> for current downloads, versions, and release status.</p>
+              <p class="submission-inline-note info-note"><span>Release candidate</span>Starter Kit <code>v0.1.0-rc.3</code> provides the local Runner, managed-Python template, bundled Example Cases, conformance checks, and deterministic packaging. Public Development Cases support broader Agent development and local testing. See <a href="data-downloads.html">Data &amp; Downloads</a> for current downloads, versions, and release status.</p>
             </div>
 
             <div class="submission-guide-subsection">

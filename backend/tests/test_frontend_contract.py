@@ -812,15 +812,17 @@ class FrontendContractTests(unittest.TestCase):
         self.assertIn("Protocol Schemas", html)
         self.assertIn("Runtime Images", html)
         self.assertIn(
-            "releases/download/v0.1.0-rc.2/"
-            "buildbench-starter-kit-0.1.0-rc.2.zip",
+            "releases/starter-kit/v0.1.0-rc.3/"
+            "buildbench-starter-kit-0.1.0-rc.3.zip",
             html,
         )
         self.assertIn(
-            "releases/download/v0.1.0-rc.2/SHA256SUMS",
+            "releases/starter-kit/v0.1.0-rc.3/SHA256SUMS",
             html,
         )
         self.assertIn("Published pre-release", html)
+        self.assertIn("Published on GHCR", html)
+        self.assertIn("BuildBench-Runtime-Images/releases/tag/v0.1.0-rc.3", html)
         self.assertNotIn('data-lucide="download"', html)
         self.assertNotIn('data-lucide="shield-check"', html)
         self.assertNotIn('<th scope="row">Example Agent</th>', html)
