@@ -1,0 +1,88 @@
+name: Publish runtime images
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Draft release tag containing the reviewed runtime build contexts
+        required: true
+        default: v0.1.0-rc.3
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+concurrency:
+  group: publish-runtime-images-${{ inputs.release_tag }}
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out release metadata
+        uses: actions/checkout@v4
+
+      - name: Download reviewed build contexts
+        env:
+          GH_TOKEN: ${{ github.token }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          mkdir -p runtime-release
+          gh release download "$RELEASE_TAG" \
+            --dir runtime-release \
+            --pattern 'buildbench-*-context-*.tar.gz'
+          mkdir -p runtime-release/validator runtime-release/example-assets
+          tar -xzf runtime-release/buildbench-validator-context-*.tar.gz \
+            -C runtime-release/validator
+          tar -xzf runtime-release/buildbench-example-assets-context-*.tar.gz \
+            -C runtime-release/example-assets
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v3
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v3
+
+      - name: Log in to GHCR
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Normalize image version
+        id: version
+        shell: bash
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: echo "value=${RELEASE_TAG#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Publish Validator runtime
+        uses: docker/build-push-action@v6
+        with:
+          context: runtime-release/validator
+          file: runtime-release/validator/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/buildbench-validator-runtime:${{ steps.version.outputs.value }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.version.outputs.value }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          provenance: mode=max
+
+      - name: Publish Example Assets
+        uses: docker/build-push-action@v6
+        with:
+          context: runtime-release/example-assets
+          file: runtime-release/example-assets/Dockerfile
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: ghcr.io/${{ github.repository_owner }}/buildbench-example-assets:${{ steps.version.outputs.value }}
+          labels: |
+            org.opencontainers.image.source=https://github.com/${{ github.repository }}
+            org.opencontainers.image.version=${{ steps.version.outputs.value }}
+            org.opencontainers.image.revision=${{ github.sha }}
+          provenance: mode=max
