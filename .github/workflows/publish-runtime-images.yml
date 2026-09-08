@@ -82,7 +82,7 @@ jobs:
           file: runtime-release/validator/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/buildbench-validator-runtime:${{ steps.version.outputs.value }}
+          tags: ghcr.io/aiops-lab-nku/buildbench-validator-runtime:${{ steps.version.outputs.value }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.version=${{ steps.version.outputs.value }}
@@ -96,7 +96,7 @@ jobs:
           file: runtime-release/example-assets/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/${{ github.repository_owner }}/buildbench-example-assets:${{ steps.version.outputs.value }}
+          tags: ghcr.io/aiops-lab-nku/buildbench-example-assets:${{ steps.version.outputs.value }}
           labels: |
             org.opencontainers.image.source=https://github.com/${{ github.repository }}
             org.opencontainers.image.version=${{ steps.version.outputs.value }}
