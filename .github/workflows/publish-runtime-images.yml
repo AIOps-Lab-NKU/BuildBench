@@ -10,7 +10,9 @@ on:
         type: string
 
 permissions:
-  contents: read
+  # Write access is required for the repository token to enumerate draft
+  # release assets. The workflow never creates, updates, or deletes releases.
+  contents: write
   packages: write
 
 concurrency:
