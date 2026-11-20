@@ -16,7 +16,7 @@ window.BuildBenchI18nData.pages.timeline = Object.freeze({
   "August 31, 2026": "2026 年 8 月 31 日",
   "September 7, 2026": "2026 年 9 月 7 日",
   "November 13, 2026": "2026 年 11 月 13 日",
-  "By November 20, 2026": "2026 年 11 月 20 日前",
+  "By November 22, 2026": "2026 年 11 月 22 日前",
   "Release": "发布",
   "Pilot": "Pilot",
   "Policy freeze": "政策冻结",

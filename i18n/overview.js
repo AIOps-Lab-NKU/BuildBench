@@ -105,7 +105,7 @@ window.BuildBenchI18nData.pages.overview = Object.freeze({
   "— Team registration closes": "— 团队注册截止",
   "13 November 2026": "2026 年 11 月 13 日",
   "— Final Agent versions freeze": "— 最终 Agent 版本冻结",
-  "By 20 November 2026": "不晚于 2026 年 11 月 20 日",
+  "By 22 November 2026": "不晚于 2026 年 11 月 22 日",
   "— Final results published": "— 公布最终结果",
   "Build-Bench competition milestones": "Build-Bench 竞赛里程碑",
   "Participant release": "参赛资源发布",
