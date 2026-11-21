@@ -5,12 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta
       name="description"
-      content="Official Build-Bench Challenge rankings based on completed Full Evaluations."
+      content="Build-Bench final standings: weighted scores, institutions, pass rates, time and token usage."
     />
     <meta property="og:title" content="Build-Bench Leaderboard | ICSE 2027" />
     <meta
       property="og:description"
-      content="Official Build-Bench Challenge rankings based on completed Full Evaluations."
+      content="Build-Bench final standings: weighted scores, institutions, pass rates, time and token usage."
     />
     <meta
       property="og:url"
@@ -25,14 +25,15 @@
     <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
     <link rel="alternate icon" type="image/png" href="assets/favicon.png" />
     <link rel="stylesheet" href="styles.css?v=20260819-2" />
+    <link rel="stylesheet" href="leaderboard-results.css?v=20261121-2" />
     <script src="assets/vendor/lucide.min.js?v=20260819-1" defer></script>
-    <script src="i18n/leaderboard.js?v=20260811-7" defer></script>
-    <script src="i18n.js?v=20260819-1" defer></script>
-    <script src="auth-client.js?v=20260819-1" defer></script>
-    <script src="app.js?v=20260821-1" defer></script>
-    <script src="leaderboard-live.js?v=20260805-1" defer></script>
+    <script src="i18n/leaderboard.js?v=20261121-2" defer></script>
+    <script src="i18n.js?v=20260913-1" defer></script>
+    <script src="auth-client.js?v=20260820-1" defer></script>
+    <script src="app.js?v=20260819-1" defer></script>
+    <script src="leaderboard-results.js?v=20261121-2" defer></script>
   </head>
-  <body class="leaderboard-page" data-page="leaderboard">
+  <body class="leaderboard-page formal-standings" data-page="leaderboard">
     <a class="skip-link" href="#main-content">Skip to main content</a>
 
     <header class="site-header">
@@ -64,60 +65,53 @@
     </header>
 
     <main id="main-content" class="leaderboard-main">
-      <section class="page-masthead leaderboard-masthead">
-        <div class="content-wrap">
-          <header class="leaderboard-heading">
-            <p class="leaderboard-kicker">Official standings</p>
-            <h1>Leaderboard</h1>
-            <p>
-              Each Team may run one Full Evaluation. Rankings use Build Success Rate from
-              organizer-published completed evaluations; Hosted Smoke Tests do not affect the
-              leaderboard.
-            </p>
-          </header>
+      <section class="formal-intro">
+        <div class="formal-content">
+          <p class="formal-eyebrow">BUILD-BENCH / ICSE 2027</p>
+          <h1>Final evaluation leaderboard</h1>
+          <p class="formal-lead">Cross-architecture package repair. One shared evaluation set, ranked by difficulty-weighted score.</p>
+          <div class="formal-facts" aria-label="Evaluation overview">
+            <span><strong>19</strong> <span>Teams</span></span>
+            <span><strong>200</strong> <span>Cases per team</span></span>
+            <span><strong>482</strong> <span>Maximum score</span></span>
+            <span class="formal-model">6.1 Sol</span>
+          </div>
         </div>
       </section>
-
-      <div class="content-wrap leaderboard-shell">
-
-        <p class="leaderboard-comparison-note">
-          Only results evaluated with the same versioned Case set and evaluation rules are compared.
-        </p>
-
-        <section aria-labelledby="leaderboard-results-title">
-          <h2 id="leaderboard-results-title" class="visually-hidden">Official competition results</h2>
-          <div class="leaderboard-state" data-live-board-state role="status">
-            <strong>Loading leaderboard</strong>
-            <span>Retrieving the latest organizer-published results.</span>
+      <div class="formal-content formal-results">
+        <div class="formal-toolbar">
+          <div>
+            <h2>Top 10 teams</h2>
+            <p>Easy 1 pt · Medium 3 pts · Hard 5 pts. Equal scores share a rank.</p>
           </div>
-
-          <div class="leaderboard-table-frame" data-live-board-table hidden>
-            <table class="official-leaderboard-table" aria-label="Official competition leaderboard">
-              <thead>
-                <tr>
-                  <th scope="col">Rank</th>
-                  <th scope="col">Team</th>
-                  <th scope="col">Score</th>
-                  <th scope="col">Successful Cases</th>
-                </tr>
-              </thead>
-              <tbody data-live-board-body></tbody>
-            </table>
+          <div class="formal-tools">
+            <label class="formal-search"><i data-lucide="search" aria-hidden="true"></i><span class="visually-hidden">Search teams or institutions</span><input type="search" placeholder="Search teams or institutions" aria-label="Search teams or institutions" data-board-search /></label>
+            <a class="formal-download" href="my-results.html"><i data-lucide="lock-keyhole" aria-hidden="true"></i><span>My results</span></a>
+            <button type="button" class="formal-download" data-board-download disabled><i data-lucide="download" aria-hidden="true"></i><span>Download CSV</span></button>
           </div>
-
-          <p class="leaderboard-version" data-live-board-version hidden></p>
-        </section>
-
-        <aside class="leaderboard-method-note" aria-label="Scoring note">
-          <p>
-            <strong>Build Success Rate</strong> is the percentage of eligible Cases whose canonical
-            repair passes the clean target build.
-          </p>
+        </div>
+        <p class="formal-status" data-board-status role="status">Loading results…</p>
+        <div class="formal-table-wrap" data-board-table hidden>
+          <table class="formal-table" aria-label="Final evaluation results">
+            <colgroup><col class="col-rank" /><col class="col-team" /><col class="col-institution" /><col class="col-score" /><col class="col-rate" /><col class="col-cases" /><col class="col-time" /><col class="col-time" /><col class="col-token" /><col class="col-token" /><col class="col-token" /></colgroup>
+            <thead>
+              <tr><th rowspan="2" scope="col">Rank</th><th rowspan="2" scope="col">Team</th><th rowspan="2" scope="col">Institution</th><th rowspan="2" scope="col" class="formal-numeric">Weighted score</th><th rowspan="2" scope="col" class="formal-numeric">Pass rate</th><th rowspan="2" scope="col" class="formal-numeric">Cases passed</th><th colspan="2" scope="colgroup" class="formal-group">Cumulative time (h)</th><th colspan="3" scope="colgroup" class="formal-group">Tokens (million)</th></tr>
+              <tr><th scope="col" class="formal-numeric">Agent</th><th scope="col" class="formal-numeric">Build</th><th scope="col" class="formal-numeric">Input</th><th scope="col" class="formal-numeric">Output</th><th scope="col" class="formal-numeric">Cached input</th></tr>
+            </thead>
+            <tbody data-board-body translate="no"></tbody>
+          </table>
+          <p class="formal-empty" data-board-empty hidden>No matching teams.</p>
+        </div>
+        <div class="formal-table-footer"><span data-board-count translate="no"></span></div>
+        <p class="formal-private-note">Only the top 10 teams are listed publicly. Sign in to view your own team's complete summary and per-case results.</p>
+        <aside class="formal-notes" aria-label="About these results">
+          <div><h3>Scoring</h3><p>The evaluation contains 74 easy, 111 medium and 15 hard cases. Weighted score = easy passes × 1 + medium passes × 3 + hard passes × 5. Pass rate = cases passed / 200.</p></div>
+          <div><h3>Time and tokens</h3><p>Time is summed across each team's final effective case runs; it excludes queueing and is not elapsed calendar time. Tokens are recorded model usage from those runs. Cached input is included in input, not added again. M = one million.</p></div>
+          <div><h3>Institutions</h3><p>Institutions follow team registration records. All participating institutions are listed for joint teams.</p></div>
         </aside>
-
       </div>
     </main>
 
-<footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><div class="footer-navigation"><nav class="footer-link-group" aria-label="Competition links"><strong>Competition</strong><div><a href="index.html">Overview</a><a href="submission.html">Participate</a><a href="leaderboard.html">Leaderboard</a><a href="contact.html">Contact</a></div></nav><nav class="footer-link-group" aria-label="Project resources"><strong>Resources</strong><div><a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">Paper</a><a href="https://arxiv.org/bibtex/2511.00780" target="_blank" rel="noreferrer">Citation</a><a href="https://github.com/AIOps-Lab-NKU/BuildBench-Agent-Baseline" target="_blank" rel="noreferrer">GitHub</a></div></nav></div><a class="footer-back-to-top" href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
+    <footer class="site-footer"><div class="footer-inner"><div class="footer-brand"><span class="brand-mark" aria-hidden="true"><img src="assets/logo.svg" alt="" /></span><div><strong>Build-Bench Challenge</strong><small>ICSE 2027 Competition Track</small></div></div><div class="footer-navigation"><nav class="footer-link-group" aria-label="Competition links"><strong>Competition</strong><div><a href="task.html">Challenge</a><a href="submission.html">Participate</a><a href="rules.html">Rules</a><a href="rules.html#evaluation-scoring">Evaluation &amp; scoring</a><a href="timeline.html">Timeline</a><a href="faq.html">FAQ</a></div></nav><nav class="footer-link-group" aria-label="Project resources"><strong>Resources</strong><div><a href="https://arxiv.org/abs/2511.00780" target="_blank" rel="noreferrer">Paper</a><a href="https://arxiv.org/bibtex/2511.00780" target="_blank" rel="noreferrer">Citation</a><a href="https://github.com/AIOps-Lab-NKU/BuildBench-Agent-Baseline" target="_blank" rel="noreferrer">GitHub</a><a href="contact.html">Contact</a></div></nav></div><a class="footer-back-to-top" href="#main-content">Back to top<i data-lucide="arrow-up" aria-hidden="true"></i></a></div></footer>
   </body>
 </html>

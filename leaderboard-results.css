@@ -1,0 +1,106 @@
+.formal-standings { --board-width: 1504px; }
+.formal-standings .header-inner,
+.formal-standings .footer-inner,
+.formal-content { width: min(var(--board-width), calc(100% - 80px)); margin-inline: auto; }
+.formal-intro { padding: 46px 0 30px; border-bottom: 1px solid #e5ebf0; background: linear-gradient(110deg,#f4f8fd 0%,#fff 72%); }
+.formal-eyebrow { margin: 0 0 12px; font-size: 11px; letter-spacing: .1em; font-weight: 750; color: #23639c; }
+.formal-intro h1 { margin: 0; font-size: clamp(30px,3.1vw,42px); font-weight: 750; letter-spacing: -.035em; line-height: 1.2; }
+.formal-lead { margin: 14px 0 0; max-width: 800px; color: #586775; font-size: 15px; line-height: 1.7; }
+.formal-facts { display: flex; align-items: center; flex-wrap: wrap; gap: 12px 28px; margin-top: 26px; color: #627080; font-size: 12px; }
+.formal-facts > span { display: inline-flex; align-items: baseline; gap: 7px; }
+.formal-facts strong { font-size: 18px; font-weight: 700; color: #253647; font-variant-numeric: tabular-nums; }
+.formal-facts .formal-model { color: #38648c; margin-left: auto; border: 1px solid #d5e3ee; border-radius: 5px; padding: 4px 9px; font-size: 11px; }
+.formal-results { padding: 32px 0 68px; }
+.formal-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 20px; margin-bottom: 21px; }
+.formal-toolbar h2 { margin: 0; font-size: 19px; line-height: 1.5; font-weight: 700; }
+.formal-toolbar p { margin: 5px 0 0; color: #6e7b88; font-size: 12px; line-height: 1.6; }
+.formal-tools { display: flex; align-items: center; gap: 10px; }
+.formal-search { display: flex; align-items: center; gap: 8px; width: 238px; border: 1px solid #dce3ea; border-radius: 6px; background: #fff; padding: 9px 11px; }
+.formal-search svg { flex: 0 0 15px; width: 15px; height: 15px; color: #7a8997; }
+.formal-search .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+.formal-search input { border: 0; outline: 0; padding: 0; width: 100%; min-width: 0; font: inherit; font-size: 12px; color: #26394a; background: transparent; }
+.formal-search:focus-within { border-color: #2878c8; outline: 2px solid #e3f0fc; }
+.formal-download { display: inline-flex; align-items: center; justify-content: center; gap: 7px; white-space: nowrap; border: 1px solid #cddde9; border-radius: 6px; background: #f8fbfe; color: #235e91; padding: 9px 12px; font: inherit; font-size: 12px; cursor: pointer; min-height: 38px; }
+.formal-download svg { width: 15px; height: 15px; }
+.formal-download:hover { background: #ebf4fc; }
+.formal-download:disabled { opacity: .55; cursor: default; }
+.formal-table-wrap { overflow-x: auto; border: 1px solid #dce4ec; border-radius: 8px; }
+.formal-table { border-collapse: separate; border-spacing: 0; width: 100%; min-width: 1200px; table-layout: fixed; font-size: 13px; }
+.formal-table .col-rank { width: 4%; }
+.formal-table .col-team { width: 11%; }
+.formal-table .col-institution { width: 20%; }
+.formal-table .col-score { width: 8%; }
+.formal-table .col-rate { width: 7%; }
+.formal-table .col-cases { width: 11%; }
+.formal-table .col-time { width: 7%; }
+.formal-table .col-token { width: 8%; }
+.formal-table .col-token:last-child { width: 9%; }
+.formal-table th,.formal-table td { padding: 17px 12px; vertical-align: middle; border: 0; border-bottom: 1px solid #e9edf2; }
+.formal-table thead th { background: #f5f8fb; color: #566575; font-size: 11px; font-weight: 650; text-align: left; line-height: 1.55; }
+.formal-table thead tr:first-child th { padding-top: 15px; padding-bottom: 9px; }
+.formal-table thead tr:nth-child(2) th { padding-top: 6px; padding-bottom: 12px; }
+.formal-table thead th[rowspan] { padding-bottom: 15px !important; }
+.formal-table thead .formal-group { text-align: right; }
+.formal-table .formal-numeric { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; color: #314356; }
+.formal-table thead .formal-numeric { color: #566575; white-space: normal; }
+.formal-table tbody tr { --row-bg: #fff; background: var(--row-bg); }
+.formal-table tbody tr:hover { --row-bg: #f3f8fc; }
+.formal-table tbody tr:last-child > * { border-bottom: 0; }
+.formal-table .formal-rank { font-size: 13px; font-weight: 650; color: #82909c; font-variant-numeric: tabular-nums; text-align: center; padding-inline: 5px; }
+.formal-table .formal-team { text-align: left; font-size: 13px; font-weight: 650; line-height: 1.5; overflow-wrap: anywhere; color: #243547; }
+.formal-table .formal-institution { color: #73808c; font-size: 11.5px; line-height: 1.55; overflow-wrap: anywhere; }
+.formal-institution span { display: block; }
+.formal-table .formal-score { font-size: 19px; font-weight: 750; color: #1f4e78; letter-spacing: -.02em; }
+.formal-table .formal-rate { font-weight: 650; }
+.formal-passed { display: block; color: #35485b; font-size: 13px; }
+.formal-breakdown { display: block; margin-top: 5px; color: #7b8793; font-size: 10px; font-weight: 450; white-space: nowrap; }
+.formal-status,.formal-empty { padding: 22px; color: #6b7b8a; background: #f7fafc; font-size: 13px; margin: 0; }
+.formal-status[hidden],.formal-table-wrap[hidden],.formal-empty[hidden] { display: none; }
+.formal-table-footer { display: flex; justify-content: space-between; gap: 15px; margin-top: 13px; font-size: 11px; color: #82909c; }
+.formal-table-footer > span:last-child { display: inline-flex; align-items: center; gap: 7px; }
+.formal-private-note { color: #788795; font-size: 12px; line-height: 1.7; margin: 20px 0 0; }
+.formal-notes { display: grid; grid-template-columns: 1fr 1.25fr .9fr; gap: 38px; margin-top: 36px; padding-top: 25px; border-top: 1px solid #e4eaf0; }
+.formal-notes h3 { margin: 0 0 8px; color: #546777; font-size: 12px; font-weight: 650; }
+.formal-notes p { margin: 0; color: #81909c; font-size: 11px; line-height: 1.8; }
+@media (max-width: 1100px) {
+  .formal-toolbar { align-items: flex-start; flex-direction: column; }
+  .formal-tools { align-self: flex-end; }
+  .formal-notes { gap: 23px; }
+}
+@media (max-width: 720px) {
+  .formal-standings .header-inner,.formal-standings .footer-inner,.formal-content { width: calc(100% - 36px); }
+  .formal-intro { padding: 30px 0 24px; }
+  .formal-intro h1 { font-size: 29px; }
+  .formal-lead { font-size: 13px; line-height: 1.75; }
+  .formal-facts { gap: 14px 18px; margin-top: 21px; font-size: 10px; }
+  .formal-facts strong { font-size: 17px; }
+  .formal-facts .formal-model { margin-left: 0; font-size: 10px; }
+  .formal-results { padding-top: 25px; }
+  .formal-toolbar { gap: 15px; }
+  .formal-toolbar h2 { font-size: 17px; }
+  .formal-toolbar p { font-size: 11px; }
+  .formal-tools { width: 100%; flex-wrap: wrap; }
+  .formal-search { flex-basis: 100%; }
+  .formal-search { flex: 1 0 100%; width: 100%; }
+  .formal-download { padding-inline: 10px; font-size: 11px; }
+  .formal-table-wrap { overflow: visible; border: 0; }
+  .formal-table,.formal-table tbody { display: block; min-width: 0; width: 100%; }
+  .formal-table colgroup,.formal-table thead { display: none; }
+  .formal-table tbody tr { display: grid; grid-template-columns: 1fr 1fr; gap: 0 24px; position: relative; padding: 17px 16px 12px; border: 1px solid #e0e7ed; border-radius: 8px; margin-bottom: 13px; }
+  .formal-table th,.formal-table td { display: flex; align-items: baseline; justify-content: space-between; min-width: 0; padding: 8px 0; font-size: 12px; border-bottom: 1px solid #e9edf2; }
+  .formal-table .formal-rank { position: absolute; left: 16px; top: 19px; display: block; border: 0; padding: 0; width: 24px; font-size: 16px; text-align: left; }
+  .formal-table .formal-team { grid-column: 1/-1; padding: 0 0 4px 34px; border: 0; font-size: 15px; display: block; }
+  .formal-table .formal-institution { grid-column: 1/-1; display: block; padding: 0 0 13px 34px; font-size: 11px; line-height: 1.6; }
+  .formal-table td[data-label]::before { content: attr(data-label); text-align: left; color: #8996a2; font-weight: 450; font-size: 10px; margin-right: 6px; white-space: normal; }
+  .formal-table .formal-score { font-size: 20px; }
+  .formal-table .formal-rate { font-size: 16px; }
+  .formal-table .formal-cases { grid-column: 1/-1; }
+  .formal-table .formal-cases > div { display: flex; align-items: baseline; gap: 12px; }
+  .formal-breakdown { margin: 0; }
+  .formal-table .formal-cached { grid-column: 1/-1; border: 0; }
+  .formal-table tbody tr:last-child > * { border-bottom: 1px solid #e9edf2; }
+  .formal-table tbody tr:last-child > .formal-rank,.formal-table tbody tr:last-child > .formal-team,.formal-table tbody tr:last-child > .formal-cached { border: 0; }
+  .formal-table-footer { font-size: 10px; }
+  .formal-notes { grid-template-columns: 1fr; gap: 19px; margin-top: 29px; padding-top: 23px; }
+  .formal-notes p { font-size: 11px; }
+}

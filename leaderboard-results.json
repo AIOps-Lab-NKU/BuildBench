@@ -1,0 +1,210 @@
+{
+  "total_teams": 10,
+  "evaluated_teams": 19,
+  "cases_per_team": 200,
+  "max_score": 482,
+  "weights": {
+    "easy": 1,
+    "medium": 3,
+    "hard": 5
+  },
+  "difficulty_counts": {
+    "medium": 111,
+    "easy": 74,
+    "hard": 15
+  },
+  "entries": [
+    {
+      "rank": 1,
+      "team": "Engineers",
+      "institutions": [
+        "The State Energy institute of Turkmenistan"
+      ],
+      "score": 218,
+      "passed": 96,
+      "total": 200,
+      "pass_rate": 0.48,
+      "easy": 41,
+      "medium": 49,
+      "hard": 6,
+      "agent_seconds": 25636,
+      "build_seconds": 389494,
+      "input_tokens": 46522106,
+      "output_tokens": 602128,
+      "cached_tokens": 40077312
+    },
+    {
+      "rank": 2,
+      "team": "HNU_chong",
+      "institutions": [
+        "湖南大学"
+      ],
+      "score": 205,
+      "passed": 91,
+      "total": 200,
+      "pass_rate": 0.455,
+      "easy": 39,
+      "medium": 47,
+      "hard": 5,
+      "agent_seconds": 31789,
+      "build_seconds": 396566,
+      "input_tokens": 90803839,
+      "output_tokens": 736309,
+      "cached_tokens": 82192384
+    },
+    {
+      "rank": 3,
+      "team": "BlueCat",
+      "institutions": [
+        "郑州大学",
+        "湖南大学"
+      ],
+      "score": 194,
+      "passed": 84,
+      "total": 200,
+      "pass_rate": 0.42,
+      "easy": 33,
+      "medium": 47,
+      "hard": 4,
+      "agent_seconds": 24894,
+      "build_seconds": 348306,
+      "input_tokens": 46060375,
+      "output_tokens": 500476,
+      "cached_tokens": 40841472
+    },
+    {
+      "rank": 4,
+      "team": "来都来了队",
+      "institutions": [
+        "复旦大学"
+      ],
+      "score": 189,
+      "passed": 85,
+      "total": 200,
+      "pass_rate": 0.425,
+      "easy": 37,
+      "medium": 44,
+      "hard": 4,
+      "agent_seconds": 63321,
+      "build_seconds": 354874,
+      "input_tokens": 232181950,
+      "output_tokens": 1493421,
+      "cached_tokens": 21313664
+    },
+    {
+      "rank": 5,
+      "team": "Cloud Computers",
+      "institutions": [
+        "Boston University"
+      ],
+      "score": 175,
+      "passed": 81,
+      "total": 200,
+      "pass_rate": 0.405,
+      "easy": 36,
+      "medium": 43,
+      "hard": 2,
+      "agent_seconds": 21916,
+      "build_seconds": 304410,
+      "input_tokens": 14699196,
+      "output_tokens": 609979,
+      "cached_tokens": 3972864
+    },
+    {
+      "rank": 6,
+      "team": "biter",
+      "institutions": [
+        "北京理工大学",
+        "武汉大学"
+      ],
+      "score": 172,
+      "passed": 76,
+      "total": 200,
+      "pass_rate": 0.38,
+      "easy": 32,
+      "medium": 40,
+      "hard": 4,
+      "agent_seconds": 71386,
+      "build_seconds": 305072,
+      "input_tokens": 228781430,
+      "output_tokens": 1389976,
+      "cached_tokens": 42550272
+    },
+    {
+      "rank": 7,
+      "team": "DePaul BuilBench",
+      "institutions": [
+        "DePaul University"
+      ],
+      "score": 149,
+      "passed": 69,
+      "total": 200,
+      "pass_rate": 0.345,
+      "easy": 31,
+      "medium": 36,
+      "hard": 2,
+      "agent_seconds": 37597,
+      "build_seconds": 377552,
+      "input_tokens": 72496622,
+      "output_tokens": 660660,
+      "cached_tokens": 62624384
+    },
+    {
+      "rank": 8,
+      "team": "涅槃",
+      "institutions": [
+        "四川大学"
+      ],
+      "score": 148,
+      "passed": 68,
+      "total": 200,
+      "pass_rate": 0.34,
+      "easy": 30,
+      "medium": 36,
+      "hard": 2,
+      "agent_seconds": 21510,
+      "build_seconds": 318353,
+      "input_tokens": 46492668,
+      "output_tokens": 471953,
+      "cached_tokens": 6775296
+    },
+    {
+      "rank": 9,
+      "team": "ICI",
+      "institutions": [
+        "lenovo"
+      ],
+      "score": 135,
+      "passed": 57,
+      "total": 200,
+      "pass_rate": 0.285,
+      "easy": 19,
+      "medium": 37,
+      "hard": 1,
+      "agent_seconds": 1895,
+      "build_seconds": 286998,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "cached_tokens": 0
+    },
+    {
+      "rank": 10,
+      "team": "西电构智",
+      "institutions": [
+        "西安电子科技大学"
+      ],
+      "score": 128,
+      "passed": 60,
+      "total": 200,
+      "pass_rate": 0.3,
+      "easy": 28,
+      "medium": 30,
+      "hard": 2,
+      "agent_seconds": 53208,
+      "build_seconds": 238780,
+      "input_tokens": 105718254,
+      "output_tokens": 837534,
+      "cached_tokens": 10422784
+    }
+  ]
+}
