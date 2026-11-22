@@ -5,6 +5,7 @@ window.BuildBenchI18nData.pages.leaderboard = Object.freeze({
   'Final evaluation leaderboard':'正式评测排行榜',
   'Cross-architecture package repair. One shared evaluation set, ranked by difficulty-weighted score.':'跨架构软件包构建修复。所有队伍使用同一套正式题目，按难度加权分排名。',
   'Teams':'参赛队伍',
+  'Registered teams':'报名队伍',
   'Cases per team':'每队评测题数',
   'Maximum score':'加权满分',
   'Evaluation overview':'评测概况',
